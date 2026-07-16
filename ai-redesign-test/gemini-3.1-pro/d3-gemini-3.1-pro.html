@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Naman Sharma - Product Designer</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&display=swap');
+
+    :root {
+      --bg: #ffdf00; /* Vibrant yellow */
+      --text: #000000;
+      --card1: #ff00ff; /* Magenta */
+      --card2: #00ffff; /* Cyan */
+      --card3: #ffffff; /* White */
+      --card4: #00ff00; /* Lime */
+      --border: 4px solid #000;
+      --shadow: 8px 8px 0px #000;
+      --shadow-hover: 12px 12px 0px #000;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+      line-height: 1.5;
+    }
+
+    .neo-box {
+      border: var(--border);
+      box-shadow: var(--shadow);
+      background: white;
+      transition: all 0.2s ease-in-out;
+    }
+
+    .neo-box:hover {
+      box-shadow: var(--shadow-hover);
+      transform: translate(-4px, -4px);
+    }
+
+    header {
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: white;
+      border-bottom: var(--border);
+    }
+
+    header .logo {
+      font-size: 2rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      background: var(--card1);
+      padding: 5px 15px;
+      border: var(--border);
+    }
+
+    nav ul {
+      display: flex;
+      gap: 20px;
+      list-style: none;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: var(--text);
+      font-weight: 700;
+      font-size: 1.2rem;
+      border: var(--border);
+      padding: 5px 15px;
+      background: var(--card2);
+      box-shadow: 4px 4px 0 #000;
+      transition: all 0.2s;
+    }
+
+    nav a:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 6px 6px 0 #000;
+    }
+
+    .hero {
+      padding: 100px 5%;
+      text-align: center;
+      position: relative;
+    }
+
+    .hero h1 {
+      font-size: 6rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      line-height: 1;
+      margin-bottom: 30px;
+      text-shadow: 4px 4px 0px var(--card2);
+    }
+
+    .hero p {
+      font-size: 1.5rem;
+      max-width: 700px;
+      margin: 0 auto;
+      background: var(--card3);
+      padding: 20px;
+      border: var(--border);
+      box-shadow: var(--shadow);
+      font-weight: 600;
+    }
+
+    .section-title {
+      font-size: 4rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-bottom: 40px;
+      background: var(--text);
+      color: white;
+      display: inline-block;
+      padding: 10px 20px;
+      transform: rotate(-2deg);
+    }
+
+    section {
+      padding: 80px 5%;
+      border-top: var(--border);
+      background: var(--bg);
+    }
+
+    /* Process grid */
+    .process-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 40px;
+      margin-top: 40px;
+    }
+
+    .process-card {
+      padding: 30px;
+      background: var(--card2);
+    }
+    
+    .process-card:nth-child(2n) { background: var(--card1); color: white; }
+    .process-card:nth-child(3n) { background: var(--card4); }
+    .process-card:nth-child(4n) { background: white; }
+
+    .process-card h3 {
+      font-size: 2rem;
+      margin-bottom: 15px;
+      border-bottom: var(--border);
+      padding-bottom: 10px;
+    }
+
+    /* Case Studies */
+    .case-studies {
+      display: grid;
+      gap: 60px;
+    }
+
+    .cs-card {
+      display: flex;
+      background: var(--card3);
+    }
+
+    .cs-card.reverse {
+      flex-direction: row-reverse;
+      background: var(--card4);
+    }
+
+    .cs-visual {
+      flex: 1;
+      border-right: var(--border);
+      background-image: repeating-linear-gradient(45deg, transparent, transparent 10px, #000 10px, #000 12px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px;
+    }
+
+    .cs-card.reverse .cs-visual {
+      border-right: none;
+      border-left: var(--border);
+      background-image: repeating-linear-gradient(-45deg, transparent, transparent 10px, #000 10px, #000 12px);
+    }
+
+    .cs-visual-placeholder {
+      background: white;
+      border: var(--border);
+      padding: 30px;
+      font-weight: 700;
+      font-size: 1.5rem;
+      text-transform: uppercase;
+      text-align: center;
+      box-shadow: 10px 10px 0 var(--card1);
+    }
+
+    .cs-content {
+      flex: 1;
+      padding: 50px;
+    }
+
+    .cs-content h3 {
+      font-size: 3rem;
+      line-height: 1.1;
+      margin-bottom: 20px;
+    }
+
+    .tag {
+      display: inline-block;
+      border: var(--border);
+      padding: 5px 10px;
+      font-weight: 700;
+      margin-right: 10px;
+      margin-bottom: 20px;
+      background: var(--card1);
+      color: white;
+      text-transform: uppercase;
+    }
+
+    .cs-impact {
+      margin-top: 30px;
+      padding: 20px;
+      background: var(--text);
+      color: white;
+      font-weight: 600;
+      font-size: 1.2rem;
+      transform: rotate(1deg);
+    }
+
+    /* Footer */
+    footer {
+      padding: 80px 5%;
+      background: var(--card1);
+      border-top: var(--border);
+      text-align: center;
+      color: white;
+    }
+
+    footer h2 {
+      font-size: 5rem;
+      text-transform: uppercase;
+      margin-bottom: 40px;
+      text-shadow: 4px 4px 0 #000;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin-bottom: 40px;
+    }
+
+    .footer-links a {
+      color: var(--text);
+      text-decoration: none;
+      font-size: 2rem;
+      font-weight: 700;
+      background: var(--card2);
+      border: var(--border);
+      padding: 10px 30px;
+      box-shadow: var(--shadow);
+      transition: transform 0.2s;
+    }
+
+    .footer-links a:hover {
+      transform: translateY(-5px);
+    }
+
+    .marquee {
+      background: var(--text);
+      color: white;
+      font-size: 2rem;
+      font-weight: 700;
+      padding: 15px 0;
+      white-space: nowrap;
+      overflow: hidden;
+      border-bottom: var(--border);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="marquee">
+    LET'S BUILD SOMETHING AWESOME • UX DESIGN • PRODUCT DESIGN • WEB DESIGN • LET'S BUILD SOMETHING AWESOME • UX DESIGN •
+  </div>
+
+  <header>
+    <div class="logo">NAMAN.</div>
+    <nav>
+      <ul>
+        <li><a href="#work">WORK</a></li>
+        <li><a href="#principles">PRINCIPLES</a></li>
+        <li><a href="#contact">CONTACT</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="hero">
+    <h1>I Design Products<br>Users Love.</h1>
+    <p class="neo-box">Self-taught Product/UX Designer based in Jaipur. I make complex products easy to use and help startups build from 0 to 1.</p>
+  </div>
+
+  <section id="work">
+    <h2 class="section-title">Selected Case Studies</h2>
+    
+    <div class="case-studies">
+      <!-- Project 1 -->
+      <div class="neo-box cs-card">
+        <div class="cs-visual">
+          <div class="cs-visual-placeholder">Asian Paints<br>Dealer Portal UI</div>
+        </div>
+        <div class="cs-content">
+          <span class="tag">UX/UI Design</span>
+          <span class="tag" style="background:var(--card2); color:black;">2021</span>
+          <h3>Digitizing the Supply Chain.</h3>
+          <p>Redesigned the dealer portal to digitize order placement, supply chain tracking, and introduced data-driven product recommendations based on previous order history.</p>
+          <div class="cs-impact">
+            20% increase in online transaction volume.
+          </div>
+        </div>
+      </div>
+
+      <!-- Project 2 -->
+      <div class="neo-box cs-card reverse">
+        <div class="cs-visual">
+          <div class="cs-visual-placeholder" style="box-shadow: 10px 10px 0 var(--card2);">Boost360<br>App Onboarding</div>
+        </div>
+        <div class="cs-content">
+          <span class="tag" style="background:var(--card4); color:black;">UX Research</span>
+          <span class="tag" style="background:var(--card3); color:black;">2021</span>
+          <h3>Frictionless Onboarding.</h3>
+          <p>Reduced massive uninstall rates by uncovering user expectations vs. marketing promises. Redesigned onboarding to be highly visual and build trust through social proof.</p>
+          <div class="cs-impact" style="transform: rotate(-1deg);">
+            60% decrease in app uninstall rate.
+          </div>
+        </div>
+      </div>
+
+      <!-- Project 3 -->
+      <div class="neo-box cs-card">
+        <div class="cs-visual">
+          <div class="cs-visual-placeholder" style="box-shadow: 10px 10px 0 var(--text); color:var(--card2); background:black;">Wikipedia (KaiOS)<br>Journey Maps</div>
+        </div>
+        <div class="cs-content">
+          <span class="tag" style="background:var(--text); color:white;">UX Research</span>
+          <span class="tag" style="background:var(--card1); color:white;">2020</span>
+          <h3>Next Billion Users.</h3>
+          <p>Collaborated with Hureo & Wikimedia to conduct F2F interviews uncovering how JioPhone users consume internet content, read Wikipedia, and navigate smart feature phones.</p>
+          <div class="cs-impact">
+            Actionable VUI & micro-screen recommendations.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="principles">
+    <h2 class="section-title">My Principles</h2>
+    <div class="process-grid">
+      <div class="neo-box process-card">
+        <h3>1. Consistency</h3>
+        <p>Consistency beats talent. I'm not the most talented designer, but I strive for constant improvement—everyday. It compounds.</p>
+      </div>
+      <div class="neo-box process-card">
+        <h3>2. Curiosity</h3>
+        <p>Curiosity fuels understanding. I know a little about a lot, helping me connect dots to create work that makes a real difference.</p>
+      </div>
+      <div class="neo-box process-card">
+        <h3>3. Function First</h3>
+        <p>Form follows function. Problems are solved with functionality, but designing beautiful products creates delight.</p>
+      </div>
+      <div class="neo-box process-card">
+        <h3>4. Give a Damn</h3>
+        <p>Highly entrepreneurial with a founder's mindset. I take ownership, collaborate deeply, and go the extra mile.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer id="contact">
+    <h2>Let's connect</h2>
+    <div class="footer-links">
+      <a href="mailto:madebynaman@gmail.com" class="neo-box">Email</a>
+      <a href="https://linkedin.com/in/madebynaman" class="neo-box" style="background:var(--card4);">LinkedIn</a>
+      <a href="http://madebynaman.com" class="neo-box" style="background:var(--card3);">Website</a>
+    </div>
+    <div style="font-size:1.5rem; font-weight:bold; background:var(--text); display:inline-block; padding:10px 20px; transform:rotate(-2deg); margin-top:20px;">
+      Ask me about Indie Dogs, Hip-Hop, or Video Games!
+    </div>
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Naman Sharma — Product/UX Designer (Playful Workspace)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
+  <style>
+    /* DESIGN SYSTEM: CURIOUS WORKSPACE */
+    :root {
+      --bg-color: #f5f3ff;
+      --card-bg: #ffffff;
+      --text-color: #3b0764;
+      --text-muted: #6b21a8;
+      --accent: #f59e0b;
+      --accent-muted: #fef3c7;
+      --success: #10b981;
+      --border-color: #e9d5ff;
+      --font-display: 'Lexend', sans-serif;
+      --font-body: 'DM Sans', sans-serif;
+      --card-shadow: 0 8px 30px rgba(107, 33, 168, 0.05);
+      --hover-shadow: 0 12px 40px rgba(107, 33, 168, 0.1);
+    }
+
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      font-family: var(--font-body);
+      line-height: 1.6;
+      font-size: 15px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* TYPOGRAPHY */
+    h1, h2, h3, h4 {
+      font-family: var(--font-display);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    a {
+      color: var(--text-color);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.15s;
+    }
+
+    a:hover {
+      color: var(--accent);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    /* STATUS BAR HEADER */
+    .status-header {
+      background: var(--card-bg);
+      border: 2px solid var(--border-color);
+      border-radius: 16px;
+      padding: 1rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2.5rem;
+      box-shadow: var(--card-shadow);
+    }
+
+    .status-left {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .status-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--success);
+      position: relative;
+    }
+
+    .status-dot::after {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: var(--success);
+      animation: ripple 1.5s infinite;
+      top: 0;
+      left: 0;
+    }
+
+    @keyframes ripple {
+      0% { transform: scale(1); opacity: 0.8; }
+      100% { transform: scale(2.5); opacity: 0; }
+    }
+
+    .status-meta {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    .status-right {
+      display: flex;
+      gap: 1.5rem;
+      font-size: 0.85rem;
+    }
+
+    .status-pill {
+      background: var(--bg-color);
+      padding: 0.35rem 0.75rem;
+      border-radius: 8px;
+      font-weight: 600;
+      color: var(--text-muted);
+      border: 1px solid var(--border-color);
+    }
+
+    /* HERO SECTION */
+    .hero-layout {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr;
+      gap: 2.5rem;
+      margin-bottom: 3.5rem;
+      align-items: center;
+    }
+
+    .hero-content {
+      background: var(--card-bg);
+      border: 2px solid var(--border-color);
+      border-radius: 24px;
+      padding: 3rem;
+      box-shadow: var(--card-shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-content::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 8px;
+      height: 100%;
+      background: var(--accent);
+    }
+
+    .hero-eyebrow {
+      background: var(--accent-muted);
+      color: #92400e;
+      padding: 0.35rem 0.75rem;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      display: inline-block;
+      margin-bottom: 1.5rem;
+      font-family: var(--font-display);
+    }
+
+    h1.hero-title {
+      font-size: 2.75rem;
+      line-height: 1.2;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-desc {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+    }
+
+    .cta-container {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .btn-playful {
+      background: var(--accent);
+      color: white;
+      border: 2px solid var(--text-color);
+      padding: 0.75rem 1.5rem;
+      border-radius: 12px;
+      font-family: var(--font-display);
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 4px 4px 0px var(--text-color);
+      transition: all 0.15s;
+    }
+
+    .btn-playful:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 6px 6px 0px var(--text-color);
+      color: white;
+    }
+
+    .btn-secondary {
+      background: var(--card-bg);
+      color: var(--text-color);
+      box-shadow: 4px 4px 0px var(--border-color);
+    }
+
+    .btn-secondary:hover {
+      box-shadow: 6px 6px 0px var(--border-color);
+    }
+
+    /* JERRY MASCOT BADGE - SIGNATURE ELEMENT */
+    .jerry-card {
+      background: #fef08a;
+      border: 2px solid #ca8a04;
+      border-radius: 24px;
+      padding: 2.5rem;
+      box-shadow: var(--card-shadow);
+      text-align: center;
+      position: relative;
+    }
+
+    .jerry-avatar {
+      width: 90px;
+      height: 90px;
+      background: #eab308;
+      border: 2px solid #ca8a04;
+      border-radius: 50%;
+      margin: 0 auto 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      font-weight: 800;
+      color: white;
+      position: relative;
+      box-shadow: 0 4px 10px rgba(234, 179, 8, 0.2);
+    }
+
+    .jerry-speech-bubble {
+      background: white;
+      border: 2px solid #ca8a04;
+      border-radius: 16px;
+      padding: 1rem;
+      margin-top: 1rem;
+      font-size: 0.85rem;
+      position: relative;
+      font-weight: 500;
+      color: #854d0e;
+    }
+
+    .jerry-speech-bubble::before {
+      content: '';
+      position: absolute;
+      top: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-left: 10px solid transparent;
+      border-right: 10px solid transparent;
+      border-bottom: 10px solid #ca8a04;
+    }
+
+    .jerry-speech-bubble::after {
+      content: '';
+      position: absolute;
+      top: -7px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-left: 8px solid transparent;
+      border-right: 8px solid transparent;
+      border-bottom: 8px solid white;
+    }
+
+    /* DYNAMIC TAB EXPLORER COMPONENT */
+    .explorer-box {
+      background: var(--card-bg);
+      border: 2px solid var(--border-color);
+      border-radius: 24px;
+      padding: 2.5rem;
+      box-shadow: var(--card-shadow);
+      margin-bottom: 3.5rem;
+    }
+
+    .explorer-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid var(--border-color);
+      padding-bottom: 1.5rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .explorer-title {
+      font-size: 1.5rem;
+      color: var(--text-color);
+    }
+
+    .explorer-tabs {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .tab-btn {
+      padding: 0.5rem 1rem;
+      border: 2px solid transparent;
+      border-radius: 10px;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 0.85rem;
+      background: var(--bg-color);
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .tab-btn:hover {
+      background: var(--border-color);
+      color: var(--text-color);
+    }
+
+    .tab-btn.active {
+      background: var(--text-color);
+      color: white;
+      border-color: var(--text-color);
+    }
+
+    .tab-panel {
+      display: none;
+    }
+
+    .tab-panel.active {
+      display: block;
+    }
+
+    /* CASE STUDIES CARDS inside Tab 1 */
+    .playful-cases-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+    }
+
+    .playful-case-card {
+      border: 2px solid var(--border-color);
+      border-radius: 16px;
+      padding: 2rem;
+      background: var(--bg-color);
+      transition: all 0.2s;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .playful-case-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--hover-shadow);
+      border-color: var(--accent);
+    }
+
+    .case-badge {
+      background: var(--accent);
+      color: white;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.25rem 0.5rem;
+      border-radius: 6px;
+      display: inline-block;
+      margin-bottom: 1rem;
+      align-self: flex-start;
+      font-family: var(--font-display);
+    }
+
+    .case-title {
+      font-size: 1.35rem;
+      margin-bottom: 0.75rem;
+      color: var(--text-color);
+    }
+
+    .case-impact {
+      color: var(--success);
+      font-weight: 700;
+      margin-bottom: 1rem;
+      font-size: 0.9rem;
+    }
+
+    .case-desc {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .case-placeholder {
+      height: 120px;
+      border: 2px dashed var(--border-color);
+      border-radius: 8px;
+      background: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      font-weight: 600;
+      margin-top: auto;
+    }
+
+    /* PRINCIPLES GRID inside Tab 2 */
+    .principles-deck {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+    }
+
+    .principle-card {
+      background: var(--bg-color);
+      border: 2px solid var(--border-color);
+      border-radius: 16px;
+      padding: 1.5rem;
+      transition: transform 0.2s;
+    }
+
+    .principle-card:hover {
+      transform: scale(1.03);
+    }
+
+    .principle-icon {
+      font-size: 1.5rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .principle-title {
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .principle-desc {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    /* TIMELINE & CLIENTS inside Tab 3 */
+    .clients-wrap {
+      margin-bottom: 2rem;
+    }
+
+    .clients-label {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      letter-spacing: 0.05em;
+      margin-bottom: 0.75rem;
+      font-weight: 700;
+    }
+
+    .clients-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .tag-pill {
+      background: var(--bg-color);
+      color: var(--text-color);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 0.35rem 0.75rem;
+      font-size: 0.85rem;
+      font-weight: 500;
+    }
+
+    .timeline-rows {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .timeline-row {
+      display: grid;
+      grid-template-columns: 180px 1fr;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 1rem;
+    }
+
+    .timeline-row:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .time-period {
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+
+    .time-role {
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+    }
+
+    .time-desc {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    /* CONTACT Tab 4 */
+    .playful-contact {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2.5rem;
+    }
+
+    .contact-card-box {
+      border: 2px solid var(--border-color);
+      background: var(--bg-color);
+      border-radius: 16px;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .contact-item-title {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .contact-item-value {
+      font-size: 1.15rem;
+      font-weight: 700;
+    }
+
+    /* RESPONSIVE DESIGN */
+    @media (max-width: 1024px) {
+      .hero-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .playful-cases-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .principles-deck {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .status-header {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: flex-start;
+      }
+
+      .explorer-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .explorer-tabs {
+        width: 100%;
+        overflow-x: auto;
+        padding-bottom: 0.5rem;
+      }
+
+      .timeline-row {
+        grid-template-columns: 1fr;
+        gap: 0.25rem;
+      }
+
+      .playful-contact {
+        grid-template-columns: 1fr;
+      }
+
+      .principles-deck {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <!-- STATUS BAR HEADER -->
+    <div class="status-header">
+      <div class="status-left">
+        <div class="status-dot"></div>
+        <div class="status-meta">Naman Sharma &bull; Active in Jaipur, India</div>
+      </div>
+      <div class="status-right">
+        <span class="status-pill">🐶 jerry_says_hi.exe</span>
+        <span class="status-pill">🛠️ open_to_work</span>
+      </div>
+    </div>
+
+    <!-- HERO SECTION -->
+    <div class="hero-layout">
+      <div class="hero-content">
+        <span class="hero-eyebrow">A Friendly Generalist</span>
+        <h1 class="hero-title">No-drama Product & UX design, built with curiosity.</h1>
+        <p class="hero-desc">
+          I'm a self-taught designer with a Computer Science degree. I love tackling 0-to-1 challenges, conducting in-depth user audits, and designing workflows that convert.
+        </p>
+        <div class="cta-container">
+          <button class="btn-playful" onclick="switchTab('cases')">Explore Projects</button>
+          <button class="btn-playful btn-secondary" onclick="switchTab('contact')">Say Hello</button>
+        </div>
+      </div>
+
+      <!-- JERRY SPEECH COMPONENT -->
+      <div class="jerry-card" id="jerry-companion">
+        <div class="jerry-avatar">🐶</div>
+        <h3 style="font-size: 1.2rem; color: #854d0e; margin-bottom: 0.5rem;">Jerry the Mascot</h3>
+        <p style="font-size: 0.85rem; color: #854d0e; opacity: 0.85;">Naman's companion and design advisor.</p>
+        <div class="jerry-speech-bubble" id="jerry-speech">
+          "Hover over Naman's projects below to see my instant design audits!"
+        </div>
+      </div>
+    </div>
+
+    <!-- MAIN EXPLORER DASHBOARD -->
+    <div class="explorer-box">
+      <div class="explorer-header">
+        <h2 class="explorer-title">Naman's Project Board</h2>
+        <div class="explorer-tabs">
+          <button class="tab-btn active" id="tab-btn-cases" onclick="switchTab('cases')">Selected Work</button>
+          <button class="tab-btn" id="tab-btn-ethos" onclick="switchTab('ethos')">Core Ethos</button>
+          <button class="tab-btn" id="tab-btn-history" onclick="switchTab('history')">Log Timeline</button>
+          <button class="tab-btn" id="tab-btn-contact" onclick="switchTab('contact')">Write Naman</button>
+        </div>
+      </div>
+
+      <!-- TAB PANEL 1: SELECTED WORK -->
+      <div class="tab-panel active" id="panel-cases">
+        <div class="playful-cases-grid">
+          
+          <!-- CASE STUDY 1: ASIAN PAINTS -->
+          <div class="playful-case-card" onmouseover="updateJerry('ap')" onmouseout="resetJerry()">
+            <div>
+              <span class="case-badge">B2B Portal Revamp</span>
+              <h3 class="case-title">Asian Paints Dealer Experience</h3>
+              <div class="case-impact">↗ +20% Online Transaction Volume</div>
+              <p class="case-desc">
+                Helped paint distributors order stock and scan inventory barcode tags in under 10 seconds, cutting cost and dependency on field agents.
+              </p>
+            </div>
+            <div class="case-placeholder">
+              Mockup draft: Barcode Quick-Checkout Widget
+            </div>
+          </div>
+
+          <!-- CASE STUDY 2: BOOST360 -->
+          <div class="playful-case-card" onmouseover="updateJerry('boost')" onmouseout="resetJerry()">
+            <div>
+              <span class="case-badge">Mobile Onboarding</span>
+              <h3 class="case-title">Boost360 App Setup Flow</h3>
+              <div class="case-impact">↗ -60% Uninstall Drop-off in 2 Weeks</div>
+              <p class="case-desc">
+                Restructured onboarding visual steps, addressing marketing-expectation mismatch, and allowed fast, simple website generation in under 2 minutes.
+              </p>
+            </div>
+            <div class="case-placeholder">
+              Mockup draft: Mobile Site Generation Step
+            </div>
+          </div>
+
+          <!-- CASE STUDY 3: WIKIPEDIA -->
+          <div class="playful-case-card" onmouseover="updateJerry('wiki')" onmouseout="resetJerry()">
+            <div>
+              <span class="case-badge">Field Research</span>
+              <h3 class="case-title">Wikipedia JioPhone Research</h3>
+              <div class="case-impact">↗ 25 Deep Field Audits (KaiOS)</div>
+              <p class="case-desc">
+                Captured and analyzed phone usages, VUI constraints, and reading behaviors on small keypad screens in Pune, Mumbai, and Delhi for the Wikimedia Foundation.
+              </p>
+            </div>
+            <div class="case-placeholder">
+              Mockup draft: Small-screen JioPhone VUI Component
+            </div>
+          </div>
+
+          <!-- CASE STUDY 4: FREELANCE & STARTUPS -->
+          <div class="playful-case-card" onmouseover="updateJerry('free')" onmouseout="resetJerry()">
+            <div>
+              <span class="case-badge">0-1 Freelance</span>
+              <h3 class="case-title">Independent Consulting Works</h3>
+              <div class="case-impact">↗ Helped Raise $500K for Turns</div>
+              <p class="case-desc">
+                End-to-end design systems, site structures, and audits for startups including Gadivan (Took from 0 to 1) and LetsConnect (4.8 stars in Play Store).
+              </p>
+            </div>
+            <div class="case-placeholder">
+              Mockup draft: Brand Guideline & Interface System
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- TAB PANEL 2: ETHOS -->
+      <div class="tab-panel" id="panel-ethos">
+        <div class="principles-deck">
+          <div class="principle-card">
+            <div class="principle-icon">⏳</div>
+            <h4 class="principle-title">Consistency</h4>
+            <p class="principle-desc">Efforts compound. I strive for constant daily refinement rather than waiting for isolated bursts of inspiration.</p>
+          </div>
+          <div class="principle-card">
+            <div class="principle-icon">🔍</div>
+            <h4 class="principle-title">Curiosity</h4>
+            <p class="principle-desc">Curious generalist model. I love learning a little about a lot to connect dots across design and code systems.</p>
+          </div>
+          <div class="principle-card">
+            <div class="principle-icon">⚙️</div>
+            <h4 class="principle-title">Function First</h4>
+            <p class="principle-desc">Function solves core user pain points. Visual delight comes next to create a memorable, delightful product experience.</p>
+          </div>
+          <div class="principle-card">
+            <div class="principle-icon">🔥</div>
+            <h4 class="principle-title">Founder Spirit</h4>
+            <p class="principle-desc">High agency and accountability. I care deeply about how designs impact business and ease developer implementation.</p>
+          </div>
+        </div>
+        
+        <!-- PROCESS SUBSECTION -->
+        <div style="margin-top: 3rem; border-top: 2px solid var(--border-color); padding-top: 2rem;">
+          <h3 style="font-size: 1.25rem; margin-bottom: 1.5rem;">How Naman Works (The 6-step loop)</h3>
+          <ol style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; list-style: none;">
+            <li style="background: var(--bg-color); padding: 1rem; border-radius: 12px;"><strong>1. Research</strong>: Finding real constraints & mapping competitor data.</li>
+            <li style="background: var(--bg-color); padding: 1rem; border-radius: 12px;"><strong>2. Journeys</strong>: Building user flows and decision patterns.</li>
+            <li style="background: var(--bg-color); padding: 1rem; border-radius: 12px;"><strong>3. Explore</strong>: Going wide with drafts & testing layout concepts.</li>
+            <li style="background: var(--bg-color); padding: 1rem; border-radius: 12px;"><strong>4. Refine</strong>: Hardening visual typography & system guidelines.</li>
+            <li style="background: var(--bg-color); padding: 1rem; border-radius: 12px;"><strong>5. Handoff</strong>: Coding close collaborations with PM & tech team.</li>
+            <li style="background: var(--bg-color); padding: 1rem; border-radius: 12px;"><strong>6. Monitor</strong>: Testing analytics metrics post-launch.</li>
+          </ol>
+        </div>
+      </div>
+
+      <!-- TAB PANEL 3: HISTORY -->
+      <div class="tab-panel" id="panel-history">
+        <div class="clients-wrap">
+          <div class="clients-label">Partial Client Roster</div>
+          <div class="clients-tags">
+            <span class="tag-pill">Thence Agency</span>
+            <span class="tag-pill">LearnApp</span>
+            <span class="tag-pill">Turns</span>
+            <span class="tag-pill">Gadivan</span>
+            <span class="tag-pill">LetsConnect</span>
+            <span class="tag-pill">Parentverse</span>
+            <span class="tag-pill">Wikipedia</span>
+            <span class="tag-pill">Shiprocket</span>
+            <span class="tag-pill">NowFloats</span>
+            <span class="tag-pill">DGlobalist</span>
+          </div>
+        </div>
+
+        <div class="timeline-rows">
+          <div class="timeline-row">
+            <div class="time-period">2022 — Present</div>
+            <div>
+              <div class="time-role">Freelance Product & Web Designer</div>
+              <div class="time-desc">Taking platforms 0 to 1, building scalable design tokens, audit reports, and improving core conversion systems for early-stage clients.</div>
+            </div>
+          </div>
+          
+          <div class="timeline-row">
+            <div class="time-period">2021 — 2022</div>
+            <div>
+              <div class="time-role">UX Designer &bull; Thence Agency</div>
+              <div class="time-desc">Directed B2B supply chain interfaces (Asian Paints) and onboarding optimizations (Boost360). Mentored intern designers.</div>
+            </div>
+          </div>
+
+          <div class="timeline-row">
+            <div class="time-period">2019 — 2020</div>
+            <div>
+              <div class="time-role">UX Research Intern &bull; Hureo</div>
+              <div class="time-desc">Collaborated with Wikimedia Foundation to lead 1-on-1 field interviews in Pune, Mumbai, Delhi, evaluating KaiOS JioPhone interface issues.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB PANEL 4: CONTACT -->
+      <div class="tab-panel" id="panel-contact">
+        <div class="playful-contact">
+          <div class="contact-card-box">
+            <div class="contact-item-title">Send Email</div>
+            <div class="contact-item-value"><a href="mailto:madebynaman@gmail.com">madebynaman@gmail.com</a></div>
+          </div>
+          <div class="contact-card-box">
+            <div class="contact-item-title">Ring Phone</div>
+            <div class="contact-item-value">+91 82083 69219</div>
+          </div>
+          <div class="contact-card-box">
+            <div class="contact-item-title">Location</div>
+            <div class="contact-item-value">Jaipur, India (Remote)</div>
+          </div>
+          <div class="contact-card-box">
+            <div class="contact-item-title">Networks</div>
+            <div class="contact-item-value">
+              <a href="https://www.linkedin.com/in/madebynaman/" target="_blank">LinkedIn</a> &bull; 
+              <a href="https://twitter.com" target="_blank">Twitter</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    // DYNAMIC TABS SWITCHER
+    function switchTab(tabId) {
+      // Hide all panels
+      const panels = document.querySelectorAll('.tab-panel');
+      panels.forEach(p => p.classList.remove('active'));
+
+      // Deactivate all buttons
+      const buttons = document.querySelectorAll('.tab-btn');
+      buttons.forEach(b => b.classList.remove('active'));
+
+      // Show target panel
+      document.getElementById(`panel-${tabId}`).classList.add('active');
+
+      // Activate target button
+      document.getElementById(`tab-btn-${tabId}`).classList.add('active');
+    }
+
+    // JERRY COMPANION INTERACTIVE HOVER ACTIONS
+    const speech = document.getElementById('jerry-speech');
+    
+    function updateJerry(context) {
+      if (context === 'ap') {
+        speech.innerHTML = `"Dealers were ordering stock via salesman calls! Naman added a 10s barcode order system to make catalog search instant."`;
+      } else if (context === 'boost') {
+        speech.innerHTML = `"Boost app had a 20% signup rate because users got lost. Naman redesigned onboarding visual steps, yielding a 60% retention boost!"`;
+      } else if (context === 'wiki') {
+        speech.innerHTML = `"JioPhones have tiny 2.4-inch screens! Naman recommended voice-search options and bullet-point content so readers don't squint."`;
+      } else if (context === 'free') {
+        speech.innerHTML = `"LetsConnect hit 4.8 stars because of Naman's usability revamp, and Turns raised pre-seed! Real outcomes compound."`;
+      }
+    }
+
+    function resetJerry() {
+      speech.innerHTML = `"Hover over Naman's projects below to see my instant design audits!"`;
+    }
+  </script>
+</body>
+</html>

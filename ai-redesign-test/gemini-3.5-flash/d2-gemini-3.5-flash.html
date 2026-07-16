@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Naman Sharma — Product/UX Designer (Editorial Direction)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    /* DESIGN SYSTEM: SAGE EDITORIAL */
+    :root {
+      --bg-color: #f1f5f2;
+      --card-bg: #fcfdfd;
+      --text-color: #18221d;
+      --text-muted: #536058;
+      --accent: #8e6c58;
+      --accent-light: #dfd4cb;
+      --success: #2e7d32;
+      --border-color: rgba(24, 34, 29, 0.08);
+      --font-serif: 'Fraunces', serif;
+      --font-sans: 'Instrument Sans', sans-serif;
+    }
+
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      font-family: var(--font-sans);
+      line-height: 1.625;
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* TYPOGRAPHY */
+    h1, h2, h3, h4, .serif-text {
+      font-family: var(--font-serif);
+      font-weight: 400;
+      letter-spacing: -0.01em;
+    }
+
+    a {
+      color: var(--text-color);
+      text-decoration: underline;
+      text-decoration-color: var(--accent);
+      text-underline-offset: 4px;
+      transition: all 0.2s;
+    }
+
+    a:hover {
+      color: var(--accent);
+      text-decoration-color: var(--text-color);
+    }
+
+    /* CONTAINER & GRID */
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    /* HEADER */
+    header {
+      padding: 2.5rem 0;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-family: var(--font-serif);
+      font-size: 1.35rem;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.9rem;
+      text-decoration: none;
+      color: var(--text-muted);
+      transition: color 0.15s;
+    }
+
+    .nav-links a:hover {
+      color: var(--text-color);
+    }
+
+    /* SECTIONS */
+    section {
+      padding: 6rem 0;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .section-eyebrow {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      margin-bottom: 1.5rem;
+      display: block;
+      font-weight: 600;
+    }
+
+    /* HERO */
+    .hero-block {
+      max-width: 900px;
+      margin-top: 1rem;
+    }
+
+    h1.hero-title {
+      font-size: 3.5rem;
+      line-height: 1.15;
+      margin-bottom: 2rem;
+    }
+
+    h1.hero-title em {
+      font-style: italic;
+      font-weight: 300;
+    }
+
+    .hero-meta {
+      display: flex;
+      gap: 3rem;
+      margin-top: 3.5rem;
+      border-top: 1px solid var(--border-color);
+      padding-top: 2rem;
+    }
+
+    .meta-item {
+      max-width: 260px;
+    }
+
+    .meta-title {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
+      letter-spacing: 0.05em;
+    }
+
+    .meta-value {
+      font-size: 1rem;
+      color: var(--text-color);
+    }
+
+    /* SIGNATURE ELEMENT: JARGON CONVERTER */
+    .manifesto-box {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 3rem;
+      margin: 3rem 0;
+      box-shadow: 0 4px 30px rgba(0,0,0,0.01);
+    }
+
+    .manifesto-title {
+      font-size: 1.75rem;
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+
+    .manifesto-text {
+      font-family: var(--font-serif);
+      font-size: 1.35rem;
+      line-height: 1.8;
+      text-align: center;
+      color: var(--text-muted);
+    }
+
+    .jargon-word {
+      text-decoration: line-through;
+      color: #9f8a7e;
+      cursor: pointer;
+      position: relative;
+      display: inline-block;
+      transition: color 0.2s;
+    }
+
+    .jargon-word:hover {
+      color: #b45309;
+    }
+
+    .translation-tooltip {
+      display: block;
+      font-family: var(--font-sans);
+      font-size: 0.9rem;
+      color: var(--success);
+      font-style: normal;
+      font-weight: 600;
+      margin-top: 0.25rem;
+      opacity: 0.85;
+    }
+
+    /* PRINCIPLES */
+    .principles-list {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem 4rem;
+    }
+
+    .principle-item {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .principle-num {
+      font-family: var(--font-serif);
+      font-size: 1.5rem;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+
+    .principle-title {
+      font-size: 1.35rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .principle-desc {
+      color: var(--text-muted);
+    }
+
+    /* SELECTED WORK */
+    .editorial-cases {
+      display: flex;
+      flex-direction: column;
+      gap: 6rem;
+    }
+
+    .case-story {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .case-story:nth-child(even) {
+      grid-template-columns: 1fr 1.2fr;
+    }
+
+    .case-story:nth-child(even) .case-content {
+      grid-column: 2;
+    }
+
+    .case-story:nth-child(even) .case-visual-column {
+      grid-column: 1;
+      grid-row: 1;
+    }
+
+    .case-content h3 {
+      font-size: 2.25rem;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+    }
+
+    .case-client {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      letter-spacing: 0.05em;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .case-metrics-banner {
+      background: var(--accent-light);
+      color: #5a4235;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      display: inline-block;
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+    }
+
+    .case-paragraph {
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+      font-size: 1.05rem;
+    }
+
+    .case-details-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-top: 2rem;
+      border-top: 1px solid var(--border-color);
+      padding-top: 1.5rem;
+    }
+
+    .detail-subhead {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .detail-text {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .case-visual-column {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .editorial-placeholder {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 2.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 280px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.005);
+    }
+
+    .placeholder-title {
+      font-family: var(--font-serif);
+      font-size: 1.35rem;
+      color: var(--text-color);
+      margin-bottom: 0.5rem;
+    }
+
+    .placeholder-subtitle {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+    }
+
+    .placeholder-wireframe {
+      border: 1px dashed var(--accent);
+      border-radius: 4px;
+      padding: 1.5rem;
+      text-align: center;
+      font-size: 0.75rem;
+      color: var(--accent);
+      background: rgba(142, 108, 88, 0.03);
+    }
+
+    /* PROCESS */
+    .process-grid {
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      gap: 4rem;
+    }
+
+    .process-left h3 {
+      font-size: 2rem;
+      line-height: 1.2;
+      margin-bottom: 1.5rem;
+    }
+
+    .process-steps-list {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .process-step {
+      display: grid;
+      grid-template-columns: 60px 1fr;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 1.5rem;
+    }
+
+    .process-step:last-child {
+      border-bottom: none;
+    }
+
+    .step-number {
+      font-family: var(--font-serif);
+      font-size: 1.5rem;
+      color: var(--accent);
+    }
+
+    .step-title {
+      font-size: 1.15rem;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+    }
+
+    .step-desc {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    /* CAREER HISTORY & TIMELINE */
+    .timeline-editorial {
+      display: flex;
+      flex-direction: column;
+      gap: 2.5rem;
+    }
+
+    .timeline-row {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      border-top: 1px solid var(--border-color);
+      padding-top: 2rem;
+    }
+
+    .timeline-period {
+      font-family: var(--font-serif);
+      font-size: 1.25rem;
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .timeline-detail h3 {
+      font-size: 1.35rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .timeline-org {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+    }
+
+    .timeline-text {
+      color: var(--text-muted);
+      max-width: 700px;
+    }
+
+    /* CONTACT / FOOTER */
+    .footer-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .footer-left h2 {
+      font-size: 3rem;
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+    }
+
+    .footer-left p {
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+      max-width: 420px;
+    }
+
+    .contact-details {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .contact-row-item {
+      display: grid;
+      grid-template-columns: 100px 1fr;
+    }
+
+    .contact-label {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .contact-value {
+      font-size: 1.1rem;
+    }
+
+    /* RESPONSIVE DESIGN */
+    @media (max-width: 1024px) {
+      section {
+        padding: 4rem 0;
+      }
+
+      h1.hero-title {
+        font-size: 2.75rem;
+      }
+
+      .case-story, .case-story:nth-child(even) {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+      }
+
+      .case-story:nth-child(even) .case-content {
+        grid-column: 1;
+      }
+
+      .case-story:nth-child(even) .case-visual-column {
+        grid-column: 1;
+      }
+
+      .process-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none; /* Keep it clean for tablet/mobile */
+      }
+
+      .principles-list {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      .timeline-row {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+      }
+
+      .footer-content {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <!-- HEADER -->
+    <header>
+      <a href="#" class="logo">Naman Sharma</a>
+      <ul class="nav-links">
+        <li><a href="#manifesto">Manifesto</a></li>
+        <li><a href="#selected-work">Selected Stories</a></li>
+        <li><a href="#process">Process</a></li>
+        <li><a href="#timeline">Timeline</a></li>
+        <li><a href="#contact">Write Naman</a></li>
+      </ul>
+    </header>
+
+    <!-- HERO -->
+    <section id="hero">
+      <div class="hero-block">
+        <span class="section-eyebrow">Design Thesis</span>
+        <h1 class="hero-title">
+          I design products users <em>love</em>, for brands that <em>care</em>. No jargon, just real business metrics.
+        </h1>
+        <p style="font-size: 1.2rem; color: var(--text-muted); max-width: 760px; line-height: 1.7;">
+          A self-taught Product & UX Designer working remotely from India. I translate complex user friction into elegant digital workflows, combining my Computer Science foundation with field-tested UX research.
+        </p>
+      </div>
+
+      <div class="hero-meta">
+        <div class="meta-item">
+          <div class="meta-title">Available for</div>
+          <div class="meta-value">Product UX Roles</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-title">Location</div>
+          <div class="meta-value">Worldwide Remote</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-title">Recent Partner</div>
+          <div class="meta-value">Asian Paints, Boost360</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SIGNATURE ELEMENT: MANIFESTO & TRANSLATOR -->
+    <section id="manifesto">
+      <span class="section-eyebrow">A Note on Style</span>
+      <div class="manifesto-box">
+        <h3 class="manifesto-title serif-text">The Anti-Jargon Converter</h3>
+        <p class="manifesto-text">
+          I hate buzzwords. I promise never to 
+          <span class="jargon-word" onclick="toggleJargon(this)">foster innovation through synergizing aesthetics
+            <span class="translation-tooltip">// Translation: I design layouts that work.</span>
+          </span> 
+          nor 
+          <span class="jargon-word" onclick="toggleJargon(this)">perpetuate narratives that transcend boundaries
+            <span class="translation-tooltip">// Translation: I help write clear copy.</span>
+          </span>. 
+          Problems are solved with functionality, not aesthetics. Once the problem is solved, going the extra mile creates delight. And humans remember delight.
+        </p>
+      </div>
+    </section>
+
+    <!-- PRINCIPLES -->
+    <section id="principles">
+      <span class="section-eyebrow">Work Ethos</span>
+      <div class="principles-list">
+        <div class="principle-item">
+          <div class="principle-num">01/</div>
+          <h3 class="principle-title">Consistency beats talent</h3>
+          <p class="principle-desc">Consistency always compounds into unimaginable results. I strive for daily improvement and meticulous commitment to visual craft.</p>
+        </div>
+        <div class="principle-item">
+          <div class="principle-num">02/</div>
+          <h3 class="principle-title">Let curiosity guide you</h3>
+          <p class="principle-desc">Understanding the "why" fuels my research. I maintain a wide library of scattered knowledge to connect dots in unexpected places.</p>
+        </div>
+        <div class="principle-item">
+          <div class="principle-num">03/</div>
+          <h3 class="principle-title">Form follows function</h3>
+          <p class="principle-desc">Products must first solve functional needs. Once the mechanics are sound, we introduce high-fidelity visual delight to capture the heart.</p>
+        </div>
+        <div class="principle-item">
+          <div class="principle-num">04/</div>
+          <h3 class="principle-title">Give a damn</h3>
+          <p class="principle-desc">I hold a founder's mindset with a high level of agency. Successful design is an outcome of deep cross-functional collaboration.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SELECTED STORIES -->
+    <section id="selected-work">
+      <span class="section-eyebrow">Selected Stories</span>
+      
+      <div class="editorial-cases">
+        
+        <!-- CASE STUDY 1: ASIAN PAINTS -->
+        <div class="case-story">
+          <div class="case-content">
+            <span class="case-client">Asian Paints // B2B Supply Chain</span>
+            <h3>Digitizing the dealer supply network</h3>
+            <div class="case-metrics-banner">20% Increase in online transaction volume</div>
+            
+            <p class="case-paragraph">
+              Distributors and dealers often faced immense friction ordering stock. I revamped the multi-platform dealer portal to simplify transactions, reduce sales-rep bottlenecks, and boost engagement.
+            </p>
+            
+            <p class="case-paragraph" style="font-size: 0.95rem;">
+              By introducing intelligent barcode scanning, personalized discount reminders, and size-based incentives directly in the UI, order speed dropped to under 10 seconds.
+            </p>
+
+            <div class="case-details-grid">
+              <div>
+                <div class="detail-subhead">Role & Scope</div>
+                <div class="detail-text">UX Research, Journey Audits, UI Design. Managed with Thence agency.</div>
+              </div>
+              <div>
+                <div class="detail-subhead">Core Discovery</div>
+                <div class="detail-text">Dealers requested simple layout abstractions with role-specific clearance.</div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="case-visual-column">
+            <div class="editorial-placeholder">
+              <div class="placeholder-title">Asian Paints Dealer Portal</div>
+              <div class="placeholder-subtitle">Simplified Catalog & Quick-Order Matrix</div>
+              <div class="placeholder-wireframe">
+                Layout Placeholder: Multi-tiered Catalog Grid
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CASE STUDY 2: BOOST360 -->
+        <div class="case-story">
+          <div class="case-visual-column">
+            <div class="editorial-placeholder">
+              <div class="placeholder-title">Boost360 App Setup Flow</div>
+              <div class="placeholder-subtitle">Visual Progress Engine & Social Proofing</div>
+              <div class="placeholder-wireframe">
+                Layout Placeholder: Horizontal Step-by-Step UI
+              </div>
+            </div>
+          </div>
+
+          <div class="case-content">
+            <span class="case-client">NowFloats // Boost360 onboarding</span>
+            <h3>Mitigating onboarding drop-offs</h3>
+            <div class="case-metrics-banner">60% Decrease in app uninstall rate</div>
+            
+            <p class="case-paragraph">
+              New users were uninstalling the mobile business portal app within 4 hours. By auditing acquisition funnels, I discovered a major mismatch between marketing promises and setup complexity.
+            </p>
+            
+            <p class="case-paragraph" style="font-size: 0.95rem;">
+              The solution involved restructuring onboarding into highly visual quick wins—allowing small business owners to build their website in under two minutes during signup.
+            </p>
+
+            <div class="case-details-grid">
+              <div>
+                <div class="detail-subhead">Role & Scope</div>
+                <div class="detail-text">UX Audits, Usability Testing, Visual Flows. Done at Thence.</div>
+              </div>
+              <div>
+                <div class="detail-subhead">Core Discovery</div>
+                <div class="detail-text">Eliminated non-mandatory steps to give users immediate setup wins.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CASE STUDY 3: WIKIPEDIA -->
+        <div class="case-story">
+          <div class="case-content">
+            <span class="case-client">Wikimedia Foundation // Field Research</span>
+            <h3>Understanding KaiOS/JioPhone adopters</h3>
+            <div class="case-metrics-banner">25 In-depth Field Interviews across India</div>
+            
+            <p class="case-paragraph">
+              JioPhone users wanted smart phone advantages (voice commands, cheap repairs, battery life) on keypad-driven feature phones. We audited reading behaviors on small screens for Wikipedia.
+            </p>
+
+            <p class="case-paragraph" style="font-size: 0.95rem;">
+              Key guidelines delivered included voice user interface search, regional translations prioritizing English digits, index tables, and media formatting guidelines optimized for 2.4" screens.
+            </p>
+
+            <div class="case-details-grid">
+              <div>
+                <div class="detail-subhead">Role & Scope</div>
+                <div class="detail-text">Field Interviews, Personas, Journey Maps. Done at Hureo.</div>
+              </div>
+              <div>
+                <div class="detail-subhead">Core Discovery</div>
+                <div class="detail-text">Users prefer video and short paragraphs over massive text blocks on KaiOS.</div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="case-visual-column">
+            <div class="editorial-placeholder">
+              <div class="placeholder-title">Wikipedia KaiOS Concept</div>
+              <div class="placeholder-subtitle">Optimized Article View & Index Component</div>
+              <div class="placeholder-wireframe">
+                Layout Placeholder: Small screen VUI Interface
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- PROCESS & STRATEGY -->
+    <section id="process">
+      <span class="section-eyebrow">Methodology</span>
+      <div class="process-grid">
+        <div class="process-left">
+          <h3>The 6-step iteration pipeline.</h3>
+          <p style="color: var(--text-muted);">A structured feedback loop designed to align product targets with engineering constraints.</p>
+        </div>
+        <div class="process-right">
+          <div class="process-steps-list">
+            <div class="process-step">
+              <div class="step-number">01</div>
+              <div>
+                <div class="step-title">Research</div>
+                <div class="step-desc">Diving into the client brief, interviewing users, and building competitive matrices.</div>
+              </div>
+            </div>
+            <div class="process-step">
+              <div class="step-number">02</div>
+              <div>
+                <div class="step-title">User Journey Mapping</div>
+                <div class="step-desc">Tracing step-by-step logic, personas, and expectations to reveal hidden user friction.</div>
+              </div>
+            </div>
+            <div class="process-step">
+              <div class="step-number">03</div>
+              <div>
+                <div class="step-title">Design Exploration</div>
+                <div class="step-desc">Brainstorming wide wireframe solutions, mapping flows, and testing early layouts.</div>
+              </div>
+            </div>
+            <div class="process-step">
+              <div class="step-number">04</div>
+              <div>
+                <div class="step-title">Refinement</div>
+                <div class="step-desc">Polishing type scales, spacing tokens, visual contrast, and high-fidelity interaction guidelines.</div>
+              </div>
+            </div>
+            <div class="process-step">
+              <div class="step-number">05</div>
+              <div>
+                <div class="step-title">Handoff</div>
+                <div class="step-desc">Providing structured specifications to engineering and collaborating to enforce layout integrity.</div>
+              </div>
+            </div>
+            <div class="process-step">
+              <div class="step-number">06</div>
+              <div>
+                <div class="step-title">Monitoring</div>
+                <div class="step-desc">Tracking analytics post-launch to continually polish conversion rates and remove friction.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TIMELINE -->
+    <section id="timeline">
+      <span class="section-eyebrow">Work History</span>
+      
+      <div class="timeline-editorial">
+        <div class="timeline-row">
+          <div class="timeline-period">2022 — Present</div>
+          <div class="timeline-detail">
+            <h3>Independent Product & UX Consultant</h3>
+            <div class="timeline-org">Worldwide Remote</div>
+            <div class="timeline-text">
+              Designed 0-1 mobile apps for Gadivan, redesigned the LetsConnect platform to secure 4.8 stars on the Play Store, and revamp web guidelines for Turns to aid a $500K pre-seed round.
+            </div>
+          </div>
+        </div>
+        
+        <div class="timeline-row">
+          <div class="timeline-period">2021 — 2022</div>
+          <div class="timeline-detail">
+            <h3>UX Designer</h3>
+            <div class="timeline-org">Thence Agency</div>
+            <div class="timeline-text">
+              Revamped the Asian Paints B2B order portal, streamlined the onboarding engine for Boost360, and refreshed the Shiprocket marketing platform. Mentored junior design interns.
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-row">
+          <div class="timeline-period">2019 — 2020</div>
+          <div class="timeline-detail">
+            <h3>UX Research Intern</h3>
+            <div class="timeline-org">Hureo Agency</div>
+            <div class="timeline-text">
+              Conducted direct, in-person usability interviews for the Wikimedia Foundation, auditing mobile accessibility features across low-spec KaiOS JioPhones.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT / FOOTER -->
+    <section id="contact" style="border-bottom: none; padding-bottom: 5rem;">
+      <span class="section-eyebrow">Connect</span>
+      <div class="footer-content">
+        <div class="footer-left">
+          <h2>Let's build something honest.</h2>
+          <p>
+            Currently open to full-time roles and high-impact consulting engagements worldwide. 
+          </p>
+        </div>
+        <div class="footer-right">
+          <div class="contact-details">
+            <div class="contact-row-item">
+              <span class="contact-label">Email</span>
+              <span class="contact-value"><a href="mailto:madebynaman@gmail.com">madebynaman@gmail.com</a></span>
+            </div>
+            <div class="contact-row-item">
+              <span class="contact-label">Phone</span>
+              <span class="contact-value">+91 82083 69219</span>
+            </div>
+            <div class="contact-row-item">
+              <span class="contact-label">Location</span>
+              <span class="contact-value">Jaipur, India (Remote)</span>
+            </div>
+            <div class="contact-row-item">
+              <span class="contact-label">Network</span>
+              <span class="contact-value">
+                <a href="https://www.linkedin.com/in/madebynaman/" target="_blank">LinkedIn</a> &bull; 
+                <a href="https://twitter.com" target="_blank">Twitter</a>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    // JARGON TOGGLER
+    function toggleJargon(el) {
+      const tooltip = el.querySelector('.translation-tooltip');
+      if (tooltip) {
+        // Simple toggle visual opacity
+        if (tooltip.style.display === 'none') {
+          tooltip.style.display = 'block';
+        } else {
+          tooltip.style.display = 'none';
+        }
+      }
+    }
+  </script>
+</body>
+</html>
