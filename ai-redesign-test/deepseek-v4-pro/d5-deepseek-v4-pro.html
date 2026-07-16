@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Naman Sharma — Product / UX Designer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { background:#FFFFFF; color:#2B2B2B; font-family:'EB Garamond',Georgia,'Times New Roman',serif; font-weight:400; line-height:1.5; -webkit-font-smoothing:antialiased; }
+::selection { background:#E5E0D8; color:#2B2B2B; }
+
+h1, h2, h3 { font-weight:500; letter-spacing:-0.01em; }
+h1 { font-size:clamp(2.8rem, 6vw, 5rem); line-height:1.04; }
+h2 { font-size:2.4rem; line-height:1.15; }
+h3 { font-size:1.5rem; line-height:1.2; }
+
+.sans { font-family:'Outfit',system-ui,-apple-system,sans-serif; letter-spacing:0; }
+
+.gallery { max-width:1100px; margin:0 auto; padding:0 2rem; }
+
+/* Hero wall */
+.hero-wall { padding:5rem 0 4rem; display:flex; flex-direction:column; align-items:flex-start; }
+.hero-wall h1 { max-width:700px; margin-bottom:1.5rem; }
+.hero-wall .hero-tagline { font-size:1.15rem; color:#8C7A5E; max-width:500px; font-style:italic; }
+.hero-wall .hero-detail { margin-top:3rem; font-family:'Outfit',system-ui,sans-serif; font-size:0.8rem; color:#8C7A5E; text-transform:uppercase; letter-spacing:0.12em; }
+.hero-wall .hero-detail span { color:#2B2B2B; font-weight:500; }
+
+/* Exhibition piece */
+.exhibit { margin:5rem 0; }
+.exhibit .ex-frame { width:100%; background:#F5F2ED; min-height:360px; display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden; }
+.exhibit .ex-frame .ex-caption-inner { font-family:'Outfit',system-ui,sans-serif; font-size:0.8rem; color:#8C7A5E; text-transform:uppercase; letter-spacing:0.1em; padding:0.75rem 1.5rem; border:1px solid #D8D0C4; background:rgba(255,255,255,0.85); }
+.exhibit .ex-frame .ex-corner-tl,
+.exhibit .ex-frame .ex-corner-tr,
+.exhibit .ex-frame .ex-corner-bl,
+.exhibit .ex-frame .ex-corner-br { position:absolute; width:24px; height:24px; border-color:#D8D0C4; z-index:1; }
+.exhibit .ex-frame .ex-corner-tl { top:1rem; left:1rem; border-top:1px solid; border-left:1px solid; }
+.exhibit .ex-frame .ex-corner-tr { top:1rem; right:1rem; border-top:1px solid; border-right:1px solid; }
+.exhibit .ex-frame .ex-corner-bl { bottom:1rem; left:1rem; border-bottom:1px solid; border-left:1px solid; }
+.exhibit .ex-frame .ex-corner-br { bottom:1rem; right:1rem; border-bottom:1px solid; border-right:1px solid; }
+
+/* Museum label */
+.object-label { margin-top:2rem; padding-left:0; max-width:500px; }
+.object-label .ol-artist { font-family:'Outfit',system-ui,sans-serif; font-size:0.7rem; color:#8C7A5E; text-transform:uppercase; letter-spacing:0.15em; margin-bottom:0.5rem; font-weight:600; }
+.object-label h3 { margin-bottom:0.3rem; }
+.object-label .ol-date { font-size:0.95rem; color:#8C7A5E; font-style:italic; margin-bottom:0.3rem; }
+.object-label .ol-medium { font-family:'Outfit',system-ui,sans-serif; font-size:0.75rem; color:#8C7A5E; margin-bottom:0.75rem; }
+.object-label .ol-description { font-size:1rem; color:#4A4A4A; line-height:1.55; }
+.object-label .ol-impact { font-family:'Outfit',system-ui,sans-serif; font-size:0.8rem; color:#2B2B2B; font-weight:500; margin-top:0.6rem; }
+
+/* Gallery stats */
+.gallery-stats { display:flex; gap:4rem; padding:3rem 0; border-top:1px solid #E5E0D8; border-bottom:1px solid #E5E0D8; margin:4rem 0; }
+.gallery-stats .gs-item { }
+.gallery-stats .gs-num { font-size:2.5rem; font-weight:500; color:#2B2B2B; line-height:1; }
+.gallery-stats .gs-label { font-family:'Outfit',system-ui,sans-serif; font-size:0.7rem; color:#8C7A5E; text-transform:uppercase; letter-spacing:0.1em; margin-top:0.4rem; }
+
+/* Wall text */
+.wall-text { max-width:600px; margin:4rem 0; }
+.wall-text .wt-heading { font-family:'Outfit',system-ui,sans-serif; font-size:0.7rem; color:#8C7A5E; text-transform:uppercase; letter-spacing:0.15em; font-weight:600; margin-bottom:1.5rem; }
+.wall-text p { font-size:1.05rem; line-height:1.6; color:#4A4A4A; margin-bottom:1.25rem; }
+
+/* Process */
+.process-gallery { margin:3rem 0; }
+.process-gallery .pg-item { display:grid; grid-template-columns:3rem 1fr; gap:1rem; padding:1.5rem 0; border-bottom:1px solid #F0EDE8; align-items:start; }
+.process-gallery .pg-item:last-child { border-bottom:none; }
+.process-gallery .pg-num { font-family:'Outfit',system-ui,sans-serif; font-size:0.75rem; color:#8C7A5E; font-weight:500; padding-top:0.1rem; }
+.process-gallery .pg-name { font-size:1.1rem; font-weight:500; margin-bottom:0.2rem; }
+.process-gallery .pg-desc { font-size:0.95rem; color:#6B6258; line-height:1.55; }
+
+/* Principles */
+.principle-text { margin:1.5rem 0; max-width:550px; }
+.principle-text .pt-name { font-size:1.2rem; font-weight:500; margin-bottom:0.3rem; }
+.principle-text .pt-desc { font-size:0.95rem; color:#5A5048; line-height:1.55; }
+
+/* Capabilities */
+.cap-columns { display:grid; grid-template-columns:1fr 1fr; gap:3rem; margin:2rem 0; }
+.cap-columns .cc-block { }
+.cap-columns .cc-title { font-family:'Outfit',system-ui,sans-serif; font-size:0.7rem; color:#8C7A5E; text-transform:uppercase; letter-spacing:0.12em; font-weight:600; margin-bottom:1rem; }
+.cap-columns .cc-list { list-style:none; }
+.cap-columns .cc-list li { font-family:'EB Garamond',Georgia,serif; font-size:0.95rem; color:#4A4A4A; padding:0.3rem 0; }
+
+/* Contact */
+.contact-gallery { text-align:center; padding:5rem 0 4rem; }
+.contact-gallery h2 { margin-bottom:1rem; }
+.contact-gallery .cg-sub { font-size:1.05rem; color:#8C7A5E; font-style:italic; margin-bottom:2rem; }
+.contact-gallery .cg-links { display:flex; justify-content:center; gap:2.5rem; flex-wrap:wrap; }
+.contact-gallery .cg-links a { font-family:'Outfit',system-ui,sans-serif; font-size:0.9rem; color:#2B2B2B; text-decoration:none; border-bottom:1px solid #E5E0D8; padding-bottom:0.15rem; transition:border-color 0.2s; }
+.contact-gallery .cg-links a:hover { border-color:#8C7A5E; }
+
+footer { text-align:center; padding:2rem; font-family:'Outfit',system-ui,sans-serif; font-size:0.7rem; color:#8C7A5E; text-transform:uppercase; letter-spacing:0.1em; }
+
+/* Gallery divider */
+.gallery-divider { width:100%; height:1px; background:#E5E0D8; margin:1rem 0 4rem; }
+</style>
+</head>
+<body>
+
+<div class="gallery">
+
+  <div class="hero-wall">
+    <h1>Naman Sharma designs products that people actually want to use.</h1>
+    <div class="hero-tagline">Product / UX Designer &mdash; Jaipur, India &mdash; Worldwide Remote</div>
+    <div class="hero-detail"><span>3+ years</span> in UX practice &middot; <span>7+ years</span> in design &middot; <span>Computer Science</span> background &middot; <span>Self-taught</span></div>
+  </div>
+
+  <div class="gallery-divider"></div>
+
+  <div class="gallery-stats">
+    <div class="gs-item"><div class="gs-num">3+</div><div class="gs-label">Years in UX</div></div>
+    <div class="gs-item"><div class="gs-num">7+</div><div class="gs-label">Years Designing</div></div>
+    <div class="gs-item"><div class="gs-num">17+</div><div class="gs-label">Clients</div></div>
+    <div class="gs-item"><div class="gs-num">4.8&#9733;</div><div class="gs-label">Play Store</div></div>
+  </div>
+
+  <div class="wall-text" style="margin-top:5rem;">
+    <div class="wt-heading">Selected Work</div>
+    <p>Four case studies spanning B2B portals, consumer onboarding, field research, and multi-client product design. Each project is a real, shipped solution with measured outcomes.</p>
+  </div>
+
+  <div class="exhibit">
+    <div class="ex-frame">
+      <div class="ex-corner-tl"></div>
+      <div class="ex-corner-tr"></div>
+      <div class="ex-corner-bl"></div>
+      <div class="ex-corner-br"></div>
+      <div class="ex-caption-inner">Case-study hero — Asian Paints dealer portal dashboard</div>
+    </div>
+    <div class="object-label">
+      <div class="ol-artist">Thence &middot; 2021</div>
+      <h3>Asian Paints Dealer Portal</h3>
+      <div class="ol-date">B2B multi-platform redesign</div>
+      <div class="ol-medium">UX Research, UX Design, UI Design</div>
+      <div class="ol-description">End-to-end UX redesign of the dealer portal with intelligent product recommendations, barcode scanning for sub-10-second ordering, and personalized discount promotions. Reduced dealer-salesman interaction costs while increasing transaction volumes.</div>
+      <div class="ol-impact">20% increase in online transaction volume</div>
+    </div>
+  </div>
+
+  <div class="exhibit">
+    <div class="ex-frame">
+      <div class="ex-corner-tl"></div>
+      <div class="ex-corner-tr"></div>
+      <div class="ex-corner-bl"></div>
+      <div class="ex-corner-br"></div>
+      <div class="ex-caption-inner">Project mockup — Boost360 onboarding flow screens</div>
+    </div>
+    <div class="object-label">
+      <div class="ol-artist">Thence &middot; 2021</div>
+      <h3>Boost360 Onboarding Redesign</h3>
+      <div class="ol-date">Consumer app conversion optimization</div>
+      <div class="ol-medium">UX Research, UX Design, Usability Testing</div>
+      <div class="ol-description">Diagnosed a 20% signup success rate through structured hypothesis testing. Root causes: poor signup UX, ad-to-app mismatch, misaligned feature communication. Redesigned onboarding to be visual, trust-building, and value-demonstrating. Validated through usability testing.</div>
+      <div class="ol-impact">60% decrease in app uninstall rate</div>
+    </div>
+  </div>
+
+  <div class="exhibit">
+    <div class="ex-frame">
+      <div class="ex-corner-tl"></div>
+      <div class="ex-corner-tr"></div>
+      <div class="ex-corner-bl"></div>
+      <div class="ex-corner-br"></div>
+      <div class="ex-caption-inner">Research artifacts — Persona cards &amp; user journey maps</div>
+    </div>
+    <div class="object-label">
+      <div class="ol-artist">Hureo / Wikimedia Foundation &middot; 2020</div>
+      <h3>Wikipedia KaiOS User Research</h3>
+      <div class="ol-date">Field research in emerging markets</div>
+      <div class="ol-medium">UX Research, Personas, User Journey Mapping</div>
+      <div class="ol-description">In-person field research with 25 JioPhone users across Pune, Mumbai, and Delhi. Uncovered motivations for smart feature phone adoption, Wikipedia awareness gaps, and information consumption behaviors. Delivered personas, ecosystem maps, and research report.</div>
+      <div class="ol-impact">25 participants across 3 cities</div>
+    </div>
+  </div>
+
+  <div class="exhibit">
+    <div class="ex-frame">
+      <div class="ex-corner-tl"></div>
+      <div class="ex-corner-tr"></div>
+      <div class="ex-corner-bl"></div>
+      <div class="ex-corner-br"></div>
+      <div class="ex-caption-inner">Project reel — Turns, Gadivan, LetsConnect &amp; more</div>
+    </div>
+    <div class="object-label">
+      <div class="ol-artist">Independent &middot; 2021&ndash;2023</div>
+      <h3>Freelance Projects</h3>
+      <div class="ol-date">Multi-client 0-to-1 product design</div>
+      <div class="ol-medium">UX Design, UI Design, Web Design, Web Development</div>
+      <div class="ol-description">Multiple products taken from zero to one across web and mobile. Turns: redesign + design system helped raise $500K pre-seed. Gadivan: end-to-end multi-app product design. LetsConnect: UX redesign led to 4.8 stars on Play Store. 17+ clients across industries.</div>
+      <div class="ol-impact">$500K raised (Turns) &middot; 4.8 stars (LetsConnect)</div>
+    </div>
+  </div>
+
+  <div class="gallery-divider"></div>
+
+  <div class="wall-text">
+    <div class="wt-heading">Process</div>
+    <p>Six stages. Every project moves through this cycle — not always linearly, but always completely. The same rigor whether the canvas is a B2B portal or a consumer onboarding flow.</p>
+  </div>
+
+  <div class="process-gallery">
+    <div class="pg-item">
+      <div class="pg-num">01</div>
+      <div>
+        <div class="pg-name">Research</div>
+        <div class="pg-desc">Understanding the problem, the users, the competitive landscape. User interviews, heuristic evaluation, competitive analysis.</div>
+      </div>
+    </div>
+    <div class="pg-item">
+      <div class="pg-num">02</div>
+      <div>
+        <div class="pg-name">User Journey</div>
+        <div class="pg-desc">Diving deep into journeys, mapping personas, uncovering the insights that shape the solution.</div>
+      </div>
+    </div>
+    <div class="pg-item">
+      <div class="pg-num">03</div>
+      <div>
+        <div class="pg-name">Design Exploration</div>
+        <div class="pg-desc">Going wide. Multiple solution paths, rapid prototyping, testing, iterating with product and engineering.</div>
+      </div>
+    </div>
+    <div class="pg-item">
+      <div class="pg-num">04</div>
+      <div>
+        <div class="pg-name">Design Refinement</div>
+        <div class="pg-desc">Polishing the chosen direction. Visual design, documentation, preparing every screen for handoff.</div>
+      </div>
+    </div>
+    <div class="pg-item">
+      <div class="pg-num">05</div>
+      <div>
+        <div class="pg-name">Handoff</div>
+        <div class="pg-desc">Working alongside engineering to ensure the design is implemented as intended.</div>
+      </div>
+    </div>
+    <div class="pg-item">
+      <div class="pg-num">06</div>
+      <div>
+        <div class="pg-name">Monitoring</div>
+        <div class="pg-desc">Tracking metrics post-launch to verify impact. Shipping is the midpoint.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="gallery-divider"></div>
+
+  <div class="wall-text">
+    <div class="wt-heading">Operating Principles</div>
+    <p>Four principles that guide the work when the brief is ambiguous and the stakes are real.</p>
+  </div>
+
+  <div class="principle-text">
+    <div class="pt-name">Consistency beats talent.</div>
+    <div class="pt-desc">Consistent effort always compounds into unimaginable results. I strive for consistency and constant improvement — everyday. It's the single variable I can control.</div>
+  </div>
+  <div class="principle-text">
+    <div class="pt-name">Form follows function.</div>
+    <div class="pt-desc">Problems are solved with functionality, not aesthetics. But once the problem is solved, going the extra mile and designing beautiful products creates delight. Humans remember delight.</div>
+  </div>
+  <div class="principle-text">
+    <div class="pt-name">Let curiosity guide you.</div>
+    <div class="pt-desc">I know a little about a lot of things. It helps me connect dots between scattered information. Every project is a journey of discovery and learning.</div>
+  </div>
+  <div class="principle-text">
+    <div class="pt-name">Give a damn.</div>
+    <div class="pt-desc">Founder's mindset: take ownership, collaborate effectively, go the extra mile. Success is a shared responsibility.</div>
+  </div>
+
+  <div class="gallery-divider"></div>
+
+  <div class="wall-text">
+    <div class="wt-heading">Capabilities</div>
+  </div>
+
+  <div class="cap-columns">
+    <div class="cc-block">
+      <div class="cc-title">Hard Skills</div>
+      <ul class="cc-list">
+        <li>User Experience Design</li>
+        <li>User Research &amp; Usability Testing</li>
+        <li>Wireframing &amp; Prototyping</li>
+        <li>Visual / UI Design</li>
+        <li>Responsive Design</li>
+        <li>Branding &amp; Interdisciplinary Design</li>
+        <li>No-code Development (Webflow, Framer)</li>
+      </ul>
+    </div>
+    <div class="cc-block">
+      <div class="cc-title">Tools &amp; Traits</div>
+      <ul class="cc-list">
+        <li>Figma, FigJam, Miro</li>
+        <li>Adobe XD, Illustrator, Photoshop</li>
+        <li>Framer, Webflow, Protopie</li>
+        <li style="margin-top:0.75rem;">Self-starter, no drama</li>
+        <li>Entrepreneurial mindset</li>
+        <li>Collaborates with product &amp; engineering</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="contact-gallery">
+    <h2>Let's talk about your product.</h2>
+    <div class="cg-sub">Based in Jaipur. Working worldwide. Quick to respond.</div>
+    <div class="cg-links">
+      <a href="mailto:madebynaman@gmail.com">madebynaman@gmail.com</a>
+      <a href="https://www.linkedin.com/in/madebynaman/">LinkedIn</a>
+      <a href="https://madebynaman.com">madebynaman.com</a>
+    </div>
+  </div>
+
+  <footer>
+    Naman Sharma &middot; Product / UX Designer &middot; Jaipur, India &middot; Worldwide Remote
+  </footer>
+
+</div>
+
+</body>
+</html>

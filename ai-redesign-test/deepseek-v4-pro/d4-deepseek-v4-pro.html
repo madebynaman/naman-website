@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>naman.sh — Product / UX Designer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { background:#0D1117; color:#E6EDF3; font-family:'Geist Mono','SF Mono','Fira Code','Cascadia Code',monospace; font-weight:400; line-height:1.65; -webkit-font-smoothing:antialiased; font-size:0.9rem; }
+::selection { background:#00FF88; color:#0D1117; }
+
+a { color:#00FF88; text-decoration:none; border-bottom:1px solid #2A3040; transition:border-color 0.2s; }
+a:hover { border-color:#00FF88; }
+code, pre { font-family:inherit; }
+
+.doc { max-width:680px; margin:0 auto; padding:2rem 1.5rem 4rem; }
+
+/* Comment lines */
+.comment { color:#6E7681; font-weight:300; font-style:italic; }
+.hr-comment { color:#6E7681; font-weight:300; margin:2.5rem 0 1.5rem; white-space:pre; line-height:1; }
+.hr-comment::before { content:'// ----------------------------------------------------------------------------'; display:block; }
+
+/* Terminal block */
+.terminal { background:#161B22; border:1px solid #2A3040; border-radius:4px; padding:2rem; margin:2rem 0; position:relative; }
+.terminal::before { content:'\25CF \25CF \25CF'; position:absolute; top:0.75rem; left:1rem; font-size:0.5rem; color:#6E7681; letter-spacing:0.3rem; }
+.terminal .prompt { color:#FFB347; }
+.terminal .cursor { display:inline-block; width:8px; height:1em; background:#00FF88; vertical-align:text-bottom; margin-left:2px; animation:blink 1s step-end infinite; }
+@keyframes blink { 50% { opacity:0; } }
+.terminal .output { color:#00FF88; }
+
+/* Headings */
+.md-h2 { font-weight:600; font-size:1.1rem; color:#00FF88; margin:2.5rem 0 1rem; }
+.md-h2::before { content:'## '; color:#6E7681; font-weight:300; }
+.md-h3 { font-weight:500; font-size:0.95rem; color:#FFB347; margin:1.5rem 0 0.5rem; }
+.md-h3::before { content:'### '; color:#6E7681; font-weight:300; }
+.md-h4 { font-weight:500; font-size:0.9rem; color:#E6EDF3; margin:1.25rem 0 0.3rem; }
+.md-h4::before { content:'#### '; color:#6E7681; font-weight:300; }
+
+/* Hero */
+.hero-term { padding:1.5rem 0; }
+
+/* Entry blocks */
+.entry { background:#161B22; border-left:2px solid #00FF88; padding:1.25rem 1.5rem; margin:1.25rem 0; }
+.entry .e-meta { color:#6E7681; font-size:0.78rem; font-weight:300; margin-bottom:0.5rem; }
+.entry .e-title { color:#FFB347; font-weight:600; font-size:0.95rem; margin-bottom:0.5rem; }
+.entry .e-body { color:#C0C8D4; line-height:1.6; }
+.entry .e-impact { color:#00FF88; font-size:0.82rem; margin-top:0.5rem; }
+.entry .e-tags { display:flex; gap:0.75rem; flex-wrap:wrap; margin-top:0.5rem; }
+.entry .e-tag { font-size:0.7rem; color:#6E7681; }
+.entry .e-tag::before { content:'['; }
+.entry .e-tag::after { content:']'; }
+
+/* Data list */
+.data-list { list-style:none; }
+.data-list li { padding:0.3rem 0; color:#C0C8D4; }
+.data-list li::before { content:'- '; color:#6E7681; }
+.data-list .dl-key { color:#FFB347; font-weight:500; }
+.data-list .dl-key::after { content:': '; color:#6E7681; }
+
+/* Table */
+.md-table { width:100%; border-collapse:collapse; margin:1rem 0; }
+.md-table td { padding:0.5rem 0.75rem; border-bottom:1px solid #1C2230; font-size:0.82rem; vertical-align:top; }
+.md-table td:first-child { color:#FFB347; font-weight:500; white-space:nowrap; width:120px; padding-right:1.5rem; }
+
+/* Inline code */
+.inline-code { color:#FFB347; }
+
+/* Contact */
+.contact-block { background:#161B22; border:1px solid #2A3040; border-radius:4px; padding:2rem; text-align:center; margin:2rem 0; }
+.contact-block .cb-title { color:#00FF88; font-size:1rem; font-weight:600; margin-bottom:0.75rem; }
+.contact-block .cb-links { display:flex; justify-content:center; gap:2rem; flex-wrap:wrap; }
+
+/* Quote */
+blockquote { border-left:2px solid #FFB347; padding-left:1rem; margin:1.25rem 0; color:#A0A8B4; font-style:italic; }
+blockquote::before { content:'> '; color:#6E7681; font-style:normal; }
+
+/* Stats row */
+.stats-row { display:flex; gap:2rem; margin:1.5rem 0; flex-wrap:wrap; }
+.stats-row .sr-num { color:#00FF88; font-size:1.3rem; font-weight:600; }
+.stats-row .sr-label { color:#6E7681; font-size:0.75rem; }
+
+/* Footer */
+.doc-footer { text-align:center; padding:2rem 0; color:#6E7681; font-size:0.75rem; }
+.doc-footer::before { content:'// EOF'; display:block; margin-bottom:0.5rem; }
+
+/* Process steps */
+.step-line { padding:0.4rem 0; }
+.step-line .step-n { color:#00FF88; font-weight:500; }
+.step-line .step-name { color:#FFB347; font-weight:500; }
+.step-line .step-desc { color:#C0C8D4; }
+
+/* Principle */
+.principle { padding:0.75rem 0; border-bottom:1px solid #1C2230; }
+.principle:last-child { border-bottom:none; }
+.principle .p-name { color:#FFB347; font-weight:500; margin-bottom:0.2rem; }
+.principle .p-desc { color:#A0A8B4; font-size:0.85rem; line-height:1.55; }
+</style>
+</head>
+<body>
+
+<div class="doc">
+
+  <div class="hero-term">
+    <div class="terminal">
+      <span class="prompt">naman@portfolio:~$</span> cat intro.txt
+      <br><br>
+      <span class="output">Naman Sharma</span><br>
+      <span class="output">Product / UX Designer</span><br>
+      <span class="output">Jaipur, India &mdash; Worldwide Remote</span>
+      <br>
+      <span class="prompt">naman@portfolio:~$</span> whoami --verbose
+      <br><br>
+      <span class="output">I design products that users love, for brands that care.</span><br>
+      <span class="output">That's it. No jargon, no buzzwords, no "synergizing aesthetics."</span><br>
+      <span class="output">Self-taught designer. Computer science background.</span><br>
+      <span class="output">3 years in UX practice. 7+ years in design overall.</span><br>
+      <span class="output">I take products from zero to one and redesign broken</span><br>
+      <span class="output">experiences into measured outcomes.</span>
+      <br>
+      <span class="prompt">naman@portfolio:~$</span> <span class="cursor"></span>
+    </div>
+  </div>
+
+  <div class="stats-row">
+    <div>
+      <div class="sr-num">3+</div>
+      <div class="sr-label">years in UX</div>
+    </div>
+    <div>
+      <div class="sr-num">7+</div>
+      <div class="sr-label">years designing</div>
+    </div>
+    <div>
+      <div class="sr-num">17+</div>
+      <div class="sr-label">clients served</div>
+    </div>
+    <div>
+      <div class="sr-num">4.8&#9733;</div>
+      <div class="sr-label">play store</div>
+    </div>
+  </div>
+
+  <div class="hr-comment"></div>
+
+  <div class="md-h2">selected-work</div>
+
+  <p class="comment">// Four case studies. Real clients, real outcomes, real metrics.</p>
+
+  <div class="entry">
+    <div class="e-meta">Thence / 2021 / UX Research, UX Design, UI Design</div>
+    <div class="e-title">Asian Paints Dealer Portal</div>
+    <div class="e-body">End-to-end UX redesign of the multi-platform dealer portal. Introduced intelligent product recommendations, barcode scanning for sub-10-second ordering, personalized discount promotions. Reduced dealer-salesman interaction costs while increasing transaction volumes.</div>
+    <div class="e-impact">+20% online transaction volume | increased engagement & loyalty</div>
+    <div class="e-tags"><span class="e-tag">B2B Portal</span><span class="e-tag">Multi-platform</span><span class="e-tag">Heuristic Evaluation</span><span class="e-tag">Supply Chain</span></div>
+  </div>
+
+  <div class="entry">
+    <div class="e-meta">Thence / 2021 / UX Research, UX Design, Usability Testing</div>
+    <div class="e-title">Boost360 Onboarding Redesign</div>
+    <div class="e-body">Diagnosed a 20% signup success rate through hypothesis-driven research. Root causes: poor signup UX, ad-to-app expectation mismatch, misaligned feature communication. Redesigned onboarding to be visual, trust-building, value-demonstrating. Validated through usability testing with real users.</div>
+    <div class="e-impact">-60% uninstall rate | dramatic reduction in signup time</div>
+    <div class="e-tags"><span class="e-tag">Consumer App</span><span class="e-tag">Onboarding</span><span class="e-tag">Usability Testing</span><span class="e-tag">Conversion</span></div>
+  </div>
+
+  <div class="entry">
+    <div class="e-meta">Hureo / Wikimedia Foundation / 2020 / UX Research</div>
+    <div class="e-title">Wikipedia KaiOS User Research</div>
+    <div class="e-body">In-person field research across Pune, Mumbai, Delhi. 25 JioPhone (KaiOS) users interviewed and observed. Uncovered motivations for smart feature phone adoption, Wikipedia awareness gaps, and information consumption behaviors. Delivered personas, journey maps, ecosystem maps, and research report to Wikimedia Foundation.</div>
+    <div class="e-impact">25 participants / 3 cities / influenced product strategy for emerging markets</div>
+    <div class="e-tags"><span class="e-tag">Field Research</span><span class="e-tag">KaiOS</span><span class="e-tag">Emerging Markets</span><span class="e-tag">Personas</span></div>
+  </div>
+
+  <div class="entry">
+    <div class="e-meta">Independent / 2021-2023 / UX Design, UI Design, Web Development</div>
+    <div class="e-title">Freelance Projects</div>
+    <div class="e-body">Multiple products taken from zero to one. Turns: website redesign + design system helped raise $500K pre-seed. Gadivan: end-to-end multi-app product design. LetsConnect: UX redesign based on user feedback led to 4.8 stars on Play Store. 17+ total clients across industries.</div>
+    <div class="e-impact">$500K raised (Turns) | 4.8 stars (LetsConnect) | 0->1 delivery (Gadivan)</div>
+    <div class="e-tags"><span class="e-tag">0-to-1</span><span class="e-tag">Design Systems</span><span class="e-tag">Web & Mobile</span><span class="e-tag">Multi-client</span></div>
+  </div>
+
+  <div class="hr-comment"></div>
+
+  <div class="md-h2">process</div>
+
+  <p class="comment">// Six stages. Not always linear, always complete.</p>
+
+  <div class="entry" style="border-left-color:#FFB347;">
+    <div class="step-line"><span class="step-n">[01]</span> <span class="step-name">Research</span></div>
+    <div class="step-desc" style="margin-top:0.3rem;">Understanding the problem, the users, the market. Competitive analysis, user interviews, heuristic evaluation.</div>
+  </div>
+  <div class="entry" style="border-left-color:#FFB347;">
+    <div class="step-line"><span class="step-n">[02]</span> <span class="step-name">User Journey</span></div>
+    <div class="step-desc" style="margin-top:0.3rem;">Mapping personas, decision flows, and pain points. Uncovering insights that will shape the solution direction.</div>
+  </div>
+  <div class="entry" style="border-left-color:#FFB347;">
+    <div class="step-line"><span class="step-n">[03]</span> <span class="step-name">Design Exploration</span></div>
+    <div class="step-desc" style="margin-top:0.3rem;">Going wide: multiple solutions, rapid prototyping, testing, iterating with product and engineering.</div>
+  </div>
+  <div class="entry" style="border-left-color:#FFB347;">
+    <div class="step-line"><span class="step-n">[04]</span> <span class="step-name">Design Refinement</span></div>
+    <div class="step-desc" style="margin-top:0.3rem;">Polishing the chosen direction. Visual design, documentation, preparing for handoff.</div>
+  </div>
+  <div class="entry" style="border-left-color:#FFB347;">
+    <div class="step-line"><span class="step-n">[05]</span> <span class="step-name">Handoff</span></div>
+    <div class="step-desc" style="margin-top:0.3rem;">Working alongside engineering to ensure pixel-perfect implementation of designs as intended.</div>
+  </div>
+  <div class="entry" style="border-left-color:#FFB347;">
+    <div class="step-line"><span class="step-n">[06]</span> <span class="step-name">Monitoring</span></div>
+    <div class="step-desc" style="margin-top:0.3rem;">Once live, tracking metrics to verify impact. Shipping is the midpoint, not the finish line.</div>
+  </div>
+
+  <div class="hr-comment"></div>
+
+  <div class="md-h2">principles</div>
+
+  <p class="comment">// What guides the work when the brief is ambiguous and the stakes are real.</p>
+
+  <div class="principle">
+    <div class="p-name">consistency_beats_talent</div>
+    <div class="p-desc">Consistent effort always compounds into unimaginable results. Improvement is a daily practice — the single variable I can control.</div>
+  </div>
+  <div class="principle">
+    <div class="p-name">form_follows_function</div>
+    <div class="p-desc">Problems are solved with functionality, not aesthetics. But once solved, beauty creates delight. Humans remember delight.</div>
+  </div>
+  <div class="principle">
+    <div class="p-name">curiosity_as_compass</div>
+    <div class="p-desc">Knowing a little about a lot connects dots others miss. Every project is a journey of discovery and learning.</div>
+  </div>
+  <div class="principle">
+    <div class="p-name">give_a_damn</div>
+    <div class="p-desc">Founder's mindset: take ownership, collaborate effectively, go the extra mile. Success is shared responsibility.</div>
+  </div>
+
+  <div class="hr-comment"></div>
+
+  <div class="md-h2">capabilities</div>
+
+  <table class="md-table">
+    <tr><td>hard_skills</td><td>User Experience Design, User Research & Usability Testing, Wireframing & Prototyping, Visual / UI Design, Responsive Design, Branding & Interdisciplinary Design, No-code Development (Webflow, Framer)</td></tr>
+    <tr><td>tools</td><td>Figma, FigJam, Miro, Adobe XD, Adobe Illustrator, Adobe Photoshop, Framer, Webflow, Protopie</td></tr>
+    <tr><td>soft_skills</td><td>Self-starter — works independently, No drama — easy to work with, Entrepreneurial — business impact mindset, Collaborates well with product & engineering, Adaptable to constraints, Organized</td></tr>
+    <tr><td>education</td><td>B.E. Computer Engineering, Smt. Kashibai Navale College of Engineering, SPPU (2017-2021)</td></tr>
+  </table>
+
+  <div class="hr-comment"></div>
+
+  <div class="md-h2">contact</div>
+
+  <div class="contact-block">
+    <div class="cb-title">$ ssh naman@madebynaman.com</div>
+    <p style="color:#C0C8D4; font-size:0.85rem;">I work remotely from Jaipur, India with clients worldwide. Quick to respond, easy to work with.</p>
+    <div class="cb-links">
+      <a href="mailto:madebynaman@gmail.com">[email]</a>
+      <a href="https://www.linkedin.com/in/madebynaman/">[linkedin]</a>
+      <a href="https://madebynaman.com">[website]</a>
+    </div>
+  </div>
+
+  <div class="doc-footer">
+    naman.sh — Product / UX Designer — Jaipur, India — Worldwide Remote
+  </div>
+
+</div>
+</body>
+</html>

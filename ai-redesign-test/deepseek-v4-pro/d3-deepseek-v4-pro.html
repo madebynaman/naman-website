@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Naman Sharma &mdash; Product / UX Designer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; scroll-padding-top:2rem; }
+body { background:#FBF9F5; color:#252220; font-family:'IBM Plex Sans',system-ui,-apple-system,sans-serif; font-weight:400; line-height:1.6; -webkit-font-smoothing:antialiased; }
+::selection { background:#E8DCC8; color:#252220; }
+
+h1, h2, h3 { font-family:'IBM Plex Serif',Georgia,'Times New Roman',serif; }
+h1 { font-size:2.6rem; font-weight:600; line-height:1.15; letter-spacing:-0.01em; }
+h2 { font-size:1.8rem; font-weight:500; line-height:1.2; letter-spacing:-0.005em; }
+h3 { font-size:1.15rem; font-weight:500; line-height:1.3; }
+
+p { font-size:0.95rem; color:#4A4440; margin-bottom:1rem; line-height:1.6; }
+a { color:#3A6170; text-decoration:none; transition:color 0.2s; }
+a:hover { color:#BF4B3B; }
+
+.page { display:flex; min-height:100vh; }
+
+/* Sidebar index */
+.sidebar { width:260px; flex-shrink:0; background:#F4EFE8; border-right:1px solid #E0D8CC; padding:3rem 1.5rem; position:sticky; top:0; height:100vh; overflow-y:auto; }
+.sidebar .sb-logo { font-family:'IBM Plex Serif',Georgia,serif; font-size:1.1rem; font-weight:600; margin-bottom:2.5rem; color:#252220; display:block; text-decoration:none; }
+.sidebar .sb-logo span { color:#BF4B3B; }
+.sidebar .sb-section { margin-bottom:1.75rem; }
+.sidebar .sb-section .sb-heading { font-size:0.65rem; text-transform:uppercase; letter-spacing:0.12em; color:#8C7E6E; font-weight:600; margin-bottom:0.6rem; }
+.sidebar .sb-section a { display:block; font-size:0.82rem; color:#5A5048; padding:0.3rem 0; border-left:2px solid transparent; padding-left:0.75rem; transition:all 0.15s; }
+.sidebar .sb-section a:hover, .sidebar .sb-section a.active { color:#BF4B3B; border-left-color:#BF4B3B; }
+.sidebar .sb-sub { padding-left:1rem; }
+.sidebar .sb-sub a { font-size:0.75rem; padding:0.2rem 0; padding-left:0.75rem; }
+
+/* Main content */
+.main { flex:1; min-width:0; }
+.main-content { max-width:780px; padding:3rem 3rem 4rem; }
+
+.header-section { padding-bottom:2rem; border-bottom:1px solid #E0D8CC; margin-bottom:2.5rem; }
+.header-section .meta-strip { display:flex; gap:1.5rem; flex-wrap:wrap; margin-top:1.2rem; }
+.header-section .meta-strip .meta-item { font-size:0.78rem; color:#8C7E6E; }
+.header-section .meta-strip .meta-item strong { color:#252220; font-weight:500; }
+
+/* Section */
+.section-block { margin-bottom:3rem; padding-top:0.5rem; }
+.section-block .sec-anchor { scroll-margin-top:2rem; }
+.section-block h2 { margin-bottom:0.25rem; }
+.section-block .sec-rationale { font-size:0.85rem; color:#8C7E6E; font-style:italic; margin-bottom:1.5rem; }
+
+/* Entry cards */
+.entry-card { border:1px solid #E0D8CC; padding:1.75rem; margin-bottom:1.5rem; position:relative; background:#FBF9F5; transition:border-color 0.2s; }
+.entry-card:hover { border-color:#BF4B3B; }
+.entry-card .ec-tags { display:flex; gap:0.5rem; flex-wrap:wrap; margin-bottom:0.75rem; }
+.entry-card .ec-tag { font-size:0.68rem; padding:0.15rem 0.6rem; border-radius:2px; font-weight:500; letter-spacing:0.03em; }
+.entry-card .ec-tag-client { background:#E8DCC8; color:#5A5048; }
+.entry-card .ec-tag-year { background:#F4EFE8; color:#8C7E6E; }
+.entry-card .ec-tag-role { background:#E6EDF1; color:#3A6170; }
+.entry-card .ec-tag-impact { background:#F6E8E6; color:#BF4B3B; }
+.entry-card h3 { margin-bottom:0.4rem; }
+.entry-card .ec-blurb { font-size:0.9rem; color:#5A5048; line-height:1.55; margin-bottom:1rem; }
+.entry-card .ec-impact { font-size:0.82rem; color:#BF4B3B; font-weight:500; margin-bottom:0.75rem; }
+
+/* Placeholder visuals */
+.index-placeholder { background:#F4EFE8; border:1px dashed #D4C9B8; min-height:160px; display:flex; align-items:center; justify-content:center; margin-bottom:1rem; position:relative; }
+.index-placeholder .ip-label { font-family:'IBM Plex Sans',system-ui,sans-serif; font-size:0.72rem; color:#8C7E6E; text-transform:uppercase; letter-spacing:0.08em; padding:0.4rem 1rem; border:1px solid #D4C9B8; background:#FBF9F5; }
+.index-placeholder .ip-watermark { position:absolute; bottom:0.5rem; right:0.75rem; font-size:0.6rem; color:#D4C9B8; letter-spacing:0.05em; }
+
+/* Cross references */
+.cross-ref { margin-top:2rem; padding-top:1.5rem; border-top:1px solid #E0D8CC; }
+.cross-ref .cr-label { font-size:0.65rem; text-transform:uppercase; letter-spacing:0.12em; color:#8C7E6E; font-weight:600; margin-bottom:0.4rem; }
+.cross-ref a { font-size:0.85rem; margin-right:1.5rem; }
+
+/* Process list */
+.proc-indexed { }
+.proc-indexed .pi-item { display:flex; gap:1rem; padding:1rem 0; border-bottom:1px solid #EDE8DF; }
+.proc-indexed .pi-item:last-child { border-bottom:none; }
+.proc-indexed .pi-num { min-width:2rem; font-size:0.75rem; color:#BF4B3B; font-weight:600; padding-top:0.1rem; }
+.proc-indexed .pi-name { font-size:0.9rem; font-weight:500; margin-bottom:0.15rem; }
+.proc-indexed .pi-desc { font-size:0.82rem; color:#6B6258; }
+
+/* About spec */
+.spec-table { width:100%; border-collapse:collapse; margin:1rem 0; }
+.spec-table td { padding:0.6rem 0.8rem; border-bottom:1px solid #EDE8DF; font-size:0.9rem; vertical-align:top; }
+.spec-table td:first-child { font-size:0.7rem; color:#8C7E6E; text-transform:uppercase; letter-spacing:0.08em; font-weight:600; white-space:nowrap; width:120px; padding-right:1.5rem; }
+.spec-table tr:last-child td { border-bottom:none; }
+
+/* Contact footer */
+.contact-footer { background:#252220; color:#FBF9F5; padding:3rem; text-align:center; margin-top:2rem; }
+.contact-footer h2 { color:#FBF9F5; margin-bottom:0.5rem; }
+.contact-footer p { color:#B0A89C; margin-bottom:1.5rem; }
+.contact-footer .cf-links { display:flex; justify-content:center; gap:2rem; flex-wrap:wrap; }
+.contact-footer a { color:#E8DCC8; font-size:0.9rem; border-bottom:1px solid #5A5048; padding-bottom:0.15rem; }
+.contact-footer a:hover { color:#BF4B3B; border-color:#BF4B3B; }
+
+footer { text-align:center; padding:1.5rem; font-size:0.7rem; color:#8C7E6E; letter-spacing:0.06em; }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <nav class="sidebar">
+    <a href="#" class="sb-logo">Naman <span>Sharma</span></a>
+
+    <div class="sb-section">
+      <div class="sb-heading">Portfolio</div>
+      <a href="#about">About</a>
+      <a href="#work">Selected Work</a>
+      <div class="sb-sub">
+        <a href="#work-ap">Asian Paints</a>
+        <a href="#work-boost">Boost360</a>
+        <a href="#work-wiki">Wikipedia KaiOS</a>
+        <a href="#work-fl">Freelance</a>
+      </div>
+      <a href="#process">Process</a>
+      <a href="#principles">Principles</a>
+      <a href="#capabilities">Capabilities</a>
+      <a href="#contact">Contact</a>
+    </div>
+
+    <div class="sb-section">
+      <div class="sb-heading">See Also</div>
+      <a href="#">Resume (PDF)</a>
+      <a href="#">LinkedIn</a>
+      <a href="#">madebynaman.com</a>
+    </div>
+  </nav>
+
+  <main class="main">
+
+    <div class="main-content">
+
+      <div class="header-section" id="about">
+        <h1>Naman Sharma</h1>
+        <p>Product / UX Designer working remotely from Jaipur, India. My work is rooted in research and constant improvement. I design products that users love, for brands that care. That's it.</p>
+        <p>Self-taught, computer science background, 3 years in UX practice, 7+ years in design. I've taken products from zero to one, redesigned broken experiences into metrics wins, and conducted field research across Indian cities for one of the world's largest knowledge platforms.</p>
+        <div class="meta-strip">
+          <div class="meta-item"><strong>Location</strong> Jaipur, India &mdash; Worldwide Remote</div>
+          <div class="meta-item"><strong>Contact</strong> madebynaman@gmail.com</div>
+          <div class="meta-item"><strong>Education</strong> B.E. Computer Engineering, SPPU</div>
+        </div>
+      </div>
+
+      <div class="section-block" id="work">
+        <h2>Selected Work</h2>
+        <div class="sec-rationale">Four case studies spanning B2B portals, consumer onboarding, field research, and multi-client 0-to-1 product design.</div>
+
+        <div class="entry-card" id="work-ap">
+          <div class="ec-tags">
+            <span class="ec-tag ec-tag-client">Thence</span>
+            <span class="ec-tag ec-tag-year">2021</span>
+            <span class="ec-tag ec-tag-role">UX Research &middot; UX Design &middot; UI Design</span>
+            <span class="ec-tag ec-tag-impact">&uarr;20% transaction volume</span>
+          </div>
+          <h3>Asian Paints Dealer Portal</h3>
+          <div class="index-placeholder">
+            <div class="ip-label">Dealer portal dashboard &mdash; Home &amp; order placement screens</div>
+            <div class="ip-watermark">FIG. 1 &mdash; Asian Paints case study</div>
+          </div>
+          <div class="ec-blurb">End-to-end UX redesign of the multi-platform dealer portal. Introduced intelligent product recommendations based on order history, barcode scanning for sub-10-second ordering, and personalized discount promotions. Collaborated with UI designers, product managers, and the client team.</div>
+          <div class="ec-impact">20% increase in online transaction volume &middot; Increased user engagement and loyalty</div>
+        </div>
+
+        <div class="entry-card" id="work-boost">
+          <div class="ec-tags">
+            <span class="ec-tag ec-tag-client">Thence</span>
+            <span class="ec-tag ec-tag-year">2021</span>
+            <span class="ec-tag ec-tag-role">UX Research &middot; UX Design &middot; Usability Testing</span>
+            <span class="ec-tag ec-tag-impact">&darr;60% uninstall rate</span>
+          </div>
+          <h3>Boost360 Onboarding Redesign</h3>
+          <div class="index-placeholder">
+            <div class="ip-label">Onboarding flow screens &mdash; Boost360 app</div>
+            <div class="ip-watermark">FIG. 2 &mdash; Boost360 case study</div>
+          </div>
+          <div class="ec-blurb">Diagnosed a 20% signup success rate through structured hypothesis testing. Identified root causes: poor signup UX, marketing-communication mismatch, and misaligned feature expectations. Redesigned onboarding to be visual, trust-building, and value-demonstrating. Validated through usability testing.</div>
+          <div class="ec-impact">60% decrease in app uninstall rate &middot; Significant reduction in average signup time</div>
+        </div>
+
+        <div class="entry-card" id="work-wiki">
+          <div class="ec-tags">
+            <span class="ec-tag ec-tag-client">Hureo / Wikimedia</span>
+            <span class="ec-tag ec-tag-year">2020</span>
+            <span class="ec-tag ec-tag-role">UX Research &middot; Personas &middot; Journey Mapping</span>
+            <span class="ec-tag ec-tag-impact">25 participants &middot; 3 cities</span>
+          </div>
+          <h3>Wikipedia KaiOS User Research</h3>
+          <div class="index-placeholder">
+            <div class="ip-label">Research artifacts &mdash; Persona cards &amp; journey maps</div>
+            <div class="ip-watermark">FIG. 3 &mdash; Wikipedia / KaiOS study</div>
+          </div>
+          <div class="ec-blurb">Field research for the Wikimedia Foundation to understand JioPhone (KaiOS) users. Conducted in-person interviews and device observation sessions across Pune, Mumbai, and Delhi with 25 participants. Delivered personas, user journey maps, ecosystem maps, and a UX research report with recommendations including voice UI, readability optimization, and regional language SEO.</div>
+          <div class="ec-impact">Findings delivered to Wikimedia Foundation &mdash; influenced product strategy for emerging markets</div>
+        </div>
+
+        <div class="entry-card" id="work-fl">
+          <div class="ec-tags">
+            <span class="ec-tag ec-tag-client">Independent</span>
+            <span class="ec-tag ec-tag-year">2021&ndash;2023</span>
+            <span class="ec-tag ec-tag-role">UX Design &middot; UI Design &middot; Web Development</span>
+            <span class="ec-tag ec-tag-impact">4.8&#9733; Play Store</span>
+          </div>
+          <h3>Freelance Projects</h3>
+          <div class="index-placeholder">
+            <div class="ip-label">Project reel &mdash; Turns, Gadivan, LetsConnect &amp; more</div>
+            <div class="ip-watermark">FIG. 4 &mdash; Freelance portfolio</div>
+          </div>
+          <div class="ec-blurb">Took multiple products from zero to one across mobile and web. Highlights: Turns (redesign helped raise $500K in pre-seed funding, built design system & brand guidelines), Gadivan (end-to-end product design for multiple mobile apps), LetsConnect (redesign based on user feedback, achieved 4.8 stars on Play Store).</div>
+          <div class="ec-impact">$500K raised (Turns) &middot; 4.8 stars (LetsConnect) &middot; 0&rarr;1 delivery (Gadivan)</div>
+        </div>
+
+        <div class="cross-ref">
+          <div class="cr-label">See also</div>
+          <a href="#process">Process &rarr;</a>
+          <a href="#capabilities">Capabilities &rarr;</a>
+        </div>
+      </div>
+
+      <div class="section-block" id="process">
+        <h2>Process</h2>
+        <div class="sec-rationale">Six stages. Every project moves through this cycle &mdash; not always linearly, but always completely.</div>
+        <div class="proc-indexed">
+          <div class="pi-item">
+            <div class="pi-num">01</div>
+            <div>
+              <div class="pi-name">Research</div>
+              <div class="pi-desc">Understanding the problem, the users, the market. Competitive analysis, user interviews, heuristic evaluation of existing interfaces.</div>
+            </div>
+          </div>
+          <div class="pi-item">
+            <div class="pi-num">02</div>
+            <div>
+              <div class="pi-name">User Journey</div>
+              <div class="pi-desc">Diving deep into the user journey. Exploring personas, mapping decision flows, and uncovering the insights that shape the solution.</div>
+            </div>
+          </div>
+          <div class="pi-item">
+            <div class="pi-num">03</div>
+            <div>
+              <div class="pi-name">Design Exploration</div>
+              <div class="pi-desc">Going wide. Exploring a range of possible solutions, testing, iterating, collaborating with product and engineering.</div>
+            </div>
+          </div>
+          <div class="pi-item">
+            <div class="pi-num">04</div>
+            <div>
+              <div class="pi-name">Design Refinement</div>
+              <div class="pi-desc">Refining the chosen direction. Polishing visual design, preparing for handoff, documenting decisions made.</div>
+            </div>
+          </div>
+          <div class="pi-item">
+            <div class="pi-num">05</div>
+            <div>
+              <div class="pi-name">Handoff</div>
+              <div class="pi-desc">Working closely with engineering and product to ensure successful implementation of designs as intended.</div>
+            </div>
+          </div>
+          <div class="pi-item">
+            <div class="pi-num">06</div>
+            <div>
+              <div class="pi-name">Monitoring</div>
+              <div class="pi-desc">Once live, monitoring performance and tracking metrics that indicate success. Shipping is the midpoint, not the finish.</div>
+            </div>
+          </div>
+        </div>
+        <div class="cross-ref">
+          <div class="cr-label">See also</div>
+          <a href="#principles">Principles &rarr;</a>
+          <a href="#work">Selected Work &rarr;</a>
+        </div>
+      </div>
+
+      <div class="section-block" id="principles">
+        <h2>Operating Principles</h2>
+        <div class="sec-rationale">What guides the work when the brief is ambiguous and the stakes are real.</div>
+        <div class="entry-card" style="border-left:3px solid #BF4B3B;">
+          <h3>Consistency beats talent</h3>
+          <div class="ec-blurb">Consistent effort always compounds into unimaginable results. I'm not the most talented designer in the world, but I strive for consistency and constant improvement &mdash; everyday. It's the single variable I can control.</div>
+        </div>
+        <div class="entry-card" style="border-left:3px solid #3A6170;">
+          <h3>Form follows function</h3>
+          <div class="ec-blurb">Problems are solved with functionality, not aesthetics. At the core of every good product is how it solves for the needs of its users. Once the problem is solved, going the extra mile and designing beautiful products creates delight. And humans remember delight.</div>
+        </div>
+        <div class="entry-card" style="border-left:3px solid #8C7E6E;">
+          <h3>Let curiosity guide you</h3>
+          <div class="ec-blurb">Curiosity fuels an endless quest for understanding. I know a little about a lot of things &mdash; it helps me connect the dots between scattered information. Each project is a journey of discovery, constant learning, and exploration.</div>
+        </div>
+        <div class="entry-card" style="border-left:3px solid #BF4B3B;">
+          <h3>Give a damn</h3>
+          <div class="ec-blurb">I'm highly entrepreneurial and strive to have a founder's mindset. Success is a shared responsibility that is an outcome of effective collaboration. I take ownership for each project I work on. I'm committed to going the extra mile to achieve success.</div>
+        </div>
+      </div>
+
+      <div class="section-block" id="capabilities">
+        <h2>Capabilities</h2>
+        <div class="sec-rationale">Hard skills, tools, and traits that define how I work.</div>
+        <table class="spec-table">
+          <tr><td>Hard Skills</td><td>User Experience Design &middot; User Research &amp; Usability Testing &middot; Wireframing &amp; Prototyping &middot; Visual / UI Design &middot; Responsive Design &middot; Branding &amp; Interdisciplinary Design &middot; No-code Development (Webflow, Framer)</td></tr>
+          <tr><td>Tools</td><td>Figma, FigJam, Miro &middot; Adobe XD, Illustrator, Photoshop &middot; Framer, Webflow, Protopie</td></tr>
+          <tr><td>Soft Skills</td><td>Self-starter &middot; No drama &middot; Entrepreneurial mindset &middot; Collaborates well with product &amp; engineering &middot; Adaptable to constraints &middot; Organized</td></tr>
+          <tr><td>Education</td><td>B.E. Computer Engineering, Smt. Kashibai Navale College of Engineering, SPPU (2017&ndash;2021)</td></tr>
+        </table>
+      </div>
+
+    </div>
+
+    <div class="contact-footer" id="contact">
+      <h2>Let's work together.</h2>
+      <p>I work remotely from Jaipur, India with clients worldwide. I'm easy to reach and quick to respond.</p>
+      <div class="cf-links">
+        <a href="mailto:madebynaman@gmail.com">madebynaman@gmail.com</a>
+        <a href="https://www.linkedin.com/in/madebynaman/">LinkedIn</a>
+        <a href="https://madebynaman.com">madebynaman.com</a>
+      </div>
+    </div>
+
+    <footer>
+      Index maintained by Naman Sharma &middot; Updated 2025 &middot; All facts verifiable against source documents
+    </footer>
+
+  </main>
+</div>
+
+<script>
+const sections = document.querySelectorAll('.section-block, .header-section, #contact');
+const links = document.querySelectorAll('.sidebar a[href^="#"]');
+
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(s => {
+    const top = s.offsetTop - 100;
+    if (window.scrollY >= top) current = s.getAttribute('id');
+  });
+  links.forEach(a => {
+    a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+  });
+});
+</script>
+
+</body>
+</html>

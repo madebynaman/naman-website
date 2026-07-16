@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Naman Sharma &mdash; Product / UX Designer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { background:#F7F6F3; color:#1B3A5C; font-family:'DM Sans',system-ui,-apple-system,sans-serif; font-weight:400; line-height:1.6; -webkit-font-smoothing:antialiased; }
+::selection { background:#A8D8EA; color:#1B3A5C; }
+
+.sheet { max-width:900px; margin:0 auto; padding:3rem 2rem; position:relative; }
+.content-band { max-width:600px; margin-left:140px; }
+
+h1 { font-family:'DM Sans',system-ui,sans-serif; font-weight:600; font-size:3.2rem; line-height:1.08; letter-spacing:-0.02em; }
+h2 { font-family:'DM Sans',system-ui,sans-serif; font-weight:500; font-size:1.6rem; line-height:1.2; letter-spacing:-0.01em; }
+h3 { font-family:'DM Sans',system-ui,sans-serif; font-weight:500; font-size:1.1rem; line-height:1.3; margin-bottom:0.3rem; }
+p { font-size:0.975rem; color:#3A5A78; margin-bottom:1rem; line-height:1.6; }
+
+.mono { font-family:'Fira Code','SF Mono',monospace; font-size:0.8rem; }
+.annotation { font-family:'Fira Code','SF Mono',monospace; font-size:0.68rem; color:#8A9AA8; line-height:1.5; }
+.metric { font-family:'Fira Code','SF Mono',monospace; font-weight:500; }
+.accent-red { color:#D4675E; }
+
+.hairline { border:none; height:1px; background:#C8CFD4; margin:2.5rem 0; }
+.hairline-light { border:none; height:0.5px; background:#D8D0C6; margin:1.25rem 0; }
+.hairline-blue { border:none; height:1px; background:#A8D8EA; margin:2rem 0; }
+
+.margins-left { position:absolute; left:2rem; width:120px; text-align:right; top:3rem; }
+
+/* Title Block */
+.title-block { border:2px solid #1B3A5C; padding:2.5rem 2rem; margin-bottom:3.5rem; position:relative; }
+.title-block .tb-row { display:grid; grid-template-columns:1fr 1fr; gap:0.5rem 2rem; padding:0.3rem 0; border-bottom:0.5px solid #C8CFD4; }
+.title-block .tb-row:last-child { border-bottom:none; }
+.title-block .tb-label { font-family:'Fira Code','SF Mono',monospace; font-size:0.7rem; color:#8A9AA8; text-transform:uppercase; letter-spacing:0.08em; }
+.title-block .tb-value { font-family:'DM Sans',system-ui,sans-serif; font-size:0.95rem; font-weight:500; color:#1B3A5C; }
+.title-block .tb-title { font-size:1.1rem; font-weight:600; }
+.tb-hero { margin-bottom:1.5rem; }
+.tb-hero h1 { margin-bottom:0.15rem; }
+.tb-hero .tb-sub { font-size:0.9rem; color:#5A7A98; font-weight:400; }
+
+/* Blueprint grid markers */
+.bp-marker { display:flex; align-items:center; gap:0.5rem; margin-bottom:1.5rem; }
+.bp-marker .bp-crosshair { width:10px; height:10px; border:1px solid #A8D8EA; border-radius:50%; flex-shrink:0; position:relative; }
+.bp-marker .bp-crosshair::before { content:''; position:absolute; top:4px; left:0; width:10px; height:0.5px; background:#A8D8EA; }
+.bp-marker .bp-crosshair::after { content:''; position:absolute; top:0; left:4px; height:10px; width:0.5px; background:#A8D8EA; }
+.bp-marker .bp-label { font-size:0.7rem; color:#8A9AA8; text-transform:uppercase; letter-spacing:0.12em; font-weight:500; }
+
+/* Section heading with blueprint number */
+.section-head { display:flex; align-items:baseline; gap:0.75rem; margin-bottom:1.5rem; }
+.section-head .sh-num { font-family:'Fira Code','SF Mono',monospace; font-size:0.75rem; color:#A8D8EA; font-weight:500; }
+.section-head h2 { margin-bottom:0; flex:1; }
+
+/* Work entries */
+.work-entry { border-left:2px solid #A8D8EA; padding:1.5rem 0 1.5rem 1.5rem; margin-left:0.5rem; position:relative; margin-bottom:2rem; }
+.work-entry::before { content:''; position:absolute; left:-6px; top:2rem; width:10px; height:10px; border-radius:50%; background:#1B3A5C; }
+.work-entry .we-client { font-size:0.7rem; color:#D4675E; text-transform:uppercase; letter-spacing:0.1em; font-weight:500; margin-bottom:0.4rem; }
+.work-entry h3 { font-family:'DM Sans',system-ui,sans-serif; font-weight:600; font-size:1.25rem; margin-bottom:0.3rem; }
+.work-entry .we-blurb { font-size:0.9rem; color:#3A5A78; margin-bottom:0; line-height:1.55; }
+.work-entry .we-impact { margin-top:0.6rem; font-size:0.78rem; font-weight:500; }
+.work-entry .we-meta { font-family:'Fira Code','SF Mono',monospace; font-size:0.7rem; color:#8A9AA8; margin-top:0.4rem; }
+
+/* Placeholder visuals — blueprint-style */
+.bp-placeholder { background:linear-gradient(135deg,#E8EDF2 0%,#DFE8F0 100%); border:1px solid #C8CFD4; min-height:180px; display:flex; align-items:center; justify-content:center; position:relative; margin:1rem 0; overflow:hidden; }
+.bp-placeholder .bp-pattern { position:absolute; inset:0; background-image:radial-gradient(circle,#C8CFD4 1px,transparent 1px); background-size:16px 16px; opacity:0.3; }
+.bp-placeholder .bp-label-inner { position:relative; font-family:'Fira Code','SF Mono',monospace; font-size:0.7rem; color:#6A8AA8; text-transform:uppercase; letter-spacing:0.08em; padding:0.5rem 1rem; border:1px solid #A8D8EA; background:rgba(247,246,243,0.8); }
+
+/* Process steps */
+.proc-step { display:flex; gap:1rem; padding:1.2rem 0; border-bottom:0.5px solid #D8D0C6; }
+.proc-step:last-child { border-bottom:none; }
+.proc-step .ps-num { font-family:'Fira Code','SF Mono',monospace; font-size:0.8rem; color:#D4675E; min-width:1.5rem; font-weight:500; padding-top:0.15rem; }
+.proc-step .ps-content { }
+.proc-step .ps-title { font-weight:600; font-size:0.95rem; margin-bottom:0.2rem; color:#1B3A5C; }
+.proc-step .ps-desc { font-size:0.85rem; color:#5A7A98; margin-bottom:0; }
+
+/* About grid */
+.about-spec { display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; }
+.about-spec .as-block { }
+.about-spec .as-label { font-family:'Fira Code','SF Mono',monospace; font-size:0.65rem; color:#D4675E; text-transform:uppercase; letter-spacing:0.1em; margin-bottom:0.35rem; font-weight:500; }
+.about-spec .as-list { list-style:none; }
+.about-spec .as-list li { font-size:0.85rem; color:#3A5A78; padding:0.2rem 0; }
+
+/* Contact */
+.contact-plate { border:2px solid #1B3A5C; padding:2.5rem; text-align:center; margin-top:2rem; }
+.contact-plate h2 { margin-bottom:0.5rem; }
+.contact-plate .cp-links { display:flex; justify-content:center; gap:2rem; margin-top:1.5rem; flex-wrap:wrap; }
+.contact-plate a { color:#1B3A5C; text-decoration:none; font-family:'Fira Code','SF Mono',monospace; font-size:0.8rem; border-bottom:1px solid #A8D8EA; padding-bottom:0.15rem; transition:border-color 0.2s; }
+.contact-plate a:hover { border-color:#D4675E; }
+
+/* Marginal annotations */
+.margin-note { position:absolute; left:2rem; width:120px; text-align:right; }
+.margin-note .mn-text { font-family:'Fira Code','SF Mono',monospace; font-size:0.62rem; color:#8A9AA8; line-height:1.5; }
+
+/* Dimensions bar */
+.dim-bar { display:flex; align-items:center; gap:0.5rem; margin:1rem 0; }
+.dim-bar .dim-line { flex:1; height:1px; background:#C8CFD4; }
+.dim-bar .dim-label { font-family:'Fira Code','SF Mono',monospace; font-size:0.65rem; color:#8A9AA8; white-space:nowrap; }
+
+footer { text-align:right; padding:2rem 0; font-family:'Fira Code','SF Mono',monospace; font-size:0.65rem; color:#8A9AA8; }
+</style>
+</head>
+<body>
+
+<div class="sheet">
+
+  <div class="title-block">
+    <div class="tb-hero">
+      <h1>Naman Sharma</h1>
+      <div class="tb-sub">Product / UX Designer &mdash; Jaipur, India</div>
+    </div>
+    <div class="tb-row">
+      <div><span class="tb-label">Discipline</span><br><span class="tb-value">Product &amp; UX Design</span></div>
+      <div><span class="tb-label">Practice</span><br><span class="tb-value">Freelance &mdash; Worldwide Remote</span></div>
+    </div>
+    <div class="tb-row">
+      <div><span class="tb-label">Experience</span><br><span class="tb-value">3+ years in UX, 7+ in design</span></div>
+      <div><span class="tb-label">Education</span><br><span class="tb-value">B.E. Computer Engineering, SPPU</span></div>
+    </div>
+    <div class="tb-row">
+      <div><span class="tb-label">Contact</span><br><span class="tb-value">madebynaman@gmail.com</span></div>
+      <div><span class="tb-label">Status</span><br><span class="tb-value accent-red">Available for projects</span></div>
+    </div>
+  </div>
+
+  <div class="bp-marker">
+    <div class="bp-crosshair"></div>
+    <div class="bp-label">Selected Work &mdash; Four case studies</div>
+  </div>
+
+  <div class="content-band">
+    <p class="annotation">Products designed for scale, tested with users, measured with outcomes. No filler projects &mdash; each entry represents a shipped solution with documented business impact.</p>
+  </div>
+
+  <div class="content-band">
+    <div class="work-entry">
+      <div class="we-client">Thence &middot; 2021</div>
+      <h3>Asian Paints Dealer Portal</h3>
+      <div class="bp-placeholder">
+        <div class="bp-pattern"></div>
+        <div class="bp-label-inner">Case-study hero &mdash; Asian Paints dealer portal dashboard</div>
+      </div>
+      <p class="we-blurb">End-to-end UX redesign of the multi-platform dealer portal. Introduced intelligent product recommendations, barcode scanning, and personalized promotions to reduce dealer-salesman interaction and increase transaction volumes.</p>
+      <div class="we-blurb"><span class="accent-red metric">&uarr;20%</span> online transaction volume &middot; increased engagement &amp; loyalty</div>
+      <div class="we-meta">Role: UX Research, UX Design, UI Design &middot; Collab: UI Designer, PM, Design Manager, Client Team</div>
+    </div>
+
+    <div class="work-entry">
+      <div class="we-client">Thence &middot; 2021</div>
+      <h3>Boost360 Onboarding Redesign</h3>
+      <div class="bp-placeholder">
+        <div class="bp-pattern"></div>
+        <div class="bp-label-inner">Project mockup &mdash; Boost360 onboarding flow screens</div>
+      </div>
+      <p class="we-blurb">Redesigned the app onboarding experience after identifying root causes of a 20% signup success rate. Conducted usability testing confirming users understood the app's value proposition and completed onboarding without confusion.</p>
+      <div class="we-blurb"><span class="accent-red metric">&darr;60%</span> uninstall rate &middot; significant decrease in signup time</div>
+      <div class="we-meta">Role: UX Research, UX Design, UI Design, Usability Testing &middot; Collab: UI Designer, Motion Designer, PM, Client Team</div>
+    </div>
+
+    <div class="work-entry">
+      <div class="we-client">Hureo / Wikimedia Foundation &middot; 2020</div>
+      <h3>Wikipedia KaiOS User Research</h3>
+      <div class="bp-placeholder">
+        <div class="bp-pattern"></div>
+        <div class="bp-label-inner">Research artifact &mdash; user journey maps &amp; persona cards</div>
+      </div>
+      <p class="we-blurb">Field research across Pune, Mumbai, and Delhi with 25 JioPhone users. Conducted in-person interviews and device observation sessions to understand phone usage, Wikipedia awareness, and information consumption behaviors on smart feature phones.</p>
+      <div class="we-blurb">25 participants &middot; 3 cities &middot; 45&ndash;60 min sessions &middot; delivered personas, journey maps &amp; research report</div>
+      <div class="we-meta">Role: UX Research, User Personas, User Journey Mapping &middot; Collab: UX Researchers, Founder</div>
+    </div>
+
+    <div class="work-entry">
+      <div class="we-client">Independent &middot; 2021&ndash;2023</div>
+      <h3>Freelance Projects</h3>
+      <div class="bp-placeholder">
+        <div class="bp-pattern"></div>
+        <div class="bp-label-inner">Work samples &mdash; Turns, Gadivan, LetsConnect website &amp; app screens</div>
+      </div>
+      <p class="we-blurb">Took multiple products from 0&ndash;1 across mobile and web. Redesigned websites &amp; landing pages, built design systems, conducted UX audits. Clients include Turns (helped raise $500K pre-seed), Gadivan (0&ndash;1 product design), LetsConnect (4.8 stars on Play Store).</p>
+      <div class="we-meta">Role: UX Research, UX Design, UI Design, Web Design, Web Development &middot; Collab: Client Team, Founders, Web Developers</div>
+    </div>
+  </div>
+
+  <hr class="hairline-blue">
+
+  <div class="bp-marker">
+    <div class="bp-crosshair"></div>
+    <div class="bp-label">Process &mdash; How work gets done</div>
+  </div>
+
+  <div class="content-band">
+    <div class="proc-step">
+      <div class="ps-num">01</div>
+      <div class="ps-content">
+        <div class="ps-title">Research</div>
+        <p class="ps-desc">Understanding the problem space, competitive landscape, and customer context. User interviews, competitive analysis, heuristic evaluation.</p>
+      </div>
+    </div>
+    <div class="proc-step">
+      <div class="ps-num">02</div>
+      <div class="ps-content">
+        <div class="ps-title">User Journey</div>
+        <p class="ps-desc">Mapping personas, journeys, and decision flows. Uncovering the insights that shape solution direction.</p>
+      </div>
+    </div>
+    <div class="proc-step">
+      <div class="ps-num">03</div>
+      <div class="ps-content">
+        <div class="ps-title">Design Exploration</div>
+        <p class="ps-desc">Going wide: multiple solution paths, rapid prototyping, testing, iterating. Collaborating with product and engineering.</p>
+      </div>
+    </div>
+    <div class="proc-step">
+      <div class="ps-num">04</div>
+      <div class="ps-content">
+        <div class="ps-title">Design Refinement</div>
+        <p class="ps-desc">Polishing the chosen direction. Visual design, documentation, preparing for handoff.</p>
+      </div>
+    </div>
+    <div class="proc-step">
+      <div class="ps-num">05</div>
+      <div class="ps-content">
+        <div class="ps-title">Handoff &amp; Monitoring</div>
+        <p class="ps-desc">Working with engineering to ensure successful implementation. Tracking metrics post-launch to verify impact.</p>
+      </div>
+    </div>
+  </div>
+
+  <hr class="hairline-blue">
+
+  <div class="bp-marker">
+    <div class="bp-crosshair"></div>
+    <div class="bp-label">Operating Principles</div>
+  </div>
+
+  <div class="content-band">
+    <div class="proc-step">
+      <div class="ps-num">A</div>
+      <div class="ps-content">
+        <div class="ps-title">Consistency beats talent</div>
+        <p class="ps-desc">Consistent effort compounds into results talent alone cannot reach. Improvement is a daily practice.</p>
+      </div>
+    </div>
+    <div class="proc-step">
+      <div class="ps-num">B</div>
+      <div class="ps-content">
+        <div class="ps-title">Form follows function</div>
+        <p class="ps-desc">Solve the problem first, then make it beautiful. Functionality creates utility; beauty creates delight.</p>
+      </div>
+    </div>
+    <div class="proc-step">
+      <div class="ps-num">C</div>
+      <div class="ps-content">
+        <div class="ps-title">Curiosity as compass</div>
+        <p class="ps-desc">Knowing a little about a lot connects scattered dots. Every project is a discovery process.</p>
+      </div>
+    </div>
+    <div class="proc-step">
+      <div class="ps-num">D</div>
+      <div class="ps-content">
+        <div class="ps-title">Give a damn</div>
+        <p class="ps-desc">Founder's mindset: take ownership, collaborate effectively, go the extra mile. Success is shared.</p>
+      </div>
+    </div>
+  </div>
+
+  <hr class="hairline-blue">
+
+  <div class="bp-marker">
+    <div class="bp-crosshair"></div>
+    <div class="bp-label">Capabilities &amp; Background</div>
+  </div>
+
+  <div class="content-band">
+    <div class="about-spec">
+      <div class="as-block">
+        <div class="as-label">Hard Skills</div>
+        <ul class="as-list">
+          <li>User Experience Design</li>
+          <li>User Research &amp; Usability Testing</li>
+          <li>Wireframing &amp; Prototyping</li>
+          <li>Visual / UI Design</li>
+          <li>Responsive Web Design</li>
+          <li>Branding &amp; Interdisciplinary Design</li>
+          <li>No-code Development (Webflow, Framer)</li>
+        </ul>
+      </div>
+      <div class="as-block">
+        <div class="as-label">Tools</div>
+        <ul class="as-list">
+          <li>Figma, FigJam, Miro</li>
+          <li>Adobe XD, Illustrator, Photoshop</li>
+          <li>Framer, Webflow, Protopie</li>
+        </ul>
+        <div class="as-label" style="margin-top:1.2rem;">Soft Skills</div>
+        <ul class="as-list">
+          <li>Self-starter &mdash; works independently</li>
+          <li>Entrepreneurial &mdash; business impact mindset</li>
+          <li>Collaborates well with product &amp; engineering</li>
+          <li>Adaptable to constraints</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="dim-bar">
+    <div class="dim-line"></div>
+    <div class="dim-label">04 principles &middot; 05 process steps &middot; 04 case studies</div>
+    <div class="dim-line"></div>
+  </div>
+
+  <div class="content-band" style="text-align:center;">
+    <div class="contact-plate">
+      <h2>Start a conversation</h2>
+      <p>I work remotely from Jaipur, India with clients worldwide. I'm easy to reach and quick to respond.</p>
+      <div class="cp-links">
+        <a href="mailto:madebynaman@gmail.com">madebynaman@gmail.com</a>
+        <a href="https://www.linkedin.com/in/madebynaman/">LinkedIn</a>
+        <a href="https://madebynaman.com">madebynaman.com</a>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    Naman Sharma &middot; Product / UX Designer &middot; Jaipur, India &middot; W.W.R.
+  </footer>
+
+</div>
+</body>
+</html>

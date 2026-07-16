@@ -38,7 +38,7 @@ separate routes** — one long page per direction, anchor-linked internally.
 One folder per model under `ai-redesign-test/` (scaffolded or added as
 participants join): `fable`, `opus-4.8`, `sonnet-5`, `gpt-5.5`, `gpt-5.6-sol`,
 `gpt-5.6-terra`, `glm-5.2`, `mimo-v2.5`, `minimax-m3`, `gemini-3.1-pro`,
-`gemini-3.5-flash`, `claude-design-fable`, `deepseek-v4-flash`.
+`gemini-3.5-flash`, `claude-design-fable`, `deepseek-v4-flash`, `deepseek-v4-pro`.
 
 ## Deliverables (per model)
 
@@ -166,8 +166,10 @@ these — the bullets are a floor, not a ceiling):
    to `website/src`, the Astro config, `package.json`, or anything outside
    the model's own folder. `resume.md` and `portfolio-content.md` are
    **read-only inputs**.
-3. **Never touch another model's folder** — no reading required, no writing
-   ever. Directions must be independent work, not responses to sibling folders.
+3. **Never touch another model's folder** — no reading, writing, listing, or
+   inspecting sibling folders. Directions must be independent work, not
+   responses to sibling folders. A model that touches another model's folder —
+   even to read or list — is disqualified from the test.
 4. No git operations: no commits, branches, staging, or history changes. The
    human reviewer handles version control.
 5. No network dependencies in the output (see HTML requirements) — except
