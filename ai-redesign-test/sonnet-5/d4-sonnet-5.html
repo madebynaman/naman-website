@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Naman Sharma — Product / UX Designer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Archivo:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --fog:#F5F6F3;
+    --ink:#20242B;
+    --ink-soft:#5B6169;
+    --steel:#46607A;
+    --line:#DADCD6;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0; background:var(--fog); color:var(--ink);
+    font-family:'Newsreader',Georgia,serif; font-size:18px; line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,h4{font-family:'Archivo',Arial,sans-serif; margin:0; font-weight:500; letter-spacing:-.01em;}
+  .label, .mono{font-family:'Archivo',Arial,sans-serif; font-size:12.5px; letter-spacing:.09em; text-transform:uppercase; color:var(--ink-soft);}
+  a{color:inherit;}
+
+  .layout{display:grid; grid-template-columns:240px 1fr; min-height:100vh;}
+  .rail{
+    position:sticky; top:0; align-self:start; height:100vh; padding:48px 0 48px 44px;
+    display:flex; flex-direction:column; justify-content:space-between; border-right:1px solid var(--line);
+  }
+  .rail .brand{font-family:'Archivo',sans-serif; font-size:16px; font-weight:600;}
+  .rail .brand span{display:block; font-family:'Newsreader',serif; font-style:italic; font-weight:400; font-size:14px; color:var(--ink-soft); margin-top:4px;}
+  .rail nav{display:flex; flex-direction:column; gap:16px; margin-top:60px;}
+  .rail nav a{
+    text-decoration:none; font-family:'Archivo',sans-serif; font-size:13px; letter-spacing:.06em; text-transform:uppercase;
+    color:var(--ink-soft); padding:4px 0; border-left:2px solid transparent; padding-left:14px; transition:color .15s, border-color .15s;
+  }
+  .rail nav a:hover, .rail nav a.active{color:var(--ink); border-color:var(--steel);}
+  .rail .foot{font-size:12px; color:var(--ink-soft); line-height:1.6;}
+
+  main{padding:0 64px 0 64px; max-width:980px;}
+  section{padding:100px 0; border-bottom:1px solid var(--line);}
+  section:last-child{border-bottom:none;}
+
+  .idx{color:var(--steel);}
+
+  /* hero */
+  #hero{padding-top:64px;}
+  .hero-title{font-size:clamp(38px,5vw,58px); line-height:1.18; max-width:820px; font-weight:400; font-style:italic;}
+  .hero-meta{margin-top:36px; display:flex; gap:40px; flex-wrap:wrap;}
+  .hero-meta div .v{font-family:'Archivo',sans-serif; font-size:14.5px; color:var(--ink); margin-top:4px;}
+
+  h2.section-title{font-family:'Archivo',sans-serif; font-size:28px; font-weight:500; margin-bottom:8px;}
+  .section-num{font-family:'Archivo',sans-serif; font-size:13px; color:var(--steel); margin-bottom:14px; display:block;}
+
+  /* work */
+  .work-row{display:grid; grid-template-columns:120px 1fr 220px; gap:32px; padding:40px 0; border-top:1px solid var(--line); align-items:start;}
+  .work-row:first-of-type{border-top:none;}
+  .work-row .n{font-family:'Archivo',sans-serif; font-size:14px; color:var(--ink-soft); padding-top:4px;}
+  .work-row h3{font-size:24px; margin-bottom:8px; font-weight:500;}
+  .work-row .client{font-family:'Archivo',sans-serif; font-size:12.5px; text-transform:uppercase; letter-spacing:.06em; color:var(--steel); margin-bottom:10px;}
+  .work-row p{margin:0; color:var(--ink-soft); font-size:16px;}
+  .visual{
+    aspect-ratio:4/3; border:1px solid var(--line); background:#EDEEE9;
+    display:flex; align-items:center; justify-content:center; text-align:center; padding:14px;
+    font-family:'Archivo',sans-serif; font-size:11px; color:var(--ink-soft); text-transform:uppercase; letter-spacing:.04em;
+  }
+  .stat-line{margin-top:16px; font-family:'Archivo',sans-serif; font-size:13.5px; color:var(--ink);}
+  .stat-line b{color:var(--steel);}
+
+  .freelance-list{margin-top:6px; column-count:2; column-gap:32px; font-family:'Archivo',sans-serif; font-size:14px; color:var(--ink-soft);}
+  .freelance-list div{padding:8px 0; border-top:1px solid var(--line);}
+
+  /* about */
+  .about-cols{display:grid; grid-template-columns:1.2fr 1fr; gap:60px;}
+  .principle{padding:22px 0; border-top:1px solid var(--line);}
+  .principle:first-child{border-top:none;}
+  .principle .label{margin-bottom:6px;}
+  .principle h4{font-size:18px; font-weight:500; font-family:'Newsreader',serif; font-style:italic;}
+
+  /* process */
+  .process-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line); margin-top:24px; border:1px solid var(--line);}
+  .process-cell{background:var(--fog); padding:26px;}
+  .process-cell .num{font-family:'Archivo',sans-serif; color:var(--steel); font-size:13px;}
+  .process-cell h4{font-size:17px; margin:10px 0 8px; font-weight:500;}
+  .process-cell p{margin:0; font-size:14px; color:var(--ink-soft); font-family:'Archivo',sans-serif; line-height:1.5;}
+
+  /* timeline */
+  .tl-row{display:grid; grid-template-columns:200px 1fr; gap:20px; padding:16px 0; border-top:1px solid var(--line); font-family:'Archivo',sans-serif; font-size:14.5px;}
+  .tl-row:first-child{border-top:none;}
+  .tl-row .p{color:var(--ink-soft); font-size:13px;}
+
+  .tools-row{display:flex; flex-wrap:wrap; gap:0; margin-top:20px; border-top:1px solid var(--line); border-left:1px solid var(--line);}
+  .tools-row span{padding:10px 18px; border-right:1px solid var(--line); border-bottom:1px solid var(--line); font-family:'Archivo',sans-serif; font-size:13px; color:var(--ink-soft);}
+
+  /* contact */
+  #contact .about-cols{align-items:start;}
+  #contact h2.section-title{font-size:36px;}
+  .contact-list{font-family:'Archivo',sans-serif; font-size:14.5px;}
+  .contact-list div{display:flex; justify-content:space-between; padding:12px 0; border-top:1px solid var(--line);}
+  .contact-list div:first-child{border-top:none;}
+  .contact-list .k{color:var(--ink-soft); text-transform:uppercase; letter-spacing:.05em; font-size:11.5px;}
+
+  footer{padding:36px 0; font-family:'Archivo',sans-serif; font-size:12px; color:var(--ink-soft); display:flex; justify-content:space-between; border-top:1px solid var(--line);}
+
+  @media (max-width:920px){
+    .layout{grid-template-columns:1fr;}
+    .rail{position:relative; height:auto; flex-direction:row; justify-content:space-between; align-items:center; padding:24px;}
+    .rail nav{flex-direction:row; margin-top:0; gap:18px; flex-wrap:wrap;}
+    .rail .foot{display:none;}
+    main{padding:0 24px;}
+    .work-row, .about-cols, .process-grid{grid-template-columns:1fr;}
+    .process-grid{border:none; background:none; gap:20px;}
+    .process-cell{border:1px solid var(--line);}
+  }
+</style>
+</head>
+<body>
+<div class="layout">
+  <aside class="rail">
+    <div>
+      <div class="brand">Naman Sharma<span>Product / UX Designer</span></div>
+      <nav>
+        <a href="#work">Work</a>
+        <a href="#about">About</a>
+        <a href="#process">Process</a>
+        <a href="#record">Record</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+    <div class="foot">Jaipur, India<br>Remote, worldwide</div>
+  </aside>
+
+  <main>
+    <section id="hero">
+      <span class="label">Portfolio — Index 00</span>
+      <h1 class="hero-title" style="margin-top:22px;">A designer who treats research as the actual work, and the interface as what's left over once the problem is understood.</h1>
+      <div class="hero-meta">
+        <div><span class="label">Role</span><div class="v">Product / UX Designer</div></div>
+        <div><span class="label">Status</span><div class="v">Freelance, since Apr 2022</div></div>
+        <div><span class="label">Based</span><div class="v">Jaipur, India</div></div>
+      </div>
+    </section>
+
+    <section id="work">
+      <span class="section-num">Index 01</span>
+      <h2 class="section-title">Selected work</h2>
+
+      <div class="work-row">
+        <div class="n">01</div>
+        <div>
+          <div class="client">Thence — 2021</div>
+          <h3>Asian Paints, Dealer Portal</h3>
+          <p>End-to-end redesign of the multi-platform dealer portal: personalised recommendations, order-history loyalty, and a barcode reorder flow under 10 seconds, built to earn back trust from dealers who'd rather call a person.</p>
+          <div class="stat-line"><b>20% increase</b> in online transaction volume, plus a measurable lift in dealer engagement and loyalty.</div>
+        </div>
+        <div class="visual">Dealer portal — home / catalog / tracking</div>
+      </div>
+
+      <div class="work-row">
+        <div class="n">02</div>
+        <div>
+          <div class="client">Thence · NowFloats — 2021</div>
+          <h3>Boost360, Onboarding</h3>
+          <p>Diagnosed a 4-hour uninstall window and a 20% signup rate down to a mismatch between marketing promises and product reality — then rebuilt onboarding around honest expectations and visible early wins.</p>
+          <div class="stat-line"><b>60% decrease</b> in app uninstall rate, with a significant drop in time-to-signup.</div>
+        </div>
+        <div class="visual">Onboarding — signup / OTP / first win</div>
+      </div>
+
+      <div class="work-row">
+        <div class="n">03</div>
+        <div>
+          <div class="client">Hureo — 2020</div>
+          <h3>Wikipedia × KaiOS Research</h3>
+          <p>For the Wikimedia Foundation: 25 in-person interviews across Pune, Mumbai and Delhi on how JioPhone owners read, search, and trust Wikipedia — resulting in concrete recommendations on voice input, readability, and regional-language discovery.</p>
+          <div class="stat-line"><b>25 participants</b>, 3 cities, delivered as personas and journey maps.</div>
+        </div>
+        <div class="visual">Research artifact — journey maps</div>
+      </div>
+
+      <div class="work-row">
+        <div class="n">04</div>
+        <div>
+          <div class="client">Independent — 2022–Present</div>
+          <h3>Freelance, End to End</h3>
+          <p>Full design function for early-stage teams — brand systems, UX audits, and 0-to-1 builds. Turns raised a $500K pre-seed after its revamp; Gadivan launched across multiple apps from scratch; LetsConnect reached 4.8 stars on the Play Store.</p>
+          <div class="freelance-list">
+            <div>Turns</div><div>Gadivan</div><div>LetsConnect</div><div>Parentverse</div><div>Venyou</div><div>Sharent</div><div>Spirinova</div><div>Gorico</div><div>RedShilliz</div><div>DGlobalist</div><div>Pahoti Wellness</div><div>+ more</div>
+          </div>
+        </div>
+        <div class="visual">Client roster</div>
+      </div>
+    </section>
+
+    <section id="about">
+      <span class="section-num">Index 02</span>
+      <h2 class="section-title">About</h2>
+      <div class="about-cols" style="margin-top:24px;">
+        <div>
+          <p>Self-taught, with a Computer Engineering background that shows up as comfort with constraints most designers hand off. A curious generalist — field research, wireframing, mobile and web UX, logos, packaging — currently re-learning to code so ideas don't wait on a handoff.</p>
+          <p style="margin-top:18px;">I hate jargon. I don't "champion transformative ideation in the ever-evolving design ethos." I design products people love, for brands that care. That's it.</p>
+        </div>
+        <div>
+          <div class="principle"><div class="label">Principle</div><h4>Consistency beats talent.</h4></div>
+          <div class="principle"><div class="label">Principle</div><h4>Let curiosity guide you.</h4></div>
+          <div class="principle"><div class="label">Principle</div><h4>Form follows function.</h4></div>
+          <div class="principle"><div class="label">Principle</div><h4>Give a damn.</h4></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="process">
+      <span class="section-num">Index 03</span>
+      <h2 class="section-title">Process</h2>
+      <div class="process-grid">
+        <div class="process-cell"><div class="num">01</div><h4>Research</h4><p>Understand the problem and the customer.</p></div>
+        <div class="process-cell"><div class="num">02</div><h4>User journey</h4><p>Map personas and where decisions happen.</p></div>
+        <div class="process-cell"><div class="num">03</div><h4>Exploration</h4><p>Go wide, test, iterate, collaborate.</p></div>
+        <div class="process-cell"><div class="num">04</div><h4>Refinement</h4><p>Polish the direction, document the why.</p></div>
+        <div class="process-cell"><div class="num">05</div><h4>Handoff</h4><p>Work with engineering until it ships.</p></div>
+        <div class="process-cell"><div class="num">06</div><h4>Monitoring</h4><p>Track what proves the work worked.</p></div>
+      </div>
+    </section>
+
+    <section id="record">
+      <span class="section-num">Index 04</span>
+      <h2 class="section-title">Record &amp; tools</h2>
+      <div class="tl-row"><div>Product, UX &amp; Web Designer — Freelance</div><div class="p">Apr 2022 — Present</div></div>
+      <div class="tl-row"><div>UX Designer — Thence</div><div class="p">Apr 2021 — Mar 2022</div></div>
+      <div class="tl-row"><div>UX Research Intern — Hureo</div><div class="p">Dec 2019 — Apr 2020</div></div>
+      <div class="tl-row"><div>Graphic Design Intern — HappleyFit</div><div class="p">Jul 2018 — May 2019</div></div>
+      <div class="tl-row"><div>Graphic Design Intern — Skillovate</div><div class="p">Dec 2017 — Mar 2018</div></div>
+      <div class="tl-row"><div>B.E. Computer Engineering — SPPU, Pune</div><div class="p">2017 — 2021</div></div>
+      <div class="tools-row">
+        <span>Figma</span><span>FigJam</span><span>Miro</span><span>Framer</span><span>Adobe XD</span><span>Illustrator</span><span>Photoshop</span><span>Webflow</span><span>Protopie</span>
+      </div>
+      <div style="margin-top:30px;">
+        <span class="label">Ask me about</span>
+        <div class="tools-row" style="margin-top:10px;">
+          <span>My indie dog, Jerry</span><span>Tech</span><span>Personal finance</span><span>Hip-hop</span><span>Video games</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <span class="section-num">Index 05</span>
+      <h2 class="section-title">Contact</h2>
+      <div class="about-cols" style="margin-top:24px;">
+        <p style="font-style:italic; font-size:22px;">Currently taking on new freelance product &amp; UX work — audits, 0-to-1 builds, end-to-end redesigns.</p>
+        <div class="contact-list">
+          <div><span class="k">Email</span><span>madebynaman@gmail.com</span></div>
+          <div><span class="k">Phone</span><span>+91 82083 69219</span></div>
+          <div><span class="k">LinkedIn</span><span>/in/madebynaman</span></div>
+          <div><span class="k">Site</span><span>madebynaman.com</span></div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <span>© Naman Sharma</span>
+      <span>Direction 4 of 5 — Quiet Systems</span>
+    </footer>
+  </main>
+</div>
+</body>
+</html>
+</content>

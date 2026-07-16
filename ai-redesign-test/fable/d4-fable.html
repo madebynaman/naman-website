@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>naman.os — Designer Operations Console · Naman Sharma</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=Figtree:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ground:#EDF0F3;
+    --panel:#FFFFFF;
+    --panel-2:#F7F9FA;
+    --ink:#101820;
+    --muted:#5B6773;
+    --line:#D8DEE4;
+    --accent:#0E7C66;
+    --accent-soft:#E0F0EB;
+    --amber:#B45309;
+    --amber-soft:#FBEEDD;
+    --head:'Sora', 'Segoe UI', Arial, sans-serif;
+    --ui:'Figtree', 'Segoe UI', Arial, sans-serif;
+    --mono:'JetBrains Mono', 'SF Mono', Menlo, monospace;
+    --r:6px;
+    --shadow:0 1px 2px rgba(16,24,32,.05), 0 4px 14px rgba(16,24,32,.06);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--ground);color:var(--ink);font-family:var(--ui);font-size:15.5px;line-height:1.6}
+  ::selection{background:var(--accent);color:#fff}
+  .shell{max-width:1220px;margin:0 auto;padding:0 28px 60px}
+
+  /* ---------- status bar ---------- */
+  .statusbar{
+    position:sticky;top:0;z-index:40;background:var(--panel);border-bottom:1px solid var(--line);
+    display:flex;align-items:center;gap:20px;padding:0 28px;height:54px;
+  }
+  .statusbar .sys{font-family:var(--mono);font-size:13px;font-weight:700}
+  .statusbar .sys .dot{color:var(--accent)}
+  .statusbar .env{
+    font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);
+    background:var(--accent-soft);border:1px solid #BFDFD5;border-radius:99px;padding:3px 10px;
+  }
+  .statusbar nav{margin-left:auto;display:flex;gap:4px}
+  .statusbar nav a{
+    font-size:13px;font-weight:500;color:var(--muted);text-decoration:none;padding:6px 12px;border-radius:var(--r);
+  }
+  .statusbar nav a:hover{background:var(--panel-2);color:var(--ink)}
+  .statusbar nav a.cta{background:var(--ink);color:#fff}
+  .statusbar nav a.cta:hover{background:var(--accent)}
+  @media (max-width:860px){.statusbar nav a:not(.cta){display:none}}
+
+  /* ---------- console intro ---------- */
+  .intro{padding:52px 0 30px;display:grid;grid-template-columns:1.5fr 1fr;gap:34px;align-items:end}
+  @media (max-width:940px){.intro{grid-template-columns:1fr}}
+  .intro .path{font-family:var(--mono);font-size:12px;color:var(--muted);margin-bottom:14px}
+  .intro .path b{color:var(--accent)}
+  .intro h1{font-family:var(--head);font-size:clamp(30px,4.2vw,48px);font-weight:700;line-height:1.14;letter-spacing:-.02em;max-width:20ch;text-wrap:balance}
+  .intro h1 .hl{color:var(--accent)}
+  .intro .sub{color:var(--muted);margin-top:16px;max-width:56ch;font-size:16.5px}
+  .id-card{
+    background:var(--panel);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:20px 22px;
+  }
+  .id-card .row{display:flex;justify-content:space-between;gap:12px;padding:7px 0;border-bottom:1px dashed var(--line);font-size:13.5px}
+  .id-card .row:last-child{border-bottom:none}
+  .id-card .k{color:var(--muted)}
+  .id-card .v{font-weight:600;text-align:right}
+  .id-card .v.mono{font-family:var(--mono);font-weight:500;font-size:12.5px}
+  .badge-live{display:inline-flex;align-items:center;gap:6px;color:var(--accent);font-weight:600}
+  .badge-live::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+
+  /* ---------- KPI grid ---------- */
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:26px 0 8px}
+  @media (max-width:940px){.kpis{grid-template-columns:repeat(2,1fr)}}
+  .kpi{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:18px 18px 14px;position:relative;overflow:hidden}
+  .kpi .lbl{font-size:12px;font-weight:600;color:var(--muted);letter-spacing:.02em;display:flex;justify-content:space-between;align-items:center}
+  .kpi .src{font-family:var(--mono);font-size:9.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--accent);background:var(--accent-soft);padding:2px 7px;border-radius:99px}
+  .kpi .val{font-family:var(--head);font-size:34px;font-weight:700;letter-spacing:-.02em;margin-top:8px;font-variant-numeric:tabular-nums}
+  .kpi .val .up{color:var(--accent);font-size:20px;vertical-align:3px}
+  .kpi .cap{font-size:12.5px;color:var(--muted);margin-top:2px}
+  .kpi svg{position:absolute;right:0;bottom:0;opacity:.9}
+
+  /* ---------- panels ---------- */
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);margin-top:26px;overflow:hidden}
+  .panel-head{display:flex;align-items:center;gap:12px;padding:16px 22px;border-bottom:1px solid var(--line);background:var(--panel-2)}
+  .panel-head h2{font-family:var(--head);font-size:17px;font-weight:600}
+  .panel-head .tag{font-family:var(--mono);font-size:10.5px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase}
+  .panel-head .count{margin-left:auto;font-family:var(--mono);font-size:11.5px;color:var(--muted)}
+
+  /* project rows */
+  .proj{display:grid;grid-template-columns:230px 1fr 190px 170px;gap:20px;padding:22px;border-bottom:1px solid var(--line);align-items:center}
+  .proj:last-child{border-bottom:none}
+  .proj:hover{background:var(--panel-2)}
+  @media (max-width:1020px){.proj{grid-template-columns:1fr;gap:12px}}
+  .proj .who h3{font-family:var(--head);font-size:16.5px;font-weight:600;line-height:1.3}
+  .proj .who .meta{font-family:var(--mono);font-size:11px;color:var(--muted);margin-top:5px}
+  .pill{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:600;border-radius:99px;padding:3px 10px;margin-top:9px}
+  .pill.shipped{color:var(--accent);background:var(--accent-soft)}
+  .pill.shipped::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--accent)}
+  .pill.research{color:var(--amber);background:var(--amber-soft)}
+  .pill.research::before{content:"";width:6px;height:6px;border-radius:2px;background:var(--amber)}
+  .proj .what{font-size:14px;color:var(--muted);max-width:56ch}
+  .proj .what b{color:var(--ink);font-weight:600}
+  .metric-box{border-left:3px solid var(--accent);padding:2px 0 2px 14px}
+  .metric-box .m{font-family:var(--head);font-size:24px;font-weight:700;font-variant-numeric:tabular-nums;line-height:1.1}
+  .metric-box .m.down{color:var(--accent)}
+  .metric-box .d{font-size:12px;color:var(--muted);margin-top:2px}
+  .thumb{
+    height:86px;border:1px dashed #AEB9C2;border-radius:var(--r);background:
+      repeating-linear-gradient(-45deg, transparent 0 10px, rgba(16,24,32,.035) 10px 11px);
+    display:flex;align-items:center;justify-content:center;padding:8px;text-align:center;
+  }
+  .thumb span{font-family:var(--mono);font-size:9.5px;line-height:1.5;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+
+  /* pipeline */
+  .pipeline{display:grid;grid-template-columns:repeat(6,1fr);gap:0;padding:26px 22px 30px}
+  @media (max-width:1020px){.pipeline{grid-template-columns:repeat(3,1fr);row-gap:30px}}
+  @media (max-width:640px){.pipeline{grid-template-columns:repeat(2,1fr)}}
+  .stage{position:relative;padding:0 18px 0 0}
+  .stage:not(:last-child)::after{
+    content:"→";position:absolute;right:6px;top:2px;color:#AEB9C2;font-size:15px;
+  }
+  @media (max-width:1020px){.stage:nth-child(3n)::after{display:none}}
+  .stage .n{font-family:var(--mono);font-size:10.5px;color:var(--accent);font-weight:700;letter-spacing:.08em}
+  .stage h3{font-family:var(--head);font-size:14.5px;font-weight:600;margin:6px 0 5px}
+  .stage p{font-size:12.5px;color:var(--muted);line-height:1.5}
+
+  /* config (principles) */
+  .config{padding:8px 22px 10px}
+  .config .item{display:grid;grid-template-columns:minmax(180px,260px) 1fr;gap:20px;padding:16px 0;border-bottom:1px dashed var(--line)}
+  .config .item:last-child{border-bottom:none}
+  @media (max-width:760px){.config .item{grid-template-columns:1fr;gap:4px}}
+  .config code{font-family:var(--mono);font-size:12.5px;color:var(--accent);background:var(--accent-soft);padding:3px 9px;border-radius:4px;align-self:start;justify-self:start;font-weight:500}
+  .config .item p{font-size:14px;color:var(--muted)}
+  .config .item p b{color:var(--ink)}
+
+  /* uptime / timeline */
+  .uptime{padding:24px 22px 28px}
+  .uptime .track{display:flex;height:34px;border-radius:4px;overflow:hidden;border:1px solid var(--line)}
+  .uptime .seg{position:relative}
+  .uptime .seg.grad{background:repeating-linear-gradient(90deg,#CBD5DC 0 6px,#DDE4E9 6px 12px)}
+  .uptime .seg.thence{background:#8FBFB2}
+  .uptime .seg.hureo{background:#D9B98A}
+  .uptime .seg.free{background:var(--accent)}
+  .uptime .legend{display:flex;flex-wrap:wrap;gap:18px;margin-top:16px;font-size:13px}
+  .uptime .legend span{display:inline-flex;align-items:center;gap:8px;color:var(--muted)}
+  .uptime .legend i{width:11px;height:11px;border-radius:3px;display:inline-block}
+  .uptime .legend b{color:var(--ink);font-weight:600}
+  .uptime .years{display:flex;justify-content:space-between;font-family:var(--mono);font-size:10.5px;color:var(--muted);margin-top:8px}
+
+  /* two-col: logs + human */
+  .duo{display:grid;grid-template-columns:1.1fr .9fr;gap:26px}
+  @media (max-width:940px){.duo{grid-template-columns:1fr}}
+  .logs{padding:18px 22px 22px;font-family:var(--mono);font-size:12.5px;line-height:2.05}
+  .logs .t{color:var(--muted)}
+  .logs .ok{color:var(--accent);font-weight:700}
+  .logs .warn{color:var(--amber);font-weight:700}
+  .human{padding:22px}
+  .human p{font-size:14.5px;color:var(--muted);margin-bottom:12px}
+  .human p b{color:var(--ink)}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+  .chips span{font-size:12px;font-weight:500;border:1px solid var(--line);background:var(--panel-2);border-radius:99px;padding:5px 12px;color:var(--muted)}
+  .chips span.hot{border-color:#BFDFD5;background:var(--accent-soft);color:var(--accent);font-weight:600}
+
+  /* clients ticker */
+  .clients{padding:18px 22px;display:flex;flex-wrap:wrap;gap:8px 22px;font-size:13.5px;color:var(--muted)}
+  .clients b{color:var(--ink);font-weight:600}
+
+  /* contact */
+  .contact{
+    margin-top:26px;background:var(--ink);color:#fff;border-radius:var(--r);box-shadow:var(--shadow);
+    padding:46px 44px;display:grid;grid-template-columns:1.4fr 1fr;gap:34px;align-items:center;
+  }
+  @media (max-width:860px){.contact{grid-template-columns:1fr;padding:36px 28px}}
+  .contact .tag{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#7FD1BE;margin-bottom:12px}
+  .contact h2{font-family:var(--head);font-size:clamp(24px,3.2vw,36px);font-weight:700;letter-spacing:-.01em;line-height:1.2;text-wrap:balance}
+  .contact p{color:#B6C2CC;margin-top:12px;max-width:50ch;font-size:15px}
+  .contact .actions{display:flex;flex-direction:column;gap:10px}
+  .contact .actions a{
+    text-align:center;text-decoration:none;font-weight:600;font-size:14.5px;padding:13px 18px;border-radius:var(--r);
+  }
+  .contact .actions a.primary{background:var(--accent);color:#fff}
+  .contact .actions a.primary:hover{background:#0A6151}
+  .contact .actions a.ghost{border:1px solid #3A4753;color:#DDE5EB}
+  .contact .actions a.ghost:hover{background:#1C2630}
+
+  footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;padding:26px 2px 0;font-family:var(--mono);font-size:11px;color:var(--muted)}
+</style>
+</head>
+<body>
+
+<div class="statusbar">
+  <span class="sys">naman<span class="dot">.</span>os</span>
+  <span class="env">status: open to work</span>
+  <nav>
+    <a href="#projects">Projects</a>
+    <a href="#pipeline">Pipeline</a>
+    <a href="#config">Config</a>
+    <a href="#uptime">Uptime</a>
+    <a href="#human">Human</a>
+    <a class="cta" href="#contact">Start a project</a>
+  </nav>
+</div>
+
+<div class="shell">
+
+  <header class="intro" id="top">
+    <div>
+      <div class="path">~/designers/<b>naman-sharma</b> — operations console <span style="opacity:.6">· all metrics from real, shipped projects</span></div>
+      <h1>A Product/UX designer who reads like a founder's <span class="hl">metrics dashboard.</span></h1>
+      <p class="sub">Because that's how Naman works: research first, design second, and then the part most designers skip — watching the numbers move. Self-taught, CS-degreed, and fluent in both Figma and engineering-speak.</p>
+    </div>
+    <div class="id-card">
+      <div class="row"><span class="k">Operator</span><span class="v">Naman Sharma</span></div>
+      <div class="row"><span class="k">Role</span><span class="v">Product / UX / Web Designer</span></div>
+      <div class="row"><span class="k">Region</span><span class="v">Jaipur, IN · remote-first</span></div>
+      <div class="row"><span class="k">Runtime</span><span class="v mono">UX since 2019 · design since 2017</span></div>
+      <div class="row"><span class="k">Availability</span><span class="v"><span class="badge-live">Accepting projects</span></span></div>
+    </div>
+  </header>
+
+  <div class="kpis">
+    <div class="kpi">
+      <div class="lbl">Online transaction volume <span class="src">Asian Paints</span></div>
+      <div class="val"><span class="up">▲</span> +20%</div>
+      <div class="cap">after dealer-portal redesign, 2021</div>
+      <svg width="110" height="34" viewBox="0 0 110 34" aria-hidden="true"><polyline points="0,28 18,26 36,27 54,20 72,16 90,10 110,4" fill="none" stroke="#0E7C66" stroke-width="2"/><circle cx="110" cy="4" r="3" fill="#0E7C66"/></svg>
+    </div>
+    <div class="kpi">
+      <div class="lbl">App uninstall rate <span class="src">Boost360</span></div>
+      <div class="val"><span class="up">▼</span> −60%</div>
+      <div class="cap">after onboarding overhaul, 2021</div>
+      <svg width="110" height="34" viewBox="0 0 110 34" aria-hidden="true"><polyline points="0,6 18,8 36,7 54,14 72,20 90,25 110,29" fill="none" stroke="#0E7C66" stroke-width="2"/><circle cx="110" cy="29" r="3" fill="#0E7C66"/></svg>
+    </div>
+    <div class="kpi">
+      <div class="lbl">Pre-seed raised <span class="src">Turns</span></div>
+      <div class="val">$500K</div>
+      <div class="cap">after site revamp lifted conversions</div>
+      <svg width="110" height="34" viewBox="0 0 110 34" aria-hidden="true"><rect x="4" y="24" width="10" height="10" fill="#CFE7E0"/><rect x="20" y="20" width="10" height="14" fill="#CFE7E0"/><rect x="36" y="22" width="10" height="12" fill="#CFE7E0"/><rect x="52" y="15" width="10" height="19" fill="#9CCFC2"/><rect x="68" y="10" width="10" height="24" fill="#9CCFC2"/><rect x="84" y="3" width="10" height="31" fill="#0E7C66"/></svg>
+    </div>
+    <div class="kpi">
+      <div class="lbl">Play Store rating <span class="src">LetsConnect</span></div>
+      <div class="val">4.8★</div>
+      <div class="cap">after end-to-end UX redesign</div>
+      <svg width="110" height="34" viewBox="0 0 110 34" aria-hidden="true"><polyline points="0,22 22,20 44,21 66,14 88,8 110,6" fill="none" stroke="#0E7C66" stroke-width="2"/><circle cx="110" cy="6" r="3" fill="#0E7C66"/></svg>
+    </div>
+  </div>
+
+  <section class="panel" id="projects">
+    <div class="panel-head"><h2>Projects</h2><span class="tag">selected engagements</span><span class="count">4 shown · more under NDA</span></div>
+
+    <div class="proj">
+      <div class="who">
+        <h3>Asian Paints — Dealer Portal</h3>
+        <div class="meta">Thence · 2021 · Research / UX / UI</div>
+        <span class="pill shipped">Shipped</span>
+      </div>
+      <div class="what">Dealers hated calling sales for every order — and hated every portal in the market. End-to-end redesign: <b>barcode ordering in &lt;10s</b>, recommendations from order history, promotions driven by regional demand. Multi-role access for different user privileges.</div>
+      <div class="metric-box"><div class="m">+20%</div><div class="d">online transaction volume</div></div>
+      <div class="thumb"><span>image slot<br>dealer portal — order flow</span></div>
+    </div>
+
+    <div class="proj">
+      <div class="who">
+        <h3>Boost360 — Onboarding</h3>
+        <div class="meta">Thence · 2021 · Research / UX / Testing</div>
+        <span class="pill shipped">Shipped</span>
+      </div>
+      <div class="what">Users uninstalled within 4 hours; signup success was 20%. Tested <b>12 hypotheses</b> down to two root causes — confusing signup, and marketing promises the app didn't keep. Rebuilt onboarding around one quick win: your business website, live in minutes.</div>
+      <div class="metric-box"><div class="m down">−60%</div><div class="d">app uninstall rate</div></div>
+      <div class="thumb"><span>image slot<br>Boost360 onboarding — mobile</span></div>
+    </div>
+
+    <div class="proj">
+      <div class="who">
+        <h3>Wikipedia — KaiOS Study</h3>
+        <div class="meta">Hureo · 2020 · Field research</div>
+        <span class="pill research">Research</span>
+      </div>
+      <div class="what">For the Wikimedia Foundation: <b>25 in-person interviews across Pune, Mumbai and Delhi</b> with JioPhone users. Personas, journey maps, and recommendations — voice-first interaction, readability, video-format content — grounded in observed behaviour, not survey guesses.</div>
+      <div class="metric-box"><div class="m">25</div><div class="d">participants · 3 cities</div></div>
+      <div class="thumb"><span>image slot<br>personas &amp; journey maps</span></div>
+    </div>
+
+    <div class="proj">
+      <div class="who">
+        <h3>Freelance — 0→1 Portfolio</h3>
+        <div class="meta">Independent · 2021–23 · 17+ clients</div>
+        <span class="pill shipped">Ongoing</span>
+      </div>
+      <div class="what"><b>Turns:</b> revamp + design system → conversions up → $500K pre-seed closed. <b>Gadivan:</b> entire multi-app product designed from scratch for multiple stakeholders. <b>LetsConnect:</b> feedback-driven redesign, now 4.8★ on the Play Store.</div>
+      <div class="metric-box"><div class="m">0→1</div><div class="d">repeatedly, and measured</div></div>
+      <div class="thumb"><span>image slot<br>freelance collage — Turns / Gadivan</span></div>
+    </div>
+  </section>
+
+  <section class="panel" id="pipeline">
+    <div class="panel-head"><h2>Delivery pipeline</h2><span class="tag">every project, same discipline</span></div>
+    <div class="pipeline">
+      <div class="stage"><div class="n">STAGE 1</div><h3>Research</h3><p>Understand the problem, the customer, and possible solutions first.</p></div>
+      <div class="stage"><div class="n">STAGE 2</div><h3>User Journey</h3><p>Personas, journeys, decision-making — mapped for real insight.</p></div>
+      <div class="stage"><div class="n">STAGE 3</div><h3>Exploration</h3><p>Go wide, test, iterate, collaborate through options.</p></div>
+      <div class="stage"><div class="n">STAGE 4</div><h3>Refinement</h3><p>Polish the direction, document decisions, prep handoff.</p></div>
+      <div class="stage"><div class="n">STAGE 5</div><h3>Handoff</h3><p>Close work with engineering so the build matches design.</p></div>
+      <div class="stage"><div class="n">STAGE 6</div><h3>Monitoring</h3><p>Live ≠ done. Track success metrics, keep improving.</p></div>
+    </div>
+  </section>
+
+  <section class="panel" id="config">
+    <div class="panel-head"><h2>System configuration</h2><span class="tag">principles — read-only, non-negotiable</span></div>
+    <div class="config">
+      <div class="item"><code>consistency_beats_talent = true</code><p><b>Consistent effort compounds.</b> Not the most talented designer in the world — the one who shows up and improves every day.</p></div>
+      <div class="item"><code>curiosity.mode = "always_on"</code><p><b>A little about a lot.</b> Generalist knowledge is how scattered information becomes connected dots.</p></div>
+      <div class="item"><code>form.follows = "function"</code><p><b>Solve the need first.</b> Then go the extra mile and make it beautiful — humans remember delight.</p></div>
+      <div class="item"><code>give_a_damn = 1  // ownership</code><p><b>Founder's mindset.</b> High agency, shared success, extra mile as default. Every project owned end to end.</p></div>
+      <div class="item"><code>jargon.enabled = false</code><p><b>Plain speech only.</b> No synergized aesthetics, no orchestrated design revolutions, no experiential marvels. Just work that works.</p></div>
+    </div>
+  </section>
+
+  <section class="panel" id="uptime">
+    <div class="panel-head"><h2>Career uptime</h2><span class="tag">2017 → present · zero downtime since 2019</span></div>
+    <div class="uptime">
+      <div class="track" role="img" aria-label="Career timeline from 2017 to present as contiguous segments">
+        <div class="seg grad" style="flex:2.4" title="Graphic design internships + freelance, 2017–2019"></div>
+        <div class="seg hureo" style="flex:.5" title="Hureo — UX Research Intern, Dec 2019–Apr 2020"></div>
+        <div class="seg grad" style="flex:1" title="Freelance graphic design"></div>
+        <div class="seg thence" style="flex:1.2" title="Thence — UX Designer, Apr 2021–Mar 2022"></div>
+        <div class="seg free" style="flex:4.2" title="Freelance Product/UX/Web — Apr 2022–present"></div>
+      </div>
+      <div class="years"><span>2017</span><span>2019</span><span>2021</span><span>2023</span><span>today</span></div>
+      <div class="legend">
+        <span><i style="background:repeating-linear-gradient(90deg,#CBD5DC 0 4px,#DDE4E9 4px 8px)"></i><b>Graphic design era</b> — Skillovate, HappleyFit, freelance</span>
+        <span><i style="background:#D9B98A"></i><b>Hureo</b> — UX Research Intern</span>
+        <span><i style="background:#8FBFB2"></i><b>Thence</b> — UX Designer</span>
+        <span><i style="background:#0E7C66"></i><b>Freelance Product/UX</b> — current, Apr 2022 →</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="duo">
+    <section class="panel">
+      <div class="panel-head"><h2>Event log</h2><span class="tag">highlights, chronological</span></div>
+      <div class="logs">
+        <div><span class="t">2019-12</span> <span class="ok">[JOIN]</span> Hureo — field research for Wikipedia begins</div>
+        <div><span class="t">2020-04</span> <span class="ok">[SHIP]</span> KaiOS study delivered: 25 users, 3 cities, personas + maps</div>
+        <div><span class="t">2021-04</span> <span class="ok">[JOIN]</span> Thence — enterprise UX engagements</div>
+        <div><span class="t">2021-—</span> <span class="ok">[SHIP]</span> Asian Paints portal → +20% transactions</div>
+        <div><span class="t">2021-—</span> <span class="ok">[SHIP]</span> Boost360 onboarding → −60% uninstalls</div>
+        <div><span class="t">2021-—</span> <span class="ok">[SHIP]</span> Shiprocket marketing site redesign</div>
+        <div><span class="t">2022-04</span> <span class="warn">[FORK]</span> Went independent — full-time freelance</div>
+        <div><span class="t">2022-—</span> <span class="ok">[SHIP]</span> Turns revamp → conversions ↑ → $500K pre-seed</div>
+        <div><span class="t">2023-—</span> <span class="ok">[SHIP]</span> Gadivan 0→1 · LetsConnect 4.8★</div>
+        <div><span class="t">now&nbsp;&nbsp;&nbsp;</span> <span class="ok">[EXEC]</span> re-learning to code; accepting new projects</div>
+      </div>
+    </section>
+
+    <section class="panel" id="human">
+      <div class="panel-head"><h2>The human behind the metrics</h2></div>
+      <div class="human">
+        <p><b>Self-taught, CS-degreed, jargon-free.</b> Naman got into product design because it sits exactly at the intersection of creativity, problem-solving and technology — and stayed because watching a metric move after a redesign never gets old.</p>
+        <p>Curious generalist: field research, usability testing, apps, logos, print, packaging, no-code builds. Easy to work with, no drama, collaborates well with product and engineering. Off-duty: quality time with Jerry, an adorable indie dog.</p>
+        <div class="chips">
+          <span class="hot">Ask about: Jerry 🐕</span>
+          <span>Hip-hop</span><span>Video games</span><span>Personal finance</span><span>Computers &amp; tech</span><span>Education</span>
+        </div>
+        <div class="chips" style="margin-top:10px">
+          <span>Figma</span><span>FigJam</span><span>Miro</span><span>Framer</span><span>Protopie</span><span>Webflow</span><span>Adobe XD</span><span>Illustrator</span><span>Photoshop</span>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <section class="panel">
+    <div class="panel-head"><h2>Client registry</h2><span class="tag">partial list</span></div>
+    <div class="clients">
+      <b>Asian Paints</b><b>Wikipedia (via Hureo)</b><b>NowFloats</b><b>Shiprocket</b><b>Thence</b>
+      <span>LearnApp</span><span>Turns</span><span>Gadivan</span><span>LetsConnect</span><span>Parentverse</span>
+      <span>Venyou</span><span>Sharent</span><span>Spirinova</span><span>Gorico</span><span>RedShilliz</span>
+      <span>DGlobalist</span><span>Pahoti Wellness</span><span>Ivy Malik</span><span>PhotoFinder</span><span>Olsub</span>
+      <span>Learn Theta</span><span>+ more</span>
+    </div>
+  </section>
+
+  <section class="contact" id="contact">
+    <div>
+      <div class="tag">new_project.init( )</div>
+      <h2>Your product's numbers could use a designer who watches them.</h2>
+      <p>Hiring for a product/UX role, or need a 0→1 partner who measures what ships? One email starts it. Full case studies — research plans, hypothesis lists, final screens — walked through live.</p>
+    </div>
+    <div class="actions">
+      <a class="primary" href="mailto:madebynaman@gmail.com">Email madebynaman@gmail.com</a>
+      <a class="ghost" href="https://www.linkedin.com/in/madebynaman/">Connect on LinkedIn</a>
+      <a class="ghost" href="tel:+918208369219">Call +91 82083 69219</a>
+    </div>
+  </section>
+
+  <footer>
+    <span>naman.os v2026 · © Naman Sharma · madebynaman.com</span>
+    <span>uptime region: Jaipur, IN · serving worldwide</span>
+  </footer>
+
+</div>
+
+</body>
+</html>
