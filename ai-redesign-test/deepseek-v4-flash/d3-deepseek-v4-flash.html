@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Naman Sharma — Product / UX Designer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { background: #F8F4ED; color: #2C2418; font-family: 'DM Sans', system-ui, -apple-system, sans-serif; font-weight: 400; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+
+::selection { background: #D4A373; color: #F8F4ED; }
+
+.container { max-width: 1140px; margin: 0 auto; padding: 0 2rem; }
+
+h1, h2, h3, .display, .serif { font-family: 'DM Serif Display', Georgia, 'Times New Roman', serif; font-weight: 400; }
+h1 { font-size: 3.5rem; line-height: 1.1; letter-spacing: -0.01em; }
+h2 { font-size: 2.5rem; line-height: 1.2; margin-bottom: 0.5rem; letter-spacing: -0.01em; }
+h3 { font-size: 1.3rem; line-height: 1.3; }
+p { margin-bottom: 1rem; font-size: 1.0625rem; color: #5C5448; }
+
+.eyebrow { font-size: 0.75rem; color: #B88A5C; text-transform: uppercase; letter-spacing: 0.12em; font-weight: 600; margin-bottom: 0.75rem; }
+
+hr.rule { border: none; height: 2px; background: #E8DFD3; margin: 3rem 0; }
+
+/* Header */
+header { padding: 2rem 0; }
+.header-inner { display: flex; justify-content: space-between; align-items: center; }
+.logo { font-family: 'DM Serif Display', Georgia, 'Times New Roman', serif; font-size: 1.25rem; color: #2C2418; text-decoration: none; }
+.logo-mark { display: inline-block; width: 8px; height: 8px; background: #D4A373; border-radius: 50%; margin-right: 0.5rem; }
+header nav a { color: #8C7C6C; text-decoration: none; font-size: 0.875rem; margin-left: 2rem; font-weight: 500; transition: color 0.2s; padding-bottom: 2px; border-bottom: 1px solid transparent; }
+header nav a:hover { color: #2C2418; border-bottom-color: #D4A373; }
+
+/* Hero */
+.hero { padding: 5rem 0 3rem; position: relative; }
+.hero::after { content: ""; position: absolute; top: 0; right: 2rem; width: 200px; height: 200px; background: radial-gradient(circle, rgba(212,163,115,0.08) 0%, transparent 70%); pointer-events: none; }
+.hero .intro-text { max-width: 640px; }
+.hero h1 { margin-bottom: 1.25rem; }
+.hero h1 .highlight { color: #B88A5C; font-style: italic; }
+.hero .subtitle { font-size: 1.2rem; color: #6C5C4C; line-height: 1.7; max-width: 560px; }
+
+/* Stats */
+.stats-bar { display: flex; gap: 3rem; margin-top: 2.5rem; padding: 2rem 0; border-top: 2px solid #E8DFD3; border-bottom: 2px solid #E8DFD3; }
+.stat-item { }
+.stat-item .number { font-family: 'DM Serif Display', Georgia, 'Times New Roman', serif; font-size: 2.5rem; color: #D4A373; line-height: 1; }
+.stat-item .desc { font-size: 0.875rem; color: #8C7C6C; margin-top: 0.25rem; }
+
+/* Featured work cards */
+.featured-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin: 2rem 0; }
+.feat-card { background: #FDFAF6; border-radius: 12px; overflow: hidden; border: 1px solid #E8DFD3; transition: box-shadow 0.3s; }
+.feat-card:hover { box-shadow: 0 8px 30px rgba(44,36,24,0.08); }
+.feat-card .card-img { height: 200px; background: #EDE4D8; display: flex; align-items: center; justify-content: center; color: #B88A5C; font-family: 'DM Serif Display', Georgia, 'Times New Roman', serif; font-style: italic; font-size: 0.875rem; position: relative; }
+.feat-card .card-img::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 60%, rgba(248,244,237,1) 100%); }
+.feat-card .card-body { padding: 1.5rem; }
+.feat-card .card-tag { font-size: 0.7rem; color: #B88A5C; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600; margin-bottom: 0.5rem; }
+.feat-card h3 { font-size: 1.4rem; margin-bottom: 0.5rem; }
+.feat-card p { font-size: 0.9375rem; color: #6C5C4C; }
+.feat-card .card-metric { display: inline-block; margin-top: 0.75rem; font-size: 0.8125rem; color: #D4A373; font-weight: 600; }
+.feat-card .card-metric::before { content: "\2192"; margin-right: 0.4rem; }
+
+/* Process */
+.process-timeline { margin: 2rem 0; }
+.process-timeline .step { display: flex; gap: 2rem; padding: 1.75rem 0; border-bottom: 1px solid #E8DFD3; }
+.process-timeline .step:last-child { border-bottom: none; }
+.process-timeline .step-num { font-family: 'DM Serif Display', Georgia, 'Times New Roman', serif; font-size: 2rem; color: #E8DFD3; line-height: 1; min-width: 3rem; }
+.process-timeline .step-content { }
+.process-timeline .step-content h3 { font-size: 1.2rem; margin-bottom: 0.3rem; }
+.process-timeline .step-content p { font-size: 0.9375rem; color: #6C5C4C; margin-bottom: 0; }
+
+/* About */
+.about-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin: 2rem 0; }
+.about-wrap .principle { padding: 1.25rem; background: #FDFAF6; border-radius: 8px; border: 1px solid #E8DFD3; margin-bottom: 1rem; }
+.about-wrap .principle h3 { font-size: 1.1rem; font-family: 'DM Serif Display', Georgia, 'Times New Roman', serif; margin-bottom: 0.25rem; }
+.about-wrap .principle p { font-size: 0.875rem; color: #6C5C4C; margin-bottom: 0; }
+.about-wrap .tool-list { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; }
+.about-wrap .tool-list span { background: #EDE4D8; padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.8125rem; color: #5C5448; }
+
+/* Contact */
+.contact-panel { background: #2C2418; color: #F8F4ED; border-radius: 16px; padding: 4rem; margin: 2rem 0; position: relative; overflow: hidden; }
+.contact-panel::before { content: ""; position: absolute; top: -50%; right: -20%; width: 300px; height: 300px; background: radial-gradient(circle, rgba(212,163,115,0.1) 0%, transparent 70%); }
+.contact-panel h2 { color: #F8F4ED; }
+.contact-panel p { color: #B8A898; max-width: 500px; }
+.contact-panel .email-btn { display: inline-block; background: #D4A373; color: #2C2418; text-decoration: none; padding: 0.875rem 2.5rem; border-radius: 40px; font-weight: 600; font-size: 0.9375rem; margin-top: 1rem; transition: background 0.2s; }
+.contact-panel .email-btn:hover { background: #C49363; }
+.contact-panel .social-links { margin-top: 1.5rem; display: flex; gap: 1.5rem; }
+.contact-panel .social-links a { color: #8C7C6C; text-decoration: none; font-size: 0.875rem; transition: color 0.2s; }
+.contact-panel .social-links a:hover { color: #D4A373; }
+
+/* Footer */
+footer { padding: 2rem 0; border-top: 2px solid #E8DFD3; margin-top: 3rem; display: flex; justify-content: space-between; align-items: center; }
+footer p { font-size: 0.8125rem; color: #8C7C6C; margin-bottom: 0; }
+
+/* Section spacing */
+section { padding: 4rem 0; }
+
+@media (max-width: 768px) {
+  h1 { font-size: 2.5rem; }
+  h2 { font-size: 1.8rem; }
+  .featured-grid { grid-template-columns: 1fr; }
+  .stats-bar { flex-direction: column; gap: 1rem; }
+  .about-wrap { grid-template-columns: 1fr; }
+  .header-inner { flex-direction: column; gap: 1rem; }
+  header nav a { margin: 0 0.75rem; }
+  .contact-panel { padding: 2rem; border-radius: 8px; }
+  .hero::after { display: none; }
+  .process-timeline .step { gap: 1rem; }
+  .process-timeline .step-num { font-size: 1.5rem; min-width: 2rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+</style>
+</head>
+<body>
+
+<header>
+<div class="container header-inner">
+  <a href="#" class="logo"><span class="logo-mark"></span>Naman Sharma</a>
+  <nav>
+    <a href="#work">Work</a>
+    <a href="#process">Process</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</div>
+</header>
+
+<main>
+<!-- Hero -->
+<section class="hero">
+<div class="container">
+  <div class="eyebrow">Product / UX Designer — Jaipur, India</div>
+  <div class="intro-text">
+    <h1>Improving people's lives with design and tech, <span class="highlight">one pixel at a time</span>.</h1>
+    <p class="subtitle">I'm a self-taught Product/UX Designer with a CS background, three years of professional experience, and a stubborn commitment to craft. I make complex products feel simple and help startups go from zero to one.</p>
+  </div>
+
+  <div class="stats-bar">
+    <div class="stat-item">
+      <div class="number">+20%</div>
+      <div class="desc">Transaction lift &mdash; Asian Paints</div>
+    </div>
+    <div class="stat-item">
+      <div class="number">−60%</div>
+      <div class="desc">Uninstall drop &mdash; Boost360</div>
+    </div>
+    <div class="stat-item">
+      <div class="number">$500K</div>
+      <div class="desc">Pre-seed raised &mdash; Turns redesign</div>
+    </div>
+    <div class="stat-item">
+      <div class="number">4.8★</div>
+      <div class="desc">Play Store rating &mdash; LetsConnect</div>
+    </div>
+  </div>
+</div>
+</section>
+
+<hr class="rule container">
+
+<!-- Selected Work -->
+<section id="work">
+<div class="container">
+  <div class="eyebrow">Selected Work</div>
+  <h2>Case studies with real weight</h2>
+  <p style="max-width: 560px;">Every project moved a metric that mattered to the business. No vanity projects, no hypotheticals.</p>
+
+  <div class="featured-grid">
+    <div class="feat-card">
+      <div class="card-img">[ Placeholder: Asian Paints dealer portal dashboard ]</div>
+      <div class="card-body">
+        <div class="card-tag">UX Research · UX Design · UI Design</div>
+        <h3>Asian Paints — Dealer Portal</h3>
+        <p>End-to-end redesign of Asia's largest paint company's dealer portal. Digitized order placement, introduced data-driven product recommendations, and barcode-based ordering — cutting dealer-salesman dependency.</p>
+        <div class="card-metric">+20% transaction volume</div>
+      </div>
+    </div>
+
+    <div class="feat-card">
+      <div class="card-img">[ Placeholder: Boost360 onboarding flow mockup ]</div>
+      <div class="card-body">
+        <div class="card-tag">UX Research · Usability Testing · UX Design</div>
+        <h3>NowFloats Boost360 — Onboarding Redesign</h3>
+        <p>Diagnosed why 80% of new users dropped off before signup. Redesigned the onboarding with visual signup, trust-building, and quick wins. Turned a 30-minute frustration into a seamless flow.</p>
+        <div class="card-metric">−60% uninstall rate</div>
+      </div>
+    </div>
+
+    <div class="feat-card">
+      <div class="card-img">[ Placeholder: Wikipedia research — user journey maps ]</div>
+      <div class="card-body">
+        <div class="card-tag">UX Research · Field Studies</div>
+        <h3>Wikipedia — KaiOS User Research</h3>
+        <p>Commissioned by the Wikimedia Foundation. Conducted 25 in-person interviews across three Indian cities to understand how JioPhone users interact with Wikipedia. Delivered actionable product recommendations.</p>
+        <div class="card-metric">Informed global product strategy</div>
+      </div>
+    </div>
+
+    <div class="feat-card">
+      <div class="card-img">[ Placeholder: Turns brand guidelines & website mockup ]</div>
+      <div class="card-body">
+        <div class="card-tag">Web Design · Brand Guidelines · UX Audit</div>
+        <h3>Turns — Brand & Product Redesign</h3>
+        <p>UX audits, full website and landing page redesign, multi-platform brand guidelines and design system. Identified conversion bottlenecks and rebuilt the experience — directly contributing to a successful fundraise.</p>
+        <div class="card-metric">$500K pre-seed raised</div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<hr class="rule container">
+
+<!-- Process -->
+<section id="process">
+<div class="container">
+  <div class="eyebrow">How I Work</div>
+  <h2>A process built from experience</h2>
+  <p style="max-width: 560px;">Every step here earned its place. I've learned that skipping any of these creates problems downstream.</p>
+
+  <div class="process-timeline">
+    <div class="step">
+      <div class="step-num">01</div>
+      <div class="step-content">
+        <h3>Research</h3>
+        <p>Understanding the problem, the customer, and the competitive landscape before touching any tool. User interviews, competitive analysis, heuristic evaluation.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">02</div>
+      <div class="step-content">
+        <h3>User Journey</h3>
+        <p>Mapping the end-to-end experience to uncover friction. Personas, journey maps, decision points — finding where the experience breaks.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <div class="step-content">
+        <h3>Design Exploration</h3>
+        <p>Going wide before going deep. Exploring multiple directions, rapid prototyping, testing assumptions through collaborative critique.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">04</div>
+      <div class="step-content">
+        <h3>Design Refinement</h3>
+        <p>Polishing the chosen direction. Visual design, design system thinking, preparing documentation for handoff.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">05</div>
+      <div class="step-content">
+        <h3>Handoff</h3>
+        <p>Close collaboration with engineering and product to ensure faithful implementation. Not a throw-over-the-wall approach.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">06</div>
+      <div class="step-content">
+        <h3>Monitor</h3>
+        <p>Shipping is the beginning, not the end. Tracking metrics, monitoring performance, and iterating based on real usage data.</p>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<hr class="rule container">
+
+<!-- About -->
+<section id="about">
+<div class="container">
+  <div class="eyebrow">About</div>
+  <h2>Curious generalist by nature</h2>
+
+  <div class="about-wrap">
+    <div>
+      <p>Product/UX designer with a Computer Engineering degree and experience spanning graphic design, UX research, product design, web design, and branding. I've worn many hats, and that breadth lets me connect dots that specialists sometimes miss.</p>
+      <p>Based in Jaipur, India — working remotely with clients worldwide.</p>
+
+      <div class="tool-list">
+        <span>Figma</span>
+        <span>FigJam</span>
+        <span>Framer</span>
+        <span>Webflow</span>
+        <span>Protopie</span>
+        <span>Adobe Suite</span>
+        <span>Miro</span>
+      </div>
+    </div>
+    <div>
+      <div class="principle">
+        <h3>Consistency beats talent</h3>
+        <p>I'm not the most talented designer out there, but I show up every day and compound my skills through consistent effort.</p>
+      </div>
+      <div class="principle">
+        <h3>Let curiosity guide you</h3>
+        <p>I know a little about a lot of things. It helps me connect scattered information into coherent solutions.</p>
+      </div>
+      <div class="principle">
+        <h3>Form follows function</h3>
+        <p>Problems are solved with functionality, not aesthetics. But once solved, beauty creates delight — and humans remember delight.</p>
+      </div>
+      <div class="principle">
+        <h3>Give a damn</h3>
+        <p>Founder's mindset. Ownership. Going the extra mile. Success is shared responsibility from effective collaboration.</p>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<hr class="rule container">
+
+<!-- Contact -->
+<section id="contact">
+<div class="container">
+  <div class="eyebrow">Get in Touch</div>
+  <div class="contact-panel">
+    <h2>Let's build something that matters.</h2>
+    <p>If you have a product that needs fixing, a team that needs design thinking, or just want to talk about hip-hop and indie dogs — I'd love to hear from you.</p>
+    <a href="mailto:madebynaman@gmail.com" class="email-btn">Send me a note</a>
+    <div class="social-links">
+      <a href="https://madebynaman.com" target="_blank" rel="noopener">madebynaman.com</a>
+      <a href="https://linkedin.com/in/madebynaman" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
+  </div>
+</div>
+</section>
+</main>
+
+<footer>
+<div class="container">
+  <p>&copy; 2025 Naman Sharma</p>
+  <p>Designed with care, built by hand.</p>
+</div>
+</footer>
+
+</body>
+</html>

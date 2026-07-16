@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Redesign Test — Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: #F8FAFC; color: #0F172A; font-family: 'Inter', system-ui, -apple-system, sans-serif; line-height: 1.6; padding: 3rem 2rem; -webkit-font-smoothing: antialiased; }
+.container { max-width: 960px; margin: 0 auto; }
+
+h1 { font-size: 2.5rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 0.25rem; }
+h1 .accent { color: #8B5CF6; }
+.subtitle { color: #64748B; margin-bottom: 2.5rem; font-size: 1.0625rem; }
+.subtitle a { color: #8B5CF6; text-decoration: none; border-bottom: 1px solid transparent; }
+.subtitle a:hover { border-bottom-color: #8B5CF6; }
+
+.meta { font-family: 'DM Mono', 'Courier New', monospace; font-size: 0.75rem; color: #94A3B8; margin-bottom: 2rem; display: flex; gap: 1.5rem; }
+
+.model-grid { display: grid; gap: 1.5rem; }
+.model-card { background: #fff; border: 1px solid #E2E8F0; border-radius: 12px; padding: 1.5rem; transition: border-color 0.2s, box-shadow 0.2s; }
+.model-card:hover { border-color: #8B5CF6; box-shadow: 0 4px 20px rgba(139,92,246,0.08); }
+.model-card .model-name { font-size: 1.15rem; font-weight: 600; margin-bottom: 0.25rem; }
+.model-card .model-name .status-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 0.5rem; vertical-align: middle; }
+.model-card .model-name .dot-ready { background: #22C55E; }
+.model-card .model-name .dot-pending { background: #CBD5E1; }
+.model-card .model-path { font-family: 'DM Mono', 'Courier New', monospace; font-size: 0.7rem; color: #94A3B8; margin-bottom: 0.75rem; }
+.model-card .directions { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.model-card .directions a { display: inline-block; background: #F1F5F9; color: #475569; text-decoration: none; padding: 0.35rem 0.75rem; border-radius: 6px; font-size: 0.8125rem; font-family: 'DM Mono', 'Courier New', monospace; transition: all 0.15s; }
+.model-card .directions a:hover { background: #8B5CF6; color: #fff; }
+.model-card .directions a.pending-link { opacity: 0.4; cursor: default; }
+.model-card .no-files { font-size: 0.8125rem; color: #94A3B8; font-style: italic; }
+
+.section-title { font-size: 1.25rem; font-weight: 600; margin: 2rem 0 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid #E2E8F0; }
+
+footer { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid #E2E8F0; font-family: 'DM Mono', 'Courier New', monospace; font-size: 0.75rem; color: #94A3B8; display: flex; justify-content: space-between; }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h1><span class="accent">AI Redesign Test</span> — Portfolio Dashboard</h1>
+  <p class="subtitle">Side-by-side comparison of 12 AI models redesigning <a href="https://madebynaman.com" target="_blank" rel="noopener">Naman Sharma's</a> portfolio homepage. Each model produced 5 distinct design directions from the same brief.</p>
+
+  <div class="meta">
+    <span>Models: 12</span>
+    <span>Directions per model: 5</span>
+    <span>Source: <a href="prd.md" style="color: #94A3B8;">prd.md</a></span>
+  </div>
+
+  <div class="section-title">Model Directions</div>
+  <div class="model-grid" id="model-grid">
+    <!-- Populated by JS below -->
+  </div>
+
+  <footer>
+    <span>AI Redesign Test — Q3 2025</span>
+    <span>Repo: github.com/naman/website</span>
+  </footer>
+</div>
+
+<script>
+const models = [
+  { name: 'deepseek-v4-flash', label: 'DeepSeek V4 Flash', files: [1,2,3,4,5] },
+  { name: 'fable', label: 'Fable', files: null },
+  { name: 'gemini-3.1-pro', label: 'Gemini 3.1 Pro', files: null },
+  { name: 'gemini-3.5-flash', label: 'Gemini 3.5 Flash', files: null },
+  { name: 'glm-5.2', label: 'GLM 5.2', files: null },
+  { name: 'gpt-5.5', label: 'GPT 5.5', files: null },
+  { name: 'gpt-5.6-sol', label: 'GPT 5.6 Sol', files: null },
+  { name: 'gpt-5.6-terra', label: 'GPT 5.6 Terra', files: null },
+  { name: 'mimo-v2.5', label: 'Mimo v2.5', files: null },
+  { name: 'minimax-m3', label: 'MiniMax M3', files: null },
+  { name: 'opus-4.8', label: 'Opus 4.8', files: null },
+  { name: 'sonnet-5', label: 'Sonnet 5', files: null },
+];
+
+const grid = document.getElementById('model-grid');
+
+models.forEach(m => {
+  const card = document.createElement('div');
+  card.className = 'model-card';
+
+  const nameDiv = document.createElement('div');
+  nameDiv.className = 'model-name';
+  const dot = document.createElement('span');
+  dot.className = 'status-dot ' + (m.files ? 'dot-ready' : 'dot-pending');
+  nameDiv.appendChild(dot);
+  nameDiv.appendChild(document.createTextNode(m.label));
+
+  const pathDiv = document.createElement('div');
+  pathDiv.className = 'model-path';
+  pathDiv.textContent = `ai-redesign-test/${m.name}/`;
+
+  const dirDiv = document.createElement('div');
+  dirDiv.className = 'directions';
+
+  if (m.files) {
+    m.files.forEach(i => {
+      const a = document.createElement('a');
+      a.href = `${m.name}/d${i}-${m.name}.html`;
+      a.textContent = `d${i}`;
+      dirDiv.appendChild(a);
+    });
+    const readme = document.createElement('a');
+    readme.href = `${m.name}/README.md`;
+    readme.textContent = 'README';
+    dirDiv.appendChild(readme);
+  } else {
+    const span = document.createElement('span');
+    span.className = 'no-files';
+    span.textContent = 'Awaiting directions';
+    dirDiv.appendChild(span);
+  }
+
+  card.appendChild(nameDiv);
+  card.appendChild(pathDiv);
+  card.appendChild(dirDiv);
+  grid.appendChild(card);
+});
+</script>
+
+</body>
+</html>
