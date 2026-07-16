@@ -1,0 +1,1295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Naman Sharma — Studio</title>
+<meta name="description" content="Naman Sharma, Product/UX Designer. Studio, current focus, selected work.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --bg:        #ECEAE0;
+    --card:      #F4EFE6;
+    --card-2:    #F8F4EC;
+    --ink:       #1B1B1B;
+    --ink-2:     #2E2E2A;
+    --ink-soft:  #4A4A48;
+    --ink-quiet: #8A8780;
+    --rule:      #D6D1C2;
+    --rule-2:    #C2BCA9;
+    --sage:      #9CA889;
+    --sage-d:    #6E7B5C;
+    --sage-l:    #C4CDB6;
+    --coral:     #FF6B4A;
+    --coral-d:   #D8472B;
+    --coral-l:   #FFD9CD;
+    --mustard:   #E8B23A;
+    --serif:     'Instrument Serif', 'Source Serif 4', Georgia, serif;
+    --sans:      'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    --mono:      'JetBrains Mono', ui-monospace, 'SF Mono', monospace;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 15.5px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  a { color: inherit; text-decoration: none; }
+  ::selection { background: var(--coral); color: #fff; }
+
+  /* ---------- Top bar ---------- */
+  .topbar {
+    position: sticky; top: 0; z-index: 20;
+    background: rgba(236, 234, 224, 0.85);
+    backdrop-filter: saturate(140%) blur(10px);
+    -webkit-backdrop-filter: saturate(140%) blur(10px);
+    border-bottom: 1px solid var(--rule);
+  }
+  .topbar-inner {
+    max-width: 84rem; margin: 0 auto;
+    padding: 0.7rem 1.5rem;
+    display: flex; justify-content: space-between; align-items: center; gap: 1rem;
+  }
+  .topbar .brand {
+    display: flex; align-items: center; gap: 0.7rem;
+    font-weight: 600; font-size: 1rem; color: var(--ink);
+  }
+  .topbar .brand .mark {
+    width: 1.6rem; height: 1.6rem; border-radius: 8px;
+    background: linear-gradient(135deg, var(--coral) 0 50%, var(--sage) 50% 100%);
+  }
+  .topbar nav { display: flex; gap: 1.5rem; font-size: 0.88rem; color: var(--ink-soft); }
+  .topbar nav a { padding: 0.25rem 0; border-bottom: 1px solid transparent; transition: color 0.15s, border-color 0.15s; }
+  .topbar nav a:hover { color: var(--ink); border-bottom-color: var(--coral); }
+  .topbar nav a[aria-current="true"] { color: var(--ink); border-bottom-color: var(--coral); }
+
+  /* The signature pill — "Now: Available..." */
+  .now-pill {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: var(--coral);
+    color: #fff;
+    padding: 0.4rem 0.85rem 0.4rem 0.7rem;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    box-shadow: 0 1px 0 rgba(0,0,0,0.04);
+  }
+  .now-pill .pulse {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: #fff; position: relative;
+  }
+  .now-pill .pulse::after {
+    content: ''; position: absolute; inset: -3px; border-radius: 50%;
+    background: rgba(255,255,255,0.5);
+    animation: ring 1.6s ease-out infinite;
+  }
+  @keyframes ring {
+    0%   { transform: scale(0.6); opacity: 0.7; }
+    100% { transform: scale(2); opacity: 0; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .now-pill .pulse::after { animation: none; }
+  }
+
+  /* ---------- Hero / bento ---------- */
+  .hero {
+    max-width: 84rem; margin: 0 auto;
+    padding: 2rem 1.5rem 1rem;
+  }
+  .bento {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-auto-rows: minmax(7.5rem, auto);
+    gap: 0.75rem;
+  }
+  .bento .card {
+    background: var(--card);
+    border: 1px solid var(--rule);
+    border-radius: 18px;
+    padding: 1.3rem 1.4rem;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+  }
+  .bento .card:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(27,27,27,0.06); border-color: var(--rule-2); }
+  .bento .card .label {
+    font-family: var(--mono);
+    font-size: 0.66rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--ink-quiet);
+    margin-bottom: 0.7rem;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .bento .card .label .tag {
+    background: var(--ink); color: var(--card);
+    padding: 0.15rem 0.4rem;
+    font-size: 0.6rem; font-weight: 500;
+    letter-spacing: 0.1em;
+  }
+  .bento .card .label .tag.coral { background: var(--coral); }
+  .bento .card .label .tag.sage { background: var(--sage-d); }
+
+  /* Hero card 01 — Intro (huge) */
+  .bento .intro {
+    grid-column: span 4;
+    grid-row: span 2;
+    background: linear-gradient(180deg, var(--card-2) 0%, var(--card) 100%);
+    padding: 1.8rem 1.8rem 1.6rem;
+  }
+  .bento .intro h1 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(2.6rem, 5.4vw, 4.6rem);
+    line-height: 0.98;
+    letter-spacing: -0.025em;
+    color: var(--ink);
+    margin: 0.4rem 0 1rem;
+  }
+  .bento .intro h1 em { font-style: italic; color: var(--coral-d); }
+  .bento .intro p {
+    font-size: 1.02rem;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    max-width: 32rem;
+  }
+  .bento .intro .role-line {
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    color: var(--sage-d);
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    margin-top: 1.2rem;
+  }
+
+  /* Status card */
+  .bento .status {
+    grid-column: span 2;
+    grid-row: span 1;
+    background: var(--coral);
+    color: #fff;
+    border-color: var(--coral-d);
+  }
+  .bento .status .label { color: rgba(255,255,255,0.7); }
+  .bento .status .label .tag { background: #fff; color: var(--coral-d); }
+  .bento .status h3 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 1.6rem;
+    line-height: 1.1;
+    margin-bottom: 0.4rem;
+  }
+  .bento .status p { font-size: 0.88rem; color: rgba(255,255,255,0.92); }
+  .bento .status .meta {
+    position: absolute; bottom: 1rem; right: 1.3rem;
+    font-family: var(--mono); font-size: 0.66rem; color: rgba(255,255,255,0.7);
+    text-transform: uppercase; letter-spacing: 0.14em;
+  }
+
+  /* Current focus card */
+  .bento .focus {
+    grid-column: span 2;
+    grid-row: span 1;
+    background: var(--ink);
+    color: var(--card-2);
+    border-color: var(--ink);
+  }
+  .bento .focus .label { color: rgba(244,239,230,0.5); }
+  .bento .focus .label .tag { background: var(--coral); color: #fff; }
+  .bento .focus h3 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-style: italic;
+    font-size: 1.35rem;
+    line-height: 1.15;
+    margin-bottom: 0.6rem;
+  }
+  .bento .focus .bar {
+    height: 6px; background: rgba(255,255,255,0.12);
+    border-radius: 999px; overflow: hidden;
+    margin-top: 0.7rem;
+  }
+  .bento .focus .bar .fill {
+    height: 100%; width: 42%;
+    background: linear-gradient(90deg, var(--coral) 0%, var(--mustard) 100%);
+    border-radius: 999px;
+  }
+  .bento .focus .pct {
+    font-family: var(--mono); font-size: 0.7rem;
+    color: rgba(244,239,230,0.6);
+    margin-top: 0.4rem;
+    text-transform: uppercase; letter-spacing: 0.14em;
+  }
+
+  /* Case cards (3 small ones) */
+  .bento .case-card {
+    grid-column: span 2;
+    grid-row: span 2;
+    padding: 0;
+    display: flex; flex-direction: column;
+  }
+  .bento .case-card .top {
+    padding: 1.1rem 1.3rem 0.6rem;
+  }
+  .bento .case-card .year {
+    font-family: var(--mono); font-size: 0.66rem; color: var(--ink-quiet);
+    text-transform: uppercase; letter-spacing: 0.14em;
+    margin-bottom: 0.3rem;
+  }
+  .bento .case-card h3 {
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 1.15rem;
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    margin-bottom: 0.3rem;
+  }
+  .bento .case-card .org {
+    font-family: var(--mono); font-size: 0.7rem; color: var(--ink-quiet);
+    text-transform: uppercase; letter-spacing: 0.12em;
+  }
+  .bento .case-card .placeholder {
+    flex: 1; min-height: 7rem;
+    margin: 0.5rem 0.5rem 0;
+    border-radius: 10px;
+    position: relative; overflow: hidden;
+    background: var(--bg);
+    border: 1px solid var(--rule);
+  }
+  .bento .case-card .footer {
+    padding: 0.8rem 1.3rem 1rem;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .bento .case-card .stat {
+    font-family: var(--mono); font-size: 0.78rem; color: var(--ink);
+    font-weight: 500;
+  }
+  .bento .case-card .stat b { color: var(--coral-d); font-size: 1rem; }
+  .bento .case-card .arrow {
+    color: var(--ink-quiet);
+    width: 18px; height: 18px;
+    transition: transform 0.2s, color 0.2s;
+  }
+  .bento .case-card:hover .arrow { color: var(--coral); transform: translateX(3px); }
+
+  /* Placeholder variants for case cards */
+  .ph-portal { background: linear-gradient(135deg, var(--mustard) 0 35%, var(--sage-l) 35% 100%); display: grid; place-items: center; }
+  .ph-portal .mock {
+    width: 70%; height: 60%;
+    background: var(--card-2);
+    border: 1px solid var(--rule-2);
+    border-radius: 4px;
+    position: relative; overflow: hidden;
+  }
+  .ph-portal .mock::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 22%; background: var(--ink); }
+  .ph-portal .mock .blk { position: absolute; background: var(--rule); }
+  .ph-portal .mock .b1 { left: 26%; top: 12%; width: 30%; height: 14%; }
+  .ph-portal .mock .b2 { left: 26%; top: 32%; width: 22%; height: 18%; background: var(--coral); }
+  .ph-portal .mock .b3 { left: 52%; top: 32%; width: 24%; height: 18%; }
+  .ph-portal .mock .b4 { left: 26%; top: 56%; width: 50%; height: 32%; }
+
+  .ph-phone {
+    background: linear-gradient(180deg, var(--sage) 0%, var(--sage-d) 100%);
+    display: flex; align-items: center; justify-content: center; gap: 0.6rem;
+  }
+  .ph-phone .ph {
+    width: 22%; aspect-ratio: 9/19; background: var(--card-2); border-radius: 5px; border: 1px solid var(--ink-2);
+    position: relative; overflow: hidden;
+  }
+  .ph-phone .ph::before { content: ''; position: absolute; top: 6%; left: 50%; transform: translateX(-50%); width: 30%; height: 3%; background: var(--ink-2); }
+  .ph-phone .ph .r { position: absolute; left: 12%; right: 12%; height: 4%; background: var(--rule-2); border-radius: 1px; }
+  .ph-phone .ph .r1 { top: 18%; width: 60%; }
+  .ph-phone .ph .r2 { top: 28%; width: 80%; background: var(--coral); }
+  .ph-phone .ph .r3 { top: 40%; width: 50%; }
+  .ph-phone .ph .r4 { top: 50%; width: 70%; }
+  .ph-phone .ph .btn { position: absolute; left: 18%; right: 18%; bottom: 6%; height: 12%; background: var(--ink); border-radius: 3px; }
+  .ph-phone .ph:nth-child(2) .r2 { background: var(--ink); }
+
+  .ph-research {
+    background: var(--sage-l);
+    position: relative; overflow: hidden;
+  }
+  .ph-research .sticky {
+    position: absolute;
+    background: var(--card-2);
+    border: 1px solid var(--ink-2);
+    padding: 0.3rem 0.5rem;
+    font-family: var(--mono); font-size: 0.5rem;
+    color: var(--ink-soft);
+    text-transform: uppercase; letter-spacing: 0.06em;
+  }
+  .ph-research .s1 { top: 12%; left: 6%;  transform: rotate(-3deg); background: var(--mustard); }
+  .ph-research .s2 { top: 10%; left: 28%; transform: rotate(2deg); }
+  .ph-research .s3 { top: 14%; left: 50%; transform: rotate(-1deg); background: var(--coral-l); }
+  .ph-research .s4 { top: 11%; left: 72%; transform: rotate(3deg); }
+  .ph-research .s5 { top: 55%; left: 12%; transform: rotate(2deg); }
+  .ph-research .s6 { top: 58%; left: 35%; transform: rotate(-2deg); background: var(--mustard); }
+  .ph-research .s7 { top: 56%; left: 58%; transform: rotate(1deg); }
+  .ph-research .s8 { top: 60%; left: 78%; transform: rotate(-3deg); background: var(--coral-l); }
+  .ph-research .center {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    width: 24%; aspect-ratio: 1; border-radius: 50%;
+    background: var(--ink);
+    display: grid; place-items: center;
+    color: var(--card-2); font-family: var(--mono); font-size: 0.55rem;
+    text-transform: uppercase; letter-spacing: 0.08em;
+  }
+
+  /* Selected clients card (small) */
+  .bento .clients {
+    grid-column: span 2;
+    grid-row: span 1;
+  }
+  .bento .clients .label .tag { background: var(--sage-d); }
+  .bento .clients .row {
+    display: flex; flex-wrap: wrap; gap: 0.4rem;
+  }
+  .bento .clients .pill {
+    font-family: var(--mono); font-size: 0.72rem;
+    padding: 0.3rem 0.65rem;
+    border: 1px solid var(--rule-2);
+    background: var(--card-2);
+    color: var(--ink-soft);
+    border-radius: 999px;
+  }
+  .bento .clients .pill.hi { background: var(--ink); color: var(--card-2); border-color: var(--ink); }
+
+  /* Tools card */
+  .bento .tools {
+    grid-column: span 2;
+    grid-row: span 1;
+  }
+  .bento .tools .row { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+  .bento .tools .tool {
+    font-family: var(--mono); font-size: 0.7rem;
+    padding: 0.25rem 0.6rem;
+    background: var(--card-2);
+    color: var(--ink-soft);
+    border-radius: 6px;
+    border: 1px solid transparent;
+  }
+  .bento .tools .tool.alt { background: var(--sage-l); color: var(--sage-d); }
+
+  /* Asks card */
+  .bento .asks {
+    grid-column: span 2;
+    grid-row: span 1;
+  }
+  .bento .asks .row { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+  .bento .asks .ask {
+    font-family: var(--hand);
+    font-size: 1.05rem;
+    padding: 0.4rem 0.7rem;
+    background: var(--mustard);
+    color: var(--ink);
+    border-radius: 6px;
+    transform: rotate(-1deg);
+  }
+  .bento .asks .ask:nth-child(2) { background: var(--coral-l); color: var(--coral-d); transform: rotate(1deg); }
+  .bento .asks .ask:nth-child(3) { background: var(--sage-l); color: var(--sage-d); transform: rotate(-0.5deg); }
+  .bento .asks .ask:nth-child(4) { background: var(--card-2); transform: rotate(0.5deg); }
+  .bento .asks .ask:nth-child(5) { background: var(--coral-l); color: var(--coral-d); transform: rotate(-0.8deg); }
+  .bento .asks .ask:nth-child(6) { background: var(--mustard); transform: rotate(0.7deg); }
+
+  /* ---------- Section wrapper ---------- */
+  .sec {
+    max-width: 84rem; margin: 0 auto;
+    padding: 4.5rem 1.5rem 1rem;
+  }
+  .sec .sec-head {
+    display: flex; justify-content: space-between; align-items: baseline;
+    padding-bottom: 1rem;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid var(--rule);
+  }
+  .sec .sec-head .kicker {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--coral-d);
+    margin-bottom: 0.4rem;
+  }
+  .sec .sec-head h2 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(2rem, 3.6vw, 2.8rem);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+  }
+  .sec .sec-head h2 em { font-style: italic; color: var(--sage-d); }
+  .sec .sec-head .meta {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--ink-quiet);
+    text-align: right;
+  }
+
+  /* ---------- Detailed case study ---------- */
+  .cs {
+    background: var(--card);
+    border: 1px solid var(--rule);
+    border-radius: 22px;
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+    display: grid;
+    grid-template-columns: 1.1fr 1.4fr;
+    gap: 2rem;
+    align-items: start;
+  }
+  .cs .left .kicker {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--coral-d);
+    margin-bottom: 0.5rem;
+  }
+  .cs .left .year {
+    font-family: var(--mono); font-size: 0.74rem;
+    color: var(--ink-quiet); text-transform: uppercase; letter-spacing: 0.12em;
+  }
+  .cs .left h3 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(1.8rem, 3vw, 2.4rem);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin: 0.6rem 0 0.4rem;
+  }
+  .cs .left .org {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--sage-d);
+    margin-bottom: 1.4rem;
+  }
+  .cs .left .placeholder {
+    aspect-ratio: 4/3;
+    border-radius: 14px;
+    background: var(--bg);
+    border: 1px solid var(--rule);
+    position: relative; overflow: hidden;
+  }
+  .cs .left .placeholder .label {
+    position: absolute; top: 0.7rem; left: 0.8rem;
+    font-family: var(--mono); font-size: 0.62rem;
+    color: var(--ink-quiet); text-transform: uppercase; letter-spacing: 0.14em;
+  }
+  .cs .left .placeholder .pin {
+    position: absolute; bottom: 0.7rem; right: 0.8rem;
+    font-family: var(--mono); font-size: 0.62rem;
+    color: var(--ink-quiet); text-transform: uppercase; letter-spacing: 0.14em;
+  }
+  .cs .left .placeholder.cs-portal {
+    background: linear-gradient(135deg, var(--mustard) 0 38%, var(--sage-l) 38% 100%);
+  }
+  .cs .left .placeholder.cs-portal .mock {
+    position: absolute; left: 12%; top: 12%; right: 12%; bottom: 12%;
+    background: var(--card-2); border: 1px solid var(--ink); border-radius: 4px; overflow: hidden;
+  }
+  .cs .left .placeholder.cs-portal .mock::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 22%; background: var(--ink); }
+  .cs .left .placeholder.cs-portal .mock .blk { position: absolute; background: var(--rule); }
+  .cs .left .placeholder.cs-portal .mock .b1 { left: 26%; top: 10%; width: 30%; height: 14%; }
+  .cs .left .placeholder.cs-portal .mock .b2 { left: 26%; top: 30%; width: 22%; height: 18%; background: var(--coral); }
+  .cs .left .placeholder.cs-portal .mock .b3 { left: 52%; top: 30%; width: 24%; height: 18%; }
+  .cs .left .placeholder.cs-portal .mock .b4 { left: 26%; top: 54%; width: 50%; height: 36%; }
+
+  .cs .left .placeholder.cs-phone {
+    background: var(--sage);
+    display: grid; place-items: center;
+  }
+  .cs .left .placeholder.cs-phone .phones { display: flex; gap: 0.7rem; }
+  .cs .left .placeholder.cs-phone .ph {
+    width: 4rem; aspect-ratio: 9/19; background: var(--card-2); border: 1.5px solid var(--ink); border-radius: 6px; position: relative; overflow: hidden;
+  }
+  .cs .left .placeholder.cs-phone .ph::before { content: ''; position: absolute; top: 5%; left: 50%; transform: translateX(-50%); width: 30%; height: 2px; background: var(--ink); }
+  .cs .left .placeholder.cs-phone .ph .r { position: absolute; left: 12%; right: 12%; height: 3px; background: var(--ink); }
+  .cs .left .placeholder.cs-phone .ph .r1 { top: 16%; width: 60%; }
+  .cs .left .placeholder.cs-phone .ph .r2 { top: 24%; width: 80%; background: var(--coral); }
+  .cs .left .placeholder.cs-phone .ph .r3 { top: 32%; width: 70%; }
+  .cs .left .placeholder.cs-phone .ph .r4 { top: 40%; width: 50%; }
+  .cs .left .placeholder.cs-phone .ph .r5 { top: 50%; width: 65%; }
+  .cs .left .placeholder.cs-phone .ph .r6 { top: 58%; width: 75%; }
+  .cs .left .placeholder.cs-phone .ph .btn { position: absolute; left: 18%; right: 18%; bottom: 6%; height: 12%; background: var(--ink); border-radius: 3px; }
+  .cs .left .placeholder.cs-phone .ph:nth-child(2) .r2 { background: var(--ink); }
+  .cs .left .placeholder.cs-phone .ph:nth-child(2) .btn { background: var(--coral); }
+
+  .cs .left .placeholder.cs-research {
+    background: var(--sage-l); position: relative; overflow: hidden;
+  }
+  .cs .left .placeholder.cs-research::before {
+    content: ''; position: absolute; inset: 15%;
+    background: radial-gradient(circle, var(--card-2) 0 28%, transparent 29%);
+  }
+  .cs .left .placeholder.cs-research .center {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    width: 22%; aspect-ratio: 1; border-radius: 50%; background: var(--ink);
+    color: var(--card-2); font-family: var(--mono); font-size: 0.55rem;
+    text-transform: uppercase; letter-spacing: 0.06em;
+    display: grid; place-items: center; z-index: 2;
+  }
+  .cs .left .placeholder.cs-research .sticky {
+    position: absolute; background: var(--card-2);
+    border: 1px solid var(--ink-2);
+    padding: 0.3rem 0.5rem;
+    font-family: var(--mono); font-size: 0.5rem;
+    color: var(--ink-soft);
+    text-transform: uppercase; letter-spacing: 0.06em;
+    z-index: 2;
+  }
+  .cs .left .placeholder.cs-research .s1 { top: 12%; left: 8%;  transform: rotate(-3deg); background: var(--mustard); }
+  .cs .left .placeholder.cs-research .s2 { top: 10%; left: 28%; transform: rotate(2deg); }
+  .cs .left .placeholder.cs-research .s3 { top: 14%; left: 50%; transform: rotate(-1deg); background: var(--coral-l); }
+  .cs .left .placeholder.cs-research .s4 { top: 11%; left: 72%; transform: rotate(3deg); }
+  .cs .left .placeholder.cs-research .s5 { top: 55%; left: 12%; transform: rotate(2deg); }
+  .cs .left .placeholder.cs-research .s6 { top: 58%; left: 35%; transform: rotate(-2deg); background: var(--mustard); }
+  .cs .left .placeholder.cs-research .s7 { top: 56%; left: 58%; transform: rotate(1deg); }
+  .cs .left .placeholder.cs-research .s8 { top: 60%; left: 78%; transform: rotate(-3deg); background: var(--coral-l); }
+
+  .cs .right h4 {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--sage-d);
+    margin-bottom: 0.5rem;
+    margin-top: 1.2rem;
+  }
+  .cs .right h4:first-child { margin-top: 0; }
+  .cs .right p {
+    font-size: 0.98rem;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    margin-bottom: 0.7rem;
+  }
+  .cs .right p.summary {
+    font-size: 1.08rem;
+    color: var(--ink);
+    line-height: 1.55;
+  }
+  .cs .right p strong { font-weight: 600; color: var(--ink); }
+  .cs .right p em { font-style: italic; color: var(--coral-d); }
+  .cs .right .outcome {
+    display: flex; gap: 0.6rem; flex-wrap: wrap; margin-top: 1.2rem;
+  }
+  .cs .right .outcome .pill {
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    padding: 0.45rem 0.8rem;
+    background: var(--card-2);
+    border: 1px solid var(--rule-2);
+    color: var(--ink);
+    border-radius: 999px;
+  }
+  .cs .right .outcome .pill b { color: var(--coral-d); font-weight: 600; margin-right: 0.3rem; }
+  .cs .right .outcome .pill.hi { background: var(--coral); color: #fff; border-color: var(--coral-d); }
+  .cs .right .outcome .pill.hi b { color: #fff; }
+
+  /* ---------- Process (numbered — IS a sequence) ---------- */
+  .process {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 0.6rem;
+  }
+  .process .step {
+    background: var(--card);
+    border: 1px solid var(--rule);
+    border-radius: 14px;
+    padding: 1.2rem 1rem;
+    position: relative;
+  }
+  .process .step .n {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--coral-d);
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.4rem;
+  }
+  .process .step h4 {
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 0.98rem;
+    line-height: 1.25;
+    color: var(--ink);
+    margin-bottom: 0.4rem;
+  }
+  .process .step p {
+    font-size: 0.83rem;
+    line-height: 1.5;
+    color: var(--ink-soft);
+  }
+
+  /* ---------- Principles (4 cards) ---------- */
+  .principles {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+  }
+  .principles .p {
+    background: var(--card);
+    border: 1px solid var(--rule);
+    border-radius: 18px;
+    padding: 1.4rem 1.5rem;
+    position: relative;
+  }
+  .principles .p .num {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 2rem;
+    line-height: 1;
+    color: var(--coral);
+    margin-bottom: 0.3rem;
+  }
+  .principles .p h3 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 1.5rem;
+    line-height: 1.15;
+    color: var(--ink);
+    margin-bottom: 0.5rem;
+  }
+  .principles .p p { font-size: 0.95rem; line-height: 1.55; color: var(--ink-soft); }
+  .principles .p.sage { background: var(--sage-l); }
+  .principles .p.coral { background: var(--coral-l); }
+  .principles .p.ink { background: var(--ink); color: var(--card-2); border-color: var(--ink); }
+  .principles .p.ink p { color: rgba(244,239,230,0.7); }
+  .principles .p.ink h3 { color: var(--card-2); }
+  .principles .p.ink .num { color: var(--mustard); }
+
+  /* ---------- Career ---------- */
+  .career {
+    background: var(--card);
+    border: 1px solid var(--rule);
+    border-radius: 18px;
+    padding: 1.6rem 1.8rem;
+  }
+  .career ul { list-style: none; }
+  .career li {
+    display: grid;
+    grid-template-columns: 7.5rem 1fr auto;
+    gap: 1.5rem;
+    padding: 1.05rem 0;
+    border-top: 1px solid var(--rule);
+    align-items: baseline;
+  }
+  .career li:first-child { border-top: none; padding-top: 0; }
+  .career li:last-child { padding-bottom: 0; }
+  .career .when {
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--ink-quiet);
+  }
+  .career .role {
+    font-family: var(--sans); font-weight: 500; font-size: 1rem; color: var(--ink); line-height: 1.3;
+  }
+  .career .org {
+    font-family: var(--mono); font-size: 0.7rem; color: var(--sage-d);
+    text-transform: uppercase; letter-spacing: 0.12em; margin-top: 0.15rem;
+  }
+  .career .where {
+    font-family: var(--mono); font-size: 0.7rem; text-transform: uppercase;
+    letter-spacing: 0.12em; color: var(--ink-quiet);
+  }
+
+  /* ---------- Contact ---------- */
+  .contact-wrap {
+    background: var(--ink);
+    color: var(--card-2);
+    border-radius: 22px;
+    padding: 2.5rem 2.2rem;
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 2.5rem;
+    align-items: end;
+  }
+  .contact-wrap h2 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(2rem, 3.6vw, 3rem);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--card-2);
+  }
+  .contact-wrap h2 em { font-style: italic; color: var(--coral); }
+  .contact-wrap p {
+    font-size: 1rem;
+    line-height: 1.55;
+    color: rgba(244,239,230,0.7);
+    margin-top: 0.8rem;
+    max-width: 32rem;
+  }
+  .contact-wrap .channels {
+    display: flex; flex-direction: column; gap: 0.5rem;
+  }
+  .contact-wrap .channels a {
+    display: flex; align-items: baseline; gap: 0.6rem;
+    font-family: var(--mono);
+    font-size: 0.92rem;
+    color: var(--card-2);
+    padding-bottom: 0.2rem;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .contact-wrap .channels a:hover { color: var(--coral); border-bottom-color: var(--coral); }
+  .contact-wrap .channels .lbl { color: var(--coral); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.14em; width: 4.5rem; }
+  .contact-wrap .signoff {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 1.6rem;
+    color: var(--mustard);
+    margin-top: 1rem;
+  }
+
+  /* ---------- Footer ---------- */
+  footer.foot {
+    max-width: 84rem; margin: 0 auto;
+    padding: 1.5rem 1.5rem 2rem;
+    display: flex; justify-content: space-between; align-items: center; gap: 1rem;
+    font-family: var(--mono); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.12em;
+    color: var(--ink-quiet);
+    flex-wrap: wrap;
+  }
+  footer.foot .paw { color: var(--coral-d); display: inline-block; transform: rotate(-6deg); }
+
+  /* ---------- Narrow widths ---------- */
+  @media (max-width: 1100px) {
+    .bento { grid-template-columns: repeat(4, 1fr); }
+    .bento .intro { grid-column: span 4; }
+    .bento .status, .bento .focus { grid-column: span 2; }
+    .bento .case-card { grid-column: span 2; }
+    .bento .clients, .bento .tools, .bento .asks { grid-column: span 2; }
+    .cs { grid-template-columns: 1fr; }
+    .process { grid-template-columns: repeat(3, 1fr); }
+    .contact-wrap { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 760px) {
+    .bento { grid-template-columns: 1fr; grid-auto-rows: auto; }
+    .bento .intro,
+    .bento .status,
+    .bento .focus,
+    .bento .case-card,
+    .bento .clients,
+    .bento .tools,
+    .bento .asks { grid-column: span 1; grid-row: auto; }
+    .process { grid-template-columns: 1fr 1fr; }
+    .principles { grid-template-columns: 1fr; }
+    .career li { grid-template-columns: 1fr; gap: 0.3rem; }
+    .topbar nav { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="#top">
+      <span class="mark" aria-hidden="true"></span>
+      <span>Naman Sharma</span>
+    </a>
+    <nav aria-label="Primary">
+      <a href="#work">Work</a>
+      <a href="#process">Process</a>
+      <a href="#principles">Principles</a>
+      <a href="#career">Career</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <span class="now-pill" aria-label="Currently available for work">
+      <span class="pulse" aria-hidden="true"></span>
+      <span>Available · Q3 2026</span>
+    </span>
+  </div>
+</header>
+
+<!-- HERO BENTO -->
+<section class="hero" id="top" aria-label="Introduction">
+  <div class="bento">
+
+    <article class="card intro">
+      <div class="role-line">Product / UX / Web Designer · Jaipur, IN</div>
+      <h1>I design products that <em>users love</em>, for brands that care.</h1>
+      <p>
+        Self-taught, CS undergrad, five years in. I help early- and growth-stage
+        teams ship work that moves numbers — and I explain to clients, plainly,
+        why design is the shortest path to those numbers. This is the studio
+        view: a bento of what I do, what I'm working on, and what I've shipped.
+      </p>
+    </article>
+
+    <article class="card status">
+      <div class="label"><span>Status</span><span class="tag coral">Now</span></div>
+      <h3>Available<br>for interesting work.</h3>
+      <p>Hiring, contract, fractional — open to a conversation.</p>
+      <div class="meta">Updated today</div>
+    </article>
+
+    <article class="card focus">
+      <div class="label"><span>Current focus</span><span class="tag">Build</span></div>
+      <h3>Re-learning to code, so I can ship my own ideas.</h3>
+      <div class="bar"><div class="fill"></div></div>
+      <div class="pct">Self-reported · day 142 of indefinite</div>
+    </article>
+
+    <!-- Case 1 — Asian Paints -->
+    <a class="card case-card" href="#case-1" aria-label="Read the Asian Paints case study">
+      <div class="top">
+        <div class="year">2021 · Thence</div>
+        <h3>Asian Paints — Dealer Portal</h3>
+        <div class="org">Research · UX · UI</div>
+      </div>
+      <div class="placeholder ph-portal">
+        <div class="mock">
+          <div class="blk b1"></div>
+          <div class="blk b2"></div>
+          <div class="blk b3"></div>
+          <div class="blk b4"></div>
+        </div>
+      </div>
+      <div class="footer">
+        <span class="stat"><b>+20%</b> Tx volume</span>
+        <svg class="arrow" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9h12M11 5l4 4-4 4"/></svg>
+      </div>
+    </a>
+
+    <!-- Case 2 — Boost360 -->
+    <a class="card case-card" href="#case-2" aria-label="Read the Boost360 case study">
+      <div class="top">
+        <div class="year">2021 · Thence</div>
+        <h3>Boost360 — Onboarding</h3>
+        <div class="org">Research · UX · UI · Usability</div>
+      </div>
+      <div class="placeholder ph-phone">
+        <div class="ph"><div class="r r1"></div><div class="r r2"></div><div class="r r3"></div><div class="r r4"></div><div class="btn"></div></div>
+        <div class="ph"><div class="r r1"></div><div class="r r2"></div><div class="r r3"></div><div class="r r4"></div><div class="btn"></div></div>
+        <div class="ph"><div class="r r1"></div><div class="r r2"></div><div class="r r3"></div><div class="r r4"></div><div class="btn"></div></div>
+      </div>
+      <div class="footer">
+        <span class="stat"><b>−60%</b> Uninstall</span>
+        <svg class="arrow" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9h12M11 5l4 4-4 4"/></svg>
+      </div>
+    </a>
+
+    <!-- Case 3 — Wikipedia -->
+    <a class="card case-card" href="#case-3" aria-label="Read the Wikipedia case study">
+      <div class="top">
+        <div class="year">2020 · Hureo / Wikimedia</div>
+        <h3>Wikipedia — KaiOS Research</h3>
+        <div class="org">Research · Personas · Journey</div>
+      </div>
+      <div class="placeholder ph-research">
+        <div class="center">25</div>
+        <div class="sticky s1">durable</div>
+        <div class="sticky s2">battery</div>
+        <div class="sticky s3">keypad</div>
+        <div class="sticky s4">jio net</div>
+        <div class="sticky s5">cheap fix</div>
+        <div class="sticky s6">smart</div>
+        <div class="sticky s7">regional</div>
+        <div class="sticky s8">voice</div>
+      </div>
+      <div class="footer">
+        <span class="stat"><b>25</b> interviews · 3 cities</span>
+        <svg class="arrow" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9h12M11 5l4 4-4 4"/></svg>
+      </div>
+    </a>
+
+    <!-- Selected clients -->
+    <article class="card clients">
+      <div class="label"><span>Selected clients</span><span class="tag sage">17+</span></div>
+      <div class="row">
+        <span class="pill hi">Thence</span>
+        <span class="pill">Turns</span>
+        <span class="pill">Gadivan</span>
+        <span class="pill">LetsConnect</span>
+        <span class="pill">Parentverse</span>
+        <span class="pill">Venyou</span>
+        <span class="pill">Sharent</span>
+        <span class="pill">+ more</span>
+      </div>
+    </article>
+
+    <!-- Tools -->
+    <article class="card tools">
+      <div class="label"><span>Day-to-day</span><span class="tag">Stack</span></div>
+      <div class="row">
+        <span class="tool">Figma</span>
+        <span class="tool alt">FigJam</span>
+        <span class="tool">Miro</span>
+        <span class="tool alt">Framer</span>
+        <span class="tool">Adobe XD</span>
+        <span class="tool alt">Illustrator</span>
+        <span class="tool">Photoshop</span>
+        <span class="tool alt">Webflow</span>
+        <span class="tool">Protopie</span>
+      </div>
+    </article>
+
+    <!-- Asks -->
+    <article class="card asks">
+      <div class="label"><span>Ask me about</span><span class="tag coral">Try me</span></div>
+      <div class="row">
+        <span class="ask">My indie dog</span>
+        <span class="ask">Computers</span>
+        <span class="ask">Finance</span>
+        <span class="ask">Hip-hop</span>
+        <span class="ask">Video games</span>
+        <span class="ask">Education</span>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<!-- DETAILED WORK -->
+<section class="sec" id="work" aria-labelledby="work-title">
+  <div class="sec-head">
+    <div>
+      <div class="kicker">Section 01</div>
+      <h2 id="work-title">Selected work, <em>at full size.</em></h2>
+    </div>
+    <div class="meta">3 case studies · 2020 — 2021</div>
+  </div>
+
+  <!-- CS 1 -->
+  <article class="cs" id="case-1" aria-labelledby="cs1-title">
+    <div class="left">
+      <div class="kicker">Case 01</div>
+      <h3 id="cs1-title">Asian Paints — Dealer Portal</h3>
+      <div class="org">Thence · 2021 · Research · UX · UI</div>
+      <div class="placeholder cs-portal" role="img" aria-label="Dealer portal, end-to-end screens">
+        <div class="mock">
+          <div class="blk b1"></div>
+          <div class="blk b2"></div>
+          <div class="blk b3"></div>
+          <div class="blk b4"></div>
+        </div>
+        <span class="label">12 screens · end-to-end</span>
+        <span class="pin">Web · Desktop</span>
+      </div>
+    </div>
+    <div class="right">
+      <h4>The problem</h4>
+      <p class="summary">
+        Asian Paints dealers were calling sales reps to place every order. Competitor
+        portals existed; dealers hated all of them. Transaction volumes and AOV
+        were flat, and the brief was simple: digitize ordering, lift AOV, and
+        make the portal worth using.
+      </p>
+      <h4>What I did</h4>
+      <p>
+        Heuristic evaluation, then an end-to-end redesign of twelve screens
+        — Home, Trending, Categories, Catalog, Listing, Order, Stock,
+        Wishlist, Cart, Tracking, Account, Reports. Added barcode-scan
+        ordering, personalized recommendations from history, loyalty
+        points, and order-size incentives to nudge AOV.
+      </p>
+      <h4>What came out</h4>
+      <p>
+        A <strong>+20%</strong> lift in online transaction volume, and a
+        healthy increase in user engagement and loyalty. Salesman–dealer
+        interaction dropped. The portal started carrying its weight.
+      </p>
+      <div class="outcome">
+        <span class="pill hi"><b>+20%</b> Online transaction volume</span>
+        <span class="pill"><b>↑</b> Engagement &amp; loyalty</span>
+        <span class="pill"><b>12</b> screens shipped</span>
+      </div>
+    </div>
+  </article>
+
+  <!-- CS 2 -->
+  <article class="cs" id="case-2" aria-labelledby="cs2-title">
+    <div class="left">
+      <div class="kicker">Case 02</div>
+      <h3 id="cs2-title">Boost360 — Onboarding</h3>
+      <div class="org">Thence · 2021 · Research · UX · UI · Usability</div>
+      <div class="placeholder cs-phone" role="img" aria-label="Onboarding screens, three phone states">
+        <div class="phones">
+          <div class="ph"><div class="r r1"></div><div class="r r2"></div><div class="r r3"></div><div class="r r4"></div><div class="r r5"></div><div class="r r6"></div><div class="btn"></div></div>
+          <div class="ph"><div class="r r1"></div><div class="r r2"></div><div class="r r3"></div><div class="r r4"></div><div class="r r5"></div><div class="r r6"></div><div class="btn"></div></div>
+          <div class="ph"><div class="r r1"></div><div class="r r2"></div><div class="r r3"></div><div class="r r4"></div><div class="r r5"></div><div class="r r6"></div><div class="btn"></div></div>
+        </div>
+        <span class="label">Onboarding · 3 states</span>
+        <span class="pin">iOS · Android</span>
+      </div>
+    </div>
+    <div class="right">
+      <h4>The problem</h4>
+      <p class="summary">
+        80% of new Boost360 users uninstalled the app before signing up. Average
+        time-to-signup was 30 minutes. Something between the marketing and
+        the product was breaking.
+      </p>
+      <h4>What I found</h4>
+      <p>
+        It wasn't crashes, OTP, ads, or permissions. It was a
+        <em>mismatch</em> — between what the marketing promised and what
+        onboarding delivered. A UX problem hiding inside a positioning
+        problem.
+      </p>
+      <h4>What I did</h4>
+      <p>
+        Made signup <strong>visual</strong>. Communicated USPs during
+        onboarding, not after. Added social proof for trust. Created a
+        <em>quick win</em> before the form fields. Routed users to support
+        if they got stuck. Ran usability tests on every iteration.
+      </p>
+      <div class="outcome">
+        <span class="pill hi"><b>−60%</b> 14-day uninstall rate</span>
+        <span class="pill"><b>↓</b> Time-to-signup</span>
+        <span class="pill"><b>4</b> states</span>
+      </div>
+    </div>
+  </article>
+
+  <!-- CS 3 -->
+  <article class="cs" id="case-3" aria-labelledby="cs3-title">
+    <div class="left">
+      <div class="kicker">Case 03</div>
+      <h3 id="cs3-title">Wikipedia — KaiOS Research</h3>
+      <div class="org">Hureo · 2020 · Research · Personas · Journey</div>
+      <div class="placeholder cs-research" role="img" aria-label="Research cluster, 25 interviews on why people use a JioPhone">
+        <div class="center">n=25</div>
+        <div class="sticky s1">durable</div>
+        <div class="sticky s2">battery</div>
+        <div class="sticky s3">keypad</div>
+        <div class="sticky s4">jio net</div>
+        <div class="sticky s5">cheap fix</div>
+        <div class="sticky s6">smart</div>
+        <div class="sticky s7">regional</div>
+        <div class="sticky s8">voice</div>
+        <span class="label">Affinities · qualitative</span>
+        <span class="pin">3 cities · 60m each</span>
+      </div>
+    </div>
+    <div class="right">
+      <h4>The brief</h4>
+      <p class="summary">
+        Wikimedia wanted to understand JioPhone (KaiOS) users — people who
+        <em>chose</em> a feature phone over a smartphone, and what that
+        meant for Wikipedia on their device.
+      </p>
+      <h4>What I did</h4>
+      <p>
+        25 in-person interviews, 45–60 minutes each, across Pune, Mumbai,
+        and Delhi. Recruited participants, ran the sessions, transcribed,
+        built personas, mapped journeys, and produced a research report
+        with concrete recommendations.
+      </p>
+      <h4>What came out</h4>
+      <p>
+        Voice-first interaction. Readability for small screens. Video
+        content. Search visibility. Regional-language SEO. Simpler Hindi.
+        The findings shaped how Wikipedia approached KaiOS for the year
+        that followed.
+      </p>
+      <div class="outcome">
+        <span class="pill hi"><b>25</b> in-person interviews</span>
+        <span class="pill"><b>3</b> cities</span>
+        <span class="pill"><b>~60m</b> per session</span>
+      </div>
+    </div>
+  </article>
+</section>
+
+<!-- PROCESS -->
+<section class="sec" id="process" aria-labelledby="process-title">
+  <div class="sec-head">
+    <div>
+      <div class="kicker">Section 02</div>
+      <h2 id="process-title">How I work, <em>in order.</em></h2>
+    </div>
+    <div class="meta">6 steps · same every project</div>
+  </div>
+  <ol class="process">
+    <li class="step">
+      <div class="n">01</div>
+      <h4>Research</h4>
+      <p>Talk to users, learn the customer, consider the solution space.</p>
+    </li>
+    <li class="step">
+      <div class="n">02</div>
+      <h4>User Journey</h4>
+      <p>Personas, decision moments, the gaps where the experience loses people.</p>
+    </li>
+    <li class="step">
+      <div class="n">03</div>
+      <h4>Exploration</h4>
+      <p>Go wide. A range of solutions, tested, iterated, narrowed together.</p>
+    </li>
+    <li class="step">
+      <div class="n">04</div>
+      <h4>Refinement</h4>
+      <p>Pick a direction, polish it, document it. The unglamorous part.</p>
+    </li>
+    <li class="step">
+      <div class="n">05</div>
+      <h4>Handoff</h4>
+      <p>Engineer-ready specs, edge cases, design system alignment.</p>
+    </li>
+    <li class="step">
+      <div class="n">06</div>
+      <h4>Monitor</h4>
+      <p>Once it's live, the work isn't done. Watch what the metrics say.</p>
+    </li>
+  </ol>
+</section>
+
+<!-- PRINCIPLES -->
+<section class="sec" id="principles" aria-labelledby="principles-title">
+  <div class="sec-head">
+    <div>
+      <div class="kicker">Section 03</div>
+      <h2 id="principles-title">Four working <em>beliefs.</em></h2>
+    </div>
+    <div class="meta">Short on purpose</div>
+  </div>
+  <div class="principles">
+    <div class="p">
+      <div class="num">01</div>
+      <h3>Consistency beats talent.</h3>
+      <p>I'm not the most talented designer in the room. I am, reliably, in the room. Consistent effort compounds into results that look like talent in hindsight.</p>
+    </div>
+    <div class="p sage">
+      <div class="num">02</div>
+      <h3>Let curiosity guide you.</h3>
+      <p>I know a little about a lot of things, and it helps me connect dots between scattered information. Each project is a journey of discovery.</p>
+    </div>
+    <div class="p coral">
+      <div class="num">03</div>
+      <h3>Form follows function.</h3>
+      <p>Problems are solved with functionality, not aesthetics. Once the problem is solved, going the extra mile on the visual layer is what creates delight.</p>
+    </div>
+    <div class="p ink">
+      <div class="num">04</div>
+      <h3>Give a damn.</h3>
+      <p>I work with a founder's mindset. I take ownership of outcomes, not deliverables. The project's success is my success while it's mine.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CAREER -->
+<section class="sec" id="career" aria-labelledby="career-title">
+  <div class="sec-head">
+    <div>
+      <div class="kicker">Section 04</div>
+      <h2 id="career-title">Career, <em>briefly.</em></h2>
+    </div>
+    <div class="meta">5 roles · 2017 — now</div>
+  </div>
+  <div class="career">
+    <ul>
+      <li>
+        <span class="when">2022 — now</span>
+        <div>
+          <div class="role">Product, UX &amp; Web Designer</div>
+          <div class="org">Freelance · Turns, Gadivan, LetsConnect, Parentverse, Venyou, &amp; more</div>
+        </div>
+        <span class="where">Jaipur, remote</span>
+      </li>
+      <li>
+        <span class="when">2021 — 2022</span>
+        <div>
+          <div class="role">UX Designer</div>
+          <div class="org">Thence · Asian Paints, NowFloats Boost360, Shiprocket</div>
+        </div>
+        <span class="where">In-house</span>
+      </li>
+      <li>
+        <span class="when">2019 — 2020</span>
+        <div>
+          <div class="role">UX Research Intern</div>
+          <div class="org">Hureo · Wikipedia / Wikimedia (KaiOS / JioPhone)</div>
+        </div>
+        <span class="where">Field research</span>
+      </li>
+      <li>
+        <span class="when">2018 — 2019</span>
+        <div>
+          <div class="role">Graphic Design Intern</div>
+          <div class="org">HappleyFit · Logo, posters, exhibition, WordPress</div>
+        </div>
+        <span class="where">Design intern</span>
+      </li>
+      <li>
+        <span class="when">2017 — 2018</span>
+        <div>
+          <div class="role">Graphic Design Intern</div>
+          <div class="org">Skillovate · Mascot, kids eBook, board game, collateral</div>
+        </div>
+        <span class="where">Design intern</span>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="sec" id="contact" aria-labelledby="contact-title">
+  <div class="contact-wrap">
+    <div>
+      <h2 id="contact-title">Write to me. <em>I'd like to hear what you're working on.</em></h2>
+      <p>
+        Hiring, freelance, a conversation about a project you're mulling —
+        the inbox is open. I read everything, and I reply to most of it.
+      </p>
+    </div>
+    <div>
+      <div class="channels">
+        <a href="mailto:madebynaman@gmail.com"><span class="lbl">Email</span> madebynaman@gmail.com</a>
+        <a href="https://www.madebynaman.com" target="_blank" rel="noopener"><span class="lbl">Site</span> madebynaman.com</a>
+        <a href="https://www.linkedin.com/in/madebynaman/" target="_blank" rel="noopener"><span class="lbl">LinkedIn</span> /in/madebynaman</a>
+        <a href="tel:+918208369219"><span class="lbl">Phone</span> +91 82083 69219</a>
+      </div>
+      <div class="signoff">— Naman, with Jerry nearby.</div>
+    </div>
+  </div>
+</section>
+
+<footer class="foot">
+  <span>Naman Sharma · Studio · Jaipur, IN</span>
+  <span>Made with care. <span class="paw">🐾</span> Maintained with caffeine.</span>
+</footer>
+
+<script>
+  (function () {
+    const links = document.querySelectorAll('.topbar nav a');
+    const sections = {};
+    links.forEach(a => {
+      const id = a.getAttribute('href').replace('#', '');
+      const el = document.getElementById(id);
+      if (el) sections[id] = { link: a, el };
+    });
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          links.forEach(a => a.removeAttribute('aria-current'));
+          const s = sections[e.target.id];
+          if (s) s.link.setAttribute('aria-current', 'true');
+        }
+      });
+    }, { rootMargin: '-40% 0px -55% 0px', threshold: 0 });
+    Object.values(sections).forEach(s => io.observe(s.el));
+  })();
+</script>
+
+</body>
+</html>

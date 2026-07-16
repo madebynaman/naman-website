@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Naman Sharma — Product / UX Designer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg: #F7F5F2;
+  --white: #FFFFFF;
+  --black: #111111;
+  --coral: #FF6B4A;
+  --teal: #00B4A0;
+  --purple: #7C5CFC;
+  --navy: #1A1F3A;
+  --gray: #6B6B7B;
+  --light-gray: #E8E6E3;
+  --font-display: 'Outfit', 'Helvetica Neue', sans-serif;
+  --font-body: 'Sora', 'Helvetica Neue', sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--black);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+a { color: inherit; text-decoration: none; }
+
+/* ─── NAV ─── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: 20px 48px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+nav .logo {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+nav ul { display: flex; gap: 28px; list-style: none; }
+
+nav a {
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  transition: color 0.2s;
+}
+
+nav a:hover { color: var(--coral); }
+
+/* ─── HERO ─── */
+.hero {
+  margin-top: 64px;
+  padding: 60px 48px 80px;
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 32px;
+  min-height: 80vh;
+  align-items: center;
+}
+
+.hero-left {
+  position: relative;
+}
+
+.hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--coral);
+  margin-bottom: 24px;
+}
+
+.hero-eyebrow::before {
+  content: '';
+  width: 32px;
+  height: 2px;
+  background: var(--coral);
+}
+
+.hero h1 {
+  font-family: var(--font-display);
+  font-size: clamp(52px, 7vw, 100px);
+  font-weight: 900;
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  margin-bottom: 24px;
+}
+
+.hero h1 .accent { color: var(--coral); }
+.hero h1 .outline {
+  -webkit-text-stroke: 2px var(--black);
+  color: transparent;
+}
+
+.hero-sub {
+  font-size: 16px;
+  color: var(--gray);
+  max-width: 400px;
+  line-height: 1.7;
+}
+
+.hero-right {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.hero-block {
+  border-radius: 16px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-height: 160px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-block.coral { background: var(--coral); color: var(--white); }
+.hero-block.teal { background: var(--teal); color: var(--white); }
+.hero-block.purple { background: var(--purple); color: var(--white); }
+.hero-block.navy { background: var(--navy); color: var(--white); }
+
+.hero-block-num {
+  font-family: var(--font-display);
+  font-size: 48px;
+  font-weight: 900;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.hero-block-label {
+  font-size: 12px;
+  font-weight: 500;
+  opacity: 0.8;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.hero-block.wide { grid-column: span 2; min-height: 120px; flex-direction: row; align-items: center; gap: 16px; }
+
+/* ─── SECTION DIVIDER ─── */
+.section-divider {
+  padding: 48px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.section-divider .line {
+  flex: 1;
+  height: 2px;
+  background: var(--black);
+}
+
+.section-divider h2 {
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* ─── MASONRY WORK ─── */
+.masonry {
+  padding: 0 48px 80px;
+  columns: 2;
+  column-gap: 24px;
+}
+
+.masonry-item {
+  break-inside: avoid;
+  margin-bottom: 24px;
+  border-radius: 16px;
+  overflow: hidden;
+  position: relative;
+  transition: transform 0.3s ease;
+}
+
+.masonry-item:hover { transform: translateY(-4px); }
+
+.masonry-item.large {
+  background: var(--navy);
+  color: var(--white);
+  padding: 48px;
+  min-height: 360px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.masonry-item.image-block {
+  background: linear-gradient(135deg, var(--purple), var(--coral));
+  min-height: 280px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--white);
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.masonry-item.accent-block {
+  background: var(--teal);
+  color: var(--white);
+  padding: 36px;
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.masonry-item .tag {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: rgba(255,255,255,0.2);
+  padding: 4px 12px;
+  border-radius: 20px;
+  margin-bottom: 16px;
+  width: fit-content;
+}
+
+.masonry-item h3 {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.masonry-item p {
+  font-size: 14px;
+  line-height: 1.7;
+  opacity: 0.85;
+}
+
+.masonry-item .metric-big {
+  font-family: var(--font-display);
+  font-size: 64px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+/* ─── CASE STUDY ─── */
+.cases {
+  padding: 0 48px 80px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.case-block {
+  border-radius: 16px;
+  overflow: hidden;
+  position: relative;
+}
+
+.case-block:first-child {
+  grid-column: span 2;
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+}
+
+.case-visual {
+  min-height: 280px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.case-block:first-child .case-visual {
+  background: var(--black);
+  color: var(--white);
+  min-height: 320px;
+}
+
+.case-block:nth-child(2) .case-visual {
+  background: var(--coral);
+  color: var(--white);
+  min-height: 280px;
+}
+
+.case-block:nth-child(3) .case-visual {
+  background: var(--teal);
+  color: var(--white);
+  min-height: 280px;
+}
+
+.case-content {
+  padding: 36px;
+  background: var(--white);
+}
+
+.case-content .eyebrow {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--coral);
+  margin-bottom: 12px;
+}
+
+.case-content h3 {
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.case-content p {
+  font-size: 14px;
+  color: var(--gray);
+  line-height: 1.7;
+  margin-bottom: 16px;
+}
+
+.case-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.case-tags span {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 6px 14px;
+  background: var(--bg);
+  border-radius: 20px;
+}
+
+/* ─── PROCESS ─── */
+.process-strip {
+  padding: 0 48px 80px;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 16px;
+}
+
+.process-pill {
+  background: var(--white);
+  border-radius: 16px;
+  padding: 28px 20px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.process-pill::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+}
+
+.process-pill:nth-child(1)::before { background: var(--coral); }
+.process-pill:nth-child(2)::before { background: var(--teal); }
+.process-pill:nth-child(3)::before { background: var(--purple); }
+.process-pill:nth-child(4)::before { background: var(--navy); }
+.process-pill:nth-child(5)::before { background: var(--coral); }
+.process-pill:nth-child(6)::before { background: var(--teal); }
+
+.process-pill-num {
+  font-family: var(--font-display);
+  font-size: 32px;
+  font-weight: 900;
+  color: var(--light-gray);
+  margin-bottom: 8px;
+}
+
+.process-pill h4 {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.process-pill p {
+  font-size: 12px;
+  color: var(--gray);
+  line-height: 1.5;
+}
+
+/* ─── ABOUT ─── */
+.about-section {
+  padding: 0 48px 80px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: start;
+}
+
+.about-left h2 {
+  font-family: var(--font-display);
+  font-size: clamp(36px, 4vw, 56px);
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  margin-bottom: 20px;
+}
+
+.about-left h2 .accent { color: var(--coral); }
+
+.about-left p {
+  font-size: 15px;
+  color: var(--gray);
+  line-height: 1.8;
+  margin-bottom: 16px;
+}
+
+.about-right {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.about-card {
+  border-radius: 16px;
+  padding: 28px;
+  background: var(--white);
+}
+
+.about-card h4 {
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.about-card p {
+  font-size: 13px;
+  color: var(--gray);
+  line-height: 1.6;
+}
+
+.about-card.coral { background: var(--coral); color: var(--white); }
+.about-card.coral p { color: rgba(255,255,255,0.8); }
+
+/* ─── CONTACT ─── */
+.contact-section {
+  padding: 80px 48px;
+  text-align: center;
+}
+
+.contact-section h2 {
+  font-family: var(--font-display);
+  font-size: clamp(48px, 6vw, 96px);
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  margin-bottom: 32px;
+}
+
+.contact-section h2 .accent { color: var(--coral); }
+
+.contact-links {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.contact-links a {
+  font-size: 14px;
+  font-weight: 600;
+  padding: 14px 28px;
+  border-radius: 28px;
+  transition: all 0.3s ease;
+}
+
+.contact-links a.primary {
+  background: var(--coral);
+  color: var(--white);
+}
+
+.contact-links a.primary:hover { background: #e55a3a; }
+
+.contact-links a.secondary {
+  background: var(--white);
+  border: 2px solid var(--light-gray);
+  color: var(--black);
+}
+
+.contact-links a.secondary:hover { border-color: var(--black); }
+
+/* ─── FOOTER ─── */
+footer {
+  padding: 24px 48px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: var(--gray);
+}
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 900px) {
+  .hero, .cases, .about-section { grid-template-columns: 1fr; }
+  .masonry { columns: 1; }
+  .process-strip { grid-template-columns: repeat(3, 1fr); }
+  .case-block:first-child { grid-template-columns: 1fr; }
+  .about-right { grid-template-columns: 1fr; }
+  nav ul { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <span class="logo">NS</span>
+  <ul>
+    <li><a href="#work">Work</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">Product / UX Designer</div>
+    <h1>I make<br><span class="accent">complex</span><br><span class="outline">products</span><br>simple.</h1>
+    <p class="hero-sub">Self-taught designer with 3+ years in UX and a background in Computer Science. Currently freelancing from Jaipur, India — worldwide remote.</p>
+  </div>
+  <div class="hero-right">
+    <div class="hero-block coral">
+      <div class="hero-block-num">20%</div>
+      <div class="hero-block-label">↑ Transaction Volume</div>
+    </div>
+    <div class="hero-block teal">
+      <div class="hero-block-num">60%</div>
+      <div class="hero-block-label">↓ Uninstall Rate</div>
+    </div>
+    <div class="hero-block purple">
+      <div class="hero-block-num">4.8★</div>
+      <div class="hero-block-label">Play Store Rating</div>
+    </div>
+    <div class="hero-block navy wide">
+      <div class="hero-block-num">$500K</div>
+      <div class="hero-block-label">Pre-seed Raised for Turns</div>
+    </div>
+  </div>
+</section>
+
+<!-- WORK -->
+<div class="section-divider" id="work">
+  <span class="line"></span>
+  <h2>Selected Work</h2>
+  <span class="line"></span>
+</div>
+
+<div class="masonry">
+  <div class="masonry-item large">
+    <div class="tag">Thence · 2021</div>
+    <h3>Asian Paints Dealer Portal</h3>
+    <p>End-to-end redesign of the multi-platform dealer portal. Heuristic evaluation, UX research, and UI design across 12+ screens — from trending products to order tracking to account management.</p>
+  </div>
+  <div class="masonry-item image-block">Asian Paints — Dealer Portal Mockup</div>
+  <div class="masonry-item accent-block">
+    <div class="metric-big">20%</div>
+    <p>Increase in online transaction volume</p>
+  </div>
+  <div class="masonry-item large">
+    <div class="tag">Thence · 2021</div>
+    <h3>Boost360 Onboarding</h3>
+    <p>Root cause: marketing-UX mismatch causing 60% of users to uninstall within 4 hours. Visual signup, social proof, and quick wins fixed it.</p>
+  </div>
+  <div class="masonry-item image-block">Boost360 — Onboarding Flow Mockup</div>
+  <div class="masonry-item accent-block">
+    <div class="metric-big">60%</div>
+    <p>Decrease in app uninstall rate</p>
+  </div>
+</div>
+
+<!-- CASES -->
+<div class="section-divider">
+  <span class="line"></span>
+  <h2>Deep Dives</h2>
+  <span class="line"></span>
+</div>
+
+<div class="cases">
+  <div class="case-block">
+    <div class="case-visual">Case Study — Wikipedia KaiOS Research</div>
+    <div class="case-content">
+      <div class="eyebrow">Hureo · 2020</div>
+      <h3>Wikipedia KaiOS User Research</h3>
+      <p>Led in-person research across 3 cities — 25 participants using JioPhones. Uncovered why users chose feature phones over smartphones, their Wikipedia pain points, and recommendations for voice UI and content optimization.</p>
+      <div class="case-tags">
+        <span>UX Research</span>
+        <span>User Personas</span>
+        <span>25 Participants</span>
+      </div>
+    </div>
+  </div>
+  <div class="case-block">
+    <div class="case-visual">Turns Brand System</div>
+    <div class="case-content">
+      <div class="eyebrow">Freelance · 2022</div>
+      <h3>Turns: From Rebrand to Raise</h3>
+      <p>Website redesign, brand guidelines, design system, and UX audits. The revamp helped Turns secure $500K in pre-seed funding.</p>
+      <div class="case-tags">
+        <span>Branding</span>
+        <span>Web Design</span>
+      </div>
+    </div>
+  </div>
+  <div class="case-block">
+    <div class="case-visual">LetsConnect Redesign</div>
+    <div class="case-content">
+      <div class="eyebrow">Freelance</div>
+      <h3>LetsConnect Play Store Win</h3>
+      <p>Redesigned end-to-end product experience based on user feedback about usability issues. Resulted in 4.8 stars on the Play Store.</p>
+      <div class="case-tags">
+        <span>UX Design</span>
+        <span>4.8★ Rating</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PROCESS -->
+<div class="section-divider" id="process">
+  <span class="line"></span>
+  <h2>How I Work</h2>
+  <span class="line"></span>
+</div>
+
+<div class="process-strip">
+  <div class="process-pill">
+    <div class="process-pill-num">01</div>
+    <h4>Research</h4>
+    <p>Understanding the problem, the customer, and possible solutions.</p>
+  </div>
+  <div class="process-pill">
+    <div class="process-pill-num">02</div>
+    <h4>User Journey</h4>
+    <p>Personas, journeys, and decision-making patterns.</p>
+  </div>
+  <div class="process-pill">
+    <div class="process-pill-num">03</div>
+    <h4>Explore</h4>
+    <p>Going wide. Testing, iterating, collaborating.</p>
+  </div>
+  <div class="process-pill">
+    <div class="process-pill-num">04</div>
+    <h4>Refine</h4>
+    <p>Polishing. Preparing handoff. Documenting decisions.</p>
+  </div>
+  <div class="process-pill">
+    <div class="process-pill-num">05</div>
+    <h4>Handoff</h4>
+    <p>Working with engineering for successful implementation.</p>
+  </div>
+  <div class="process-pill">
+    <div class="process-pill-num">06</div>
+    <h4>Monitor</h4>
+    <p>Live doesn't mean done. Track and iterate.</p>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<div class="section-divider" id="about">
+  <span class="line"></span>
+  <h2>About</h2>
+  <span class="line"></span>
+</div>
+
+<div class="about-section">
+  <div class="about-left">
+    <h2>Curious generalist. <span class="accent">Self-taught.</span></h2>
+    <p>Product/UX design sits at the intersection of my passion for creativity, problem solving, and technology. I'm a curious generalist — whether it's UX research, usability testing, designing apps, websites, logos, or product packaging, I've done it all.</p>
+    <p>I hate jargon. I don't "foster innovation through synergizing aesthetics and functionality." I solve problems. I make things easy to use.</p>
+  </div>
+  <div class="about-right">
+    <div class="about-card">
+      <h4>Consistency Beats Talent</h4>
+      <p>Consistent efforts compound into unimaginable results.</p>
+    </div>
+    <div class="about-card">
+      <h4>Let Curiosity Guide You</h4>
+      <p>I know a little about a lot. It helps me connect dots.</p>
+    </div>
+    <div class="about-card">
+      <h4>Form Follows Function</h4>
+      <p>Problems are solved with functionality, not aesthetics.</p>
+    </div>
+    <div class="about-card coral">
+      <h4>Give a Damn</h4>
+      <p>Entrepreneurial mindset. High agency. Ownership.</p>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<div class="contact-section" id="contact">
+  <h2>Let's <span class="accent">talk.</span></h2>
+  <div class="contact-links">
+    <a href="mailto:madebynaman@gmail.com" class="primary">Email Me</a>
+    <a href="https://www.linkedin.com/in/madebynaman/" target="_blank" class="secondary">LinkedIn</a>
+    <a href="https://www.madebynaman.com" target="_blank" class="secondary">Website</a>
+  </div>
+</div>
+
+<footer>
+  <span>© 2024 Naman Sharma</span>
+  <span>Jaipur, India — Worldwide Remote</span>
+</footer>
+
+</body>
+</html>

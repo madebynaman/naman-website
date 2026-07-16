@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Naman Sharma — Product/UX Designer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --sage: #E8F3E8;
+  --forest: #2D4A3E;
+  --coral: #E07A5F;
+  --sand: #F2E8CF;
+  --midnight: #1D2D35;
+  --mist: #D4E4D4;
+  --cream: #FAFBF8;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--cream);
+  color: var(--midnight);
+  font-family: 'DM Sans', system-ui, sans-serif;
+  line-height: 1.65;
+  font-size: 15px;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* Typography */
+h1, h2, h3, .display {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+h1 { font-size: clamp(2.8rem, 5vw, 4.8rem); font-weight: 700; }
+h2 { font-size: clamp(1.8rem, 3vw, 2.8rem); margin-bottom: 1.25rem; }
+h3 { font-size: 1.25rem; font-weight: 600; margin-bottom: 0.4rem; }
+
+.accent { color: var(--coral); }
+
+.mono {
+  font-family: 'Space Mono', 'Courier New', monospace;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--forest);
+}
+
+/* Living blobs */
+.blob {
+  position: absolute;
+  border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+  filter: blur(60px);
+  opacity: 0.5;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@keyframes blobMove {
+  0%, 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; transform: translate(0, 0) scale(1); }
+  25% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; transform: translate(30px, -20px) scale(1.05); }
+  50% { border-radius: 50% 60% 30% 60% / 30% 40% 70% 50%; transform: translate(-20px, 30px) scale(0.95); }
+  75% { border-radius: 60% 30% 50% 40% / 60% 50% 30% 60%; transform: translate(10px, 10px) scale(1.02); }
+}
+
+.blob-1 {
+  width: 500px; height: 500px;
+  background: var(--sage);
+  top: -100px; right: -150px;
+  animation: blobMove 20s ease-in-out infinite;
+}
+
+.blob-2 {
+  width: 400px; height: 400px;
+  background: var(--sand);
+  bottom: 10%; left: -100px;
+  animation: blobMove 25s ease-in-out infinite reverse;
+}
+
+.blob-3 {
+  width: 300px; height: 300px;
+  background: var(--mist);
+  top: 40%; right: 5%;
+  animation: blobMove 18s ease-in-out infinite;
+  opacity: 0.4;
+}
+
+/* Layout */
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  position: relative;
+  z-index: 1;
+}
+
+.section {
+  padding: 6rem 0;
+  position: relative;
+}
+
+/* Navigation */
+.nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  background: rgba(250,251,248,0.88);
+  backdrop-filter: blur(12px);
+  z-index: 100;
+  padding: 0 2rem;
+  border-bottom: 1px solid var(--mist);
+}
+
+.nav-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 64px;
+}
+
+.nav a {
+  color: var(--midnight);
+  text-decoration: none;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-left: 2rem;
+  transition: color 0.2s;
+}
+
+.nav a:hover { color: var(--coral); }
+
+.nav .logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-left: 0;
+}
+
+/* Hero */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding-top: 64px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-content { max-width: 640px; }
+
+.hero .mono { margin-bottom: 1.5rem; display: block; }
+
+.hero h1 { margin-bottom: 1.5rem; }
+
+.hero h1 em {
+  font-style: italic;
+  font-weight: 500;
+  color: var(--coral);
+}
+
+.hero p.lead {
+  font-size: 1.1rem;
+  color: var(--forest);
+  line-height: 1.8;
+  margin-bottom: 2rem;
+  max-width: 480px;
+}
+
+.hero .tag {
+  display: inline-block;
+  background: var(--sage);
+  color: var(--forest);
+  font-family: 'Space Mono', monospace;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 0.4rem 0.9rem;
+  border-radius: 100px;
+  margin-right: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Organic cards */
+.organic-card {
+  background: #fff;
+  border-radius: 24px 8px 32px 16px;
+  padding: 2rem;
+  box-shadow: 0 4px 24px rgba(29,45,53,0.06);
+  transition: transform 0.3s, box-shadow 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+
+.organic-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(29,45,53,0.1);
+}
+
+.organic-card::before {
+  content: '';
+  position: absolute;
+  top: -50px; right: -50px;
+  width: 120px; height: 120px;
+  background: var(--sage);
+  border-radius: 50%;
+  opacity: 0.5;
+}
+
+/* Case Study Grid */
+.case-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+}
+
+@media (max-width: 700px) {
+  .case-grid { grid-template-columns: 1fr; }
+}
+
+.case-card .case-meta {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.case-card h3 {
+  font-size: 1.4rem;
+  margin-bottom: 0.5rem;
+}
+
+.case-card p {
+  color: var(--forest);
+  font-size: 0.92rem;
+  line-height: 1.7;
+  margin-bottom: 1rem;
+}
+
+.case-visual {
+  width: 100%;
+  height: 160px;
+  background: linear-gradient(120deg, var(--sage) 0%, var(--sand) 60%, var(--mist) 100%);
+  border-radius: 16px 8px 24px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--forest);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 1rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.case-visual::after {
+  content: '';
+  position: absolute;
+  inset: 8px;
+  border: 1.5px dashed rgba(45,74,62,0.2);
+  border-radius: 12px 4px 20px 8px;
+}
+
+.case-impact {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.72rem;
+  color: var(--coral);
+  background: rgba(224,122,95,0.08);
+  display: inline-block;
+  padding: 0.3rem 0.7rem;
+  border-radius: 100px;
+}
+
+/* Process — Growth rings */
+.process-rings {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  max-width: 800px;
+}
+
+.ring {
+  display: grid;
+  grid-template-columns: 70px 1fr;
+  gap: 1.5rem;
+  align-items: start;
+}
+
+.ring-num {
+  width: 56px; height: 56px;
+  border-radius: 50%;
+  background: var(--sage);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--forest);
+  flex-shrink: 0;
+}
+
+.ring-content h3 {
+  font-size: 1.15rem;
+  margin-bottom: 0.3rem;
+}
+
+.ring-content p {
+  color: var(--forest);
+  font-size: 0.92rem;
+  line-height: 1.7;
+}
+
+/* Principles — Garden */
+.principle-garden {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+}
+
+@media (max-width: 700px) {
+  .principle-garden { grid-template-columns: 1fr; }
+}
+
+.principle-plant {
+  padding: 2rem;
+  border-radius: 24px 8px 32px 16px;
+  position: relative;
+  overflow: hidden;
+}
+
+.principle-plant:nth-child(1) { background: var(--sage); }
+.principle-plant:nth-child(2) { background: var(--sand); }
+.principle-plant:nth-child(3) { background: var(--mist); }
+.principle-plant:nth-child(4) { background: linear-gradient(135deg, var(--sage) 0%, var(--mist) 100%); }
+
+.principle-plant h3 {
+  font-size: 1.3rem;
+  margin-bottom: 0.75rem;
+}
+
+.principle-plant p {
+  color: var(--forest);
+  font-size: 0.92rem;
+  line-height: 1.7;
+}
+
+/* Timeline — Growth chart */
+.timeline-chart {
+  position: relative;
+  padding-left: 3rem;
+}
+
+.timeline-chart::before {
+  content: '';
+  position: absolute;
+  left: 12px;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: linear-gradient(to bottom, var(--sage), var(--mist), var(--sand));
+  border-radius: 3px;
+}
+
+.chart-item {
+  position: relative;
+  padding-bottom: 2.5rem;
+}
+
+.chart-item::before {
+  content: '';
+  position: absolute;
+  left: -2.55rem;
+  top: 0.2rem;
+  width: 16px;
+  height: 16px;
+  background: #fff;
+  border: 3px solid var(--coral);
+  border-radius: 50%;
+}
+
+.chart-item .chart-date {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--coral);
+  margin-bottom: 0.25rem;
+}
+
+.chart-item .chart-role {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.15rem;
+}
+
+.chart-item .chart-org {
+  font-size: 0.9rem;
+  color: var(--forest);
+}
+
+/* Contact — Seed packet */
+.contact-seed {
+  background: linear-gradient(135deg, var(--sage) 0%, var(--sand) 100%);
+  border-radius: 32px 12px 40px 20px;
+  padding: 4rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.contact-seed::before {
+  content: '';
+  position: absolute;
+  top: -60px; right: -60px;
+  width: 180px; height: 180px;
+  background: var(--mist);
+  border-radius: 50%;
+  opacity: 0.6;
+}
+
+.contact-seed h2 { margin-bottom: 1rem; position: relative; z-index: 1; }
+.contact-seed p { color: var(--forest); max-width: 480px; margin: 0 auto 2rem; position: relative; z-index: 1; }
+
+.contact-links {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+  position: relative;
+  z-index: 1;
+}
+
+.contact-links a {
+  color: var(--midnight);
+  text-decoration: none;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  border-bottom: 2px solid var(--coral);
+  padding-bottom: 0.15rem;
+  transition: color 0.2s;
+}
+
+.contact-links a:hover { color: var(--coral); }
+
+/* Footer */
+.footer {
+  padding: 3rem 0;
+  text-align: center;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--forest);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* Utility */
+.mb-1 { margin-bottom: 1rem; }
+.mb-2 { margin-bottom: 2rem; }
+.mb-3 { margin-bottom: 3rem; }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--cream); }
+::-webkit-scrollbar-thumb { background: var(--mist); border-radius: 4px; }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="#" class="logo">Naman Sharma</a>
+    <div>
+      <a href="#work">Work</a>
+      <a href="#process">Process</a>
+      <a href="#principles">Principles</a>
+      <a href="#timeline">Timeline</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="container hero-content">
+    <span class="mono">Product/UX Designer — Jaipur, India</span>
+    <h1>Growing ideas into products that people <em>love</em> to use.</h1>
+    <p class="lead">Self-taught designer with a Computer Science background. I help start-ups build 0 to 1, making complex products feel simple. I believe consistency compounds, curiosity connects the dots, and every project is a journey of discovery.</p>
+    <div>
+      <span class="tag">UX Research</span>
+      <span class="tag">Product Design</span>
+      <span class="tag">0 to 1</span>
+      <span class="tag">Remote</span>
+      <span class="tag">Jerry 🐕</span>
+    </div>
+  </div>
+</section>
+
+<!-- Selected Work -->
+<section class="section" id="work">
+  <div class="container">
+    <div class="blob blob-3"></div>
+    <span class="mono mb-1" style="display:block;">The Garden</span>
+    <h2>Selected Work</h2>
+    <p class="mb-3" style="color: var(--forest); max-width: 600px;">Every project starts as a seed — research, nurture, prune, grow. Four case studies with roots in real research and real outcomes.</p>
+    <div class="case-grid">
+      <div class="organic-card case-card">
+        <div class="case-meta">
+          <span class="mono">Asian Paints</span>
+          <span class="mono">2021</span>
+        </div>
+        <div class="case-visual">Dealer Portal — Dashboard</div>
+        <h3>Dealer Portal Redesign</h3>
+        <p>End-to-end redesign for India's largest paint company. Intelligent recommendations, personalized discounts, barcode quick-order, and data-driven promotions based on geographic trends.</p>
+        <span class="case-impact">+20% transaction volume</span>
+      </div>
+      <div class="organic-card case-card">
+        <div class="case-meta">
+          <span class="mono">Boost360</span>
+          <span class="mono">2021</span>
+        </div>
+        <div class="case-visual">Onboarding — Signup Flow</div>
+        <h3>Onboarding Experience</h3>
+        <p>Redesigned onboarding for an app losing 80% of users at signup. Visual flow, trust-building social proof, quick wins, and fixing expectation mismatch across all marketing touchpoints.</p>
+        <span class="case-impact">-60% uninstall rate</span>
+      </div>
+      <div class="organic-card case-card">
+        <div class="case-meta">
+          <span class="mono">Wikipedia</span>
+          <span class="mono">2020</span>
+        </div>
+        <div class="case-visual">KaiOS Research — Field Map</div>
+        <h3>KaiOS User Research</h3>
+        <p>25 one-on-one interviews with JioPhone users across three cities. Voice interaction, regional SEO, readability optimization, and content format recommendations for smart feature phones.</p>
+        <span class="case-impact">25 participants, 3 cities</span>
+      </div>
+      <div class="organic-card case-card">
+        <div class="case-meta">
+          <span class="mono">Freelance</span>
+          <span class="mono">2022–2023</span>
+        </div>
+        <div class="case-visual">Freelance — Product Suite</div>
+        <h3>Independent Product Design</h3>
+        <p>0-to-1 builds for Turns, Gadivan, LetsConnect. Website redesigns, mobile apps, design systems, UX audits. Turns raised $500K pre-seed; LetsConnect hit 4.8 stars on Play Store.</p>
+        <span class="case-impact">0 to 1 product builds</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Process -->
+<section class="section" id="process">
+  <div class="container">
+    <span class="mono mb-1" style="display:block;">Growth Rings</span>
+    <h2>Process</h2>
+    <p class="mb-3" style="color: var(--forest); max-width: 600px;">Like the rings of a tree, each phase adds a layer. The center is research. The outer bark is monitoring. Everything in between is craft.</p>
+    <div class="process-rings">
+      <div class="ring">
+        <div class="ring-num">1</div>
+        <div class="ring-content">
+          <h3>Research</h3>
+          <p>Understanding the problem, considering possible solutions, and learning about the customer. The seed won't sprout in the wrong soil.</p>
+        </div>
+      </div>
+      <div class="ring">
+        <div class="ring-num">2</div>
+        <div class="ring-content">
+          <h3>User Journey</h3>
+          <p>Diving deep into the user journey to uncover insights. Exploring personas, journeys, and understanding decision making at every fork.</p>
+        </div>
+      </div>
+      <div class="ring">
+        <div class="ring-num">3</div>
+        <div class="ring-content">
+          <h3>Design Exploration</h3>
+          <p>Going wide and exploring a range of possible solutions. Testing, iterating, collaborating, and working through the problem without premature convergence.</p>
+        </div>
+      </div>
+      <div class="ring">
+        <div class="ring-num">4</div>
+        <div class="ring-content">
+          <h3>Design Refinement</h3>
+          <p>Refining a chosen direction and polishing visual design. Preparing for handoff and documenting the decisions made along the way.</p>
+        </div>
+      </div>
+      <div class="ring">
+        <div class="ring-num">5</div>
+        <div class="ring-content">
+          <h3>Handoff</h3>
+          <p>Working closely with engineering and product to ensure successful implementation. A design is only as good as its execution.</p>
+        </div>
+      </div>
+      <div class="ring">
+        <div class="ring-num">6</div>
+        <div class="ring-content">
+          <h3>Monitoring</h3>
+          <p>Once live, the work isn't done. Monitoring performance and tracking metrics that indicate success — and finding the next thing to improve.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Principles -->
+<section class="section" id="principles">
+  <div class="container">
+    <span class="mono mb-1" style="display:block;">Root System</span>
+    <h2>Principles</h2>
+    <p class="mb-3" style="color: var(--forest); max-width: 600px;">The invisible structure beneath every visible decision. These aren't slogans — they are heuristics I use when stuck.</p>
+    <div class="principle-garden">
+      <div class="principle-plant">
+        <h3>Consistency beats talent</h3>
+        <p>Compounding daily effort outperforms sporadic genius. I'm not the most talented designer in the world, but I show up every day.</p>
+      </div>
+      <div class="principle-plant">
+        <h3>Let curiosity guide you</h3>
+        <p>Knowing a little about a lot helps me connect the dots between scattered information. Each project is a journey of discovery.</p>
+      </div>
+      <div class="principle-plant">
+        <h3>Form follows function</h3>
+        <p>Problems are solved with functionality, not aesthetics. But once solved, going the extra mile creates delight. Humans remember delight.</p>
+      </div>
+      <div class="principle-plant">
+        <h3>Give a damn</h3>
+        <p>I'm highly entrepreneurial with a founder's mindset. Success is a shared responsibility that requires ownership and agency.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Timeline -->
+<section class="section" id="timeline">
+  <div class="container">
+    <span class="mono mb-1" style="display:block;">Growth Chart</span>
+    <h2>Career Timeline</h2>
+    <p class="mb-3" style="color: var(--forest); max-width: 600px;">From graphic design roots to product design canopy. Each ring represents a season of growth.</p>
+    <div class="timeline-chart">
+      <div class="chart-item">
+        <div class="chart-date">Apr 2022 – Present</div>
+        <div class="chart-role">Product, UX & Web Designer — Freelance</div>
+        <div class="chart-org">Turns, Gadivan, LetsConnect, and more</div>
+      </div>
+      <div class="chart-item">
+        <div class="chart-date">Apr 2021 – Mar 2022</div>
+        <div class="chart-role">UX Designer — Thence</div>
+        <div class="chart-org">Asian Paints, Boost360, Shiprocket</div>
+      </div>
+      <div class="chart-item">
+        <div class="chart-date">Dec 2019 – Apr 2020</div>
+        <div class="chart-role">UX Research Intern — Hureo</div>
+        <div class="chart-org">Wikipedia KaiOS Research</div>
+      </div>
+      <div class="chart-item">
+        <div class="chart-date">Jul 2018 – May 2019</div>
+        <div class="chart-role">Graphic Design Intern — HappleyFit</div>
+        <div class="chart-org">Branding, WordPress, Social</div>
+      </div>
+      <div class="chart-item">
+        <div class="chart-date">Dec 2017 – Mar 2018</div>
+        <div class="chart-role">Graphic Design Intern — Skillovate</div>
+        <div class="chart-org">Mascot, eBook, Board Game</div>
+      </div>
+      <div class="chart-item">
+        <div class="chart-date">Jul 2017 – Apr 2020</div>
+        <div class="chart-role">Graphic Designer — Freelance</div>
+        <div class="chart-org">Logos, print, social, packaging, web</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Contact -->
+<section class="section" id="contact">
+  <div class="container">
+    <div class="contact-seed">
+      <h2>Plant a seed.</h2>
+      <p>I'm always open to conversations about product design, research, or that indie dog you also love. No jargon required.</p>
+      <div class="contact-links">
+        <a href="mailto:madebynaman@gmail.com">Email</a>
+        <a href="https://madebynaman.com" target="_blank" rel="noopener">Website</a>
+        <a href="tel:+918208369219">Phone</a>
+        <a href="#" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <p>Naman Sharma — Product/UX Designer — Jaipur, India</p>
+  </div>
+</footer>
+
+</body>
+</html>

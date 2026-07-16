@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Naman Sharma — Product/UX Designer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --parchment: #F5F0E8;
+  --ink: #1A1A1A;
+  --terracotta: #C4704A;
+  --moss: #4A6741;
+  --graphite: #6B6B6B;
+  --highlight: #E8DCC4;
+  --paper: #FDFCF9;
+  --margin: 220px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--parchment);
+  color: var(--ink);
+  font-family: 'Inter', system-ui, sans-serif;
+  line-height: 1.65;
+  font-size: 15px;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Typography */
+h1, h2, h3, .display {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+h1 { font-size: clamp(2.8rem, 5vw, 4.5rem); font-weight: 700; }
+h2 { font-size: clamp(1.8rem, 3vw, 2.6rem); margin-bottom: 1.5rem; }
+h3 { font-size: 1.35rem; font-weight: 600; margin-bottom: 0.5rem; }
+
+.mono {
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--graphite);
+}
+
+/* Layout */
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.section {
+  padding: 6rem 0;
+  position: relative;
+}
+
+/* Margin annotations (desktop) */
+@media (min-width: 900px) {
+  .has-margin { padding-left: var(--margin); position: relative; }
+  .margin-label {
+    position: absolute;
+    left: 0;
+    top: 6.5rem;
+    width: 180px;
+    text-align: right;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--graphite);
+  }
+  .margin-label::before {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 1px;
+    background: var(--highlight);
+    margin-left: auto;
+    margin-bottom: 0.6rem;
+  }
+}
+
+/* Navigation */
+.nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  background: rgba(245,240,232,0.92);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--highlight);
+  z-index: 100;
+  padding: 0 2rem;
+}
+
+.nav-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 56px;
+}
+
+.nav a {
+  color: var(--ink);
+  text-decoration: none;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-left: 2rem;
+  transition: color 0.2s;
+}
+
+.nav a:hover { color: var(--terracotta); }
+
+.nav .logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-left: 0;
+}
+
+/* Hero */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding-top: 56px;
+  position: relative;
+}
+
+.hero-inner { position: relative; }
+
+.hero .stamp {
+  display: inline-block;
+  border: 2px solid var(--terracotta);
+  color: var(--terracotta);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  padding: 0.35rem 0.8rem;
+  transform: rotate(-3deg);
+  margin-bottom: 2rem;
+}
+
+.hero h1 {
+  max-width: 700px;
+  margin-bottom: 1.5rem;
+}
+
+.hero h1 em {
+  font-style: italic;
+  font-weight: 500;
+  color: var(--terracotta);
+}
+
+.hero p.lead {
+  font-size: 1.15rem;
+  max-width: 520px;
+  color: var(--graphite);
+  line-height: 1.7;
+  margin-bottom: 2rem;
+}
+
+.hero .location {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--graphite);
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.hero .location span { display: flex; align-items: center; gap: 0.4rem; }
+
+/* Pinned note cards */
+.pinned {
+  background: var(--paper);
+  border: 1px solid var(--highlight);
+  padding: 1.5rem;
+  position: relative;
+  box-shadow: 2px 3px 12px rgba(0,0,0,0.04);
+}
+
+.pinned::before {
+  content: '';
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 14px;
+  height: 14px;
+  background: var(--terracotta);
+  border-radius: 50%;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+}
+
+.pinned-tilt-left { transform: rotate(-1.5deg); }
+.pinned-tilt-right { transform: rotate(1.5deg); }
+
+/* Case Study Grid */
+.case-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+}
+
+@media (max-width: 700px) {
+  .case-grid { grid-template-columns: 1fr; }
+}
+
+.case-card {
+  background: var(--paper);
+  border: 1px solid var(--highlight);
+  padding: 2rem;
+  position: relative;
+}
+
+.case-card .case-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px dashed var(--highlight);
+}
+
+.case-card .case-visual {
+  width: 100%;
+  height: 180px;
+  background: linear-gradient(135deg, var(--highlight) 0%, var(--parchment) 100%);
+  border: 1px solid var(--highlight);
+  margin: 1.25rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--graphite);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  position: relative;
+  overflow: hidden;
+}
+
+.case-card .case-visual::after {
+  content: '';
+  position: absolute;
+  inset: 8px;
+  border: 1px dashed var(--graphite);
+  opacity: 0.3;
+}
+
+.case-card h3 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.case-card p {
+  color: var(--graphite);
+  font-size: 0.92rem;
+  line-height: 1.7;
+  margin-bottom: 1rem;
+}
+
+.case-card .impact {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--moss);
+  border: 1px solid var(--moss);
+  display: inline-block;
+  padding: 0.25rem 0.6rem;
+  margin-top: 0.5rem;
+}
+
+/* Process Steps */
+.process-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.process-step {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: 1.5rem;
+  align-items: start;
+}
+
+.process-step .step-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--highlight);
+  line-height: 1;
+  text-align: right;
+}
+
+.process-step .step-content h3 {
+  font-size: 1.15rem;
+  margin-bottom: 0.3rem;
+}
+
+.process-step .step-content p {
+  color: var(--graphite);
+  font-size: 0.92rem;
+  line-height: 1.7;
+}
+
+/* Principles */
+.principle-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+}
+
+@media (max-width: 700px) {
+  .principle-grid { grid-template-columns: 1fr; }
+}
+
+.principle-card {
+  padding: 2rem;
+  border-left: 3px solid var(--terracotta);
+  background: var(--paper);
+}
+
+.principle-card:nth-child(2) { border-left-color: var(--moss); }
+.principle-card:nth-child(3) { border-left-color: var(--graphite); }
+.principle-card:nth-child(4) { border-left-color: var(--terracotta); }
+
+.principle-card h3 {
+  font-size: 1.3rem;
+  margin-bottom: 0.75rem;
+}
+
+.principle-card p {
+  color: var(--graphite);
+  font-size: 0.92rem;
+  line-height: 1.7;
+}
+
+/* Timeline */
+.timeline {
+  position: relative;
+  padding-left: 2rem;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: repeating-linear-gradient(
+    to bottom,
+    var(--highlight) 0,
+    var(--highlight) 8px,
+    transparent 8px,
+    transparent 16px
+  );
+}
+
+.timeline-item {
+  position: relative;
+  padding-bottom: 2.5rem;
+}
+
+.timeline-item::before {
+  content: '';
+  position: absolute;
+  left: -2rem;
+  top: 0.3rem;
+  width: 10px;
+  height: 10px;
+  background: var(--parchment);
+  border: 2px solid var(--terracotta);
+  border-radius: 50%;
+  transform: translateX(-4px);
+}
+
+.timeline-item .t-date {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--terracotta);
+  margin-bottom: 0.25rem;
+}
+
+.timeline-item .t-role {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.15rem;
+}
+
+.timeline-item .t-org {
+  font-size: 0.85rem;
+  color: var(--graphite);
+}
+
+/* Contact */
+.contact-block {
+  background: var(--paper);
+  border: 1px solid var(--highlight);
+  padding: 3rem;
+  text-align: center;
+  position: relative;
+}
+
+.contact-block::before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  right: 3rem;
+  width: 18px;
+  height: 18px;
+  background: var(--moss);
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.12);
+}
+
+.contact-block h2 {
+  margin-bottom: 1rem;
+}
+
+.contact-block p {
+  color: var(--graphite);
+  max-width: 480px;
+  margin: 0 auto 2rem;
+}
+
+.contact-links {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.contact-links a {
+  color: var(--ink);
+  text-decoration: none;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  border-bottom: 1px solid var(--terracotta);
+  padding-bottom: 0.15rem;
+  transition: color 0.2s;
+}
+
+.contact-links a:hover { color: var(--terracotta); }
+
+/* Footer */
+.footer {
+  padding: 3rem 0;
+  text-align: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--graphite);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* Section divider */
+.section-divider {
+  max-width: 200px;
+  height: 1px;
+  background: var(--highlight);
+  margin: 0 auto;
+}
+
+/* Utility */
+.text-center { text-align: center; }
+.mb-1 { margin-bottom: 1rem; }
+.mb-2 { margin-bottom: 2rem; }
+.mb-3 { margin-bottom: 3rem; }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--parchment); }
+::-webkit-scrollbar-thumb { background: var(--highlight); border-radius: 4px; }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="#" class="logo">Naman Sharma</a>
+    <div>
+      <a href="#work">Work</a>
+      <a href="#process">Process</a>
+      <a href="#principles">Principles</a>
+      <a href="#timeline">Timeline</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="container hero-inner">
+    <div class="stamp">Field Notes — 2024</div>
+    <h1>Product/UX Designer working remotely from Jaipur, India. <em>I design products that users love, for brands that care.</em></h1>
+    <p class="lead">Self-taught designer with a Computer Science background. Three years of UX experience helping start-ups build 0 to 1, making complex products easy to use. I hate jargon. I believe consistency beats talent, and curiosity creates work that makes a difference.</p>
+    <div class="location">
+      <span>📍 Jaipur, India</span>
+      <span>🌐 Worldwide Remote</span>
+      <span>🐕 Jerry says hi</span>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- Selected Work -->
+<section class="section" id="work">
+  <div class="container has-margin">
+    <div class="margin-label">Observations</div>
+    <h2>Selected Work</h2>
+    <p class="mb-3" style="color: var(--graphite); max-width: 600px;">Real case studies with real outcomes. Four projects that shaped my understanding of research-led design and business impact.</p>
+    <div class="case-grid">
+      <div class="case-card pinned pinned-tilt-left">
+        <div class="case-meta">
+          <span class="mono">Asian Paints</span>
+          <span class="mono">2021</span>
+        </div>
+        <h3>Dealer Portal Redesign</h3>
+        <p>End-to-end redesign of a multi-platform dealer portal for India's largest paint company. Heuristic evaluation, new features to reduce dealer-salesman interaction, intelligent product recommendations, barcode quick-order, and data-driven promotions.</p>
+        <div class="case-visual">Case Study Hero — Dealer Dashboard</div>
+        <span class="impact">+20% online transaction volume</span>
+      </div>
+      <div class="case-card pinned pinned-tilt-right">
+        <div class="case-meta">
+          <span class="mono">Boost360</span>
+          <span class="mono">2021</span>
+        </div>
+        <h3>Onboarding Experience</h3>
+        <p>Redesigned onboarding for a small-business app suffering from 80% signup drop-off. Root cause: expectation mismatch from paid acquisition. Visual signup flow, trust-building social proof, quick wins, and screen-level UX fixes.</p>
+        <div class="case-visual">Case Study Hero — Onboarding Flow</div>
+        <span class="impact">-60% app uninstall rate</span>
+      </div>
+      <div class="case-card pinned pinned-tilt-right">
+        <div class="case-meta">
+          <span class="mono">Wikipedia</span>
+          <span class="mono">2020</span>
+        </div>
+        <h3>KaiOS User Research</h3>
+        <p>One-on-one interviews with 25 JioPhone users across Pune, Mumbai, and Delhi. Uncovered insights about voice interaction, regional content discovery, and readability constraints on smart feature phones.</p>
+        <div class="case-visual">Case Study Hero — Research Map</div>
+        <span class="impact">25 participants, 3 cities</span>
+      </div>
+      <div class="case-card pinned pinned-tilt-left">
+        <div class="case-meta">
+          <span class="mono">Freelance</span>
+          <span class="mono">2022–2023</span>
+        </div>
+        <h3>Independent Product Design</h3>
+        <p>End-to-end product experiences for Turns, Gadivan, and LetsConnect. Website redesigns, 0-to-1 mobile apps, design systems, and UX audits. Turns raised $500K pre-seed post-revamp; LetsConnect hit 4.8 stars on Play Store.</p>
+        <div class="case-visual">Case Study Hero — Product Suite</div>
+        <span class="impact">0 to 1 product builds</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- Process -->
+<section class="section" id="process">
+  <div class="container has-margin">
+    <div class="margin-label">Method</div>
+    <h2>Process</h2>
+    <p class="mb-3" style="color: var(--graphite); max-width: 600px;">No two projects follow the exact same path, but every project starts with research and ends with monitoring. This is the backbone.</p>
+    <div class="process-list">
+      <div class="process-step">
+        <div class="step-num">01</div>
+        <div class="step-content">
+          <h3>Research</h3>
+          <p>Understanding the problem, considering possible solutions, and learning about the customer. I don't start drawing until I know who I'm drawing for.</p>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="step-num">02</div>
+        <div class="step-content">
+          <h3>User Journey</h3>
+          <p>Diving deep into the user journey to uncover insights. Exploring personas, journeys, and understanding decision making at every touchpoint.</p>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="step-num">03</div>
+        <div class="step-content">
+          <h3>Design Exploration</h3>
+          <p>Going wide and exploring a range of possible solutions. Testing, iterating, collaborating, and working through the problem at hand without premature convergence.</p>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="step-num">04</div>
+        <div class="step-content">
+          <h3>Design Refinement</h3>
+          <p>Refining a chosen direction and polishing visual design. Preparing for handoff and documenting the decisions made along the way.</p>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="step-num">05</div>
+        <div class="step-content">
+          <h3>Handoff</h3>
+          <p>Working closely with engineering and product to ensure successful implementation. A design is only as good as its execution.</p>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="step-num">06</div>
+        <div class="step-content">
+          <h3>Monitoring</h3>
+          <p>Once live, the work isn't done. Monitoring performance and tracking metrics that indicate success — and finding the next thing to improve.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- Principles -->
+<section class="section" id="principles">
+  <div class="container has-margin">
+    <div class="margin-label">Beliefs</div>
+    <h2>Principles</h2>
+    <p class="mb-3" style="color: var(--graphite); max-width: 600px;">These aren't posters on a wall. They are heuristics I use when I'm stuck, when the path forward is unclear, or when I need to decide what matters.</p>
+    <div class="principle-grid">
+      <div class="principle-card">
+        <h3>Consistency beats talent</h3>
+        <p>I'm not the most talented designer in the world, but I strive for consistency and constant improvement — everyday. Consistency compounds into unimaginable results.</p>
+      </div>
+      <div class="principle-card">
+        <h3>Let curiosity guide you</h3>
+        <p>Curiosity fuels my endless quest for understanding. I know a little about a lot of things — it helps me connect the dots between scattered information.</p>
+      </div>
+      <div class="principle-card">
+        <h3>Form follows function</h3>
+        <p>Problems are solved with functionality, not aesthetics. But once the problem is solved, going the extra mile and designing beautiful products creates delight. And humans remember delight.</p>
+      </div>
+      <div class="principle-card">
+        <h3>Give a damn</h3>
+        <p>I'm highly entrepreneurial and strive to have a founder's mindset. Success is a shared responsibility. I take ownership for each project I work on.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- Timeline -->
+<section class="section" id="timeline">
+  <div class="container has-margin">
+    <div class="margin-label">Chronicle</div>
+    <h2>Career Timeline</h2>
+    <p class="mb-3" style="color: var(--graphite); max-width: 600px;">From graphic design internships in Pune to product design for India's largest paint company — and everything in between.</p>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="t-date">Apr 2022 – Present</div>
+        <div class="t-role">Product, UX & Web Designer</div>
+        <div class="t-org">Freelance — Turns, Gadivan, LetsConnect, and more</div>
+      </div>
+      <div class="timeline-item">
+        <div class="t-date">Apr 2021 – Mar 2022</div>
+        <div class="t-role">UX Designer</div>
+        <div class="t-org">Thence — Asian Paints, Boost360, Shiprocket</div>
+      </div>
+      <div class="timeline-item">
+        <div class="t-date">Dec 2019 – Apr 2020</div>
+        <div class="t-role">UX Research Intern</div>
+        <div class="t-org">Hureo — Wikipedia KaiOS Research</div>
+      </div>
+      <div class="timeline-item">
+        <div class="t-date">Jul 2018 – May 2019</div>
+        <div class="t-role">Graphic Design Intern</div>
+        <div class="t-org">HappleyFit — Branding, WordPress, Social</div>
+      </div>
+      <div class="timeline-item">
+        <div class="t-date">Dec 2017 – Mar 2018</div>
+        <div class="t-role">Graphic Design Intern</div>
+        <div class="t-org">Skillovate — Mascot, eBook, Board Game</div>
+      </div>
+      <div class="timeline-item">
+        <div class="t-date">Jul 2017 – Apr 2020</div>
+        <div class="t-role">Graphic Designer</div>
+        <div class="t-org">Freelance — Logos, print collateral, social graphics</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- Contact -->
+<section class="section" id="contact">
+  <div class="container">
+    <div class="contact-block pinned">
+      <h2>Let's build something useful together.</h2>
+      <p>I'm always open to conversations about product design, research, or that indie dog you also love. No jargon required.</p>
+      <div class="contact-links">
+        <a href="mailto:madebynaman@gmail.com">madebynaman@gmail.com</a>
+        <a href="https://madebynaman.com" target="_blank" rel="noopener">madebynaman.com</a>
+        <a href="tel:+918208369219">+91 82083 69219</a>
+        <a href="#" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <p>Naman Sharma — Product/UX Designer — Jaipur, India</p>
+  </div>
+</footer>
+
+</body>
+</html>

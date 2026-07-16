@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Naman Sharma — Product/UX Designer — The Layer Cake</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --teal: #0D4F4F;
+  --teal-light: #1A6B6B;
+  --sand: #E8D5B7;
+  --sand-dark: #D4BC96;
+  --coral: #E8846B;
+  --coral-light: #F0A08B;
+  --midnight: #1A1A3E;
+  --midnight-light: #2D2D5E;
+  --cream: #F5F0E8;
+  --sage: #87A878;
+  --sage-light: #A8C49A;
+  --charcoal: #2C2C2C;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
+  color: var(--charcoal);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+.layer {
+  padding: 6rem 2rem;
+  position: relative;
+}
+
+.layer-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.layer-tag {
+  font-family: 'IBM Plex Mono', 'Courier New', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+  opacity: 0.5;
+}
+
+.layer h2 {
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+  font-size: 2.25rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 2.5rem;
+}
+
+.layer-hero {
+  background: var(--teal);
+  color: var(--cream);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: 4rem 2rem;
+}
+
+.layer-hero .layer-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+.hero-left .hero-tag {
+  font-family: 'IBM Plex Mono', 'Courier New', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--sage-light);
+  margin-bottom: 1.5rem;
+}
+
+.hero-left h1 {
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  margin-bottom: 1.5rem;
+}
+
+.hero-left .hero-role {
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+  font-size: 1.2rem;
+  font-weight: 400;
+  color: var(--sand);
+  margin-bottom: 1rem;
+}
+
+.hero-left .hero-desc {
+  font-size: 1rem;
+  color: rgba(245,240,232,0.7);
+  line-height: 1.7;
+  max-width: 440px;
+}
+
+.hero-right {
+  display: grid;
+  gap: 1rem;
+}
+
+.hero-stat {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px;
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  transition: background 0.2s;
+}
+
+.hero-stat:hover {
+  background: rgba(255,255,255,0.1);
+}
+
+.hero-stat .stat-num {
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--coral);
+  white-space: nowrap;
+}
+
+.hero-stat .stat-label {
+  font-size: 0.85rem;
+  color: rgba(245,240,232,0.6);
+}
+
+.layer-work {
+  background: var(--sand);
+  color: var(--charcoal);
+}
+
+.work-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+}
+
+.work-card {
+  background: var(--cream);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.work-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.1);
+}
+
+.work-card .card-visual {
+  height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'IBM Plex Mono', 'Courier New', monospace;
+  font-size: 0.7rem;
+  color: rgba(0,0,0,0.3);
+  letter-spacing: 0.05em;
+}
+
+.work-card:nth-child(1) .card-visual { background: linear-gradient(135deg, var(--teal), var(--teal-light)); color: rgba(255,255,255,0.4); }
+.work-card:nth-child(2) .card-visual { background: linear-gradient(135deg, var(--coral), var(--coral-light)); color: rgba(255,255,255,0.4); }
+.work-card:nth-child(3) .card-visual { background: linear-gradient(135deg, var(--midnight), var(--midnight-light)); color: rgba(255,255,255,0.4); }
+.work-card:nth-child(4) .card-visual { background: linear-gradient(135deg, var(--sage), var(--sage-light)); color: rgba(255,255,255,0.4); }
+
+.work-card .card-body {
+  padding: 1.5rem;
+}
+
+.work-card .card-tag {
+  font-family: 'IBM Plex Mono', 'Courier New', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--teal);
+  margin-bottom: 0.5rem;
+}
+
+.work-card h3 {
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.work-card .card-meta {
+  font-family: 'IBM Plex Mono', 'Courier New', monospace;
+  font-size: 0.65rem;
+  color: #999;
+  margin-bottom: 0.75rem;
+}
+
+.work-card .card-desc {
+  font-size: 0.85rem;
+  color: #666;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.work-card .card-result {
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--teal);
+  padding: 0.35rem 0.75rem;
+  background: rgba(13,79,79,0.08);
+  border-radius: 6px;
+  display: inline-block;
+}
+
+.layer-process {
+  background: var(--coral);
+  color: var(--cream);
+}
+
+.layer-process h2 { color: var(--cream); }
+.layer-process .layer-tag { color: var(--cream); }
+
+.process-flow {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 1rem;
+}
+
+.flow-step {
+  text-align: center;
+  padding: 1.5rem 0.75rem;
+  background: rgba(255,255,255,0.1);
+  border-radius: 12px;
+  transition: background 0.2s;
+}
+
+.flow-step:hover {
+  background: rgba(255,255,255,0.18);
+}
+
+.flow-step .step-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.15);
+  margin: 0 auto 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.flow-step h4 {
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 0.35rem;
+}
+
+.flow-step p {
+  font-size: 0.7rem;
+  color: rgba(245,240,232,0.65);
+  line-height: 1.5;
+}
+
+.layer-principles {
+  background: var(--midnight);
+  color: var(--cream);
+}
+
+.layer-principles h2 { color: var(--cream); }
+.layer-principles .layer-tag { color: var(--cream); }
+
+.principles-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+.principle-card {
+  padding: 2rem;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px;
+  background: rgba(255,255,255,0.03);
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.principle-card:hover {
+  background: rgba(255,255,255,0.06);
+  border-color: rgba(255,255,255,0.15);
+}
+
+.principle-card .p-num {
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+  font-size: 2.5rem;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 0.75rem;
+}
+
+.principle-card:nth-child(1) .p-num { color: var(--coral); }
+.principle-card:nth-child(2) .p-num { color: var(--sage-light); }
+.principle-card:nth-child(3) .p-num { color: var(--sand); }
+.principle-card:nth-child(4) .p-num { color: #7EB8DA; }
+
+.principle-card h3 {
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.principle-card p {
+  font-size: 0.85rem;
+  color: rgba(245,240,232,0.6);
+  line-height: 1.65;
+}
+
+.layer-about {
+  background: var(--cream);
+  color: var(--charcoal);
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+}
+
+.about-block h3 {
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--teal);
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--teal);
+}
+
+.about-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.45rem 0;
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+  font-size: 0.9rem;
+}
+
+.about-row:last-of-type { border-bottom: none; }
+
+.about-row .row-key {
+  font-family: 'IBM Plex Mono', 'Courier New', monospace;
+  font-size: 0.7rem;
+  color: #999;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.about-row .row-val {
+  font-weight: 500;
+}
+
+.about-callout {
+  margin-top: 1.25rem;
+  padding: 1rem 1.25rem;
+  background: var(--sand);
+  border-radius: 10px;
+  font-size: 0.85rem;
+  color: var(--charcoal);
+  line-height: 1.6;
+  font-style: italic;
+}
+
+.layer-contact {
+  background: var(--teal);
+  color: var(--cream);
+  text-align: center;
+  padding: 5rem 2rem;
+}
+
+.layer-contact h2 {
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+  font-size: 2.5rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--cream);
+  margin-bottom: 0.75rem;
+}
+
+.layer-contact .contact-sub {
+  color: rgba(245,240,232,0.6);
+  margin-bottom: 2.5rem;
+  font-size: 1.05rem;
+}
+
+.contact-btns {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.contact-btn {
+  font-family: 'IBM Plex Mono', 'Courier New', monospace;
+  font-size: 0.8rem;
+  color: var(--cream);
+  text-decoration: none;
+  padding: 0.75rem 1.75rem;
+  border: 1px solid rgba(245,240,232,0.25);
+  border-radius: 10px;
+  transition: all 0.25s;
+  letter-spacing: 0.05em;
+}
+
+.contact-btn:hover {
+  background: rgba(245,240,232,0.1);
+  border-color: var(--cream);
+}
+
+.layer-footer {
+  background: var(--charcoal);
+  color: rgba(255,255,255,0.3);
+  text-align: center;
+  padding: 1.5rem 2rem;
+  font-family: 'IBM Plex Mono', 'Courier New', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+}
+
+@media (max-width: 768px) {
+  .layer-hero .layer-inner { grid-template-columns: 1fr; gap: 2rem; }
+  .work-grid { grid-template-columns: 1fr; }
+  .process-flow { grid-template-columns: repeat(2, 1fr); }
+  .principles-grid { grid-template-columns: 1fr; }
+  .about-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<section class="layer layer-hero" id="top">
+  <div class="layer-inner">
+    <div class="hero-left">
+      <div class="hero-tag">Product / UX Designer</div>
+      <h1>Naman<br>Sharma</h1>
+      <p class="hero-role">Designing products users love, for brands that care.</p>
+      <p class="hero-desc">Self-taught designer with a Computer Science background. 3+ years making complex products simple to use and helping startups build from zero to one. Based in Jaipur, working worldwide.</p>
+    </div>
+    <div class="hero-right">
+      <div class="hero-stat">
+        <span class="stat-num">+20%</span>
+        <span class="stat-label">Increase in online transaction volume — Asian Paints dealer portal</span>
+      </div>
+      <div class="hero-stat">
+        <span class="stat-num">-60%</span>
+        <span class="stat-label">Decrease in app uninstall rate — Boost360 onboarding redesign</span>
+      </div>
+      <div class="hero-stat">
+        <span class="stat-num">$500K</span>
+        <span class="stat-label">Pre-seed funding helped raise — Turns brand & landing pages</span>
+      </div>
+      <div class="hero-stat">
+        <span class="stat-num">4.8★</span>
+        <span class="stat-label">Play Store rating — LetsConnect product redesign</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="layer layer-work" id="work">
+  <div class="layer-inner">
+    <div class="layer-tag">Selected Work</div>
+    <h2>Case Studies</h2>
+
+    <div class="work-grid">
+      <div class="work-card">
+        <div class="card-visual">case-study hero — Asian Paints dealer portal</div>
+        <div class="card-body">
+          <div class="card-tag">Thence / 2021</div>
+          <h3>Asian Paints: Dealer Portal</h3>
+          <div class="card-meta">UX Research · UX Design · UI Design</div>
+          <p class="card-desc">Dealers didn't want to call sales reps for every order. Redesigned the end-to-end multi-platform portal with personalized recommendations, barcode scanning, and data-driven promotions based on geographical trends.</p>
+          <span class="card-result">+20% transaction volume</span>
+        </div>
+      </div>
+
+      <div class="work-card">
+        <div class="card-visual">case-study hero — Boost360 onboarding flow</div>
+        <div class="card-body">
+          <div class="card-tag">Thence / 2021</div>
+          <h3>Boost360: Onboarding</h3>
+          <div class="card-meta">UX Research · UX Design · Usability Testing</div>
+          <p class="card-desc">Users uninstalling within 4 hours. 20% signup rate at 30 minutes. Root cause: mismatch between marketing promises and onboarding reality. Made signup visual, built trust with social proof, created quick wins.</p>
+          <span class="card-result">-60% uninstall rate</span>
+        </div>
+      </div>
+
+      <div class="work-card">
+        <div class="card-visual">research artifact — Wikipedia KaiOS study</div>
+        <div class="card-body">
+          <div class="card-tag">Hureo / 2020</div>
+          <h3>Wikipedia: KaiOS Research</h3>
+          <div class="card-meta">UX Research · Personas · Journey Mapping</div>
+          <p class="card-desc">25 in-person interviews across Pune, Mumbai, and Delhi. Understanding JioPhone users — their phone habits, Wikipedia awareness, and motivations. Findings informed Wikipedia's KaiOS product strategy.</p>
+          <span class="card-result">25 interviews, 3 cities</span>
+        </div>
+      </div>
+
+      <div class="work-card">
+        <div class="card-visual">project mockup — Turns brand & landing pages</div>
+        <div class="card-body">
+          <div class="card-tag">Freelance / 2022–23</div>
+          <h3>Turns: Brand & Web</h3>
+          <div class="card-meta">Web Design · Brand Guidelines · Design System</div>
+          <p class="card-desc">More than a website refresh — a multi-platform brand identity and scalable design system. Full UX audit, redesigned landing pages, and brand guidelines that became part of the investor pitch.</p>
+          <span class="card-result">$500K pre-seed raised</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="layer layer-process" id="process">
+  <div class="layer-inner">
+    <div class="layer-tag">Methodology</div>
+    <h2>Process</h2>
+
+    <div class="process-flow">
+      <div class="flow-step">
+        <div class="step-icon">R</div>
+        <h4>Research</h4>
+        <p>Understanding the problem, solutions, and the customer.</p>
+      </div>
+      <div class="flow-step">
+        <div class="step-icon">J</div>
+        <h4>User Journey</h4>
+        <p>Deep dive into journeys, personas, decisions.</p>
+      </div>
+      <div class="flow-step">
+        <div class="step-icon">E</div>
+        <h4>Exploration</h4>
+        <p>Going wide — testing, iterating, collaborating.</p>
+      </div>
+      <div class="flow-step">
+        <div class="step-icon">D</div>
+        <h4>Refinement</h4>
+        <p>Polishing direction, preparing handoff.</p>
+      </div>
+      <div class="flow-step">
+        <div class="step-icon">H</div>
+        <h4>Handoff</h4>
+        <p>Working with engineering for implementation.</p>
+      </div>
+      <div class="flow-step">
+        <div class="step-icon">M</div>
+        <h4>Monitoring</h4>
+        <p>Tracking metrics post-launch.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="layer layer-principles" id="principles">
+  <div class="layer-inner">
+    <div class="layer-tag">Operating Principles</div>
+    <h2>What I Believe</h2>
+
+    <div class="principles-grid">
+      <div class="principle-card">
+        <div class="p-num">01</div>
+        <h3>Consistency beats talent</h3>
+        <p>Consistent effort towards the craft compounds into unimaginable results. Not the most talented — but striving for constant improvement, every day.</p>
+      </div>
+      <div class="principle-card">
+        <div class="p-num">02</div>
+        <h3>Let curiosity guide you</h3>
+        <p>Knowing a little about a lot of things connects dots between scattered information. Each project is a journey of discovery, learning, and exploration.</p>
+      </div>
+      <div class="principle-card">
+        <div class="p-num">03</div>
+        <h3>Form follows function</h3>
+        <p>Problems are solved with functionality. But once solved, going the extra mile to design beautiful products creates delight. Humans remember delight.</p>
+      </div>
+      <div class="principle-card">
+        <div class="p-num">04</div>
+        <h3>Give a damn</h3>
+        <p>Entrepreneurial with a founder's mindset. High agency, full ownership, committed to going the extra mile. Success is a shared responsibility.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="layer layer-about" id="about">
+  <div class="layer-inner">
+    <div class="layer-tag">Background</div>
+    <h2>About</h2>
+
+    <div class="about-grid">
+      <div class="about-block">
+        <h3>Profile</h3>
+        <div class="about-row"><span class="row-key">Role</span><span class="row-val">Product / UX Designer</span></div>
+        <div class="about-row"><span class="row-key">Base</span><span class="row-val">Jaipur, India</span></div>
+        <div class="about-row"><span class="row-key">Scope</span><span class="row-val">Worldwide Remote</span></div>
+        <div class="about-row"><span class="row-key">Education</span><span class="row-val">B.E. Computer Engineering</span></div>
+        <div class="about-row"><span class="row-key">Experience</span><span class="row-val">3+ years in UX</span></div>
+        <div class="about-row"><span class="row-key">Origin</span><span class="row-val">Self-taught, CS background</span></div>
+        <div class="about-callout">"A curious generalist — on-field research, usability testing, web apps, mobile apps, logos, websites, print, packaging. Done it all. Currently re-learning to code to bring ideas to life."</div>
+      </div>
+      <div class="about-block">
+        <h3>Toolkit</h3>
+        <div class="about-row"><span class="row-key">Design</span><span class="row-val">Figma, FigJam, Adobe XD</span></div>
+        <div class="about-row"><span class="row-key">Prototype</span><span class="row-val">Protopie, Framer</span></div>
+        <div class="about-row"><span class="row-key">Visual</span><span class="row-val">Illustrator, Photoshop</span></div>
+        <div class="about-row"><span class="row-key">Research</span><span class="row-val">Miro, FigJam</span></div>
+        <div class="about-row"><span class="row-key">Web</span><span class="row-val">Webflow, No-code</span></div>
+        <div class="about-row"><span class="row-key">Traits</span><span class="row-val">No drama, self-starter</span></div>
+        <div class="about-callout">Ask me about: my indie dog Jerry, computers & tech, personal finance & investing, hip-hop music, video games, education.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="layer layer-contact" id="contact">
+  <div class="layer-inner">
+    <h2>Let's Work Together</h2>
+    <p class="contact-sub">Have a product problem worth solving? Let's talk.</p>
+    <div class="contact-btns">
+      <a href="mailto:madebynaman@gmail.com" class="contact-btn">Email</a>
+      <a href="https://www.madebynaman.com" class="contact-btn">Website</a>
+      <a href="https://www.linkedin.com/in/madebynaman/" class="contact-btn">LinkedIn</a>
+    </div>
+  </div>
+</section>
+
+<footer class="layer-footer">
+  Naman Sharma — madebynaman.com — Jaipur, India
+</footer>
+
+</body>
+</html>

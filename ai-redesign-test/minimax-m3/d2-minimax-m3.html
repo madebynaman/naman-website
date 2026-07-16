@@ -1,0 +1,1177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Naman Sharma — System Spec v3.2</title>
+<meta name="description" content="Technical spec sheet for Naman Sharma, Product/UX Designer.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+  /* ---------- Tokens ---------- */
+  :root {
+    --bg:        #FFFFFF;
+    --bg-soft:   #F4F5F7;
+    --ink:       #0A0A0A;
+    --ink-2:     #2A2A2A;
+    --ink-soft:  #4D4D4D;
+    --ink-quiet: #8A8A8A;
+    --rule:      #E2E4E8;
+    --rule-2:    #C8CCD2;
+    --cobalt:    #0040FF;
+    --cobalt-d:  #002BB3;
+    --cobalt-l:  #E6ECFF;
+    --ok:        #00A86B;
+    --warn:      #E0A100;
+    --bad:       #D63B1F;
+    --mono:      'IBM Plex Mono', ui-monospace, 'SF Mono', 'Menlo', monospace;
+    --sans:      'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 15px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; text-decoration: none; }
+
+  /* ---------- Top progress strip ---------- */
+  .progress {
+    position: fixed; top: 0; left: 0; right: 0;
+    height: 2px; background: transparent; z-index: 50;
+  }
+  .progress .bar {
+    height: 100%; width: var(--p, 0%);
+    background: var(--cobalt);
+    transition: width 60ms linear;
+  }
+
+  /* ---------- Top frame ---------- */
+  .topframe {
+    border-bottom: 1px solid var(--ink);
+    background: var(--bg);
+    position: sticky; top: 0; z-index: 30;
+  }
+  .topframe-inner {
+    max-width: 84rem; margin: 0 auto;
+    padding: 0.6rem 1.5rem;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 1.5rem;
+    font-family: var(--mono);
+    font-size: 0.74rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--ink-soft);
+  }
+  .topframe .logo {
+    display: flex; align-items: center; gap: 0.6rem;
+    font-weight: 600; color: var(--ink);
+  }
+  .topframe .logo .square {
+    width: 12px; height: 12px; background: var(--cobalt);
+  }
+  .topframe .crumbs { color: var(--ink-quiet); }
+  .topframe .crumbs b { color: var(--ink); font-weight: 500; }
+  .topframe .status {
+    display: flex; align-items: center; gap: 0.55rem;
+    color: var(--ok); font-weight: 500;
+  }
+  .topframe .status .pulse {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--ok); position: relative;
+  }
+  .topframe .status .pulse::after {
+    content: ''; position: absolute; inset: -4px; border-radius: 50%;
+    border: 1.5px solid var(--ok); opacity: 0.6;
+    animation: pulse 1.8s ease-out infinite;
+  }
+  @keyframes pulse {
+    0%   { transform: scale(0.6); opacity: 0.7; }
+    100% { transform: scale(2.0); opacity: 0; }
+  }
+
+  /* ---------- Hero / spec sheet header ---------- */
+  .hero {
+    border-bottom: 1px solid var(--ink);
+    padding: 3.5rem 1.5rem 3rem;
+    max-width: 84rem; margin: 0 auto;
+  }
+  .hero .top {
+    display: flex; justify-content: space-between; align-items: baseline;
+    font-family: var(--mono);
+    font-size: 0.74rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--ink-quiet);
+    margin-bottom: 1.5rem;
+  }
+  .hero .top b { color: var(--ink); font-weight: 500; }
+  .hero h1 {
+    font-family: var(--mono);
+    font-weight: 600;
+    font-size: clamp(2.4rem, 6vw, 4.8rem);
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    color: var(--ink);
+    margin-bottom: 1.2rem;
+  }
+  .hero h1 .v {
+    color: var(--cobalt);
+    font-weight: 500;
+  }
+  .hero h1 .slash { color: var(--ink-quiet); }
+  .hero .tag {
+    font-family: var(--mono);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--ink-soft);
+    margin-bottom: 1.6rem;
+  }
+  .hero .lede {
+    max-width: 48rem;
+    font-size: 1.08rem;
+    line-height: 1.55;
+    color: var(--ink-2);
+  }
+
+  /* Spec data table */
+  .specdata {
+    margin-top: 2.5rem;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-top: 1px solid var(--ink);
+    border-left: 1px solid var(--rule);
+  }
+  .specdata .cell {
+    border-right: 1px solid var(--ink);
+    border-bottom: 1px solid var(--ink);
+    padding: 0.9rem 1rem;
+  }
+  .specdata .cell .k {
+    font-family: var(--mono);
+    font-size: 0.66rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-quiet);
+    margin-bottom: 0.35rem;
+  }
+  .specdata .cell .v {
+    font-family: var(--mono);
+    font-size: 0.95rem;
+    color: var(--ink);
+    font-weight: 500;
+  }
+  .specdata .cell .v.cobalt { color: var(--cobalt); }
+  .specdata .cell .v.ok { color: var(--ok); }
+
+  /* ---------- Sections ---------- */
+  .section {
+    max-width: 84rem; margin: 0 auto;
+    padding: 4rem 1.5rem;
+    border-bottom: 1px solid var(--rule);
+  }
+  .section:last-of-type { border-bottom: none; }
+  .section .label {
+    display: grid;
+    grid-template-columns: 4.5rem 1fr auto;
+    align-items: baseline;
+    gap: 1.5rem;
+    padding-bottom: 1.2rem;
+    margin-bottom: 2.2rem;
+    border-bottom: 1px solid var(--ink);
+  }
+  .section .label .id {
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-quiet);
+  }
+  .section .label .id b { color: var(--cobalt); font-weight: 500; }
+  .section .label h2 {
+    font-family: var(--sans);
+    font-weight: 500;
+    font-size: 1.6rem;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+  }
+  .section .label .meta {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--ink-quiet);
+  }
+
+  /* ---------- Performance metrics ---------- */
+  .perf {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border: 1px solid var(--ink);
+  }
+  .perf .m {
+    padding: 1.6rem 1.3rem 1.4rem;
+    border-right: 1px solid var(--ink);
+    position: relative;
+  }
+  .perf .m:last-child { border-right: none; }
+  .perf .m .big {
+    font-family: var(--mono);
+    font-weight: 600;
+    font-size: 3.2rem;
+    line-height: 1;
+    letter-spacing: -0.04em;
+    color: var(--cobalt);
+    margin-bottom: 0.6rem;
+  }
+  .perf .m .label {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-quiet);
+    margin-bottom: 0.5rem;
+  }
+  .perf .m .src {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--ink-soft);
+    line-height: 1.45;
+  }
+  .perf .m .src b { color: var(--ink); font-weight: 500; }
+  .perf .m .arrow {
+    position: absolute; top: 1rem; right: 1rem;
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: var(--cobalt);
+  }
+  .perf .m.warn .big { color: var(--warn); }
+
+  /* ---------- Architecture / stack diagram ---------- */
+  .arch {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 2.5rem;
+    align-items: start;
+  }
+  .arch .diagram {
+    border: 1px solid var(--ink);
+    background:
+      linear-gradient(transparent 23px, var(--bg-soft) 24px) 0 0 / 100% 24px,
+      var(--bg);
+    padding: 1.5rem;
+    min-height: 22rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .arch .diagram::before {
+    content: 'fig. 02 — system architecture';
+    position: absolute; top: 0.5rem; left: 1rem;
+    font-family: var(--mono); font-size: 0.65rem;
+    color: var(--ink-quiet);
+    text-transform: uppercase; letter-spacing: 0.12em;
+  }
+  .arch .nodes {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.7rem;
+    margin-top: 1.6rem;
+  }
+  .arch .node {
+    border: 1px solid var(--ink);
+    background: var(--bg);
+    padding: 0.6rem 0.7rem;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: var(--ink);
+    line-height: 1.3;
+    position: relative;
+  }
+  .arch .node .k {
+    display: block;
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-quiet);
+    margin-bottom: 0.15rem;
+  }
+  .arch .node .v { font-weight: 500; }
+  .arch .node.core { border-color: var(--cobalt); background: var(--cobalt-l); }
+  .arch .node.core .v { color: var(--cobalt-d); }
+
+  .arch .notes h3 {
+    font-family: var(--mono);
+    font-weight: 500;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--cobalt);
+    margin-bottom: 0.8rem;
+  }
+  .arch .notes p {
+    font-size: 0.98rem;
+    line-height: 1.6;
+    color: var(--ink-2);
+    margin-bottom: 1rem;
+  }
+  .arch .notes p:last-child { margin-bottom: 0; }
+  .arch .notes code {
+    font-family: var(--mono);
+    font-size: 0.85em;
+    background: var(--bg-soft);
+    padding: 0.05em 0.35em;
+    color: var(--cobalt-d);
+  }
+
+  /* ---------- Modules (case studies) ---------- */
+  .module {
+    border: 1px solid var(--ink);
+    margin-bottom: 2rem;
+  }
+  .module:last-child { margin-bottom: 0; }
+  .module .head {
+    display: grid;
+    grid-template-columns: 6rem 1fr auto;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1rem 1.4rem;
+    border-bottom: 1px solid var(--ink);
+    background: var(--ink);
+    color: var(--bg);
+  }
+  .module .head .fig {
+    font-family: var(--mono); font-size: 0.78rem; font-weight: 500;
+    color: var(--cobalt);
+    background: var(--bg);
+    padding: 0.25rem 0.55rem;
+    text-align: center;
+  }
+  .module .head h3 {
+    font-family: var(--sans);
+    font-weight: 500;
+    font-size: 1.1rem;
+    line-height: 1.3;
+  }
+  .module .head .ver {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--bg-soft);
+  }
+  .module .body {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+  }
+  .module .left {
+    padding: 1.4rem;
+    border-right: 1px solid var(--ink);
+    background: var(--bg-soft);
+  }
+  .module .right { padding: 1.4rem; }
+
+  .kv {
+    display: grid; grid-template-columns: 5rem 1fr;
+    gap: 0.3rem 1rem;
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    margin-bottom: 1rem;
+  }
+  .kv dt {
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--ink-quiet);
+    padding-top: 0.1rem;
+  }
+  .kv dd { color: var(--ink); line-height: 1.45; }
+  .kv dd .ok { color: var(--ok); font-weight: 500; }
+  .kv dd .warn { color: var(--warn); font-weight: 500; }
+  .kv dd .cobalt { color: var(--cobalt); font-weight: 500; }
+
+  .module .right h4 {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--cobalt);
+    margin-bottom: 0.6rem;
+    margin-top: 1.1rem;
+  }
+  .module .right h4:first-child { margin-top: 0; }
+  .module .right p {
+    font-size: 0.96rem;
+    line-height: 1.6;
+    color: var(--ink-2);
+    margin-bottom: 0.6rem;
+  }
+  .module .right p:last-child { margin-bottom: 0; }
+  .module .right p.summary { font-size: 1.05rem; color: var(--ink); }
+
+  /* Module placeholder figures */
+  .phfig {
+    border: 1px dashed var(--ink-quiet);
+    background: var(--bg);
+    aspect-ratio: 16/10;
+    margin-bottom: 1rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .phfig .tag {
+    position: absolute; top: 0.4rem; left: 0.5rem;
+    font-family: var(--mono); font-size: 0.6rem;
+    color: var(--ink-quiet);
+    text-transform: uppercase; letter-spacing: 0.12em;
+    background: var(--bg); padding: 0.1rem 0.3rem;
+    border: 1px solid var(--rule-2);
+  }
+  .phfig .tag2 {
+    position: absolute; bottom: 0.4rem; right: 0.5rem;
+    font-family: var(--mono); font-size: 0.6rem;
+    color: var(--ink-quiet);
+    text-transform: uppercase; letter-spacing: 0.12em;
+  }
+  /* portal wireframe */
+  .phfig .wfm {
+    position: absolute; inset: 1.2rem 1rem 1rem 1rem;
+    border: 1px solid var(--ink-soft);
+  }
+  .phfig .wfm .side {
+    position: absolute; left: 0; top: 0; bottom: 0; width: 22%;
+    background: var(--bg-soft);
+    border-right: 1px solid var(--ink-soft);
+  }
+  .phfig .wfm .side::before {
+    content: ''; position: absolute; top: 0.6rem; left: 12%;
+    width: 76%; height: 5px; background: var(--ink-soft);
+  }
+  .phfig .wfm .side::after {
+    content: ''; position: absolute; top: 0.6rem; left: 12%; width: 76%;
+    height: 100%;
+    background: repeating-linear-gradient(180deg, transparent 0 10%, var(--rule-2) 10% 10.5%, transparent 10.5% 22%);
+  }
+  .phfig .wfm .t1, .phfig .wfm .t2, .phfig .wfm .t3, .phfig .wfm .t4 {
+    position: absolute; background: var(--bg-soft); border: 1px solid var(--rule-2);
+  }
+  .phfig .wfm .t1 { left: 26%; top: 6%; width: 38%; height: 16%; }
+  .phfig .wfm .t2 { left: 26%; top: 26%; width: 30%; height: 22%; background: var(--cobalt-l); border-color: var(--cobalt); }
+  .phfig .wfm .t3 { left: 60%; top: 26%; width: 36%; height: 22%; }
+  .phfig .wfm .t4 { left: 26%; top: 52%; width: 70%; height: 42%; }
+  .phfig .wfm .dim {
+    position: absolute; left: 0; right: 0; bottom: -0.55rem;
+    font-family: var(--mono); font-size: 0.55rem; color: var(--ink-quiet);
+    display: flex; justify-content: space-between;
+  }
+  /* phone flow */
+  .phfig .phones {
+    position: absolute; inset: 1rem 1rem; display: flex; gap: 0.8rem; align-items: center; justify-content: center;
+  }
+  .phfig .phones .ph {
+    width: 18%; aspect-ratio: 9/19; border: 1.5px solid var(--ink);
+    background: var(--bg-soft); position: relative; border-radius: 6px; overflow: hidden;
+  }
+  .phfig .phones .ph::before {
+    content: ''; position: absolute; top: 6%; left: 50%; transform: translateX(-50%);
+    width: 30%; height: 2px; background: var(--ink-soft);
+  }
+  .phfig .phones .ph .r { position: absolute; left: 12%; right: 12%; height: 3px; background: var(--rule-2); }
+  .phfig .phones .ph .r1 { top: 16%; width: 60%; }
+  .phfig .phones .ph .r2 { top: 24%; width: 80%; background: var(--cobalt); }
+  .phfig .phones .ph .r3 { top: 34%; width: 70%; }
+  .phfig .phones .ph .r4 { top: 42%; width: 50%; }
+  .phfig .phones .ph .r5 { top: 54%; width: 65%; }
+  .phfig .phones .ph .r6 { top: 62%; width: 75%; }
+  .phfig .phones .ph .btn {
+    position: absolute; left: 18%; right: 18%; bottom: 6%;
+    height: 12%; background: var(--ink); border-radius: 3px;
+  }
+  .phfig .phones .arr {
+    width: 4%; height: 1px; background: var(--ink-soft);
+    position: relative;
+  }
+  .phfig .phones .arr::after {
+    content: '>'; position: absolute; right: -0.5rem; top: -0.5rem;
+    font-family: var(--mono); color: var(--ink-soft);
+  }
+  /* research cluster */
+  .phfig .cluster {
+    position: absolute; inset: 1rem;
+  }
+  .phfig .cluster .n {
+    position: absolute; border: 1px solid var(--ink-soft); background: var(--bg-soft);
+    font-family: var(--mono); font-size: 0.55rem; color: var(--ink-soft);
+    text-transform: uppercase; letter-spacing: 0.08em;
+    display: grid; place-items: center;
+  }
+  .phfig .cluster .n.center { width: 22%; height: 14%; left: 39%; top: 43%; background: var(--cobalt); color: var(--bg); border-color: var(--cobalt); }
+  .phfig .cluster .n.c1 { width: 18%; height: 12%; left: 8%;  top: 18%; }
+  .phfig .cluster .n.c2 { width: 18%; height: 12%; left: 41%; top: 12%; }
+  .phfig .cluster .n.c3 { width: 18%; height: 12%; left: 74%; top: 18%; }
+  .phfig .cluster .n.c4 { width: 18%; height: 12%; left: 8%;  top: 70%; }
+  .phfig .cluster .n.c5 { width: 18%; height: 12%; left: 41%; top: 76%; }
+  .phfig .cluster .n.c6 { width: 18%; height: 12%; left: 74%; top: 70%; }
+  .phfig .cluster .ln {
+    position: absolute; background: var(--rule-2); height: 1px;
+    transform-origin: 0 0;
+  }
+  /* freelance grid */
+  .phfig .clients {
+    position: absolute; inset: 1rem;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0.5rem;
+  }
+  .phfig .clients .cl {
+    border: 1px solid var(--ink-soft);
+    background: var(--bg);
+    display: grid; place-items: center;
+    font-family: var(--mono); font-size: 0.55rem;
+    color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.08em;
+    text-align: center; padding: 0.3rem; line-height: 1.1;
+  }
+  .phfig .clients .cl.hi { background: var(--cobalt-l); color: var(--cobalt-d); border-color: var(--cobalt); }
+
+  /* ---------- Benchmarks / principles table ---------- */
+  table.bench {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: var(--mono);
+    font-size: 0.78rem;
+  }
+  table.bench th, table.bench td {
+    text-align: left;
+    padding: 0.7rem 0.9rem;
+    border-bottom: 1px solid var(--rule);
+  }
+  table.bench th {
+    background: var(--ink);
+    color: var(--bg);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-size: 0.7rem;
+  }
+  table.bench td.idx { color: var(--cobalt); font-weight: 500; }
+  table.bench td.name { font-family: var(--sans); font-weight: 500; color: var(--ink); }
+  table.bench td.spec { color: var(--ink-soft); }
+  table.bench td.status { text-align: right; }
+  .pill {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 0.18rem 0.5rem;
+    border: 1px solid currentColor;
+  }
+  .pill.ok   { color: var(--ok); }
+  .pill.warn { color: var(--warn); }
+  .pill.cobalt { color: var(--cobalt); border-color: var(--cobalt); }
+  .pill.muted { color: var(--ink-quiet); }
+
+  /* ---------- Changelog / career ---------- */
+  .changelog { list-style: none; border: 1px solid var(--ink); }
+  .changelog li {
+    display: grid;
+    grid-template-columns: 5.5rem 1.5rem 1fr;
+    gap: 1rem;
+    align-items: start;
+    padding: 0.85rem 1.2rem;
+    border-bottom: 1px solid var(--rule);
+    font-family: var(--mono);
+    font-size: 0.78rem;
+  }
+  .changelog li:last-child { border-bottom: none; }
+  .changelog .hash { color: var(--cobalt); font-weight: 500; }
+  .changelog .when { color: var(--ink-quiet); text-transform: uppercase; letter-spacing: 0.1em; }
+  .changelog .what { color: var(--ink); line-height: 1.5; }
+  .changelog .what b { color: var(--ink); font-weight: 500; }
+  .changelog .what .meta { color: var(--ink-quiet); font-size: 0.72rem; }
+  .changelog .tag-new { color: var(--ok); }
+  .changelog .tag-feat { color: var(--cobalt); }
+  .changelog .tag-fix { color: var(--warn); }
+
+  /* ---------- Inputs/outputs / contact ---------- */
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border: 1px solid var(--ink);
+  }
+  .contact-grid .col {
+    padding: 1.6rem 1.5rem;
+  }
+  .contact-grid .col + .col { border-left: 1px solid var(--ink); }
+  .contact-grid h4 {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--cobalt);
+    margin-bottom: 1rem;
+  }
+  .contact-grid .row {
+    display: grid; grid-template-columns: 5rem 1fr;
+    gap: 0.4rem 1rem;
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    margin-bottom: 0.4rem;
+  }
+  .contact-grid .row dt { color: var(--ink-quiet); text-transform: uppercase; letter-spacing: 0.1em; }
+  .contact-grid .row dd { color: var(--ink); }
+  .contact-grid .row dd a { color: var(--cobalt); border-bottom: 1px solid transparent; transition: border-color 0.2s; }
+  .contact-grid .row dd a:hover { border-bottom-color: var(--cobalt); }
+
+  /* ---------- Reduced motion ---------- */
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .topframe .status .pulse::after { animation: none; }
+  }
+
+  /* ---------- Narrow widths ---------- */
+  @media (max-width: 960px) {
+    .perf { grid-template-columns: repeat(2, 1fr); }
+    .perf .m:nth-child(2) { border-right: none; }
+    .perf .m:nth-child(1), .perf .m:nth-child(2) { border-bottom: 1px solid var(--ink); }
+    .arch { grid-template-columns: 1fr; }
+    .module .body { grid-template-columns: 1fr; }
+    .module .left { border-right: none; border-bottom: 1px solid var(--ink); }
+    .contact-grid { grid-template-columns: 1fr; }
+    .contact-grid .col + .col { border-left: none; border-top: 1px solid var(--ink); }
+    .specdata { grid-template-columns: repeat(2, 1fr); }
+    .specdata .cell:nth-child(2n) { border-right: 1px solid var(--ink); }
+  }
+  @media (max-width: 620px) {
+    .perf { grid-template-columns: 1fr; }
+    .perf .m { border-right: none; border-bottom: 1px solid var(--ink); }
+    .perf .m:last-child { border-bottom: none; }
+    .topframe .crumbs { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="progress" aria-hidden="true"><div class="bar" id="pbar"></div></div>
+
+<header class="topframe">
+  <div class="topframe-inner">
+    <div class="logo"><span class="square"></span> NAMAN.SHARMA</div>
+    <div class="crumbs">docs / <b>portfolio</b> / spec-v3.2.html</div>
+    <div class="status" aria-live="polite">
+      <span class="pulse" aria-hidden="true"></span>
+      <span>Available · All systems operational</span>
+    </div>
+  </div>
+</header>
+
+<!-- ============== HERO / SPEC ============== -->
+<section class="hero" id="top" aria-labelledby="hero-title">
+  <div class="top">
+    <span>File: <b>spec-v3.2.html</b></span>
+    <span>Build: <b>2026.07.16</b></span>
+    <span>Region: <b>Jaipur, IN · Remote</b></span>
+  </div>
+  <h1 id="hero-title">
+    naman_sharma <span class="slash">/</span> Product_UX_Designer <span class="slash">/</span> <span class="v">v3.2</span>
+  </h1>
+  <p class="tag">// Self-taught, CS undergrad, 5+ years in production. Tested on early and growth-stage teams.</p>
+  <p class="lede">
+    A technical reference for a Product/UX designer. Not a marketing page — a
+    spec sheet. If you want to evaluate fit, the sections below cover what
+    this build does, where it's been deployed, what it has shipped, and how
+    to reach the maintainer.
+  </p>
+
+  <dl class="specdata" aria-label="Build metadata">
+    <div class="cell">
+      <div class="k">Maintainer</div>
+      <div class="v">Naman Sharma</div>
+    </div>
+    <div class="cell">
+      <div class="k">Role</div>
+      <div class="v cobalt">Product / UX / Web</div>
+    </div>
+    <div class="cell">
+      <div class="k">Status</div>
+      <div class="v ok">Available</div>
+    </div>
+    <div class="cell">
+      <div class="k">Last Deploy</div>
+      <div class="v">2026.07.16</div>
+    </div>
+  </dl>
+</section>
+
+<!-- ============== PERFORMANCE ============== -->
+<section class="section" id="perf" aria-labelledby="perf-title">
+  <div class="label">
+    <div class="id"><b>§01</b> Performance</div>
+    <h2 id="perf-title">Measured outcomes from production deployments</h2>
+    <div class="meta">n=3 modules · 2020–2021</div>
+  </div>
+
+  <div class="perf">
+    <div class="m">
+      <span class="arrow">↑</span>
+      <div class="big">+20%</div>
+      <div class="label">Metric · Online transaction volume</div>
+      <div class="src"><b>Asian Paints</b> — Dealer portal, end-to-end redesign. Resulted in 20% increase in transactional volume and a healthy lift in engagement and loyalty.</div>
+    </div>
+    <div class="m warn">
+      <span class="arrow">↓</span>
+      <div class="big">−60%</div>
+      <div class="label">Metric · 14-day uninstall rate</div>
+      <div class="src"><b>Boost360</b> — Onboarding flow redesign + usability testing. Major drop in 14-day uninstall rate and significant reduction in time-to-signup.</div>
+    </div>
+    <div class="m">
+      <span class="arrow">↘</span>
+      <div class="big">~30<span style="font-size:1.6rem">m</span></div>
+      <div class="label">Metric · Time-to-signup, before</div>
+      <div class="src"><b>Boost360</b> — Average time for signup success was 30 minutes in the old flow. New flow reduced it substantially (per usability testing).</div>
+    </div>
+    <div class="m">
+      <span class="arrow">$</span>
+      <div class="big">$500K</div>
+      <div class="label">Metric · Pre-seed, design attribution</div>
+      <div class="src"><b>Turns</b> — Website &amp; landing pages, multi-platform brand guidelines, and design system. Helped raise pre-seed funding.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== ARCHITECTURE ============== -->
+<section class="section" id="arch" aria-labelledby="arch-title">
+  <div class="label">
+    <div class="id"><b>§02</b> Architecture</div>
+    <h2 id="arch-title">Stack, layers, and the modules they enable</h2>
+    <div class="meta">Self-reported · current</div>
+  </div>
+
+  <div class="arch">
+    <div class="diagram" role="img" aria-label="System architecture diagram: Research layer feeding Design and Engineering layers">
+      <div class="nodes">
+        <div class="node"><span class="k">Layer 01</span><span class="v">Research</span></div>
+        <div class="node"><span class="k">Layer 02</span><span class="v">Synthesis</span></div>
+        <div class="node"><span class="k">Layer 03</span><span class="v">IA &amp; Flow</span></div>
+        <div class="node core"><span class="k">Core</span><span class="v">Visual Design</span></div>
+        <div class="node"><span class="k">Layer 05</span><span class="v">Prototype</span></div>
+        <div class="node"><span class="k">Layer 06</span><span class="v">Test &amp; Iterate</span></div>
+        <div class="node"><span class="k">Layer 07</span><span class="v">Handoff</span></div>
+        <div class="node"><span class="k">Layer 08</span><span class="v">Monitor</span></div>
+        <div class="node"><span class="k">Layer 09</span><span class="v">Document</span></div>
+      </div>
+    </div>
+
+    <div class="notes">
+      <h3>// Module overview</h3>
+      <p>
+        Single-product deployments, multi-platform brand systems, and
+        end-to-end UX audits are all the same module — different <code>props</code>.
+        Research and synthesis are mandatory. Visual design is where the work
+        gets judged, and handoff is where it lives or dies.
+      </p>
+      <p>
+        I work in the same tools as the team. <code>Figma</code> as the
+        default. <code>FigJam</code> when we need a wall. <code>Framer</code>
+        when something needs to be live. <code>Webflow</code> when it's a
+        marketing site. <code>Protopie</code> when the interaction has to be
+        felt. <code>Miro</code> when the room is distributed.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ============== MODULES / CASE STUDIES ============== -->
+<section class="section" id="modules" aria-labelledby="modules-title">
+  <div class="label">
+    <div class="id"><b>§03</b> Modules</div>
+    <h2 id="modules-title">Four shipped modules. Each is a real case.</h2>
+    <div class="meta">3 of 4 detailed</div>
+  </div>
+
+  <!-- Module 01 -->
+  <article class="module">
+    <div class="head">
+      <div class="fig">FIG. 01</div>
+      <h3>Asian Paints — Dealer Portal</h3>
+      <div class="ver">v2.0 · shipped 2021</div>
+    </div>
+    <div class="body">
+      <div class="left">
+        <div class="phfig">
+          <span class="tag">fig. 01.a — wireframe, dashboard</span>
+          <div class="wfm">
+            <div class="side"></div>
+            <div class="t1"></div>
+            <div class="t2"></div>
+            <div class="t3"></div>
+            <div class="t4"></div>
+            <div class="dim"><span>1440px</span><span>9 cols</span></div>
+          </div>
+          <span class="tag2">end-to-end · 12 screens</span>
+        </div>
+        <dl class="kv">
+          <dt>Agency</dt><dd>Thence</dd>
+          <dt>Year</dt><dd>2021</dd>
+          <dt>Role</dt><dd>Research · UX · UI</dd>
+          <dt>Stack</dt><dd>Web (dealer portal)</dd>
+          <dt>Outcome</dt><dd><span class="ok">+20%</span> transaction volume</dd>
+        </dl>
+      </div>
+      <div class="right">
+        <h4>// Input</h4>
+        <p class="summary">
+          Asian Paints dealers were calling sales reps to place every order.
+          Competitor portals existed; dealers hated all of them. Transaction
+          volumes were flat, AOV was flat.
+        </p>
+        <h4>// Process</h4>
+        <p>
+          Heuristic evaluation, then end-to-end redesign across twelve screens
+          (Home, Trending, Categories, Catalog, Listing, Order, Stock, Wishlist,
+          Cart, Tracking, Account, Reports). Added barcode-scan ordering,
+          personalized recommendations, loyalty points, and AOV incentives.
+        </p>
+        <h4>// Output</h4>
+        <p>
+          <span class="cobalt" style="font-family: var(--mono); font-weight: 500;">+20%</span>
+          in online transaction volume. Healthy increase in user engagement and
+          loyalty. New features reduced dealer-salesman interaction and cut
+          costs.
+        </p>
+      </div>
+    </div>
+  </article>
+
+  <!-- Module 02 -->
+  <article class="module">
+    <div class="head">
+      <div class="fig">FIG. 02</div>
+      <h3>Boost360 — Onboarding Flow</h3>
+      <div class="ver">v3.0 · shipped 2021</div>
+    </div>
+    <div class="body">
+      <div class="left">
+        <div class="phfig">
+          <span class="tag">fig. 02.a — onboarding, 3 states</span>
+          <div class="phones">
+            <div class="ph"><div class="r r1"></div><div class="r r2"></div><div class="r r3"></div><div class="r r4"></div><div class="r r5"></div><div class="r r6"></div><div class="btn"></div></div>
+            <div class="arr"></div>
+            <div class="ph"><div class="r r1"></div><div class="r r2"></div><div class="r r3"></div><div class="r r4"></div><div class="r r5"></div><div class="r r6"></div><div class="btn"></div></div>
+            <div class="arr"></div>
+            <div class="ph"><div class="r r1"></div><div class="r r2"></div><div class="r r3"></div><div class="r r4"></div><div class="r r5"></div><div class="r r6"></div><div class="btn"></div></div>
+          </div>
+          <span class="tag2">ios · android · 4 screens</span>
+        </div>
+        <dl class="kv">
+          <dt>Agency</dt><dd>Thence</dd>
+          <dt>Year</dt><dd>2021</dd>
+          <dt>Role</dt><dd>Research · UX · UI · Usability</dd>
+          <dt>Stack</dt><dd>Mobile (iOS, Android)</dd>
+          <dt>Outcome</dt><dd><span class="ok">−60%</span> uninstall rate</dd>
+        </dl>
+      </div>
+      <div class="right">
+        <h4>// Input</h4>
+        <p class="summary">
+          80% of new Boost360 users uninstalled the app before signing up.
+          Average time-to-signup was 30 minutes. Something between the
+          marketing and the product was breaking.
+        </p>
+        <h4>// Diagnosis</h4>
+        <p>
+          Not crashes, OTP, ads, or permissions. It was a mismatch between
+          what marketing promised and what onboarding delivered — a UX problem
+          hiding inside a positioning problem.
+        </p>
+        <h4>// Output</h4>
+        <p>
+          Visual signup, USPs communicated during onboarding, social proof for
+          trust, quick wins to demonstrate value, and a route to support.
+          Usability testing confirmed the new flow was understandable and
+          motivating. <span class="cobalt" style="font-family: var(--mono); font-weight: 500;">−60%</span>
+          uninstall rate within 14 days.
+        </p>
+      </div>
+    </div>
+  </article>
+
+  <!-- Module 03 -->
+  <article class="module">
+    <div class="head">
+      <div class="fig">FIG. 03</div>
+      <h3>Wikipedia — KaiOS User Research</h3>
+      <div class="ver">v1.0 · 2020</div>
+    </div>
+    <div class="body">
+      <div class="left">
+        <div class="phfig">
+          <span class="tag">fig. 03.a — research cluster</span>
+          <div class="cluster">
+            <div class="n c1">Smart features</div>
+            <div class="n c2">Durable</div>
+            <div class="n c3">Battery</div>
+            <div class="n c4">Keypad</div>
+            <div class="n c5">Affordable</div>
+            <div class="n c6">Jio network</div>
+            <div class="n center">Why JioPhone?</div>
+          </div>
+          <span class="tag2">n=25 · 3 cities</span>
+        </div>
+        <dl class="kv">
+          <dt>Agency</dt><dd>Hureo</dd>
+          <dt>Year</dt><dd>2020</dd>
+          <dt>Role</dt><dd>Research · Personas · Journey</dd>
+          <dt>Method</dt><dd>In-person, 45–60 min</dd>
+          <dt>Outcome</dt><dd><span class="cobalt">Recommendations</span> shipped to Wikimedia</dd>
+        </dl>
+      </div>
+      <div class="right">
+        <h4>// Input</h4>
+        <p class="summary">
+          Wikimedia wanted to understand JioPhone (KaiOS) users — people who
+          chose a feature phone over a smartphone, and what that meant for
+          Wikipedia on their device.
+        </p>
+        <h4>// Method</h4>
+        <p>
+          25 in-person interviews, 45–60 minutes each, across Pune, Mumbai,
+          Delhi. Recruited, ran the sessions, transcribed, built personas,
+          mapped journeys, and produced an ecosystem map and recommendations
+          report.
+        </p>
+        <h4>// Output</h4>
+        <p>
+          Concrete recommendations: voice-first interaction, readability
+          optimization for small screens, video content, search visibility,
+          regional-language SEO, simpler Hindi. Findings shaped how Wikipedia
+          approached KaiOS for the next year.
+        </p>
+      </div>
+    </div>
+  </article>
+
+  <!-- Module 04 -->
+  <article class="module">
+    <div class="head">
+      <div class="fig">FIG. 04</div>
+      <h3>Freelance — Multi-tenant</h3>
+      <div class="ver">rolling · 2022 — present</div>
+    </div>
+    <div class="body">
+      <div class="left">
+        <div class="phfig">
+          <span class="tag">fig. 04.a — client surface</span>
+          <div class="clients">
+            <div class="cl hi">Turns</div>
+            <div class="cl">Gadivan</div>
+            <div class="cl">LetsConnect</div>
+            <div class="cl">Parentverse</div>
+            <div class="cl">Venyou</div>
+            <div class="cl">Sharent</div>
+            <div class="cl">Spirinova</div>
+            <div class="cl">Gorico</div>
+            <div class="cl">RedShilliz</div>
+            <div class="cl hi">+$500K pre-seed</div>
+            <div class="cl">DGlobalist</div>
+            <div class="cl">Pahoti</div>
+            <div class="cl">Ivy Malik</div>
+            <div class="cl">PhotoFinder</div>
+            <div class="cl">Olsub</div>
+            <div class="cl">Learn Theta</div>
+            <div class="cl">LearnApp</div>
+            <div class="cl">Thence</div>
+            <div class="cl">+ more</div>
+            <div class="cl">+ more</div>
+          </div>
+          <span class="tag2">14+ active</span>
+        </div>
+        <dl class="kv">
+          <dt>Mode</dt><dd>Independent</dd>
+          <dt>Years</dt><dd>2022 — present</dd>
+          <dt>Role</dt><dd>End-to-end</dd>
+          <dt>Stack</dt><dd>Web · Mobile · Brand</dd>
+          <dt>Outcome</dt><dd><span class="ok">0 → 1</span> for multiple products</dd>
+        </dl>
+      </div>
+      <div class="right">
+        <h4>// Input</h4>
+        <p class="summary">
+          Multiple short- and mid-tenure freelance engagements across web,
+          mobile, brand, and design system work. Selection of representative
+          tenants below.
+        </p>
+        <h4>// Tenants</h4>
+        <p>
+          Turns (web, brand, design system, contributed to $500K pre-seed) ·
+          Gadivan (multi-app, 0→1) · LetsConnect (end-to-end, 4.8★ on Play
+          Store) · plus Parentverse, Venyou, Sharent, Spirinova, Gorico,
+          RedShilliz, DGlobalist, Pahoti Wellness, Ivy Malik, PhotoFinder,
+          Olsub, Learn Theta, LearnApp.
+        </p>
+      </div>
+    </div>
+  </article>
+</section>
+
+<!-- ============== BENCHMARKS / PRINCIPLES ============== -->
+<section class="section" id="bench" aria-labelledby="bench-title">
+  <div class="label">
+    <div class="id"><b>§04</b> Benchmarks</div>
+    <h2 id="bench-title">Spec compliance — the four operating principles</h2>
+    <div class="meta">4 / 4 passing</div>
+  </div>
+
+  <table class="bench" aria-label="Spec compliance table">
+    <thead>
+      <tr>
+        <th style="width: 4rem">Idx</th>
+        <th>Spec</th>
+        <th>Description</th>
+        <th style="width: 8rem" class="status">Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="idx">01</td>
+        <td class="name">Consistency beats talent</td>
+        <td class="spec">Reliable, compounding effort over a single heroic sprint. The default cadence is small, daily, and durable.</td>
+        <td class="status"><span class="pill cobalt">passing</span></td>
+      </tr>
+      <tr>
+        <td class="idx">02</td>
+        <td class="name">Let curiosity guide you</td>
+        <td class="spec">Curiosity is a feature, not a hobby. A generalist surface area helps the work connect scattered information.</td>
+        <td class="status"><span class="pill cobalt">passing</span></td>
+      </tr>
+      <tr>
+        <td class="idx">03</td>
+        <td class="name">Form follows function</td>
+        <td class="spec">Function first; delight second. Solve the need before polishing the surface — and humans remember the polish.</td>
+        <td class="status"><span class="pill cobalt">passing</span></td>
+      </tr>
+      <tr>
+        <td class="idx">04</td>
+        <td class="name">Give a damn</td>
+        <td class="spec">Founder's mindset. Ownership of outcomes, not deliverables. Success is a shared, accountable result.</td>
+        <td class="status"><span class="pill cobalt">passing</span></td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ============== CHANGELOG / CAREER ============== -->
+<section class="section" id="changelog" aria-labelledby="changelog-title">
+  <div class="label">
+    <div class="id"><b>§05</b> Changelog</div>
+    <h2 id="changelog-title">Career as a commit history</h2>
+    <div class="meta">5 major · 0 deprecated</div>
+  </div>
+
+  <ul class="changelog">
+    <li>
+      <span class="hash">a7c19f2</span>
+      <span class="tag-new">new</span>
+      <span class="what">
+        <b>Product, UX &amp; Web Designer — Freelance</b><br>
+        <span class="meta">Apr 2022 — present · Thence, LearnApp, Turns, Gadivan, LetsConnect, Parentverse, &amp; more</span>
+      </span>
+    </li>
+    <li>
+      <span class="hash">4e20d51</span>
+      <span class="tag-feat">feat</span>
+      <span class="what">
+        <b>UX Designer — Thence</b><br>
+        <span class="meta">Apr 2021 — Mar 2022 · Asian Paints, NowFloats Boost360, Shiprocket</span>
+      </span>
+    </li>
+    <li>
+      <span class="hash">1b88c0d</span>
+      <span class="tag-feat">feat</span>
+      <span class="what">
+        <b>UX Research Intern — Hureo</b><br>
+        <span class="meta">Dec 2019 — Apr 2020 · Wikipedia / Wikimedia Foundation (KaiOS / JioPhone study, 25 interviews)</span>
+      </span>
+    </li>
+    <li>
+      <span class="hash">7d2fe09</span>
+      <span class="tag-feat">feat</span>
+      <span class="what">
+        <b>Graphic Design Intern — HappleyFit</b><br>
+        <span class="meta">Jul 2018 — May 2019 · Logo, posters, banners, exhibition booth, WordPress site</span>
+      </span>
+    </li>
+    <li>
+      <span class="hash">0f0eb30</span>
+      <span class="tag-feat">feat</span>
+      <span class="what">
+        <b>Graphic Design Intern — Skillovate</b><br>
+        <span class="meta">Dec 2017 — Mar 2018 · Mascot, kids eBook, board game, collateral</span>
+      </span>
+    </li>
+  </ul>
+</section>
+
+<!-- ============== INPUTS / OUTPUTS / CONTACT ============== -->
+<section class="section" id="contact" aria-labelledby="contact-title">
+  <div class="label">
+    <div class="id"><b>§06</b> I/O</div>
+    <h2 id="contact-title">Inputs (you) → Outputs (work)</h2>
+    <div class="meta">reply SLA · &lt; 48h</div>
+  </div>
+
+  <div class="contact-grid">
+    <div class="col">
+      <h4>// Inputs accepted</h4>
+      <dl class="row">
+        <dt>Hiring</dt><dd>Full-time, contract, fractional</dd>
+        <dt>Freelance</dt><dd>Web, mobile, brand, 0→1</dd>
+        <dt>Workshops</dt><dd>Design process, handoff, UX audits</dd>
+        <dt>Calls</dt><dd>15-min intro · by request</dd>
+      </dl>
+    </div>
+    <div class="col">
+      <h4>// Endpoints</h4>
+      <dl class="row">
+        <dt>Email</dt><dd><a href="mailto:madebynaman@gmail.com">madebynaman@gmail.com</a></dd>
+        <dt>Site</dt><dd><a href="https://www.madebynaman.com" target="_blank" rel="noopener">madebynaman.com</a></dd>
+        <dt>LinkedIn</dt><dd><a href="https://www.linkedin.com/in/madebynaman/" target="_blank" rel="noopener">/in/madebynaman</a></dd>
+        <dt>Phone</dt><dd><a href="tel:+918208369219">+91 82083 69219</a></dd>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<footer style="border-top: 1px solid var(--ink); background: var(--ink); color: var(--bg-soft);">
+  <div style="max-width: 84rem; margin: 0 auto; padding: 1.2rem 1.5rem; display: flex; justify-content: space-between; align-items: center; font-family: var(--mono); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.1em;">
+    <span>// end of spec · naman_sharma v3.2 · build 2026.07.16</span>
+    <span>built with care. maintained with caffeine.</span>
+  </div>
+</footer>
+
+<script>
+  // Scroll progress bar
+  (function () {
+    const bar = document.getElementById('pbar');
+    function update() {
+      const h = document.documentElement;
+      const max = h.scrollHeight - h.clientHeight;
+      const pct = max > 0 ? (h.scrollTop / max) * 100 : 0;
+      bar.style.width = pct + '%';
+    }
+    document.addEventListener('scroll', update, { passive: true });
+    update();
+  })();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Naman Sharma — Product / UX Designer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --cream: #F4F1EA;
+  --warm-white: #FAF8F4;
+  --terracotta: #C4623A;
+  --olive: #5B6B4F;
+  --charcoal: #2C2825;
+  --brown: #8A7568;
+  --sand: #D9CFC2;
+  --font-display: 'Playfair Display', 'Georgia', serif;
+  --font-body: 'DM Sans', 'Helvetica Neue', sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--cream);
+  color: var(--charcoal);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: inherit; text-decoration: none; }
+
+/* ─── HAND-DRAWN SVG ACCENTS ─── */
+.doodle {
+  position: absolute;
+  opacity: 0.12;
+  pointer-events: none;
+}
+
+/* ─── NAV ─── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  background: var(--cream);
+  padding: 20px 48px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--sand);
+}
+
+nav .logo {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 500;
+}
+
+nav ul { display: flex; gap: 28px; list-style: none; }
+
+nav a {
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  position: relative;
+}
+
+nav a::after {
+  content: '';
+  position: absolute;
+  bottom: -2px; left: 0;
+  width: 0; height: 1.5px;
+  background: var(--terracotta);
+  transition: width 0.3s ease;
+}
+
+nav a:hover::after { width: 100%; }
+
+/* ─── HERO ─── */
+.hero {
+  margin-top: 64px;
+  padding: 100px 48px 80px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+  position: relative;
+}
+
+.hero-salutation {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 20px;
+  color: var(--terracotta);
+  margin-bottom: 20px;
+}
+
+.hero h1 {
+  font-family: var(--font-display);
+  font-size: clamp(48px, 7vw, 96px);
+  font-weight: 400;
+  line-height: 1.05;
+  margin-bottom: 32px;
+}
+
+.hero h1 em {
+  font-style: italic;
+  color: var(--terracotta);
+}
+
+.hero-subtitle {
+  font-size: 18px;
+  color: var(--brown);
+  max-width: 520px;
+  margin: 0 auto 40px;
+  line-height: 1.7;
+}
+
+.hero-divider {
+  width: 60px;
+  height: 2px;
+  background: var(--terracotta);
+  margin: 0 auto 40px;
+}
+
+.hero-details {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  font-size: 13px;
+  color: var(--brown);
+}
+
+.hero-details span { display: flex; align-items: center; gap: 6px; }
+
+.hero-details .dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--terracotta);
+}
+
+/* ─── SECTION INTRO ─── */
+.section-intro {
+  padding: 60px 48px;
+  text-align: center;
+}
+
+.section-intro h2 {
+  font-family: var(--font-display);
+  font-size: clamp(32px, 4vw, 52px);
+  font-weight: 400;
+  margin-bottom: 12px;
+}
+
+.section-intro p {
+  font-size: 15px;
+  color: var(--brown);
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+/* ─── WORK CARDS ─── */
+.work-cards {
+  padding: 20px 48px 80px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.work-card {
+  background: var(--warm-white);
+  border: 1px solid var(--sand);
+  border-radius: 12px;
+  padding: 48px;
+  margin-bottom: 24px;
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 48px;
+  align-items: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.work-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(44, 40, 37, 0.06);
+}
+
+.work-card-visual {
+  background: var(--charcoal);
+  border-radius: 8px;
+  height: 260px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--cream);
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  position: relative;
+  overflow: hidden;
+}
+
+.work-card-visual::after {
+  content: '';
+  position: absolute;
+  bottom: -20px;
+  right: -20px;
+  width: 80px;
+  height: 80px;
+  border: 2px solid var(--terracotta);
+  border-radius: 50%;
+  opacity: 0.3;
+}
+
+.work-card-content .tag {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--terracotta);
+  margin-bottom: 12px;
+}
+
+.work-card-content h3 {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 500;
+  margin-bottom: 12px;
+}
+
+.work-card-content p {
+  font-size: 14px;
+  color: var(--brown);
+  line-height: 1.7;
+  margin-bottom: 20px;
+}
+
+.work-card-content .metric {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.work-card-content .metric-val {
+  font-family: var(--font-display);
+  font-size: 36px;
+  color: var(--terracotta);
+}
+
+.work-card-content .metric-label {
+  font-size: 13px;
+  color: var(--brown);
+}
+
+/* ─── CASE STUDIES ─── */
+.case-studies {
+  padding: 20px 48px 80px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.case-card {
+  background: var(--warm-white);
+  border: 1px solid var(--sand);
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 24px;
+}
+
+.case-card-inner {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+}
+
+.case-card-visual {
+  background: linear-gradient(135deg, var(--charcoal) 0%, #3D3530 100%);
+  min-height: 320px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--cream);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  position: relative;
+}
+
+.case-card-visual::before {
+  content: '';
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  border: 1px dashed var(--terracotta);
+  border-radius: 8px;
+  opacity: 0.2;
+  transform: rotate(12deg);
+}
+
+.case-card-content {
+  padding: 48px;
+}
+
+.case-card-content .eyebrow {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--olive);
+  margin-bottom: 16px;
+}
+
+.case-card-content h3 {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 500;
+  margin-bottom: 16px;
+}
+
+.case-card-content p {
+  font-size: 14px;
+  color: var(--brown);
+  line-height: 1.7;
+  margin-bottom: 20px;
+}
+
+.case-card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.case-card-tags span {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 6px 14px;
+  border: 1px solid var(--sand);
+  border-radius: 20px;
+  color: var(--brown);
+}
+
+/* ─── PROCESS ─── */
+.process-section {
+  padding: 60px 48px 80px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.process-flow {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.process-item {
+  background: var(--warm-white);
+  border: 1px solid var(--sand);
+  border-radius: 12px;
+  padding: 32px;
+  position: relative;
+}
+
+.process-item-num {
+  font-family: var(--font-display);
+  font-size: 40px;
+  color: var(--terracotta);
+  opacity: 0.6;
+  margin-bottom: 12px;
+}
+
+.process-item h4 {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.process-item p {
+  font-size: 13px;
+  color: var(--brown);
+  line-height: 1.6;
+}
+
+/* ─── PRINCIPLES ─── */
+.principles-section {
+  padding: 60px 48px 80px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.principles-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.principle-card {
+  background: var(--warm-white);
+  border: 1px solid var(--sand);
+  border-radius: 12px;
+  padding: 36px;
+}
+
+.principle-card h4 {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 500;
+  margin-bottom: 12px;
+  color: var(--terracotta);
+}
+
+.principle-card p {
+  font-size: 14px;
+  color: var(--brown);
+  line-height: 1.7;
+}
+
+/* ─── ABOUT ─── */
+.about-section {
+  padding: 60px 48px 80px;
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.about-section h2 {
+  font-family: var(--font-display);
+  font-size: clamp(32px, 4vw, 48px);
+  font-weight: 400;
+  margin-bottom: 24px;
+}
+
+.about-section p {
+  font-size: 16px;
+  color: var(--brown);
+  line-height: 1.8;
+  margin-bottom: 16px;
+}
+
+.about-section .highlight {
+  color: var(--terracotta);
+  font-weight: 500;
+}
+
+/* ─── CONTACT ─── */
+.contact-section {
+  padding: 80px 48px;
+  text-align: center;
+  border-top: 1px solid var(--sand);
+}
+
+.contact-section h2 {
+  font-family: var(--font-display);
+  font-size: clamp(36px, 5vw, 64px);
+  font-weight: 400;
+  margin-bottom: 32px;
+}
+
+.contact-section h2 em {
+  font-style: italic;
+  color: var(--terracotta);
+}
+
+.contact-links {
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+
+.contact-links a {
+  font-size: 14px;
+  padding: 12px 24px;
+  border: 1px solid var(--sand);
+  border-radius: 24px;
+  transition: all 0.3s ease;
+}
+
+.contact-links a:hover {
+  background: var(--terracotta);
+  color: var(--warm-white);
+  border-color: var(--terracotta);
+}
+
+/* ─── FOOTER ─── */
+footer {
+  padding: 24px 48px;
+  border-top: 1px solid var(--sand);
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: var(--brown);
+}
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 900px) {
+  .work-card, .case-card-inner { grid-template-columns: 1fr; }
+  .process-flow { grid-template-columns: 1fr; }
+  .principles-grid { grid-template-columns: 1fr; }
+  nav ul { display: none; }
+  .hero-details { flex-direction: column; align-items: center; gap: 12px; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <span class="logo">Naman Sharma</span>
+  <ul>
+    <li><a href="#work">Work</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <svg class="doodle" style="top: 60px; left: 40px; width: 120px;" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="1.5">
+    <path d="M10,50 Q30,10 50,50 T90,50" />
+  </svg>
+  <svg class="doodle" style="bottom: 40px; right: 60px; width: 80px;" viewBox="0 0 80 80" fill="none" stroke="currentColor" stroke-width="1.5">
+    <circle cx="40" cy="40" r="30" stroke-dasharray="4 4" />
+  </svg>
+  <div class="hero-inner">
+    <div class="hero-salutation">Hey there, I'm</div>
+    <h1>Naman Sharma</h1>
+    <p class="hero-subtitle">
+      Product & UX Designer rooted in research and constant improvement.
+      Improving people's lives with design and tech, one pixel at a time.
+    </p>
+    <div class="hero-divider"></div>
+    <div class="hero-details">
+      <span><span class="dot"></span>Jaipur, India</span>
+      <span><span class="dot"></span>Product / UX Design</span>
+      <span><span class="dot"></span>3+ Years Experience</span>
+    </div>
+  </div>
+</section>
+
+<!-- WORK -->
+<div class="section-intro" id="work">
+  <h2>Selected Work</h2>
+  <p>A curated selection of projects where design met impact.</p>
+</div>
+
+<div class="work-cards">
+  <div class="work-card">
+    <div class="work-card-visual">Asian Paints — Dealer Portal</div>
+    <div class="work-card-content">
+      <div class="tag">Thence · 2021</div>
+      <h3>Asian Paints Dealer Portal</h3>
+      <p>End-to-end UX redesign for the multi-platform dealer portal. Heuristic evaluation, research across dealer workflows, and a complete visual overhaul across 12+ screens — from trending products to order tracking.</p>
+      <div class="metric">
+        <span class="metric-val">20%</span>
+        <span class="metric-label">increase in online transaction volume</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="work-card">
+    <div class="work-card-visual">Boost360 — Onboarding</div>
+    <div class="work-card-content">
+      <div class="tag">Thence · 2021</div>
+      <h3>Boost360 Onboarding</h3>
+      <p>Root cause analysis revealed a marketing-UX mismatch: users acquired through ads expected something different from what onboarding delivered. The fix made signup visual, built trust with social proof, and created quick wins.</p>
+      <div class="metric">
+        <span class="metric-val">60%</span>
+        <span class="metric-label">decrease in app uninstall rate</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CASE STUDIES -->
+<div class="section-intro">
+  <h2>Deep Dives</h2>
+  <p>The stories behind the solutions.</p>
+</div>
+
+<div class="case-studies">
+  <div class="case-card">
+    <div class="case-card-inner">
+      <div class="case-card-visual">Case Study — Wikipedia KaiOS</div>
+      <div class="case-card-content">
+        <div class="eyebrow">Hureo · 2020</div>
+        <h3>Wikipedia KaiOS User Research</h3>
+        <p>Led in-person research across 3 cities — 25 participants using JioPhones. Uncovered why users chose feature phones over smartphones, their Wikipedia pain points, and recommendations for voice UI and content optimization that could reach an entirely new audience.</p>
+        <div class="case-card-tags">
+          <span>UX Research</span>
+          <span>User Personas</span>
+          <span>25 Participants</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="case-card">
+    <div class="case-card-inner">
+      <div class="case-card-visual">Case Study — Turns Brand</div>
+      <div class="case-card-content">
+        <div class="eyebrow">Freelance · 2022</div>
+        <h3>Turns: From Rebrand to Raise</h3>
+        <p>Website redesign, multi-platform brand guidelines, design system, and UX audits — the full stack. The revamp didn't just improve conversions; it helped Turns secure $500K in pre-seed funding by presenting a coherent, professional brand story.</p>
+        <div class="case-card-tags">
+          <span>Branding</span>
+          <span>Web Design</span>
+          <span>Design System</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PROCESS -->
+<div class="section-intro" id="process">
+  <h2>How I Work</h2>
+  <p>Six steps from problem to impact.</p>
+</div>
+
+<div class="process-section">
+  <div class="process-flow">
+    <div class="process-item">
+      <div class="process-item-num">01</div>
+      <h4>Research</h4>
+      <p>Understanding the problem space, the customer, and the possible solutions. Every decision starts with evidence.</p>
+    </div>
+    <div class="process-item">
+      <div class="process-item-num">02</div>
+      <h4>User Journey</h4>
+      <p>Diving deep into personas, journeys, and decision-making patterns to uncover the insights that matter.</p>
+    </div>
+    <div class="process-item">
+      <div class="process-item-num">03</div>
+      <h4>Design Exploration</h4>
+      <p>Going wide. Testing, iterating, collaborating. Exploring the full range before committing to a direction.</p>
+    </div>
+    <div class="process-item">
+      <div class="process-item-num">04</div>
+      <h4>Refinement</h4>
+      <p>Polishing the chosen direction. Preparing designs for handoff. Documenting every decision along the way.</p>
+    </div>
+    <div class="process-item">
+      <div class="process-item-num">05</div>
+      <h4>Handoff</h4>
+      <p>Working closely with engineering and product to ensure successful implementation. No design lives in a vacuum.</p>
+    </div>
+    <div class="process-item">
+      <div class="process-item-num">06</div>
+      <h4>Monitoring</h4>
+      <p>Live doesn't mean done. Tracking metrics, monitoring performance, and iterating based on real data.</p>
+    </div>
+  </div>
+</div>
+
+<!-- PRINCIPLES -->
+<div class="section-intro">
+  <h2>Principles</h2>
+  <p>The beliefs that guide my work.</p>
+</div>
+
+<div class="principles-section">
+  <div class="principles-grid">
+    <div class="principle-card">
+      <h4>Consistency beats talent</h4>
+      <p>Consistent efforts compound into unimaginable results. I'm not the most talented designer — but I strive for improvement every day.</p>
+    </div>
+    <div class="principle-card">
+      <h4>Let curiosity guide you</h4>
+      <p>I know a little about a lot. It helps me connect dots between scattered information and create work that actually makes a difference.</p>
+    </div>
+    <div class="principle-card">
+      <h4>Form follows function</h4>
+      <p>Problems are solved with functionality, not aesthetics. But going the extra mile to design beautiful products creates delight. And humans remember delight.</p>
+    </div>
+    <div class="principle-card">
+      <h4>Give a damn</h4>
+      <p>Entrepreneurial mindset. High agency. I take ownership and commit to going the extra mile — because success is a shared responsibility.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<div class="about-section" id="about">
+  <h2>About Me</h2>
+  <p>Self-taught Product/UX Designer with 3 years of experience and a background in Computer Science. Product/UX design sits at the intersection of my passion for <span class="highlight">creativity, problem solving, and technology.</span></p>
+  <p>I'm a curious generalist — whether it's UX research, usability testing, designing apps, websites, logos, or product packaging, I've done it all. When I'm not designing, I'm spending quality time with my adorable furry friend. <span class="highlight">Jerry says hi!</span></p>
+</div>
+
+<!-- CONTACT -->
+<div class="contact-section" id="contact">
+  <h2>Let's <em>create</em> together</h2>
+  <div class="contact-links">
+    <a href="mailto:madebynaman@gmail.com">Email</a>
+    <a href="https://www.linkedin.com/in/madebynaman/" target="_blank">LinkedIn</a>
+    <a href="https://www.madebynaman.com" target="_blank">Website</a>
+  </div>
+</div>
+
+<footer>
+  <span>© 2024 Naman Sharma</span>
+  <span>Jaipur, India</span>
+</footer>
+
+</body>
+</html>

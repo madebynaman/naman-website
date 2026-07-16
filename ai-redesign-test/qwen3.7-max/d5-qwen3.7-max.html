@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Naman Sharma — Product/UX Designer — The Conversation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Work+Sans:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --warm-white: #FAFAF8;
+  --soft-black: #1A1A1A;
+  --sage: #5B8C5A;
+  --sage-light: #E8F0E8;
+  --gold: #C9A96E;
+  --gold-light: #F5EFE0;
+  --warm-gray: #888888;
+  --light-gray: #E8E6E2;
+  --rose: #C17C74;
+  --rose-light: #F5E8E6;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Work Sans', system-ui, -apple-system, sans-serif;
+  background: var(--warm-white);
+  color: var(--soft-black);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+.page { max-width: 900px; margin: 0 auto; padding: 0 2rem; }
+
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 4rem 0;
+}
+
+.hero .opening {
+  font-family: 'Fira Code', 'Courier New', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--warm-gray);
+  margin-bottom: 2rem;
+}
+
+.hero h1 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin-bottom: 1.5rem;
+}
+
+.hero h1 em {
+  font-style: italic;
+  color: var(--sage);
+}
+
+.hero .thesis {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.35rem;
+  font-style: italic;
+  color: var(--warm-gray);
+  max-width: 520px;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+}
+
+.hero .thesis-attr {
+  font-family: 'Work Sans', system-ui, sans-serif;
+  font-size: 0.8rem;
+  font-style: normal;
+  color: var(--gold);
+  font-weight: 500;
+}
+
+.hero-meta {
+  display: flex;
+  gap: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--light-gray);
+}
+
+.hero-meta span {
+  font-family: 'Fira Code', 'Courier New', monospace;
+  font-size: 0.7rem;
+  color: var(--warm-gray);
+  letter-spacing: 0.05em;
+}
+
+.timeline {
+  position: relative;
+  padding: 4rem 0;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 1px;
+  background: var(--light-gray);
+  transform: translateX(-50%);
+}
+
+.section-intro {
+  text-align: center;
+  padding: 4rem 0 2rem;
+  position: relative;
+  z-index: 1;
+}
+
+.section-intro .section-label {
+  font-family: 'Fira Code', 'Courier New', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--sage);
+  margin-bottom: 0.5rem;
+}
+
+.section-intro h2 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.dialogue {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  margin-bottom: 4rem;
+  position: relative;
+}
+
+.dialogue::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 1px;
+  background: var(--light-gray);
+}
+
+.dialogue-dot {
+  position: absolute;
+  top: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--warm-white);
+  border: 2px solid var(--sage);
+  z-index: 2;
+}
+
+.dialogue-left, .dialogue-right {
+  padding: 2rem;
+}
+
+.dialogue-left {
+  padding-right: 3rem;
+}
+
+.dialogue-right {
+  padding-left: 3rem;
+}
+
+.voice-label {
+  font-family: 'Fira Code', 'Courier New', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.voice-label .voice-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+.voice-problem .voice-label { color: var(--rose); }
+.voice-problem .voice-dot { background: var(--rose); }
+.voice-solution .voice-label { color: var(--sage); }
+.voice-solution .voice-dot { background: var(--sage); }
+
+.dialogue-left .case-tag {
+  font-family: 'Fira Code', 'Courier New', monospace;
+  font-size: 0.6rem;
+  color: var(--warm-gray);
+  letter-spacing: 0.1em;
+  margin-bottom: 0.5rem;
+}
+
+.dialogue-left h3 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  line-height: 1.2;
+}
+
+.dialogue-left .case-meta {
+  font-family: 'Fira Code', 'Courier New', monospace;
+  font-size: 0.65rem;
+  color: var(--warm-gray);
+  margin-bottom: 1rem;
+}
+
+.dialogue-left .case-visual {
+  width: 100%;
+  height: 120px;
+  background: var(--rose-light);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Fira Code', 'Courier New', monospace;
+  font-size: 0.65rem;
+  color: var(--rose);
+  margin-bottom: 1rem;
+}
+
+.dialogue-left .problem-text {
+  font-size: 0.9rem;
+  color: #555;
+  line-height: 1.7;
+}
+
+.dialogue-right .solution-text {
+  font-size: 0.9rem;
+  color: #555;
+  line-height: 1.7;
+  margin-bottom: 1.25rem;
+}
+
+.dialogue-right .case-visual-sol {
+  width: 100%;
+  height: 120px;
+  background: var(--sage-light);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Fira Code', 'Courier New', monospace;
+  font-size: 0.65rem;
+  color: var(--sage);
+  margin-bottom: 1rem;
+}
+
+.result-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: var(--gold-light);
+  border-radius: 8px;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--gold);
+}
+
+.result-badge .badge-icon {
+  font-size: 0.8rem;
+}
+
+.process-convo {
+  padding: 4rem 0;
+}
+
+.process-flow {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  position: relative;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.process-flow::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 24px;
+  width: 1px;
+  background: var(--light-gray);
+}
+
+.process-item {
+  display: flex;
+  gap: 1.5rem;
+  padding: 1.25rem 0;
+  position: relative;
+}
+
+.process-item .p-marker {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--warm-white);
+  border: 2px solid var(--light-gray);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--sage);
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.process-item:hover .p-marker {
+  border-color: var(--sage);
+  background: var(--sage-light);
+}
+
+.process-item h4 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+  padding-top: 0.15rem;
+}
+
+.process-item p {
+  font-size: 0.85rem;
+  color: #666;
+  line-height: 1.6;
+}
+
+.principles-convo {
+  padding: 4rem 0;
+}
+
+.principles-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+}
+
+.principle-quote {
+  padding: 2rem;
+  border-radius: 12px;
+  position: relative;
+}
+
+.principle-quote:nth-child(1) { background: var(--sage-light); }
+.principle-quote:nth-child(2) { background: var(--gold-light); }
+.principle-quote:nth-child(3) { background: var(--rose-light); }
+.principle-quote:nth-child(4) { background: #E8E6F0; }
+
+.principle-quote .pq-num {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 3rem;
+  font-weight: 700;
+  line-height: 1;
+  opacity: 0.15;
+  position: absolute;
+  top: 1rem;
+  right: 1.5rem;
+}
+
+.principle-quote h3 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.2rem;
+  font-weight: 600;
+  font-style: italic;
+  margin-bottom: 0.75rem;
+}
+
+.principle-quote p {
+  font-size: 0.85rem;
+  color: #555;
+  line-height: 1.65;
+}
+
+.about-convo {
+  padding: 4rem 0;
+}
+
+.about-dialogue {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+}
+
+.about-block h3 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--sage);
+}
+
+.about-block .a-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.4rem 0;
+  border-bottom: 1px solid var(--light-gray);
+  font-size: 0.85rem;
+}
+
+.about-block .a-row:last-of-type { border-bottom: none; }
+
+.about-block .a-key {
+  font-family: 'Fira Code', 'Courier New', monospace;
+  font-size: 0.65rem;
+  color: var(--warm-gray);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.about-block .a-note {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: var(--gold-light);
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-style: italic;
+  color: #555;
+  line-height: 1.6;
+}
+
+.continue-convo {
+  text-align: center;
+  padding: 5rem 0;
+  border-top: 1px solid var(--light-gray);
+}
+
+.continue-convo h2 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 2.5rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.5rem;
+}
+
+.continue-convo h2 em {
+  font-style: italic;
+  color: var(--sage);
+}
+
+.continue-convo .continue-sub {
+  font-size: 1rem;
+  color: var(--warm-gray);
+  margin-bottom: 2.5rem;
+}
+
+.continue-links {
+  display: flex;
+  justify-content: center;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.continue-link {
+  font-family: 'Work Sans', system-ui, sans-serif;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--soft-black);
+  text-decoration: none;
+  padding: 0.65rem 1.5rem;
+  border: 1px solid var(--light-gray);
+  border-radius: 100px;
+  transition: all 0.25s;
+}
+
+.continue-link:hover {
+  border-color: var(--sage);
+  background: var(--sage-light);
+  color: var(--sage);
+}
+
+.site-footer {
+  text-align: center;
+  padding: 2rem;
+  font-family: 'Fira Code', 'Courier New', monospace;
+  font-size: 0.65rem;
+  color: var(--warm-gray);
+  letter-spacing: 0.1em;
+}
+
+@media (max-width: 768px) {
+  .dialogue { grid-template-columns: 1fr; }
+  .dialogue::before { left: 1rem; }
+  .dialogue-left { padding-right: 2rem; }
+  .dialogue-right { padding-left: 2rem; }
+  .principles-list { grid-template-columns: 1fr; }
+  .about-dialogue { grid-template-columns: 1fr; }
+  .hero-meta { flex-direction: column; gap: 0.5rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <section class="hero" id="top">
+    <div class="opening">A conversation about design, research, and building things that matter</div>
+    <h1>Naman Sharma,<br><em>Product / UX Designer</em></h1>
+    <p class="thesis">"I design products that users love, for brands that care. That's it. No jargon, no paradigm shifts — just research, craft, and giving a damn."</p>
+    <p class="thesis"><span class="thesis-attr">— Naman, on what he does</span></p>
+
+    <div class="hero-meta">
+      <span>Jaipur, India</span>
+      <span>Worldwide Remote</span>
+      <span>3+ years in UX</span>
+      <span>Self-taught, CS degree</span>
+    </div>
+  </section>
+
+  <div class="section-intro" id="work">
+    <div class="section-label">Selected Work</div>
+    <h2>The Conversations</h2>
+  </div>
+
+  <div class="timeline">
+
+    <div class="dialogue">
+      <div class="dialogue-dot"></div>
+      <div class="dialogue-left">
+        <div class="case-tag">Thence / 2021</div>
+        <h3>Asian Paints: Dealer Portal</h3>
+        <div class="case-meta">UX Research · UX Design · UI Design</div>
+        <div class="case-visual">case-study hero — dealer portal screens</div>
+        <div class="voice-label voice-problem"><span class="voice-dot"></span> The Problem</div>
+        <p class="problem-text">Dealers don't want to talk to a salesperson every time they need to place an order. Every competitor already has a digital portal — and dealers are frustrated with all of them. The existing portal needed different access levels for different user privileges, and Asian Paints had valuable trend data they weren't using to nudge dealers.</p>
+      </div>
+      <div class="dialogue-right">
+        <div class="voice-label voice-solution"><span class="voice-dot"></span> The Response</div>
+        <div class="case-visual-sol">solution mockup — personalized recommendations, barcode scan</div>
+        <p class="solution-text">End-to-end heuristic evaluation and redesign of the multi-platform dealer portal. Introduced personalized product recommendations based on order history, data-driven promotions tied to geographical trends, periodic incentives to increase AOV, and a barcode scanner for 10-second reorders. Reduced dealer-salesman interaction and costs.</p>
+        <span class="result-badge"><span class="badge-icon">&#9650;</span> 20% increase in online transaction volume</span>
+      </div>
+    </div>
+
+    <div class="dialogue">
+      <div class="dialogue-dot"></div>
+      <div class="dialogue-left">
+        <div class="case-tag">Thence / 2021</div>
+        <h3>Boost360: Onboarding</h3>
+        <div class="case-meta">UX Research · UX Design · Usability Testing</div>
+        <div class="case-visual">case-study hero — onboarding flow screens</div>
+        <div class="voice-label voice-problem"><span class="voice-dot"></span> The Problem</div>
+        <p class="problem-text">New users are uninstalling within 4 hours of installation. Signup success rate is 20% with a 30-minute average completion time. The hypothesis list was long — crashes, OTP delays, permissions, ads, language barriers. But the real cause was more subtle than anyone expected.</p>
+      </div>
+      <div class="dialogue-right">
+        <div class="voice-label voice-solution"><span class="voice-dot"></span> The Response</div>
+        <div class="case-visual-sol">solution mockup — visual signup, quick wins, social proof</div>
+        <p class="solution-text">The root cause: marketing promised one thing, onboarding delivered another. Made signup visual and easy to understand. Communicated app USPs during onboarding. Built trust with social proof. Created quick wins so users saw results immediately. Identified the communication mismatch across all marketing touchpoints.</p>
+        <span class="result-badge"><span class="badge-icon">&#9650;</span> 60% decrease in app uninstall rate</span>
+      </div>
+    </div>
+
+    <div class="dialogue">
+      <div class="dialogue-dot"></div>
+      <div class="dialogue-left">
+        <div class="case-tag">Hureo / 2020</div>
+        <h3>Wikipedia: KaiOS Research</h3>
+        <div class="case-meta">UX Research · Personas · Journey Mapping</div>
+        <div class="case-visual">research artifact — interview setup, personas</div>
+        <div class="voice-label voice-problem"><span class="voice-dot"></span> The Question</div>
+        <p class="problem-text">The Wikimedia Foundation wanted to understand JioPhone users — people using smart feature phones running KaiOS. Who are they? Why a feature phone over a smartphone? What do they need from Wikipedia that they're not getting?</p>
+      </div>
+      <div class="dialogue-right">
+        <div class="voice-label voice-solution"><span class="voice-dot"></span> The Findings</div>
+        <div class="case-visual-sol">research output — journey maps, recommendations</div>
+        <p class="solution-text">25 one-on-one in-person interviews across Pune, Mumbai, and Delhi. 45–60 minute sessions. Users wanted voice-based interaction, video-format content, simpler Hindi, English numerals for dates, and a table of contents for long articles. Research informed Wikipedia's KaiOS product strategy.</p>
+        <span class="result-badge"><span class="badge-icon">&#9679;</span> 25 interviews across 3 cities</span>
+      </div>
+    </div>
+
+    <div class="dialogue">
+      <div class="dialogue-dot"></div>
+      <div class="dialogue-left">
+        <div class="case-tag">Freelance / 2022–23</div>
+        <h3>Turns: Brand & Web</h3>
+        <div class="case-meta">Web Design · Brand Guidelines · Design System</div>
+        <div class="case-visual">project mockup — brand board, landing pages</div>
+        <div class="voice-label voice-problem"><span class="voice-dot"></span> The Problem</div>
+        <p class="problem-text">A startup preparing for fundraising needed more than a prettier website. They needed a multi-platform brand identity, a scalable design system, and landing pages that could convert — all informed by a thorough UX audit of existing touchpoints.</p>
+      </div>
+      <div class="dialogue-right">
+        <div class="voice-label voice-solution"><span class="voice-dot"></span> The Response</div>
+        <div class="case-visual-sol">deliverable — brand guidelines, component library</div>
+        <p class="solution-text">Conducted a full UX audit. Redesigned the website and landing pages. Established multi-platform brand guidelines and a component design system. The revamp directly increased conversions and became a key part of the investor pitch.</p>
+        <span class="result-badge"><span class="badge-icon">&#9650;</span> Helped raise $500K in pre-seed</span>
+      </div>
+    </div>
+
+  </div>
+
+  <section class="process-convo" id="process">
+    <div class="section-intro">
+      <div class="section-label">Methodology</div>
+      <h2>How the Conversation Flows</h2>
+    </div>
+
+    <div class="process-flow">
+      <div class="process-item">
+        <div class="p-marker">1</div>
+        <div>
+          <h4>Research</h4>
+          <p>Understanding the problem space, considering possible solutions, and learning about the customer before touching any design tool.</p>
+        </div>
+      </div>
+      <div class="process-item">
+        <div class="p-marker">2</div>
+        <div>
+          <h4>User Journey</h4>
+          <p>Diving deep into user journeys to uncover insights. Exploring personas, mapping decision-making, understanding the full context.</p>
+        </div>
+      </div>
+      <div class="process-item">
+        <div class="p-marker">3</div>
+        <div>
+          <h4>Design Exploration</h4>
+          <p>Going wide with a range of solutions. Testing, iterating, collaborating, and working through the problem at hand.</p>
+        </div>
+      </div>
+      <div class="process-item">
+        <div class="p-marker">4</div>
+        <div>
+          <h4>Design Refinement</h4>
+          <p>Polishing the chosen direction, refining visual design, preparing for handoff, and documenting every decision made.</p>
+        </div>
+      </div>
+      <div class="process-item">
+        <div class="p-marker">5</div>
+        <div>
+          <h4>Handoff</h4>
+          <p>Working closely with engineering and product to ensure a successful handoff and effective implementation.</p>
+        </div>
+      </div>
+      <div class="process-item">
+        <div class="p-marker">6</div>
+        <div>
+          <h4>Monitoring</h4>
+          <p>Once live, the work isn't done. Tracking performance and metrics that indicate success — and iterating from there.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="principles-convo" id="principles">
+    <div class="section-intro">
+      <div class="section-label">Operating Principles</div>
+      <h2>What I Believe</h2>
+    </div>
+
+    <div class="principles-list">
+      <div class="principle-quote">
+        <div class="pq-num">01</div>
+        <h3>"Consistency beats talent"</h3>
+        <p>Consistent effort towards the craft compounds into unimaginable results. Not the most talented in the world — but striving for consistency and constant improvement, every single day.</p>
+      </div>
+      <div class="principle-quote">
+        <div class="pq-num">02</div>
+        <h3>"Let curiosity guide you"</h3>
+        <p>Knowing a little about a lot of things helps connect dots between scattered information. Each project is a journey of discovery, constant learning, and exploration. Curiosity creates work that actually makes a difference.</p>
+      </div>
+      <div class="principle-quote">
+        <div class="pq-num">03</div>
+        <h3>"Form follows function"</h3>
+        <p>Problems are solved with functionality, not aesthetics. But once the problem is solved, going the extra mile to design beautiful products creates delight. And humans remember delight.</p>
+      </div>
+      <div class="principle-quote">
+        <div class="pq-num">04</div>
+        <h3>"Give a damn"</h3>
+        <p>Highly entrepreneurial with a founder's mindset. Success is a shared responsibility that comes from effective collaboration. High agency, full ownership, committed to going the extra mile.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="about-convo" id="about">
+    <div class="section-intro">
+      <div class="section-label">Background</div>
+      <h2>The Person</h2>
+    </div>
+
+    <div class="about-dialogue">
+      <div class="about-block">
+        <h3>Profile</h3>
+        <div class="a-row"><span class="a-key">Role</span><span>Product / UX Designer</span></div>
+        <div class="a-row"><span class="a-key">Base</span><span>Jaipur, India</span></div>
+        <div class="a-row"><span class="a-key">Scope</span><span>Worldwide Remote</span></div>
+        <div class="a-row"><span class="a-key">Education</span><span>B.E. Computer Engineering</span></div>
+        <div class="a-row"><span class="a-key">Experience</span><span>3+ years in UX</span></div>
+        <div class="a-row"><span class="a-key">Origin</span><span>Self-taught, CS background</span></div>
+        <div class="a-note">"A curious generalist at heart — on-field research, usability testing, web apps, mobile apps, logos, websites, print, packaging. Done it all."</div>
+      </div>
+      <div class="about-block">
+        <h3>Toolkit</h3>
+        <div class="a-row"><span class="a-key">Design</span><span>Figma, FigJam, Adobe XD</span></div>
+        <div class="a-row"><span class="a-key">Prototype</span><span>Protopie, Framer</span></div>
+        <div class="a-row"><span class="a-key">Visual</span><span>Illustrator, Photoshop</span></div>
+        <div class="a-row"><span class="a-key">Research</span><span>Miro, FigJam</span></div>
+        <div class="a-row"><span class="a-key">Web</span><span>Webflow, No-code</span></div>
+        <div class="a-row"><span class="a-key">Traits</span><span>No drama, self-starter</span></div>
+        <div class="a-note">Ask me about: my indie dog Jerry, computers & tech, personal finance & investing, hip-hop music, video games, education.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="continue-convo" id="contact">
+    <h2>Continue the <em>Conversation</em></h2>
+    <p class="continue-sub">Have a product problem worth exploring together?</p>
+    <div class="continue-links">
+      <a href="mailto:madebynaman@gmail.com" class="continue-link">Email</a>
+      <a href="https://www.madebynaman.com" class="continue-link">Website</a>
+      <a href="https://www.linkedin.com/in/madebynaman/" class="continue-link">LinkedIn</a>
+    </div>
+  </section>
+
+</div>
+
+<footer class="site-footer">
+  Naman Sharma — madebynaman.com — Jaipur, India
+</footer>
+
+</body>
+</html>

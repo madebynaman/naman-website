@@ -1,0 +1,1387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Naman Sharma — Issue 01</title>
+<meta name="description" content="Portfolio of Naman Sharma, presented as a personal design zine, Issue 01.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT@9..144,300..900,0..100&family=Inter:wght@400;500;600&family=Caveat:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --paper:   #F2E4D7;
+    --paper-2: #EAD8C5;
+    --rose:    #E26D5A;
+    --rose-d:  #B84A38;
+    --green:   #1F3A2E;
+    --green-l: #2D5640;
+    --mustard: #E8B23A;
+    --mustard-d: #C29420;
+    --ink:     #15110D;
+    --ink-soft:#3E352B;
+    --ink-quiet:#7C6A55;
+    --rule:    #C9B89C;
+
+    --serif:   'Fraunces', 'Source Serif 4', Georgia, serif;
+    --sans:    'Inter', system-ui, sans-serif;
+    --hand:    'Caveat', 'Comic Sans MS', cursive;
+    --mono:    'Space Mono', ui-monospace, 'SF Mono', monospace;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; text-decoration: none; }
+  img { display: block; max-width: 100%; }
+
+  /* ---------- Paper grain ---------- */
+  body::before {
+    content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 1;
+    background-image:
+      radial-gradient(circle at 10% 20%, rgba(21,17,13,0.04) 0 1px, transparent 1.5px),
+      radial-gradient(circle at 80% 30%, rgba(21,17,13,0.04) 0 1px, transparent 1.5px),
+      radial-gradient(circle at 40% 70%, rgba(21,17,13,0.04) 0 1px, transparent 1.5px),
+      radial-gradient(circle at 60% 90%, rgba(21,17,13,0.04) 0 1px, transparent 1.5px);
+    background-size: 13px 13px, 17px 17px, 19px 19px, 23px 23px;
+    mix-blend-mode: multiply;
+  }
+
+  /* ---------- Top bar ---------- */
+  .topbar {
+    position: sticky; top: 0; z-index: 20;
+    background: var(--green);
+    color: var(--paper);
+    border-bottom: 4px solid var(--ink);
+  }
+  .topbar-inner {
+    max-width: 90rem; margin: 0 auto;
+    padding: 0.7rem 1.5rem;
+    display: flex; justify-content: space-between; align-items: center;
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .topbar .brand { font-weight: 700; }
+  .topbar .brand .issue { color: var(--mustard); margin-left: 0.5rem; }
+  .topbar nav { display: flex; gap: 1.5rem; font-size: 0.74rem; }
+  .topbar nav a { border-bottom: 1px solid transparent; padding-bottom: 0.15rem; transition: border-color 0.2s; }
+  .topbar nav a:hover { border-bottom-color: var(--mustard); }
+
+  /* ---------- COVER ---------- */
+  .cover {
+    position: relative;
+    background: var(--paper);
+    padding: 5rem 1.5rem 4rem;
+    border-bottom: 4px solid var(--ink);
+    overflow: hidden;
+  }
+  .cover::before {
+    content: ''; position: absolute; top: -10%; right: -8%;
+    width: 50%; height: 70%;
+    background: var(--mustard);
+    transform: rotate(-4deg);
+    z-index: 0;
+  }
+  .cover::after {
+    content: ''; position: absolute; bottom: -8%; left: -6%;
+    width: 35%; height: 50%;
+    background: var(--rose);
+    transform: rotate(2deg);
+    z-index: 0;
+  }
+  .cover .wrap {
+    position: relative; z-index: 2;
+    max-width: 90rem; margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 3rem;
+    align-items: center;
+  }
+  .cover .meta {
+    font-family: var(--mono);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--green);
+    margin-bottom: 1rem;
+    display: flex; gap: 1.2rem; align-items: center;
+  }
+  .cover .meta .dot { width: 8px; height: 8px; background: var(--ink); border-radius: 50%; }
+  .cover h1 {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-style: italic;
+    font-size: clamp(3.5rem, 9vw, 7.5rem);
+    line-height: 0.92;
+    letter-spacing: -0.025em;
+    color: var(--ink);
+    margin-bottom: 1.4rem;
+    font-variation-settings: "SOFT" 50, "opsz" 144;
+  }
+  .cover h1 .sub { display: block; font-style: normal; font-weight: 400; color: var(--green); font-size: 0.4em; letter-spacing: 0.02em; }
+  .cover .standfirst {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 1.25rem;
+    line-height: 1.4;
+    color: var(--ink-soft);
+    max-width: 32rem;
+    font-variation-settings: "SOFT" 80, "opsz" 14;
+  }
+  .cover .standfirst em { font-style: italic; color: var(--ink); background: linear-gradient(180deg, transparent 60%, var(--mustard) 60%); padding: 0 0.1em; }
+  .cover .standfirst strong { font-weight: 600; color: var(--ink); }
+  .cover .byline {
+    margin-top: 1.8rem;
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--ink-soft);
+    display: flex; align-items: center; gap: 0.6rem;
+  }
+  .cover .byline .jerry { font-family: var(--hand); font-size: 1.4rem; text-transform: none; letter-spacing: 0; color: var(--rose-d); transform: rotate(-3deg); display: inline-block; }
+
+  .cover .cover-art {
+    position: relative;
+    aspect-ratio: 4/5;
+    transform: rotate(2deg);
+  }
+  .cover .cover-art .frame {
+    position: absolute; inset: 0;
+    background: var(--green);
+    border: 3px solid var(--ink);
+    overflow: hidden;
+  }
+  .cover .cover-art .frame::before {
+    content: ''; position: absolute; inset: 8%;
+    background:
+      radial-gradient(circle at 30% 30%, var(--mustard) 0 25%, transparent 26%),
+      radial-gradient(circle at 70% 60%, var(--rose) 0 18%, transparent 19%),
+      radial-gradient(circle at 50% 80%, var(--paper) 0 14%, transparent 15%),
+      var(--paper-2);
+  }
+  .cover .cover-art .frame::after {
+    content: ''; position: absolute; inset: 0;
+    background: repeating-linear-gradient(45deg, transparent 0 14px, rgba(21,17,13,0.05) 14px 15px);
+  }
+  .cover .cover-art .label {
+    position: absolute; top: -0.6rem; left: -0.6rem;
+    background: var(--mustard);
+    border: 2px solid var(--ink);
+    padding: 0.4rem 0.7rem;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--ink);
+    transform: rotate(-6deg);
+    z-index: 3;
+  }
+  .cover .cover-art .price {
+    position: absolute; bottom: -0.4rem; right: -0.4rem;
+    background: var(--ink); color: var(--paper);
+    width: 4rem; height: 4rem;
+    border-radius: 50%;
+    display: grid; place-items: center;
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: 1.4rem;
+    border: 3px solid var(--paper);
+    z-index: 3;
+  }
+  .cover .barcode {
+    position: absolute; bottom: 1rem; left: 1rem;
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--paper);
+    background: var(--ink);
+    padding: 0.2rem 0.5rem;
+    letter-spacing: 0.1em;
+  }
+  .cover .cover-art .sticker {
+    position: absolute; top: 30%; right: -1.5rem;
+    font-family: var(--hand);
+    font-size: 1.8rem;
+    color: var(--rose-d);
+    transform: rotate(8deg);
+    z-index: 3;
+    line-height: 1;
+  }
+  .cover .cover-art .sticker small {
+    display: block; font-family: var(--hand); font-size: 1rem;
+    color: var(--ink-soft); text-align: right;
+  }
+
+  /* ---------- TOC / MASTHEAD ---------- */
+  .toc {
+    background: var(--paper-2);
+    border-bottom: 4px solid var(--ink);
+    padding: 3.5rem 1.5rem;
+    position: relative;
+  }
+  .toc .wrap {
+    max-width: 90rem; margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.3fr 0.7fr;
+    gap: 3rem;
+  }
+  .toc h2 {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-style: italic;
+    font-size: 2.2rem;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin-bottom: 1.4rem;
+  }
+  .toc .list { list-style: none; }
+  .toc .list li {
+    display: grid;
+    grid-template-columns: 2.2rem 1fr 5rem 4rem;
+    gap: 0.5rem;
+    padding: 0.65rem 0;
+    border-top: 1px solid var(--ink);
+    align-items: baseline;
+    font-family: var(--serif);
+  }
+  .toc .list li:last-child { border-bottom: 1px solid var(--ink); }
+  .toc .list .pg { font-family: var(--mono); font-size: 0.85rem; color: var(--ink-quiet); }
+  .toc .list .num { font-family: var(--mono); font-size: 0.8rem; color: var(--rose-d); font-weight: 700; }
+  .toc .list .title { font-size: 1.05rem; color: var(--ink); font-weight: 500; }
+  .toc .list .title em { font-style: italic; color: var(--green); font-weight: 400; }
+  .toc .list .dept { font-family: var(--mono); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--ink-quiet); text-align: right; }
+
+  .toc .colophon-card {
+    background: var(--paper);
+    border: 2px solid var(--ink);
+    padding: 1.2rem 1.2rem 1rem;
+    transform: rotate(-1.5deg);
+    position: relative;
+    box-shadow: 5px 5px 0 var(--ink);
+  }
+  .toc .colophon-card::before {
+    content: '';
+    position: absolute; top: -0.7rem; left: 50%; transform: translateX(-50%) rotate(-3deg);
+    width: 5rem; height: 1.2rem; background: var(--mustard);
+    border: 1px solid var(--ink);
+  }
+  .toc .colophon-card h3 {
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 600;
+    font-size: 1.3rem;
+    margin-bottom: 0.6rem;
+  }
+  .toc .colophon-card p { font-size: 0.92rem; line-height: 1.55; color: var(--ink-soft); margin-bottom: 0.6rem; }
+  .toc .colophon-card p:last-child { margin-bottom: 0; }
+  .toc .colophon-card .sig { font-family: var(--hand); font-size: 1.6rem; color: var(--rose-d); margin-top: 0.6rem; }
+
+  /* ---------- Jerry sticky notes (signature) ---------- */
+  .jerry-note {
+    position: relative;
+    background: var(--mustard);
+    border: 1.5px solid var(--ink);
+    padding: 0.9rem 1rem 0.7rem;
+    font-family: var(--hand);
+    font-size: 1.25rem;
+    line-height: 1.25;
+    color: var(--ink);
+    transform: rotate(-2deg);
+    box-shadow: 3px 3px 0 var(--ink);
+    max-width: 16rem;
+  }
+  .jerry-note::before {
+    content: '';
+    position: absolute; top: -0.5rem; left: 50%; transform: translateX(-50%);
+    width: 4rem; height: 1rem; background: var(--paper);
+    border: 1px solid var(--ink);
+  }
+  .jerry-note .paw {
+    color: var(--rose-d);
+    display: inline-block;
+    transform: rotate(-8deg);
+    margin-right: 0.3rem;
+  }
+  .jerry-note .attr {
+    display: block;
+    font-size: 0.95rem;
+    color: var(--ink-soft);
+    margin-top: 0.2rem;
+  }
+  .jerry-note.green { background: #B8D4A8; }
+  .jerry-note.rose  { background: #F0BFB0; }
+  .jerry-note.paper { background: var(--paper); }
+
+  /* ---------- Sections (general) ---------- */
+  .section {
+    padding: 4.5rem 1.5rem;
+    max-width: 90rem;
+    margin: 0 auto;
+    position: relative;
+  }
+  .section.alt { background: var(--paper-2); max-width: none; }
+  .section.alt .wrap { max-width: 90rem; margin: 0 auto; }
+
+  .dept-head {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: baseline;
+    gap: 1.5rem;
+    margin-bottom: 2.4rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid var(--ink);
+  }
+  .dept-head .num {
+    font-family: var(--mono);
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--rose-d);
+    background: var(--ink);
+    color: var(--paper);
+    padding: 0.2rem 0.6rem;
+  }
+  .dept-head h2 {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-style: italic;
+    font-size: 2.6rem;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+  }
+  .dept-head h2 small {
+    display: block;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 0.4em;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--ink-quiet);
+    margin-top: 0.2rem;
+  }
+  .dept-head .folio {
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-quiet);
+  }
+
+  /* ---------- Editor's letter ---------- */
+  .editor-letter {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 3rem;
+  }
+  .editor-letter .body p {
+    font-family: var(--serif);
+    font-size: 1.18rem;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    margin-bottom: 1.2rem;
+    max-width: 36rem;
+    font-variation-settings: "opsz" 14, "SOFT" 30;
+  }
+  .editor-letter .body p:first-child::first-letter {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: 4.5rem;
+    line-height: 0.85;
+    float: left;
+    color: var(--rose-d);
+    padding: 0.4rem 0.5rem 0 0;
+    margin-right: 0.1rem;
+  }
+  .editor-letter .body .pull {
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 500;
+    font-size: 1.5rem;
+    line-height: 1.2;
+    color: var(--ink);
+    border-top: 2px solid var(--ink);
+    border-bottom: 2px solid var(--ink);
+    padding: 1rem 0;
+    margin: 1.6rem 0;
+    max-width: 34rem;
+  }
+  .editor-letter .body em { font-style: italic; color: var(--green); }
+  .editor-letter .body strong { font-weight: 600; color: var(--ink); }
+  .editor-letter .sign-off {
+    font-family: var(--hand);
+    font-size: 2.2rem;
+    color: var(--ink);
+    margin-top: 1.6rem;
+  }
+  .editor-letter .sign-off small { display: block; font-family: var(--sans); font-size: 0.85rem; color: var(--ink-quiet); margin-top: 0.2rem; }
+
+  .editor-letter .side {
+    display: flex; flex-direction: column; gap: 1.6rem;
+  }
+  .editor-letter .side .card {
+    background: var(--paper);
+    border: 2px solid var(--ink);
+    padding: 1.2rem;
+  }
+  .editor-letter .side .card h4 {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--green);
+    margin-bottom: 0.6rem;
+  }
+  .editor-letter .side .card p { font-size: 0.95rem; line-height: 1.55; color: var(--ink-soft); }
+  .editor-letter .side .card .num { font-family: var(--serif); font-weight: 600; font-size: 2.4rem; line-height: 1; color: var(--ink); }
+
+  /* ---------- Feature spread (case study) ---------- */
+  .feature {
+    margin-bottom: 5rem;
+    padding-bottom: 3rem;
+    border-bottom: 2px dashed var(--ink);
+    position: relative;
+  }
+  .feature:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+  .feature .feature-image {
+    position: relative;
+    aspect-ratio: 16/9;
+    margin-bottom: 1.8rem;
+    border: 2px solid var(--ink);
+    overflow: hidden;
+  }
+  .feature .feature-image .label {
+    position: absolute; top: 0.6rem; left: 0.6rem;
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--paper);
+    background: var(--ink);
+    padding: 0.25rem 0.55rem;
+    z-index: 2;
+  }
+  .feature .feature-image .dept-stamp {
+    position: absolute; top: 0.6rem; right: 0.6rem;
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink);
+    background: var(--mustard);
+    border: 1.5px solid var(--ink);
+    padding: 0.2rem 0.5rem;
+    z-index: 2;
+    transform: rotate(2deg);
+  }
+  .feature .feature-image .corner-note {
+    position: absolute; bottom: 0.6rem; right: 0.6rem;
+    font-family: var(--hand);
+    font-size: 1.1rem;
+    color: var(--paper);
+    background: var(--rose-d);
+    padding: 0.2rem 0.6rem;
+    transform: rotate(-2deg);
+    z-index: 2;
+  }
+  .feature .feature-image .art { position: absolute; inset: 0; }
+
+  /* Three different feature art variants */
+  .art-portal {
+    background:
+      linear-gradient(135deg, var(--mustard) 0 30%, var(--green) 30% 100%);
+    display: grid; place-items: center; padding: 2rem;
+  }
+  .art-portal .screen {
+    width: 70%; height: 80%;
+    background: var(--paper);
+    border: 2px solid var(--ink);
+    position: relative; overflow: hidden;
+  }
+  .art-portal .screen::before {
+    content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 22%;
+    background: var(--green); border-right: 2px solid var(--ink);
+  }
+  .art-portal .screen .bar { position: absolute; left: 0; right: 0; top: 0; height: 12%; background: var(--paper-2); border-bottom: 1px solid var(--ink); }
+  .art-portal .screen .blk { position: absolute; background: var(--paper-2); border: 1px solid var(--ink); }
+  .art-portal .screen .b1 { left: 26%; top: 16%; width: 35%; height: 16%; }
+  .art-portal .screen .b2 { left: 26%; top: 36%; width: 22%; height: 22%; background: var(--mustard); }
+  .art-portal .screen .b3 { left: 52%; top: 36%; width: 24%; height: 22%; }
+  .art-portal .screen .b4 { left: 26%; top: 62%; width: 50%; height: 28%; }
+
+  .art-phone {
+    background: var(--green);
+    display: flex; align-items: center; justify-content: center; gap: 1.5rem; padding: 1.5rem;
+  }
+  .art-phone .ph {
+    width: 20%; aspect-ratio: 9/19; background: var(--paper); border: 2px solid var(--ink); border-radius: 14px; position: relative; overflow: hidden;
+  }
+  .art-phone .ph::before {
+    content: ''; position: absolute; top: 5%; left: 50%; transform: translateX(-50%);
+    width: 30%; height: 2%; background: var(--ink); border-radius: 2px;
+  }
+  .art-phone .ph .r { position: absolute; left: 10%; right: 10%; height: 3%; background: var(--ink); }
+  .art-phone .ph .r1 { top: 16%; width: 60%; }
+  .art-phone .ph .r2 { top: 24%; width: 80%; background: var(--rose); }
+  .art-phone .ph .r3 { top: 32%; width: 70%; }
+  .art-phone .ph .r4 { top: 40%; width: 50%; }
+  .art-phone .ph .r5 { top: 50%; width: 65%; }
+  .art-phone .ph .r6 { top: 58%; width: 75%; }
+  .art-phone .ph .btn { position: absolute; left: 14%; right: 14%; bottom: 6%; height: 12%; background: var(--ink); border-radius: 6px; }
+  .art-phone .ph:nth-child(2) .r2 { background: var(--ink); }
+  .art-phone .ph:nth-child(2) .btn { background: var(--mustard); }
+
+  .art-research {
+    background: var(--rose);
+    position: relative; overflow: hidden;
+  }
+  .art-research::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(circle at 50% 50%, var(--paper) 0 28%, transparent 29%);
+  }
+  .art-research .sticky {
+    position: absolute;
+    background: var(--paper);
+    border: 1.5px solid var(--ink);
+    padding: 0.5rem 0.7rem;
+    font-family: var(--hand);
+    font-size: 0.9rem;
+    line-height: 1.2;
+    width: 12%; height: 22%;
+    color: var(--ink);
+  }
+  .art-research .sticky:nth-child(2) { top: 12%; left: 6%;  background: var(--mustard); transform: rotate(-4deg); }
+  .art-research .sticky:nth-child(3) { top: 8%;  left: 24%; background: var(--paper); transform: rotate(2deg); }
+  .art-research .sticky:nth-child(4) { top: 14%; left: 44%; background: #B8D4A8; transform: rotate(-2deg); }
+  .art-research .sticky:nth-child(5) { top: 10%; left: 64%; background: var(--paper); transform: rotate(3deg); }
+  .art-research .sticky:nth-child(6) { top: 8%;  left: 82%; background: var(--mustard); transform: rotate(-3deg); }
+  .art-research .sticky:nth-child(7) { top: 58%; left: 12%; background: var(--paper); transform: rotate(2deg); }
+  .art-research .sticky:nth-child(8) { top: 62%; left: 32%; background: var(--mustard); transform: rotate(-2deg); }
+  .art-research .sticky:nth-child(9) { top: 56%; left: 52%; background: #B8D4A8; transform: rotate(3deg); }
+  .art-research .sticky:nth-child(10){ top: 60%; left: 72%; background: var(--paper); transform: rotate(-3deg); }
+  .art-research .center { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-family: var(--serif); font-style: italic; font-size: 1.4rem; color: var(--ink); background: var(--paper); border: 2px solid var(--ink); padding: 0.4rem 0.8rem; z-index: 3; }
+
+  .feature .feature-body {
+    display: grid;
+    grid-template-columns: 7rem 1fr 14rem;
+    gap: 2rem;
+  }
+  .feature .feature-body .folio {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--ink-quiet);
+  }
+  .feature .feature-body .folio b { display: block; color: var(--ink); font-size: 0.85rem; font-weight: 700; margin-top: 0.2rem; }
+  .feature .feature-body h3 {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: 2.3rem;
+    line-height: 1.05;
+    letter-spacing: -0.015em;
+    color: var(--ink);
+    margin-bottom: 1rem;
+  }
+  .feature .feature-body h3 em { font-style: italic; color: var(--green); }
+  .feature .feature-body .deck {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-style: italic;
+    font-size: 1.18rem;
+    line-height: 1.4;
+    color: var(--ink-soft);
+    margin-bottom: 1.4rem;
+    max-width: 36rem;
+  }
+  .feature .feature-body .body p {
+    font-family: var(--serif);
+    font-size: 1.06rem;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    margin-bottom: 1rem;
+    max-width: 36rem;
+  }
+  .feature .feature-body .body p strong { font-weight: 600; color: var(--ink); }
+  .feature .feature-body .body p em { font-style: italic; color: var(--rose-d); }
+  .feature .feature-body .pull {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-style: italic;
+    font-size: 1.45rem;
+    line-height: 1.25;
+    color: var(--ink);
+    border-left: 4px solid var(--rose);
+    padding: 0.2rem 0 0.2rem 1.2rem;
+    margin: 1.4rem 0;
+    max-width: 32rem;
+  }
+  .feature .feature-body .stats {
+    display: flex; gap: 1.2rem; flex-wrap: wrap; margin-top: 1.2rem;
+  }
+  .feature .feature-body .stat {
+    border: 1.5px solid var(--ink);
+    padding: 0.6rem 0.8rem;
+    background: var(--paper);
+  }
+  .feature .feature-body .stat .big {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: 1.7rem;
+    line-height: 1;
+    color: var(--ink);
+  }
+  .feature .feature-body .stat .lbl {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-quiet);
+    margin-top: 0.2rem;
+  }
+  .feature .feature-body .side-rail {
+    display: flex; flex-direction: column; gap: 1rem; align-items: flex-end;
+  }
+  .feature .feature-body .side-rail .jerry-note { max-width: 12rem; }
+  .feature .feature-body .side-rail .credit {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-quiet);
+    text-align: right;
+  }
+  .feature .feature-body .side-rail .credit b { color: var(--ink); font-weight: 700; }
+
+  /* ---------- INTERVIEW (principles as Q&A) ---------- */
+  .interview {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 3rem;
+  }
+  .interview .q-card {
+    background: var(--paper-2);
+    border: 2px solid var(--ink);
+    padding: 1.6rem;
+    transform: rotate(-0.5deg);
+  }
+  .interview .q-card .q-num {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--rose-d);
+    margin-bottom: 0.4rem;
+  }
+  .interview .q-card h4 {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-style: italic;
+    font-size: 1.6rem;
+    line-height: 1.15;
+    color: var(--ink);
+    margin-bottom: 0.6rem;
+  }
+  .interview .q-card .q {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 1rem;
+    color: var(--ink-soft);
+    line-height: 1.45;
+  }
+  .interview .q-card .q::before { content: '"'; color: var(--rose-d); font-size: 1.4rem; font-weight: 600; }
+  .interview .q-card .q::after  { content: '"'; color: var(--rose-d); font-size: 1.4rem; font-weight: 600; }
+
+  .interview .answers { display: flex; flex-direction: column; gap: 2.2rem; }
+  .interview .answer {
+    border-top: 2px solid var(--ink);
+    padding-top: 1.2rem;
+  }
+  .interview .answer .label {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--green);
+    margin-bottom: 0.5rem;
+  }
+  .interview .answer h3 {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: 1.5rem;
+    line-height: 1.2;
+    color: var(--ink);
+    margin-bottom: 0.6rem;
+  }
+  .interview .answer p {
+    font-family: var(--serif);
+    font-size: 1.06rem;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    max-width: 38rem;
+  }
+  .interview .answer p em { font-style: italic; color: var(--rose-d); }
+
+  /* ---------- Classifieds (skills) ---------- */
+  .classifieds {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    border: 2px solid var(--ink);
+  }
+  .classifieds .ad {
+    padding: 1.2rem;
+    border-right: 1px solid var(--ink);
+    border-bottom: 1px solid var(--ink);
+    background: var(--paper);
+  }
+  .classifieds .ad:nth-child(4n) { border-right: none; }
+  .classifieds .ad:nth-last-child(-n+4) { border-bottom: none; }
+  .classifieds .ad .cat {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--rose-d);
+    margin-bottom: 0.4rem;
+  }
+  .classifieds .ad h4 {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: 1.05rem;
+    line-height: 1.2;
+    color: var(--ink);
+    margin-bottom: 0.4rem;
+  }
+  .classifieds .ad p {
+    font-family: var(--sans);
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: var(--ink-soft);
+  }
+  .classifieds .ad.alt { background: var(--mustard); }
+  .classifieds .ad.alt2 { background: #B8D4A8; }
+
+  /* ---------- Asks about ---------- */
+  .asks-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.2rem;
+    margin-top: 1.5rem;
+  }
+  .asks-grid .ask {
+    background: var(--paper);
+    border: 2px solid var(--ink);
+    padding: 1rem 1.2rem;
+    position: relative;
+  }
+  .asks-grid .ask:nth-child(1) { transform: rotate(-1deg); }
+  .asks-grid .ask:nth-child(2) { transform: rotate(0.5deg); background: var(--mustard); }
+  .asks-grid .ask:nth-child(3) { transform: rotate(-0.5deg); background: #B8D4A8; }
+  .asks-grid .ask:nth-child(4) { transform: rotate(0.8deg); background: #F0BFB0; }
+  .asks-grid .ask:nth-child(5) { transform: rotate(-0.7deg); }
+  .asks-grid .ask:nth-child(6) { transform: rotate(0.3deg); background: var(--mustard); }
+  .asks-grid .ask .top {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--green);
+    margin-bottom: 0.3rem;
+  }
+  .asks-grid .ask h4 {
+    font-family: var(--hand);
+    font-size: 1.6rem;
+    line-height: 1.1;
+    color: var(--ink);
+  }
+  .asks-grid .ask p { font-size: 0.85rem; line-height: 1.4; color: var(--ink-soft); margin-top: 0.3rem; }
+
+  /* ---------- Colophon (contact) ---------- */
+  .colophon {
+    background: var(--green);
+    color: var(--paper);
+    padding: 4rem 1.5rem 3rem;
+    border-top: 4px solid var(--ink);
+  }
+  .colophon .wrap {
+    max-width: 90rem; margin: 0 auto;
+    display: grid; grid-template-columns: 1.2fr 1fr; gap: 3rem; align-items: end;
+  }
+  .colophon h2 {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-style: italic;
+    font-size: clamp(2.4rem, 5vw, 4rem);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.2rem;
+  }
+  .colophon h2 small {
+    display: block;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 0.35em;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--mustard);
+    margin-top: 0.3rem;
+  }
+  .colophon p { font-size: 1.05rem; line-height: 1.55; max-width: 32rem; color: var(--paper-2); }
+  .colophon .endpoints {
+    display: flex; flex-direction: column; gap: 0.4rem; margin-top: 1.6rem;
+  }
+  .colophon .endpoints a {
+    font-family: var(--mono);
+    font-size: 0.9rem;
+    color: var(--mustard);
+    display: inline-flex; gap: 0.8rem;
+    align-items: baseline;
+    border-bottom: 1px solid transparent;
+    padding-bottom: 0.1rem;
+    transition: border-color 0.2s;
+    align-self: flex-start;
+  }
+  .colophon .endpoints a:hover { border-bottom-color: var(--mustard); }
+  .colophon .endpoints .lbl { color: var(--paper-2); font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.16em; width: 4.5rem; }
+  .colophon .signoff { font-family: var(--hand); font-size: 2.4rem; color: var(--mustard); }
+  .colophon .signoff small { display: block; font-family: var(--mono); font-size: 0.7rem; color: var(--paper-2); letter-spacing: 0.1em; text-transform: uppercase; margin-top: 0.3rem; }
+
+  /* ---------- Reduced motion ---------- */
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+  }
+
+  /* ---------- Narrow widths ---------- */
+  @media (max-width: 1000px) {
+    .cover .wrap, .toc .wrap, .editor-letter, .interview, .colophon .wrap {
+      grid-template-columns: 1fr;
+    }
+    .cover::before, .cover::after { display: none; }
+    .feature .feature-body { grid-template-columns: 1fr; }
+    .feature .feature-body .folio { margin-bottom: 0.6rem; }
+    .feature .feature-body .side-rail { align-items: flex-start; flex-direction: row; flex-wrap: wrap; }
+    .feature .feature-body .side-rail .jerry-note { max-width: 100%; }
+    .classifieds { grid-template-columns: repeat(2, 1fr); }
+    .classifieds .ad { border-right: 1px solid var(--ink); }
+    .classifieds .ad:nth-child(4n) { border-right: 1px solid var(--ink); }
+    .classifieds .ad:nth-child(2n) { border-right: none; }
+    .asks-grid { grid-template-columns: repeat(2, 1fr); }
+    .topbar nav { display: none; }
+  }
+  @media (max-width: 600px) {
+    .asks-grid, .classifieds { grid-template-columns: 1fr; }
+    .classifieds .ad { border-right: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Top bar -->
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">Naman / Zine <span class="issue">Issue 01 · Summer 2026</span></div>
+    <nav aria-label="Sections">
+      <a href="#editor">Editor's Letter</a>
+      <a href="#features">Features</a>
+      <a href="#interview">Interview</a>
+      <a href="#classifieds">Classifieds</a>
+      <a href="#colophon">Colophon</a>
+    </nav>
+  </div>
+</header>
+
+<!-- COVER -->
+<section class="cover" id="cover" aria-labelledby="cover-title">
+  <div class="wrap">
+    <div>
+      <div class="meta">
+        <span class="dot"></span>
+        <span>Issue 01 · Summer 2026</span>
+        <span>— A working journal</span>
+      </div>
+      <h1 id="cover-title">
+        Naman Sharma
+        <span class="sub">A designer, his dog, &amp; the work.</span>
+      </h1>
+      <p class="standfirst">
+        Five years of <em>research, redesigns,</em> and a few <strong>small obsessions</strong>
+        — collected into one long letter, with a dog as a recurring character.
+        Read it with a coffee, or with whatever's nearby.
+      </p>
+      <div class="byline">
+        <span>Edited &amp; designed by Naman Sharma</span>
+        <span class="jerry">— &amp; Jerry, supervising</span>
+      </div>
+    </div>
+    <div class="cover-art" aria-hidden="true">
+      <div class="frame"></div>
+      <div class="label">Cover · Vol. 5</div>
+      <div class="sticker">hello,<br>stranger!<small>— Jerry</small></div>
+      <div class="price">$0</div>
+      <div class="barcode">9 772026 071001</div>
+    </div>
+  </div>
+</section>
+
+<!-- TOC / MASTHEAD -->
+<section class="toc" id="toc" aria-labelledby="toc-title">
+  <div class="wrap">
+    <div>
+      <h2 id="toc-title">Inside this issue.</h2>
+      <ol class="list">
+        <li><span class="num">01</span><span class="title">A letter from <em>the editor</em></span><span class="dept">Prose</span><span class="pg">p. 04</span></li>
+        <li><span class="num">02</span><span class="title">Feature: <em>Asian Paints</em> — a dealer portal, end-to-end</span><span class="dept">Case Study</span><span class="pg">p. 08</span></li>
+        <li><span class="num">03</span><span class="title">Feature: <em>Boost360</em> — fixing the onboarding mismatch</span><span class="dept">Case Study</span><span class="pg">p. 14</span></li>
+        <li><span class="num">04</span><span class="title">Feature: <em>Wikipedia</em> — KaiOS, in 25 interviews</span><span class="dept">Research</span><span class="pg">p. 20</span></li>
+        <li><span class="num">05</span><span class="title">Interview: <em>four</em> working beliefs</span><span class="dept">Q&amp;A</span><span class="pg">p. 26</span></li>
+        <li><span class="num">06</span><span class="title">Classifieds — <em>tools</em> &amp; things I like</span><span class="dept">Tools</span><span class="pg">p. 32</span></li>
+        <li><span class="num">07</span><span class="title">Colophon — <em>how to write</em></span><span class="dept">Contact</span><span class="pg">p. 38</span></li>
+      </ol>
+    </div>
+    <aside class="colophon-card" aria-label="Jerry's note on the issue">
+      <h3>Jerry's note</h3>
+      <p>
+        I supervised the writing of this issue from a position approximately
+        eighteen inches from the keyboard. My contributions were mostly
+        editorial and concerned nap schedules.
+      </p>
+      <p>
+        The piece on Boost360 made me think of treats. Consider this a
+        disclosure.
+      </p>
+      <p class="sig">— Jerry 🐾</p>
+    </aside>
+  </div>
+</section>
+
+<!-- EDITOR'S LETTER -->
+<section class="section" id="editor" aria-labelledby="editor-title">
+  <div class="dept-head">
+    <span class="num">01</span>
+    <h2 id="editor-title">A letter from the editor<small>On jargon, and what design is actually for.</small></h2>
+    <span class="folio">P. 04 — Prose</span>
+  </div>
+
+  <div class="editor-letter">
+    <div class="body">
+      <p>
+        I don't do jargon. I never have. If you've ever received a deck from
+        me that used the phrase "orchestrate design revolutions," I owe you an
+        apology and possibly a refund. This issue is an attempt to do the
+        opposite — to show the work, plainly, and let it stand on its own.
+      </p>
+      <p>
+        I'm a self-taught Product/UX designer. I have a Computer Engineering
+        degree I don't use much, and a small library of opinions about
+        research, handoff, and what makes a product feel finished. I've spent
+        the last five years helping early- and growth-stage teams take
+        products from zero to one, and explaining to clients, plainly, why
+        that work matters. The features in this issue are the ones I'd pitch
+        first.
+      </p>
+      <p class="pull">
+        "I design products that users love, for brands that care. That's it."
+      </p>
+      <p>
+        When I'm not doing that, I'm with my dog Jerry. He's the kind of
+        collaborator who doesn't write copy but does walk across the keyboard
+        at exactly the wrong moment. He's listed as co-editor. You'll find
+        his notes throughout.
+      </p>
+      <p>
+        Read what you want. Skip what you don't. If something strikes you as
+        interesting — or if you'd like to talk about a project of your own —
+        the <em>colophon</em> at the back of the issue has the addresses.
+      </p>
+      <div class="sign-off">— Naman<small>Editor, Issue 01 · Jaipur</small></div>
+    </div>
+    <aside class="side">
+      <div class="card">
+        <h4>The stats</h4>
+        <div class="num">05</div>
+        <p>years of design practice, two of them in-house, the rest freelance.</p>
+      </div>
+      <div class="card">
+        <h4>Where I've shipped</h4>
+        <p>Thence (Asian Paints, Boost360, Shiprocket), Hureo (Wikimedia), and a rotating roster of freelance clients — Turns, Gadivan, LetsConnect, and many more.</p>
+      </div>
+      <div class="card">
+        <h4>What's inside</h4>
+        <p>Three real case studies, four working beliefs, a tools list, and one persistent dog.</p>
+      </div>
+      <div class="jerry-note green">
+        <span class="paw">🐾</span> Sit. Stay. Read.
+        <span class="attr">— editorial supervision</span>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<!-- FEATURES (case studies) -->
+<section class="section alt" id="features" aria-labelledby="features-title">
+  <div class="wrap">
+    <div class="dept-head">
+      <span class="num">02</span>
+      <h2 id="features-title">The features<small>Three case studies from the last five years.</small></h2>
+      <span class="folio">P. 08 — Case Studies</span>
+    </div>
+
+    <!-- Feature 01 -->
+    <article class="feature">
+      <div class="feature-image">
+        <span class="label">Feature 02 / Dealer portal</span>
+        <span class="dept-stamp">Thence · 2021</span>
+        <div class="corner-note">rebuilt, end-to-end</div>
+        <div class="art art-portal">
+          <div class="screen">
+            <div class="bar"></div>
+            <div class="blk b1"></div>
+            <div class="blk b2"></div>
+            <div class="blk b3"></div>
+            <div class="blk b4"></div>
+          </div>
+        </div>
+      </div>
+      <div class="feature-body">
+        <div class="folio">p. 08<b>Asian Paints</b></div>
+        <div>
+          <h3>A dealer portal that <em>dealers</em> would use.</h3>
+          <p class="deck">Twelve screens, one ugly problem, and a category of users who would rather call a sales rep than log in.</p>
+          <div class="body">
+            <p>
+              <strong>The setup.</strong> Asian Paints dealers were calling sales reps to place every order. Competitor portals existed; dealers hated
+              them. Transaction volumes and AOV were flat. We had a brief: improve the UX, digitize ordering, and nudge AOV up.
+            </p>
+            <p class="pull">
+              "Make it so fast and so good that calling the sales rep becomes the weird thing to do."
+            </p>
+            <p>
+              <strong>The work.</strong> Heuristic evaluation, then a full redesign of twelve screens: Home, Trending, Categories, Catalog, Listing,
+              Order, Stock, Wishlist, Cart, Tracking, Account, Reports. Added barcode-scan ordering, personalized recommendations from
+              history, loyalty points, and order-size incentives. Worked alongside a UI designer, PM, design lead, and the client team.
+            </p>
+            <p>
+              <strong>The result.</strong> A <em>+20%</em> lift in online transaction volume and a healthy increase in user engagement and
+              loyalty. Salesman-dealer interaction dropped. The portal started carrying its weight.
+            </p>
+            <div class="stats">
+              <div class="stat"><div class="big">+20%</div><div class="lbl">Tx Volume</div></div>
+              <div class="stat"><div class="big">12</div><div class="lbl">Screens</div></div>
+              <div class="stat"><div class="big">1</div><div class="lbl">Agency</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="side-rail">
+          <div class="credit">WORDS BY<br><b>Naman</b></div>
+          <div class="jerry-note">
+            <span class="paw">🐾</span> I would scan a barcode for treats.
+            <span class="attr">— Jerry</span>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- Feature 02 -->
+    <article class="feature">
+      <div class="feature-image">
+        <span class="label">Feature 03 / Onboarding</span>
+        <span class="dept-stamp">Thence · 2021</span>
+        <div class="corner-note">mismatch, found</div>
+        <div class="art art-phone">
+          <div class="ph"><div class="r r1"></div><div class="r r2"></div><div class="r r3"></div><div class="r r4"></div><div class="r r5"></div><div class="r r6"></div><div class="btn"></div></div>
+          <div class="ph"><div class="r r1"></div><div class="r r2"></div><div class="r r3"></div><div class="r r4"></div><div class="r r5"></div><div class="r r6"></div><div class="btn"></div></div>
+          <div class="ph"><div class="r r1"></div><div class="r r2"></div><div class="r r3"></div><div class="r r4"></div><div class="r r5"></div><div class="r r6"></div><div class="btn"></div></div>
+          <div class="ph"><div class="r r1"></div><div class="r r2"></div><div class="r r3"></div><div class="r r4"></div><div class="r r5"></div><div class="r r6"></div><div class="btn"></div></div>
+        </div>
+      </div>
+      <div class="feature-body">
+        <div class="folio">p. 14<b>Boost360</b></div>
+        <div>
+          <h3>The uninstall wasn't a bug. <em>It was a promise.</em></h3>
+          <p class="deck">80% of new users were gone before they signed up. We diagnosed the cause in week one, redesigned the flow, and watched the metric move.</p>
+          <div class="body">
+            <p>
+              <strong>The setup.</strong> 80% of new Boost360 users uninstalled the app before signing up. Average time-to-signup was 30
+              minutes. The brief was to find out why, and fix it.
+            </p>
+            <p>
+              <strong>What it wasn't.</strong> Crashes. OTP. Permissions. Ads. None of the usual suspects. The clue was in the marketing
+              channels — users were arriving expecting one product and meeting another.
+            </p>
+            <p class="pull">
+              "It was a UX problem hiding inside a positioning problem."
+            </p>
+            <p>
+              <strong>The fix.</strong> Made signup visual. Communicated USPs during onboarding, not after. Added social proof for trust.
+              Created a quick win before the form fields. Routed users to support if they got stuck. Aligned marketing with the product at
+              every touchpoint.
+            </p>
+            <p>
+              <strong>The result.</strong> <em>−60%</em> uninstall rate within 14 days. A significant reduction in time-to-signup. Users
+              described the new flow as "easy," "fast," and "motivating" in usability testing — adjectives the old flow never earned.
+            </p>
+            <div class="stats">
+              <div class="stat"><div class="big">−60%</div><div class="lbl">Uninstall</div></div>
+              <div class="stat"><div class="big">~30m</div><div class="lbl">Old Signup</div></div>
+              <div class="stat"><div class="big">4</div><div class="lbl">States</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="side-rail">
+          <div class="credit">WORDS BY<br><b>Naman</b></div>
+          <div class="jerry-note rose">
+            <span class="paw">🐾</span> I uninstalled the app once. By accident. With my face.
+            <span class="attr">— Jerry</span>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- Feature 03 -->
+    <article class="feature">
+      <div class="feature-image">
+        <span class="label">Feature 04 / Field research</span>
+        <span class="dept-stamp">Hureo · 2020</span>
+        <div class="corner-note">25 interviews</div>
+        <div class="art art-research">
+          <div class="center">Why JioPhone?</div>
+          <div class="sticky">cheap<br>to fix</div>
+          <div class="sticky">durable</div>
+          <div class="sticky">battery<br>life</div>
+          <div class="sticky">familiar<br>keypad</div>
+          <div class="sticky">family<br>on Jio</div>
+          <div class="sticky">smart<br>features</div>
+          <div class="sticky">regional<br>language</div>
+          <div class="sticky">voice<br>search</div>
+          <div class="sticky">video<br>content</div>
+        </div>
+      </div>
+      <div class="feature-body">
+        <div class="folio">p. 20<b>Wikipedia / KaiOS</b></div>
+        <div>
+          <h3>What a feature phone <em>teaches</em> you about design.</h3>
+          <p class="deck">25 in-person interviews across three cities, in 2020, to learn how people who chose not to use a smartphone use Wikipedia anyway.</p>
+          <div class="body">
+            <p>
+              <strong>The setup.</strong> Wikimedia wanted to understand the people using Wikipedia on JioPhones — a smart feature phone
+              running KaiOS. These were people who had <em>chosen</em> not to use a smartphone. That choice was the entire question.
+            </p>
+            <p>
+              <strong>The fieldwork.</strong> 25 in-person interviews, 45–60 minutes each, in Pune, Mumbai, and Delhi. Recruited participants,
+              ran the sessions, transcribed, built personas, mapped journeys, and produced a research report. We sat with people in their
+              homes, watched them use their phones, and asked why.
+            </p>
+            <p class="pull">
+              "The phone was the point — not a compromise. Designing for it meant starting over."
+            </p>
+            <p>
+              <strong>What we learned.</strong> Why JioPhone: cheap to maintain, durable, good battery, familiar keypad, family on the Jio
+              network, smart features at an affordable price. What they wanted from Wikipedia: more images and video, English numerals in
+              Hindi articles, simpler words, a search bar inside articles, a news section, the ability to copy text.
+            </p>
+            <p>
+              <strong>What we recommended.</strong> Voice-first interaction. Readability for small screens. Video content. Better search
+              visibility. Regional-language SEO. Simpler Hindi. The findings shaped how Wikipedia approached KaiOS for the year that
+              followed.
+            </p>
+            <div class="stats">
+              <div class="stat"><div class="big">25</div><div class="lbl">Interviews</div></div>
+              <div class="stat"><div class="big">3</div><div class="lbl">Cities</div></div>
+              <div class="stat"><div class="big">~60m</div><div class="lbl">Each</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="side-rail">
+          <div class="credit">WORDS BY<br><b>Naman + Hureo</b></div>
+          <div class="jerry-note paper">
+            <span class="paw">🐾</span> I have never used Wikipedia. I have strong opinions about it.
+            <span class="attr">— Jerry</span>
+          </div>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- INTERVIEW (principles) -->
+<section class="section" id="interview" aria-labelledby="interview-title">
+  <div class="dept-head">
+    <span class="num">03</span>
+    <h2 id="interview-title">Interview: four working beliefs<small>On consistency, curiosity, function, and giving a damn.</small></h2>
+    <span class="folio">P. 26 — Q&amp;A</span>
+  </div>
+
+  <div class="interview">
+    <aside class="q-card">
+      <div class="q-num">The prompt</div>
+      <h4>You list four principles on your site. They're short. Walk us through them.</h4>
+      <p class="q">I keep them short on purpose. A principle you can't say in one breath isn't one you'll remember at 2am when the deadline is fake and the scope is real.</p>
+    </aside>
+    <div class="answers">
+      <div class="answer">
+        <div class="label">Principle 01 · Effort</div>
+        <h3>"Consistency beats talent."</h3>
+        <p>
+          I'm not the most talented designer in the room. I am, <em>reliably</em>, in the room. Consistent effort compounds into results that
+          look like talent in hindsight — and I think that's a better bet to make. The boring version of this is "show up." The less boring
+          version is "show up, and bring better questions than you brought yesterday."
+        </p>
+      </div>
+      <div class="answer">
+        <div class="label">Principle 02 · Method</div>
+        <h3>"Let curiosity guide you."</h3>
+        <p>
+          I know a little about a lot of things, and it helps me connect dots between scattered information. Each project is a journey of
+          discovery. Curiosity is what keeps the work making a difference past the kickoff slide — and what makes me genuinely hard to bore
+          on a long engagement.
+        </p>
+      </div>
+      <div class="answer">
+        <div class="label">Principle 03 · Order of ops</div>
+        <h3>"Form follows function."</h3>
+        <p>
+          Problems are solved with <em>functionality</em>, not aesthetics. The visual layer is what creates delight, but only once the
+          functionality is right. The order matters. A beautiful app that doesn't solve a real problem is a poster. A functional app with
+          a thoughtful visual layer is a product.
+        </p>
+      </div>
+      <div class="answer">
+        <div class="label">Principle 04 · Stance</div>
+        <h3>"Give a damn."</h3>
+        <p>
+          I work with a founder's mindset. I take ownership of outcomes, not deliverables. I treat the project's success as my success while
+          it's mine. That means showing up worried about things that aren't on the brief — because the brief is the floor, not the ceiling.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CLASSIFIEDS (tools) -->
+<section class="section" id="classifieds" aria-labelledby="classifieds-title">
+  <div class="dept-head">
+    <span class="num">04</span>
+    <h2 id="classifieds-title">Classifieds<small>Tools of the trade, in the order I reach for them.</small></h2>
+    <span class="folio">P. 32 — Tools</span>
+  </div>
+
+  <div class="classifieds">
+    <div class="ad">
+      <div class="cat">Design · Default</div>
+      <h4>Figma</h4>
+      <p>The default. Where most of the day goes. Frames, components, variants, dev mode.</p>
+    </div>
+    <div class="ad alt">
+      <div class="cat">Whiteboarding</div>
+      <h4>FigJam</h4>
+      <p>For when the room is a Miro and the room is also Figma. Affinity maps, flows, jam sessions.</p>
+    </div>
+    <div class="ad">
+      <div class="cat">Workshops</div>
+      <h4>Miro</h4>
+      <p>Distributed workshops, journey maps, ecosystem maps. The wall we don't have.</p>
+    </div>
+    <div class="ad alt2">
+      <div class="cat">Prototyping</div>
+      <h4>Framer</h4>
+      <p>When the prototype needs to be live, on a real URL, on a real phone. The marketing site is in here too.</p>
+    </div>
+    <div class="ad alt2">
+      <div class="cat">Legacy</div>
+      <h4>Adobe XD</h4>
+      <p>Still a great tool. Still in the rotation for the projects that started in it.</p>
+    </div>
+    <div class="ad">
+      <div class="cat">Illustration</div>
+      <h4>Illustrator</h4>
+      <p>Logos, marks, the occasional icon. Vector for things that need to be precise.</p>
+    </div>
+    <div class="ad alt">
+      <div class="cat">Image</div>
+      <h4>Photoshop</h4>
+      <p>Still the fastest way to do a lot of things that don't need to be in Figma.</p>
+    </div>
+    <div class="ad">
+      <div class="cat">Marketing sites</div>
+      <h4>Webflow</h4>
+      <p>Marketing sites, landing pages, the kind of thing that needs to ship this week and look right.</p>
+    </div>
+    <div class="ad alt2">
+      <div class="cat">High-fidelity proto</div>
+      <h4>Protopie</h4>
+      <p>When the interaction has to be felt. Voice, haptics, sensors, real device prototyping.</p>
+    </div>
+    <div class="ad">
+      <div class="cat">Currently learning</div>
+      <h4>Code (again)</h4>
+      <p>Re-learning to ship my own ideas. The next version of this site will be in a framework.</p>
+    </div>
+    <div class="ad alt">
+      <div class="cat">Background</div>
+      <h4>CS undergrad</h4>
+      <p>B.E. Computer Engineering, Pune University. Useful for talking to engineers, less useful for design.</p>
+    </div>
+    <div class="ad alt2">
+      <div class="cat">On rotation</div>
+      <h4>Hip-hop, books, finance podcasts</h4>
+      <p>The "ask me about" set. Beats, balance sheets, and one persistent dog.</p>
+    </div>
+  </div>
+
+  <h3 style="font-family: var(--serif); font-weight: 600; font-style: italic; font-size: 1.8rem; margin-top: 3.5rem; margin-bottom: 0.4rem; color: var(--ink);">Ask me about</h3>
+  <p style="font-family: var(--serif); font-size: 1.05rem; color: var(--ink-soft); max-width: 36rem;">Six things I'd rather talk about than the design process. The dog is a permanent fixture.</p>
+  <div class="asks-grid">
+    <div class="ask"><div class="top">No. 01</div><h4>My indie dog</h4><p>Jerry. He has a chair at the desk and opinions about the deadline.</p></div>
+    <div class="ask"><div class="top">No. 02</div><h4>Computers &amp; tech</h4><p>CS undergrad. I have feelings about operating systems.</p></div>
+    <div class="ask"><div class="top">No. 03</div><h4>Personal finance &amp; investing</h4><p>Index funds, mostly. Boring on purpose.</p></div>
+    <div class="ask"><div class="top">No. 04</div><h4>Hip-hop music</h4><p>Beats and lyrics, in roughly equal measure.</p></div>
+    <div class="ask"><div class="top">No. 05</div><h4>Video games</h4><p>Strategy and RPG. Long campaigns, slow saves.</p></div>
+    <div class="ask"><div class="top">No. 06</div><h4>Education</h4><p>How we learn, how we teach, how we forget.</p></div>
+  </div>
+</section>
+
+<!-- COLOPHON (contact) -->
+<section class="colophon" id="colophon" aria-labelledby="colophon-title">
+  <div class="wrap">
+    <div>
+      <h2 id="colophon-title">Colophon<small>How to write, where to find me.</small></h2>
+      <p>
+        If you'd like to talk about a project, a role, or anything in this issue,
+        the easiest way is the inbox below. I read everything and reply to most
+        of it. Jerry supervises all correspondence.
+      </p>
+      <div class="endpoints">
+        <a href="mailto:madebynaman@gmail.com"><span class="lbl">Email</span> madebynaman@gmail.com</a>
+        <a href="https://www.madebynaman.com" target="_blank" rel="noopener"><span class="lbl">Site</span> madebynaman.com</a>
+        <a href="https://www.linkedin.com/in/madebynaman/" target="_blank" rel="noopener"><span class="lbl">LinkedIn</span> /in/madebynaman</a>
+        <a href="tel:+918208369219"><span class="lbl">Phone</span> +91 82083 69219</a>
+      </div>
+    </div>
+    <div>
+      <div class="signoff">Until next issue.
+        <small>— Naman &amp; Jerry, Jaipur · Summer 2026</small>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer style="background: var(--ink); color: var(--paper-2);">
+  <div style="max-width: 90rem; margin: 0 auto; padding: 1.4rem 1.5rem; display: flex; justify-content: space-between; align-items: center; font-family: var(--mono); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.1em; flex-wrap: wrap; gap: 0.6rem;">
+    <span>Naman Sharma · Issue 01 · Summer 2026</span>
+    <span>Set in Fraunces, Inter, Caveat &amp; Space Mono. Made by hand in Jaipur.</span>
+  </div>
+</footer>
+
+</body>
+</html>
