@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Naman Sharma — Product / UX Designer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Hanken+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#fafaf8;
+    --band:#f1f1ec;
+    --ink:#17181a;
+    --ink-2:#3d4045;
+    --graphite:#5c6066;
+    --faint:#9a9da0;
+    --hair:#e2e2dc;
+    --hair-2:#d3d3cc;
+    --sage:#8c9a86;
+    --serif:"Instrument Serif",Georgia,serif;
+    --sans:"Hanken Grotesk","Helvetica Neue",Arial,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.7;font-weight:400;-webkit-font-smoothing:antialiased;letter-spacing:.005em}
+  ::selection{background:var(--sage);color:#fff}
+  a{color:inherit;text-decoration:none}
+  h1,h2,h3{margin:0;font-weight:400;line-height:1;text-wrap:balance}
+  .serif{font-family:var(--serif)}
+  p{margin:0}
+  :focus-visible{outline:1.5px solid var(--sage);outline-offset:4px;border-radius:1px}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 48px}
+  @media(max-width:640px){.wrap{padding:0 24px}}
+  .eyebrow{font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--graphite);font-weight:500}
+  .hair{height:1px;background:var(--hair);border:0;margin:0}
+
+  /* nav */
+  header{position:sticky;top:0;z-index:40;background:color-mix(in srgb,var(--paper) 82%,transparent);backdrop-filter:blur(8px)}
+  header .wrap{display:flex;align-items:center;justify-content:space-between;height:76px}
+  .brand{font-family:var(--serif);font-size:22px;letter-spacing:.01em}
+  .brand .dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--sage);margin-left:8px;vertical-align:middle}
+  nav{display:flex;gap:34px}
+  nav a{font-size:12.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--graphite);position:relative;font-weight:500}
+  nav a::after{content:"";position:absolute;left:0;right:100%;bottom:-6px;height:1px;background:var(--sage);transition:right .3s ease}
+  nav a:hover{color:var(--ink)}nav a:hover::after{right:0}
+  @media(max-width:760px){nav{display:none}}
+
+  /* hero */
+  .hero{padding:150px 0 130px}
+  .hero .status{display:inline-flex;align-items:center;gap:9px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--graphite);margin-bottom:56px}
+  .hero .status .d{width:7px;height:7px;border-radius:50%;background:var(--sage)}
+  .hero h1{font-family:var(--serif);font-size:clamp(44px,7.5vw,92px);line-height:1.04;letter-spacing:-.005em;max-width:16ch}
+  .hero h1 em{font-style:italic}
+  .hero .sub{margin-top:44px;display:grid;grid-template-columns:1fr auto;gap:48px;align-items:end}
+  .hero .sub p{max-width:44ch;color:var(--ink-2);font-size:17px}
+  .hero .sub .loc{font-size:12.5px;letter-spacing:.06em;color:var(--graphite);text-align:right;line-height:2}
+  @media(max-width:640px){.hero{padding:96px 0 80px}.hero .sub{grid-template-columns:1fr;gap:24px}.hero .sub .loc{text-align:left}}
+
+  /* section scaffold */
+  section{padding:104px 0}
+  .band{background:var(--band)}
+  .sec-label{display:grid;grid-template-columns:200px 1fr;gap:48px;margin-bottom:56px;align-items:baseline}
+  .sec-label .num{font-size:12px;letter-spacing:.2em;color:var(--graphite);text-transform:uppercase}
+  .sec-label h2{font-family:var(--serif);font-size:clamp(28px,4vw,44px);line-height:1.08;letter-spacing:-.01em;max-width:20ch}
+  .sec-label h2 em{font-style:italic}
+  @media(max-width:760px){.sec-label{grid-template-columns:1fr;gap:12px}}
+
+  /* about */
+  .about{display:grid;grid-template-columns:200px 1fr;gap:48px}
+  @media(max-width:760px){.about{grid-template-columns:1fr;gap:24px}}
+  .about .aside{font-size:12.5px;color:var(--graphite);line-height:1.9}
+  .about .aside b{display:block;color:var(--ink);font-weight:600;margin-bottom:2px}
+  .about .body{max-width:60ch}
+  .about .body p{font-size:19px;color:var(--ink-2);margin-bottom:1.2em;line-height:1.75}
+  .about .body p .serif{font-style:italic;color:var(--ink)}
+  .about .body .plain{font-family:var(--serif);font-size:26px;font-style:italic;color:var(--ink);line-height:1.35;margin-top:8px}
+
+  /* principles */
+  .prin{border-top:1px solid var(--hair)}
+  .prow{display:grid;grid-template-columns:200px 1fr auto;gap:48px;padding:34px 0;border-bottom:1px solid var(--hair);align-items:baseline}
+  .prow .idx{font-size:12px;letter-spacing:.2em;color:var(--sage);text-transform:uppercase}
+  .prow h3{font-family:var(--serif);font-size:30px;letter-spacing:-.01em}
+  .prow p{color:var(--graphite);font-size:15px;max-width:46ch;text-align:right;justify-self:end}
+  @media(max-width:760px){.prow{grid-template-columns:1fr;gap:8px}.prow p{text-align:left;justify-self:start}}
+
+  /* work */
+  .works{border-top:1px solid var(--hair)}
+  .work{display:grid;grid-template-columns:200px 1fr;gap:48px;padding:52px 0;border-bottom:1px solid var(--hair);transition:padding .3s}
+  @media(max-width:760px){.work{grid-template-columns:1fr;gap:24px}}
+  .work .meta{font-size:12.5px;color:var(--graphite);line-height:1.9}
+  .work .meta .num{font-family:var(--serif);font-size:34px;color:var(--ink);display:block;margin-bottom:14px}
+  .work .meta .metric{margin-top:18px}
+  .work .meta .metric b{font-family:var(--serif);font-size:40px;color:var(--ink);display:block;line-height:1}
+  .work .meta .metric span{font-size:12px;color:var(--graphite)}
+  .work .main{max-width:60ch}
+  .work h3{font-family:var(--serif);font-size:clamp(26px,3.4vw,40px);line-height:1.1;letter-spacing:-.01em}
+  .work h3 em{font-style:italic}
+  .work .desc{color:var(--ink-2);font-size:16.5px;margin-top:16px;max-width:52ch}
+  .work .more{overflow:hidden;max-height:0;opacity:0;transition:max-height .45s ease,opacity .4s ease,margin .4s ease}
+  .work:hover .more,.work:focus-within .more{max-height:220px;opacity:1;margin-top:20px}
+  @media(prefers-reduced-motion:reduce){.work .more{transition:none}}
+  .work .more p{font-size:14.5px;color:var(--graphite);max-width:54ch}
+  .fig{margin-top:26px;border:1px solid var(--hair-2);aspect-ratio:16/7;position:relative;background:var(--paper);display:flex;align-items:flex-end;padding:18px}
+  .band .fig{background:#fff}
+  .fig .mk{position:absolute;top:0;left:0;right:0;bottom:0;background:
+    linear-gradient(90deg,transparent 49.6%,var(--hair) 49.6% 50.4%,transparent 50.4%),
+    linear-gradient(transparent 49.6%,var(--hair) 49.6% 50.4%,transparent 50.4%);opacity:.5}
+  .fig .cap{position:relative;font-size:12.5px;color:var(--graphite);letter-spacing:.02em}
+  .fig .cap b{color:var(--ink);font-family:var(--serif);font-size:16px;font-style:italic;display:block}
+  .fig .dot{position:absolute;top:16px;right:16px;width:8px;height:8px;border-radius:50%;background:var(--sage)}
+  .readlink{display:inline-flex;align-items:center;gap:8px;margin-top:22px;font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink);font-weight:500}
+  .readlink .arw{transition:transform .3s}
+  .readlink:hover .arw{transform:translateX(5px)}
+  .readlink::before{content:"";width:20px;height:1px;background:var(--sage)}
+
+  /* process */
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--hair);border:1px solid var(--hair)}
+  @media(max-width:720px){.steps{grid-template-columns:1fr}}
+  .stp{background:var(--paper);padding:30px 26px}
+  .band .stp{background:var(--band)}
+  .stp .n{font-family:var(--serif);font-size:22px;color:var(--sage)}
+  .stp h3{font-size:18px;font-weight:600;margin:12px 0 8px;letter-spacing:-.01em}
+  .stp p{font-size:13.5px;color:var(--graphite)}
+
+  /* timeline */
+  .tl{border-top:1px solid var(--hair)}
+  .tl .r{display:grid;grid-template-columns:200px 1fr auto;gap:48px;padding:24px 0;border-bottom:1px solid var(--hair);align-items:baseline}
+  .tl .yr{font-size:12.5px;color:var(--graphite);font-variant-numeric:tabular-nums;letter-spacing:.03em}
+  .tl .role{font-family:var(--serif);font-size:22px}
+  .tl .role span{font-size:14px;color:var(--graphite);font-style:italic}
+  .tl .org{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--sage);text-align:right}
+  @media(max-width:760px){.tl .r{grid-template-columns:1fr;gap:4px}.tl .org{text-align:left}}
+
+  .clients{display:flex;flex-wrap:wrap;gap:8px 26px;margin-top:8px}
+  .clients span{font-family:var(--serif);font-size:22px;color:var(--ink-2)}
+  .personal{font-family:var(--serif);font-size:clamp(22px,3vw,30px);font-style:italic;color:var(--ink-2);line-height:1.5;max-width:34ch}
+  .personal em{color:var(--sage);font-style:normal;font-family:var(--sans);font-size:13px;letter-spacing:.1em;text-transform:uppercase;vertical-align:middle}
+
+  /* contact */
+  .contact{text-align:center;padding:140px 0}
+  .contact .eyebrow{margin-bottom:36px}
+  .contact h2{font-family:var(--serif);font-size:clamp(38px,6.5vw,84px);line-height:1.05;letter-spacing:-.01em}
+  .contact h2 em{font-style:italic}
+  .contact a.mail{display:inline-block;margin-top:40px;font-family:var(--serif);font-size:clamp(22px,3.4vw,34px);border-bottom:1px solid var(--hair-2);padding-bottom:6px}
+  .contact a.mail:hover{border-color:var(--sage)}
+  .contact .links{margin-top:48px;display:flex;gap:34px;justify-content:center;flex-wrap:wrap;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--graphite)}
+  .contact .links a:hover{color:var(--ink)}
+
+  footer{padding:40px 0;border-top:1px solid var(--hair)}
+  footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;font-size:12px;color:var(--graphite);letter-spacing:.04em}
+
+  .reveal{opacity:0;transform:translateY(12px);transition:opacity .8s ease,transform .8s ease}
+  .reveal.in{opacity:1;transform:none}
+  @media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="brand">Naman Sharma<span class="dot" aria-hidden="true"></span></div>
+    <nav aria-label="Sections">
+      <a href="#about">About</a>
+      <a href="#principles">Principles</a>
+      <a href="#work">Work</a>
+      <a href="#process">Process</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap">
+      <div class="status"><span class="d" aria-hidden="true"></span>Available for select product work</div>
+      <h1 class="serif">Design products people love, <em>for brands that care.</em></h1>
+      <div class="sub">
+        <p>A Product/UX designer who makes complex things quietly simple — rooted in research, measured by outcomes, finished with restraint.</p>
+        <p class="loc">Jaipur, India<br>Worldwide · Remote<br>Product / UX / Web</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="hair">
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="wrap">
+      <div class="about">
+        <div class="aside">
+          <b>Who</b>Self-taught Product/UX designer.<br><br>
+          <b>Background</b>Computer engineering.<br><br>
+          <b>Experience</b>3 years, agency + freelance.<br><br>
+          <b>Approach</b>Research → design → measure.
+        </div>
+        <div class="body">
+          <p>I design at the intersection of curiosity, problem-solving, and technology. My work starts with a question — who is stuck, and why — long before it becomes a screen.</p>
+          <p>Across an agency and a bench of freelance clients, I've made complex products <span class="serif">easy to use</span> and helped startups go from zero to one. I solve the problem first; the beauty is the extra mile after — because humans remember delight.</p>
+          <p class="plain">I hate jargon. I make hard things easy. That's it.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRINCIPLES -->
+  <section id="principles" class="band">
+    <div class="wrap">
+      <div class="sec-label"><div class="num">01 — Principles</div><h2 class="serif">Four beliefs, held <em>quietly</em> and applied daily.</h2></div>
+      <div class="prin">
+        <div class="prow"><span class="idx">i</span><h3 class="serif">Consistency beats talent</h3><p>Consistent effort compounds into results talent alone never reaches.</p></div>
+        <div class="prow"><span class="idx">ii</span><h3 class="serif">Let curiosity guide you</h3><p>Knowing a little about a lot is how you connect scattered dots into insight.</p></div>
+        <div class="prow"><span class="idx">iii</span><h3 class="serif">Form follows function</h3><p>Function solves the problem; delight is the extra mile that makes it memorable.</p></div>
+        <div class="prow"><span class="idx">iv</span><h3 class="serif">Give a damn</h3><p>Founder's mindset, full ownership, and the extra mile — every time.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WORK -->
+  <section id="work">
+    <div class="wrap">
+      <div class="sec-label"><div class="num">02 — Selected Work</div><h2 class="serif">Four studies. Read them <em>at your pace</em>.</h2></div>
+      <div class="works">
+
+        <article class="work" tabindex="0">
+          <div class="meta">
+            <span class="num serif">01</span>
+            Asian Paints<br>via Thence · 2021<br>UX Research · UI
+            <div class="metric"><b class="serif">+20%</b><span>online transaction volume</span></div>
+          </div>
+          <div class="main">
+            <h3 class="serif">A dealer portal that <em>paid for itself</em>.</h3>
+            <p class="desc">Dealers were tired of phoning a salesman to place every order. I redesigned the end-to-end portal — barcode reorder, history-based recommendations, demand-driven promotions.</p>
+            <div class="fig" role="img" aria-label="Placeholder: Asian Paints dealer portal — order and tracking interface">
+              <div class="mk" aria-hidden="true"></div>
+              <span class="dot" aria-hidden="true"></span>
+              <span class="cap">Placeholder<b class="serif">Dealer portal — order &amp; tracking UI</b></span>
+            </div>
+            <div class="more"><p>Built on a full heuristic audit, the redesign cut dealer–salesman friction, added personalised loyalty, and let dealers reorder in ten seconds by scanning a barcode. Result: a 20% lift in online transaction volume and stronger engagement.</p></div>
+            <a class="readlink" href="#contact">Read the study <span class="arw" aria-hidden="true">→</span></a>
+          </div>
+        </article>
+
+        <article class="work" tabindex="0">
+          <div class="meta">
+            <span class="num serif">02</span>
+            Boost360 / NowFloats<br>via Thence · 2021<br>Research · UX · Testing
+            <div class="metric"><b class="serif">−60%</b><span>app uninstall rate</span></div>
+          </div>
+          <div class="main">
+            <h3 class="serif">Onboarding that stopped <em>losing people</em>.</h3>
+            <p class="desc">Users were uninstalling within four hours; only 1 in 5 finished signup, and it took them half an hour. The real cause wasn't technical — it was a promise the product didn't keep.</p>
+            <div class="fig" role="img" aria-label="Placeholder: Boost360 visual signup and onboarding flow">
+              <div class="mk" aria-hidden="true"></div>
+              <span class="dot" aria-hidden="true"></span>
+              <span class="cap">Placeholder<b class="serif">Visual signup — onboarding flow</b></span>
+            </div>
+            <div class="more"><p>I made signup visual and self-explanatory, communicated the real USPs during onboarding, added social proof, and engineered quick wins so value arrived before commitment. Usability testing confirmed the fix; uninstalls fell 60% and signup time dropped sharply.</p></div>
+            <a class="readlink" href="#contact">Read the study <span class="arw" aria-hidden="true">→</span></a>
+          </div>
+        </article>
+
+        <article class="work" tabindex="0">
+          <div class="meta">
+            <span class="num serif">03</span>
+            Wikimedia Foundation<br>via Hureo · 2020<br>Research · Personas
+            <div class="metric"><b class="serif">25</b><span>participants · 3 cities</span></div>
+          </div>
+          <div class="main">
+            <h3 class="serif">Listening to <em>the next billion readers</em>.</h3>
+            <p class="desc">Why do people choose a JioPhone over a smartphone — and what does Wikipedia owe them? Twenty-five in-person interviews across Pune, Mumbai, and Delhi.</p>
+            <div class="fig" role="img" aria-label="Placeholder: KaiOS research — personas and journey maps">
+              <div class="mk" aria-hidden="true"></div>
+              <span class="dot" aria-hidden="true"></span>
+              <span class="cap">Placeholder<b class="serif">KaiOS study — personas &amp; journeys</b></span>
+            </div>
+            <div class="more"><p>Watching people read on smart feature phones surfaced clear needs: voice-first interaction over the keypad, readability for small screens, video over dense text, discoverable in-article search, and SEO for regional languages.</p></div>
+            <a class="readlink" href="#contact">Read the study <span class="arw" aria-hidden="true">→</span></a>
+          </div>
+        </article>
+
+        <article class="work" tabindex="0">
+          <div class="meta">
+            <span class="num serif">04</span>
+            Independent<br>Freelance · 2021–23<br>Research · UI · Build
+            <div class="metric"><b class="serif">$500K</b><span>pre-seed raised (Turns)</span></div>
+          </div>
+          <div class="main">
+            <h3 class="serif">Zero to one, <em>on repeat</em>.</h3>
+            <p class="desc">A run of independent products where I owned the whole arc — research, design system, and often the build itself.</p>
+            <div class="fig" role="img" aria-label="Placeholder: freelance projects — Turns, Gadivan, LetsConnect">
+              <div class="mk" aria-hidden="true"></div>
+              <span class="dot" aria-hidden="true"></span>
+              <span class="cap">Placeholder<b class="serif">Turns · Gadivan · LetsConnect</b></span>
+            </div>
+            <div class="more"><p>For Turns, a site and brand-system redesign plus UX audits lifted conversions and helped raise $500K in pre-seed. Gadivan went 0→1 across apps for different stakeholders; LetsConnect's feedback-led redesign reached 4.8★ on the Play Store.</p></div>
+            <a class="readlink" href="#contact">Ask about the rest <span class="arw" aria-hidden="true">→</span></a>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section id="process" class="band">
+    <div class="wrap">
+      <div class="sec-label"><div class="num">03 — Process</div><h2 class="serif">Six steps. Linear on paper, <em>looping</em> in practice.</h2></div>
+      <div class="steps">
+        <div class="stp"><div class="n serif">01</div><h3>Research</h3><p>Understand the problem, learn the customer, map possible solutions.</p></div>
+        <div class="stp"><div class="n serif">02</div><h3>User Journey</h3><p>Personas, journeys, and where real decisions get made.</p></div>
+        <div class="stp"><div class="n serif">03</div><h3>Exploration</h3><p>Go wide. Test, iterate, collaborate through the problem.</p></div>
+        <div class="stp"><div class="n serif">04</div><h3>Refinement</h3><p>Refine one direction, polish the craft, document decisions.</p></div>
+        <div class="stp"><div class="n serif">05</div><h3>Handoff</h3><p>Ship with engineering and product so intent survives.</p></div>
+        <div class="stp"><div class="n serif">06</div><h3>Monitoring</h3><p>Live isn't done. Track what defines success; keep improving.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PATH -->
+  <section id="path">
+    <div class="wrap">
+      <div class="sec-label"><div class="num">04 — Path</div><h2 class="serif">Graphic design to research to <em>product</em>.</h2></div>
+      <div class="tl">
+        <div class="r"><span class="yr">Apr 2022 — Present</span><span class="role serif">Product, UX &amp; Web Designer <span>· 0→1, systems</span></span><span class="org">Freelance</span></div>
+        <div class="r"><span class="yr">Apr 2021 — Mar 2022</span><span class="role serif">UX Designer <span>· research, testing</span></span><span class="org">Thence</span></div>
+        <div class="r"><span class="yr">Dec 2019 — Apr 2020</span><span class="role serif">UX Research Intern <span>· KaiOS study</span></span><span class="org">Hureo</span></div>
+        <div class="r"><span class="yr">2018 — 2019</span><span class="role serif">Graphic Design Intern <span>· brand, web</span></span><span class="org">HappleyFit</span></div>
+        <div class="r"><span class="yr">2017 — 2021</span><span class="role serif">B.E. Computer Engineering <span>· SPPU, Pune</span></span><span class="org">Education</span></div>
+      </div>
+      <div style="margin-top:56px" class="eyebrow">Selected clients</div>
+      <div class="clients">
+        <span>Thence</span><span>Turns</span><span>Gadivan</span><span>LetsConnect</span><span>LearnApp</span><span>Parentverse</span><span>Spirinova</span><span>Learn Theta</span>
+      </div>
+      <div style="margin-top:56px" class="eyebrow">Beyond the screen</div>
+      <p class="personal" style="margin-top:16px">A curious generalist — re-learning to code, following markets, and answering to an indie dog named Jerry. <em>He says hi.</em></p>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="band contact">
+    <div class="wrap">
+      <div class="eyebrow">Contact</div>
+      <h2 class="serif">Let's make something<br><em>worth keeping.</em></h2>
+      <a class="mail serif" href="mailto:madebynaman@gmail.com">madebynaman@gmail.com</a>
+      <div class="links">
+        <a href="https://madebynaman.com">madebynaman.com</a>
+        <a href="https://www.linkedin.com/in/madebynaman/">LinkedIn</a>
+        <a href="mailto:madebynaman@gmail.com">Email</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2024 Naman Sharma · Product / UX Designer</span>
+    <span>Jaipur, India · Worldwide remote</span>
+  </div>
+</footer>
+
+<script>
+  (function(){
+    var rm = window.matchMedia && window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+    var els = document.querySelectorAll('.prow, .work, .stp, .tl .r');
+    els.forEach(function(el){el.classList.add('reveal')});
+    if(rm || !('IntersectionObserver' in window)){els.forEach(function(el){el.classList.add('in')});return;}
+    var io = new IntersectionObserver(function(en){en.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.14});
+    els.forEach(function(el){io.observe(el)});
+  })();
+</script>
+</body>
+</html>

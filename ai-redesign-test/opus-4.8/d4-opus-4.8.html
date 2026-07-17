@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Naman Sharma — Product/UX Designer · Delight</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#141210;
+    --cream:#f4ede0;
+    --cobalt:#2b4dff;
+    --lime:#c6f24e;
+    --coral:#ff5c4d;
+    --white:#fffdf8;
+    --disp:"Bricolage Grotesque","Arial Black",sans-serif;
+    --sans:"DM Sans","Helvetica Neue",Arial,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  body{margin:0;background:var(--cream);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
+  ::selection{background:var(--cobalt);color:var(--white)}
+  a{color:inherit;text-decoration:none}
+  h1,h2,h3,h4{font-family:var(--disp);margin:0;line-height:.92;font-weight:800;letter-spacing:-.02em;text-wrap:balance}
+  p{margin:0}
+  :focus-visible{outline:3px solid var(--cobalt);outline-offset:3px}
+  .wrap{max-width:1240px;margin:0 auto;padding:0 32px}
+  @media(max-width:600px){.wrap{padding:0 20px}}
+  .eyebrow{font-family:var(--sans);font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase}
+
+  /* pills / stickers */
+  .pill{display:inline-flex;align-items:center;gap:8px;border:2px solid var(--ink);border-radius:40px;padding:7px 16px;font-size:13px;font-weight:600;background:var(--white)}
+  .pill .led{width:9px;height:9px;border-radius:50%;background:var(--lime);border:1px solid var(--ink)}
+  .tag{display:inline-block;border:2px solid var(--ink);border-radius:30px;padding:6px 15px;font-weight:600;font-size:14px;background:var(--white)}
+
+  /* nav */
+  header{position:sticky;top:0;z-index:60;background:var(--cobalt);border-bottom:3px solid var(--ink)}
+  header .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+  .brand{font-family:var(--disp);font-weight:800;font-size:22px;color:var(--white);letter-spacing:-.01em}
+  .brand b{color:var(--lime)}
+  nav.top{display:flex;gap:8px}
+  nav.top a{color:var(--white);font-weight:600;font-size:14px;padding:6px 12px;border-radius:30px;transition:background .2s,color .2s}
+  nav.top a:hover{background:var(--lime);color:var(--ink)}
+  .nav-cta{background:var(--lime);color:var(--ink)!important;border:2px solid var(--ink)}
+  @media(max-width:820px){nav.top a:not(.nav-cta){display:none}}
+
+  /* hero */
+  .hero{background:var(--cream);padding:70px 0 40px;position:relative;overflow:hidden}
+  .hero .blob{position:absolute;border-radius:50%;filter:blur(2px);z-index:0}
+  .hero .b1{width:280px;height:280px;background:var(--coral);top:-60px;right:6%;border:3px solid var(--ink);border-radius:46% 54% 60% 40%/48% 42% 58% 52%}
+  .hero .b2{width:120px;height:120px;background:var(--lime);bottom:40px;right:24%;border:3px solid var(--ink)}
+  .hero .inner{position:relative;z-index:1}
+  .hero .top-pills{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:28px}
+  .hero h1{font-size:clamp(52px,11vw,168px);font-weight:800;letter-spacing:-.03em}
+  .hero h1 .love{color:var(--coral);position:relative}
+  .hero h1 .care{background:var(--cobalt);color:var(--white);padding:0 .12em;display:inline-block;transform:rotate(-1.5deg);border-radius:6px}
+  .hero .sub{margin-top:36px;display:grid;grid-template-columns:1.3fr .9fr;gap:40px;align-items:end}
+  .hero .sub p{font-size:20px;max-width:44ch;font-weight:400}
+  .hero .sub p b{font-weight:600}
+  .hero .cta-row{display:flex;gap:14px;flex-wrap:wrap}
+  .btn{font-family:var(--disp);font-weight:700;font-size:17px;border:3px solid var(--ink);border-radius:40px;padding:14px 26px;background:var(--lime);box-shadow:5px 5px 0 var(--ink);transition:transform .12s,box-shadow .12s}
+  .btn:hover{transform:translate(-2px,-2px);box-shadow:7px 7px 0 var(--ink)}
+  .btn:active{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--ink)}
+  .btn.coral{background:var(--coral);color:var(--white)}
+  @media(max-width:720px){.hero .sub{grid-template-columns:1fr;gap:24px}.hero .b1{width:170px;height:170px}}
+
+  /* marquee */
+  .marquee{background:var(--ink);color:var(--cream);border-top:3px solid var(--ink);border-bottom:3px solid var(--ink);overflow:hidden;padding:14px 0}
+  .marquee .track{display:flex;gap:44px;white-space:nowrap;width:max-content;animation:scroll 26s linear infinite}
+  .marquee:hover .track{animation-play-state:paused}
+  @media(prefers-reduced-motion:reduce){.marquee .track{animation:none;flex-wrap:wrap;white-space:normal;width:auto;padding:0 32px}}
+  @keyframes scroll{to{transform:translateX(-50%)}}
+  .marquee span{font-family:var(--disp);font-weight:700;font-size:22px;display:inline-flex;align-items:center;gap:44px}
+  .marquee span::after{content:"✦";color:var(--lime)}
+
+  /* section blocks */
+  .block{padding:88px 0;border-bottom:3px solid var(--ink)}
+  .block.cream{background:var(--cream)}
+  .block.ink{background:var(--ink);color:var(--cream)}
+  .block.cobalt{background:var(--cobalt);color:var(--white)}
+  .block.lime{background:var(--lime)}
+  .block-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-bottom:44px}
+  .block-head h2{font-size:clamp(36px,6.5vw,88px);font-weight:800;letter-spacing:-.03em}
+  .block-head .eyebrow{opacity:.8}
+
+  /* about */
+  .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start}
+  @media(max-width:820px){.about-grid{grid-template-columns:1fr}}
+  .about-grid .lead{font-size:clamp(22px,3vw,32px);font-weight:400;line-height:1.35}
+  .about-grid .lead b{font-weight:600}
+  .quote{font-family:var(--disp);font-weight:800;font-size:clamp(28px,4vw,52px);line-height:1;letter-spacing:-.02em}
+  .quote .hl{color:var(--coral)}
+  .antij{margin-top:26px;background:var(--white);border:3px solid var(--ink);border-radius:20px;padding:24px;box-shadow:6px 6px 0 var(--ink)}
+  .antij .no{text-decoration:line-through;text-decoration-color:var(--coral);text-decoration-thickness:3px;opacity:.6;font-size:15px}
+  .antij .yes{font-family:var(--disp);font-weight:800;font-size:24px;margin-top:12px;display:block;letter-spacing:-.01em}
+
+  /* principle cards */
+  .cards{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+  @media(max-width:900px){.cards{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:520px){.cards{grid-template-columns:1fr}}
+  .card{border:3px solid var(--ink);border-radius:22px;padding:24px;min-height:220px;display:flex;flex-direction:column;justify-content:space-between;box-shadow:6px 6px 0 var(--ink);transition:transform .15s}
+  .card:hover{transform:translateY(-4px)}
+  .card .n{font-family:var(--disp);font-weight:800;font-size:40px}
+  .card h3{font-size:23px;margin:16px 0 8px;letter-spacing:-.01em}
+  .card p{font-size:14px}
+  .card.c1{background:var(--coral);color:var(--white)}
+  .card.c2{background:var(--lime)}
+  .card.c3{background:var(--white)}
+  .card.c4{background:var(--cobalt);color:var(--white)}
+
+  /* work drops */
+  .drop{border:3px solid var(--ink);border-radius:26px;overflow:hidden;margin-bottom:28px;background:var(--white);box-shadow:8px 8px 0 var(--ink)}
+  .drop-grid{display:grid;grid-template-columns:1.05fr .95fr}
+  @media(max-width:860px){.drop-grid{grid-template-columns:1fr}}
+  .drop-left{padding:34px 32px;display:flex;flex-direction:column}
+  .drop .no{font-family:var(--disp);font-weight:800;font-size:15px;letter-spacing:.1em}
+  .drop h3{font-size:clamp(30px,4.4vw,52px);font-weight:800;letter-spacing:-.02em;margin:10px 0 14px;line-height:.94}
+  .drop .desc{font-size:16px;max-width:46ch}
+  .drop .tags{display:flex;gap:8px;flex-wrap:wrap;margin:20px 0 auto}
+  .drop .tags .t{font-size:12px;font-weight:600;border:2px solid var(--ink);border-radius:20px;padding:4px 11px}
+  .drop .metric{margin-top:26px;display:flex;align-items:baseline;gap:16px}
+  .drop .metric .big{font-family:var(--disp);font-weight:800;font-size:clamp(52px,8vw,92px);letter-spacing:-.03em;line-height:.8}
+  .drop .metric .lbl{font-size:14px;max-width:22ch}
+  .drop-right{position:relative;border-left:3px solid var(--ink);min-height:320px;display:flex;align-items:center;justify-content:center;padding:28px}
+  @media(max-width:860px){.drop-right{border-left:0;border-top:3px solid var(--ink)}}
+  .mock{width:100%;height:100%;min-height:240px;border:3px solid var(--ink);border-radius:16px;position:relative;background:var(--cream);display:flex;flex-direction:column;overflow:hidden}
+  .mock .bar{height:34px;border-bottom:3px solid var(--ink);display:flex;align-items:center;gap:6px;padding:0 12px;background:var(--white)}
+  .mock .bar i{width:12px;height:12px;border-radius:50%;border:2px solid var(--ink)}
+  .mock .body{flex:1;padding:16px;display:grid;gap:10px}
+  .mock .row{display:flex;gap:10px}
+  .mock .sq{border:2px solid var(--ink);border-radius:8px;flex:1;min-height:38px}
+  .mock .caplabel{position:absolute;bottom:10px;left:10px;right:10px;font-size:12px;font-weight:600;background:var(--ink);color:var(--cream);padding:6px 10px;border-radius:20px}
+
+  /* d-colors per drop */
+  .drop-right.r1{background:var(--coral)}
+  .drop-right.r2{background:var(--lime)}
+  .drop-right.r3{background:var(--cobalt)}
+  .drop-right.r4{background:var(--cream)}
+
+  /* process */
+  .proc{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  @media(max-width:820px){.proc{grid-template-columns:1fr 1fr}}
+  @media(max-width:520px){.proc{grid-template-columns:1fr}}
+  .pstep{background:var(--cream);color:var(--ink);border:3px solid var(--ink);border-radius:18px;padding:22px}
+  .pstep .n{font-family:var(--disp);font-weight:800;font-size:32px;color:var(--cobalt)}
+  .pstep h3{font-size:20px;margin:10px 0 8px}
+  .pstep p{font-size:14px}
+
+  /* timeline */
+  .tl{display:grid;gap:14px}
+  .tl .r{display:grid;grid-template-columns:180px 1fr auto;gap:20px;align-items:center;background:var(--white);border:3px solid var(--ink);border-radius:16px;padding:16px 22px}
+  .tl .r .yr{font-weight:600;font-size:14px;font-variant-numeric:tabular-nums}
+  .tl .r .role{font-family:var(--disp);font-weight:700;font-size:20px}
+  .tl .r .org{font-weight:600;font-size:13px}
+  @media(max-width:640px){.tl .r{grid-template-columns:1fr;gap:4px}}
+
+  /* personality */
+  .persona{display:grid;grid-template-columns:1.2fr 1fr;gap:36px;align-items:center}
+  @media(max-width:820px){.persona{grid-template-columns:1fr}}
+  .persona h2{font-size:clamp(34px,5.5vw,72px)}
+  .persona .jerry{background:var(--white);border:3px solid var(--ink);border-radius:24px;padding:28px;box-shadow:8px 8px 0 var(--ink);text-align:center}
+  .persona .jerry .face{font-size:64px;line-height:1}
+  .persona .jerry .name{font-family:var(--disp);font-weight:800;font-size:28px;margin-top:8px}
+  .persona .jerry p{font-size:14px;margin-top:6px}
+  .askrow{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
+
+  /* contact */
+  .contact{background:var(--coral);color:var(--white);text-align:center;padding:110px 0}
+  .contact h2{font-size:clamp(44px,8vw,120px);font-weight:800;letter-spacing:-.03em}
+  .contact .mail{display:inline-block;margin-top:26px;font-family:var(--disp);font-weight:700;font-size:clamp(22px,3.6vw,40px);border-bottom:4px solid var(--white);padding-bottom:4px}
+  .contact .links{margin-top:40px;display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+  .contact .links a{background:var(--white);color:var(--ink);font-weight:600;border-radius:30px;padding:10px 20px;border:3px solid var(--ink);box-shadow:4px 4px 0 var(--ink)}
+  .contact .links a:hover{background:var(--lime)}
+
+  footer{background:var(--ink);color:var(--cream);padding:26px 0;font-size:13px;font-weight:500}
+  footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+  footer b{color:var(--lime)}
+
+  .reveal{opacity:0;transform:translateY(16px) scale(.99);transition:opacity .6s,transform .6s}
+  .reveal.in{opacity:1;transform:none}
+  @media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="brand">Naman<b>.</b>Sharma</div>
+    <nav class="top" aria-label="Sections">
+      <a href="#about">About</a>
+      <a href="#principles">Principles</a>
+      <a href="#work">Work</a>
+      <a href="#process">Process</a>
+      <a class="nav-cta" href="#contact">Let's talk →</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <!-- HERO -->
+  <section class="hero">
+    <span class="blob b1" aria-hidden="true"></span>
+    <span class="blob b2" aria-hidden="true"></span>
+    <div class="wrap inner">
+      <div class="top-pills">
+        <span class="pill"><span class="led" aria-hidden="true"></span>Available for select work</span>
+        <span class="pill">📍 Jaipur, India · Remote worldwide</span>
+        <span class="pill">Product / UX Designer</span>
+      </div>
+      <h1>I design products<br>people <span class="love">love</span>,<br>for brands that <span class="care">care.</span></h1>
+      <div class="sub">
+        <p>Self-taught Product/UX designer with a computer-science brain. I make complex things <b>ridiculously easy to use</b> and take startups from zero to one. Research goes in, delight comes out.</p>
+        <div class="cta-row">
+          <a class="btn coral" href="#work">See the work ↓</a>
+          <a class="btn" href="#contact">Say hi</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee" aria-hidden="true">
+    <div class="track">
+      <span>User Research</span><span>0→1 Product</span><span>UX Audits</span><span>Design Systems</span><span>Usability Testing</span><span>Prototyping</span><span>Web Design</span><span>Brand</span>
+      <span>User Research</span><span>0→1 Product</span><span>UX Audits</span><span>Design Systems</span><span>Usability Testing</span><span>Prototyping</span><span>Web Design</span><span>Brand</span>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <section id="about" class="block cream">
+    <div class="wrap">
+      <div class="block-head"><h2>Hey, I'm Naman.</h2><span class="eyebrow">01 — About</span></div>
+      <div class="about-grid">
+        <div>
+          <p class="lead">A curious generalist who came to design from computer engineering. Three years in, across an agency and a bench of freelance clients, I've learned to <b>find the friction, kill it, and measure what happened.</b></p>
+          <div class="antij">
+            <span class="eyebrow" style="color:var(--coral)">What I don't do</span>
+            <p class="no">Foster innovation by synergizing aesthetics and functionality. Orchestrate design revolutions. Perpetuate narratives that transcend boundaries.</p>
+            <span class="yes">I hate jargon. I make hard things easy. 🎯</span>
+          </div>
+        </div>
+        <div>
+          <p class="quote">Solve the problem <span class="hl">first.</span> Earn the delight <span class="hl">second.</span> Because humans remember delight.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRINCIPLES -->
+  <section id="principles" class="block ink">
+    <div class="wrap">
+      <div class="block-head"><h2 style="color:var(--cream)">How I roll.</h2><span class="eyebrow" style="color:var(--lime)">02 — Principles</span></div>
+      <div class="cards">
+        <div class="card c1"><div class="n">01</div><div><h3>Consistency beats talent</h3><p>Show up for the craft every day. Consistency compounds into results talent can't touch.</p></div></div>
+        <div class="card c2"><div class="n">02</div><div><h3>Let curiosity guide you</h3><p>Know a little about a lot. That's how you connect dots nobody else sees.</p></div></div>
+        <div class="card c3"><div class="n">03</div><div><h3>Form follows function</h3><p>Solve it first. Then go the extra mile — because delight is what sticks.</p></div></div>
+        <div class="card c4"><div class="n">04</div><div><h3>Give a damn</h3><p>Founder's mindset. Full ownership. Extra mile. Every single time.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WORK -->
+  <section id="work" class="block cream">
+    <div class="wrap">
+      <div class="block-head"><h2>The drops.</h2><span class="eyebrow">03 — Selected Work</span></div>
+
+      <!-- drop 1 -->
+      <article class="drop">
+        <div class="drop-grid">
+          <div class="drop-left">
+            <span class="no" style="text-decoration:none">01 — ASIAN PAINTS · THENCE · 2021</span>
+            <h3>The dealer portal that paid for itself.</h3>
+            <p class="desc">Dealers were sick of phoning a salesman to order paint. I redesigned the whole portal — 10-second barcode reorder, recommendations from order history, demand-driven promos.</p>
+            <div class="tags"><span class="t">UX Research</span><span class="t">UX/UI</span><span class="t">E-commerce</span></div>
+            <div class="metric"><span class="big" style="color:var(--coral)">+20%</span><span class="lbl">online transaction volume — plus more engagement &amp; loyalty.</span></div>
+          </div>
+          <div class="drop-right r1">
+            <div class="mock" role="img" aria-label="Placeholder mockup: Asian Paints dealer portal order and tracking screens">
+              <div class="bar" aria-hidden="true"><i></i><i></i><i></i></div>
+              <div class="body" aria-hidden="true"><div class="row"><span class="sq"></span><span class="sq"></span></div><div class="row"><span class="sq" style="flex:2"></span><span class="sq"></span></div><div class="row"><span class="sq"></span><span class="sq"></span><span class="sq"></span></div></div>
+              <span class="caplabel">Dealer portal — order + tracking UI</span>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- drop 2 -->
+      <article class="drop">
+        <div class="drop-grid">
+          <div class="drop-left">
+            <span class="no" style="text-decoration:none">02 — BOOST360 / NOWFLOATS · THENCE · 2021</span>
+            <h3>Onboarding that stopped losing people.</h3>
+            <p class="desc">Users uninstalled within 4 hours. Signup success? 20%, at 30 minutes a pop. The real cause wasn't tech — the app didn't deliver what the ads promised. So I rebuilt the promise.</p>
+            <div class="tags"><span class="t">Research</span><span class="t">Onboarding</span><span class="t">Usability Testing</span></div>
+            <div class="metric"><span class="big" style="color:var(--cobalt)">60%↓</span><span class="lbl">drop in uninstalls, plus way faster signup.</span></div>
+          </div>
+          <div class="drop-right r2">
+            <div class="mock" role="img" aria-label="Placeholder mockup: Boost360 visual signup onboarding flow">
+              <div class="bar" aria-hidden="true"><i></i><i></i><i></i></div>
+              <div class="body" aria-hidden="true"><div class="row"><span class="sq" style="min-height:70px"></span></div><div class="row"><span class="sq"></span><span class="sq"></span><span class="sq"></span></div><div class="row"><span class="sq" style="flex:3"></span></div></div>
+              <span class="caplabel">Visual signup — step-by-step flow</span>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- drop 3 -->
+      <article class="drop">
+        <div class="drop-grid">
+          <div class="drop-left">
+            <span class="no" style="text-decoration:none">03 — WIKIMEDIA FOUNDATION · HUREO · 2020</span>
+            <h3>Listening to the next billion readers.</h3>
+            <p class="desc">Why do people pick a JioPhone over a smartphone — and what does Wikipedia owe them? 25 in-person interviews across Pune, Mumbai &amp; Delhi turned into a real roadmap.</p>
+            <div class="tags"><span class="t">Field Research</span><span class="t">Personas</span><span class="t">Journey Maps</span></div>
+            <div class="metric"><span class="big">25</span><span class="lbl">participants, 3 cities — voice UI, readability, regional SEO.</span></div>
+          </div>
+          <div class="drop-right r3">
+            <div class="mock" role="img" aria-label="Placeholder: KaiOS research personas and journey maps">
+              <div class="bar" aria-hidden="true"><i></i><i></i><i></i></div>
+              <div class="body" aria-hidden="true"><div class="row"><span class="sq"></span><span class="sq"></span></div><div class="row"><span class="sq"></span><span class="sq"></span></div><div class="row"><span class="sq" style="flex:2"></span><span class="sq"></span></div></div>
+              <span class="caplabel">Personas · journey maps · field notes</span>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- drop 4 -->
+      <article class="drop">
+        <div class="drop-grid">
+          <div class="drop-left">
+            <span class="no" style="text-decoration:none">04 — FREELANCE · 2021–2023</span>
+            <h3>Zero to one, on repeat.</h3>
+            <p class="desc">Independent products where I owned the whole arc. Turns: redesign + brand system + UX audits. Gadivan: 0→1 across apps. LetsConnect: feedback-led redesign to 4.8★.</p>
+            <div class="tags"><span class="t">0→1</span><span class="t">Design Systems</span><span class="t">Web Build</span></div>
+            <div class="metric"><span class="big" style="color:var(--coral)">$500K</span><span class="lbl">pre-seed raised by Turns after the revamp.</span></div>
+          </div>
+          <div class="drop-right r4">
+            <div class="mock" role="img" aria-label="Placeholder: freelance product collage Turns Gadivan LetsConnect">
+              <div class="bar" aria-hidden="true"><i></i><i></i><i></i></div>
+              <div class="body" aria-hidden="true"><div class="row"><span class="sq"></span><span class="sq"></span><span class="sq"></span></div><div class="row"><span class="sq" style="flex:2"></span><span class="sq"></span></div><div class="row"><span class="sq"></span><span class="sq"></span></div></div>
+              <span class="caplabel">Turns · Gadivan · LetsConnect</span>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section id="process" class="block lime">
+    <div class="wrap">
+      <div class="block-head"><h2>The playbook.</h2><span class="eyebrow">04 — Process</span></div>
+      <div class="proc">
+        <div class="pstep"><div class="n">01</div><h3>Research</h3><p>Understand the problem, learn the customer, list the real options.</p></div>
+        <div class="pstep"><div class="n">02</div><h3>User Journey</h3><p>Personas, journeys, and where the real decisions happen.</p></div>
+        <div class="pstep"><div class="n">03</div><h3>Exploration</h3><p>Go wide. Test, iterate, collaborate through the problem.</p></div>
+        <div class="pstep"><div class="n">04</div><h3>Refinement</h3><p>Refine one direction, polish the craft, document decisions.</p></div>
+        <div class="pstep"><div class="n">05</div><h3>Handoff</h3><p>Ship with engineering &amp; product so the intent survives.</p></div>
+        <div class="pstep"><div class="n">06</div><h3>Monitoring</h3><p>Live isn't done. Track the metrics, keep improving.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TIMELINE -->
+  <section id="path" class="block cream">
+    <div class="wrap">
+      <div class="block-head"><h2>The road so far.</h2><span class="eyebrow">05 — Path</span></div>
+      <div class="tl">
+        <div class="r"><span class="yr">Apr 2022 — Now</span><span class="role">Product, UX &amp; Web Designer</span><span class="org tag">Freelance</span></div>
+        <div class="r"><span class="yr">Apr 2021 — Mar 2022</span><span class="role">UX Designer</span><span class="org tag">Thence</span></div>
+        <div class="r"><span class="yr">Dec 2019 — Apr 2020</span><span class="role">UX Research Intern</span><span class="org tag">Hureo</span></div>
+        <div class="r"><span class="yr">2018 — 2019</span><span class="role">Graphic Design Intern</span><span class="org tag">HappleyFit</span></div>
+        <div class="r"><span class="yr">2017 — 2021</span><span class="role">B.E. Computer Engineering</span><span class="org tag">SPPU, Pune</span></div>
+      </div>
+      <div style="margin-top:34px" class="eyebrow">Played with great people at</div>
+      <div class="askrow">
+        <span class="tag">Thence</span><span class="tag">Turns</span><span class="tag">Gadivan</span><span class="tag">LetsConnect</span><span class="tag">LearnApp</span><span class="tag">Parentverse</span><span class="tag">Spirinova</span><span class="tag">Learn Theta</span><span class="tag">+ more</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- PERSONALITY -->
+  <section class="block cobalt">
+    <div class="wrap">
+      <div class="persona">
+        <div>
+          <span class="eyebrow" style="color:var(--lime)">06 — Off the clock</span>
+          <h2 style="color:var(--white);margin-top:14px">No drama.<br>Easy to work with.</h2>
+          <p style="font-size:19px;max-width:44ch;margin-top:18px">When I'm not designing, I'm re-learning to code, deep in a finance spreadsheet, or getting beaten at a video game. Ask me about any of it:</p>
+          <div class="askrow">
+            <span class="tag">🎧 Hip-hop</span><span class="tag">🎮 Video games</span><span class="tag">📈 Personal finance</span><span class="tag">💻 Computers &amp; tech</span><span class="tag">📚 Education</span>
+          </div>
+        </div>
+        <div class="jerry">
+          <div class="face" aria-hidden="true">🐶</div>
+          <div class="name">Jerry</div>
+          <p>Chief Morale Officer &amp; indie dog. He says hi. 👋</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="contact">
+    <div class="wrap">
+      <span class="eyebrow">07 — Contact</span>
+      <h2 style="margin-top:16px">Let's build<br>something loud.</h2>
+      <a class="mail" href="mailto:madebynaman@gmail.com">madebynaman@gmail.com</a>
+      <div class="links">
+        <a href="https://madebynaman.com">madebynaman.com</a>
+        <a href="https://www.linkedin.com/in/madebynaman/">LinkedIn</a>
+        <a href="mailto:madebynaman@gmail.com">Email me</a>
+        <span class="tag" style="box-shadow:4px 4px 0 var(--ink)">+91 82083 69219</span>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2024 Naman Sharma — Product/UX Designer <b>·</b> Jaipur, India</span>
+    <span>Made with delight <b>·</b> Bricolage Grotesque + DM Sans</span>
+  </div>
+</footer>
+
+<script>
+  (function(){
+    var rm = window.matchMedia && window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+    var els = document.querySelectorAll('.drop, .card, .pstep, .tl .r');
+    els.forEach(function(el){el.classList.add('reveal')});
+    if(rm || !('IntersectionObserver' in window)){els.forEach(function(el){el.classList.add('in')});return;}
+    var io = new IntersectionObserver(function(en){en.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.12});
+    els.forEach(function(el){io.observe(el)});
+  })();
+</script>
+</body>
+</html>

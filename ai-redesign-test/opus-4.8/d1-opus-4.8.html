@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Naman Sharma — Product/UX Designer · The Monograph</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Archivo:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#f2efe7;
+    --paper-2:#e9e5da;
+    --ink:#1a1714;
+    --ink-soft:#4a453e;
+    --ink-faint:#8a8378;
+    --oxblood:#6e1f1b;
+    --oxblood-2:#8a2e26;
+    --rule:#cec7ba;
+    --measure:66ch;
+    --display:"Fraunces",Georgia,"Times New Roman",serif;
+    --body:"Archivo","Helvetica Neue",Arial,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  body{
+    margin:0;background:var(--paper);color:var(--ink);
+    font-family:var(--body);font-size:17px;line-height:1.65;
+    -webkit-font-smoothing:antialiased;font-synthesis:none;
+    text-rendering:optimizeLegibility;
+  }
+  ::selection{background:var(--oxblood);color:var(--paper)}
+  a{color:inherit}
+  h1,h2,h3,h4{font-family:var(--display);font-weight:500;line-height:1.02;margin:0;text-wrap:balance;font-optical-sizing:auto}
+  p{margin:0 0 1.1em}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 40px}
+  .rule{border:0;border-top:1px solid var(--rule);margin:0}
+  .eyebrow{font-family:var(--body);font-size:11.5px;font-weight:600;letter-spacing:.24em;text-transform:uppercase;color:var(--oxblood)}
+  .eyebrow.muted{color:var(--ink-faint)}
+
+  /* ---------- Masthead ---------- */
+  header.masthead{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--paper) 88%,transparent);backdrop-filter:saturate(120%) blur(6px);border-bottom:1px solid var(--rule)}
+  .masthead .wrap{display:flex;align-items:baseline;justify-content:space-between;height:64px;gap:24px}
+  .logo{font-family:var(--display);font-weight:600;font-size:20px;letter-spacing:-.01em}
+  .logo em{color:var(--oxblood);font-style:italic}
+  nav.top{display:flex;gap:26px;font-size:12.5px;letter-spacing:.06em;text-transform:uppercase}
+  nav.top a{text-decoration:none;color:var(--ink-soft);padding:4px 0;border-bottom:1px solid transparent;transition:border-color .2s,color .2s}
+  nav.top a:hover{color:var(--ink);border-color:var(--oxblood)}
+  nav.top a:focus-visible,a:focus-visible,button:focus-visible{outline:2px solid var(--oxblood);outline-offset:3px;border-radius:2px}
+  @media(max-width:860px){nav.top{display:none}}
+
+  /* ---------- Hero ---------- */
+  .hero{padding:96px 0 72px;border-bottom:1px solid var(--rule)}
+  .hero .kicker{display:flex;gap:14px;align-items:center;margin-bottom:34px}
+  .hero .kicker .dot{width:7px;height:7px;border-radius:50%;background:var(--oxblood)}
+  .hero h1{font-size:clamp(46px,8.2vw,104px);letter-spacing:-.02em;font-weight:400}
+  .hero h1 em{font-style:italic;color:var(--oxblood)}
+  .hero .lede{margin-top:34px;display:grid;grid-template-columns:1.6fr .9fr;gap:48px;align-items:end}
+  .hero .lede p{font-size:19px;max-width:46ch;color:var(--ink-soft)}
+  .hero .facts{font-size:13px;line-height:1.9;color:var(--ink-soft);border-left:1px solid var(--rule);padding-left:20px}
+  .hero .facts b{font-family:var(--display);font-weight:600;color:var(--ink);display:block;font-size:14px}
+  @media(max-width:760px){.hero .lede{grid-template-columns:1fr;gap:28px}.hero .facts{border-left:0;padding-left:0;border-top:1px solid var(--rule);padding-top:18px}}
+
+  /* ---------- Section frame w/ margin column ---------- */
+  section{padding:78px 0;border-bottom:1px solid var(--rule)}
+  .grid{display:grid;grid-template-columns:180px minmax(0,1fr);gap:56px}
+  @media(max-width:860px){.grid{grid-template-columns:1fr;gap:24px}}
+  .margin-col{position:sticky;top:96px;align-self:start}
+  .margin-col .idx{font-family:var(--display);font-size:15px;color:var(--oxblood);font-weight:600}
+  .margin-col h2.small{font-size:24px;margin:6px 0 12px;letter-spacing:-.01em}
+  .margin-col .note{font-size:12.5px;color:var(--ink-faint);line-height:1.7;font-style:italic;font-family:var(--display)}
+  @media(max-width:860px){.margin-col{position:static}}
+
+  /* ---------- About essay ---------- */
+  .essay{max-width:var(--measure)}
+  .essay p{font-size:18px}
+  .essay .dropcap:first-letter{font-family:var(--display);float:left;font-size:82px;line-height:.72;padding:8px 14px 0 0;color:var(--oxblood);font-weight:500}
+  .antijargon{margin-top:30px;padding:22px 26px;background:var(--paper-2);border-left:3px solid var(--oxblood)}
+  .antijargon .strike{color:var(--ink-faint);text-decoration:line-through;text-decoration-color:var(--oxblood);font-style:italic;font-family:var(--display);font-size:17px}
+  .antijargon .plain{font-family:var(--display);font-style:italic;font-size:22px;margin-top:12px;color:var(--ink)}
+
+  /* ---------- Principles ---------- */
+  .principles{display:grid;grid-template-columns:repeat(2,1fr);gap:0;border:1px solid var(--rule)}
+  .principle{padding:30px 32px;border-right:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+  .principle:nth-child(2n){border-right:0}
+  .principle:nth-last-child(-n+2){border-bottom:0}
+  .principle .n{font-family:var(--display);font-size:13px;color:var(--oxblood);font-weight:600}
+  .principle h3{font-size:26px;margin:8px 0 10px;letter-spacing:-.01em}
+  .principle p{font-size:15px;color:var(--ink-soft);margin:0;max-width:42ch}
+  @media(max-width:680px){.principles{grid-template-columns:1fr}.principle{border-right:0}.principle:nth-last-child(2){border-bottom:1px solid var(--rule)}}
+
+  /* ---------- Work ---------- */
+  .work-head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:8px}
+  .article{padding:66px 0;border-bottom:1px solid var(--rule)}
+  .article:last-child{border-bottom:0;padding-bottom:8px}
+  .article .a-grid{display:grid;grid-template-columns:180px minmax(0,1fr);gap:56px}
+  @media(max-width:860px){.article .a-grid{grid-template-columns:1fr;gap:24px}}
+  .a-meta .no{font-family:var(--display);font-size:60px;line-height:.8;font-weight:400;color:var(--oxblood)}
+  .a-meta dl{margin:20px 0 0;font-size:12px;line-height:1.5}
+  .a-meta dt{letter-spacing:.16em;text-transform:uppercase;color:var(--ink-faint);font-weight:600;font-size:10.5px;margin-top:12px}
+  .a-meta dd{margin:2px 0 0;color:var(--ink-soft)}
+  .article h3.title{font-size:clamp(30px,4.6vw,50px);letter-spacing:-.02em;font-weight:400}
+  .article h3.title em{font-style:italic;color:var(--oxblood)}
+  .article .sub{font-family:var(--display);font-style:italic;color:var(--ink-soft);font-size:19px;margin:8px 0 26px}
+  .fig{border:1px solid var(--ink);background:
+      repeating-linear-gradient(135deg,transparent 0 22px,rgba(110,31,27,.05) 22px 23px),
+      var(--paper-2);
+      aspect-ratio:16/8;position:relative;display:flex;flex-direction:column;justify-content:flex-end;padding:20px;overflow:hidden;margin-bottom:24px}
+  .fig .tag{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--oxblood);font-weight:600}
+  .fig .cap{font-family:var(--display);font-size:20px;font-style:italic;max-width:32ch;color:var(--ink)}
+  .fig .frame{position:absolute;inset:16px;border:1px solid var(--rule)}
+  .fig .chips{position:absolute;top:18px;right:18px;display:flex;gap:6px}
+  .fig .chips span{width:26px;height:16px;border:1px solid var(--ink-faint);background:var(--paper)}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:36px;margin-top:8px}
+  @media(max-width:680px){.two{grid-template-columns:1fr;gap:18px}}
+  .two h4{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);font-family:var(--body);font-weight:600;margin-bottom:8px}
+  .two p{font-size:15.5px;color:var(--ink-soft);margin:0}
+  .two ul{margin:0;padding-left:18px;font-size:15px;color:var(--ink-soft)}
+  .two li{margin-bottom:5px}
+  .outcome{margin-top:30px;display:flex;align-items:baseline;gap:22px;flex-wrap:wrap;border-top:1px solid var(--rule);padding-top:24px}
+  .outcome .big{font-family:var(--display);font-size:64px;line-height:.85;color:var(--oxblood);font-weight:500}
+  .outcome .lbl{font-size:14px;color:var(--ink-soft);max-width:34ch}
+  .readmore{display:inline-block;margin-top:22px;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--oxblood);text-decoration:none;border-bottom:1px solid var(--oxblood);padding-bottom:2px}
+  .readmore:hover{color:var(--ink);border-color:var(--ink)}
+
+  /* ---------- Process ---------- */
+  .process-list{counter-reset:step;border-top:1px solid var(--rule)}
+  .step{display:grid;grid-template-columns:64px 1fr;gap:24px;padding:22px 0;border-bottom:1px solid var(--rule);align-items:baseline}
+  .step .sn{font-family:var(--display);font-size:22px;color:var(--oxblood)}
+  .step h3{font-size:24px;letter-spacing:-.01em;display:inline}
+  .step p{display:inline;color:var(--ink-soft);font-size:15.5px;margin:0}
+  .step .body{max-width:70ch}
+
+  /* ---------- Timeline ---------- */
+  .timeline{border-top:1px solid var(--rule)}
+  .trow{display:grid;grid-template-columns:180px 1fr auto;gap:32px;padding:18px 0;border-bottom:1px solid var(--rule);align-items:baseline}
+  .trow .yr{font-size:13px;color:var(--ink-faint);letter-spacing:.04em;font-variant-numeric:tabular-nums}
+  .trow .role{font-family:var(--display);font-size:21px}
+  .trow .role span{color:var(--ink-faint);font-style:italic;font-size:16px}
+  .trow .org{font-size:13px;color:var(--oxblood);letter-spacing:.1em;text-transform:uppercase;text-align:right}
+  @media(max-width:680px){.trow{grid-template-columns:1fr;gap:2px}.trow .org{text-align:left}}
+
+  /* ---------- Clients ---------- */
+  .clients{display:flex;flex-wrap:wrap;gap:10px 14px}
+  .clients span{font-family:var(--display);font-size:22px;color:var(--ink-soft);font-style:italic}
+  .clients span::after{content:"·";color:var(--oxblood);margin-left:14px}
+  .clients span:last-child::after{content:""}
+
+  /* ---------- Coda ---------- */
+  .coda{display:flex;flex-wrap:wrap;gap:12px}
+  .coda .pill{border:1px solid var(--rule);border-radius:40px;padding:8px 18px;font-size:14px;color:var(--ink-soft);background:var(--paper)}
+  .coda .pill b{font-family:var(--display);color:var(--oxblood);font-weight:500}
+
+  /* ---------- Contact ---------- */
+  .contact{background:var(--ink);color:var(--paper);border:0}
+  .contact .eyebrow{color:var(--oxblood-2)}
+  .contact h2{color:var(--paper);font-size:clamp(34px,6vw,72px);letter-spacing:-.02em;font-weight:400}
+  .contact h2 em{color:var(--oxblood-2);font-style:italic}
+  .contact a.mail{display:inline-block;margin-top:10px;font-family:var(--display);font-size:clamp(24px,4vw,40px);color:var(--paper);text-decoration:none;border-bottom:1px solid rgba(242,239,231,.4)}
+  .contact a.mail:hover{border-color:var(--oxblood-2)}
+  .contact .links{margin-top:34px;display:flex;gap:26px;flex-wrap:wrap;font-size:13px;letter-spacing:.08em;text-transform:uppercase}
+  .contact .links a{color:rgba(242,239,231,.7);text-decoration:none;border-bottom:1px solid transparent;padding-bottom:3px}
+  .contact .links a:hover{color:var(--paper);border-color:var(--oxblood-2)}
+
+  footer{background:var(--ink);color:rgba(242,239,231,.55);padding:26px 0;font-size:12px}
+  footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+
+  /* reveal */
+  .reveal{opacity:0;transform:translateY(14px);transition:opacity .7s ease,transform .7s ease}
+  .reveal.in{opacity:1;transform:none}
+  @media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
+</style>
+</head>
+<body>
+<header class="masthead">
+  <div class="wrap">
+    <div class="logo">Naman&nbsp;Sharma <em>—</em> <span style="font-family:var(--body);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);font-weight:600">Product / UX</span></div>
+    <nav class="top" aria-label="Sections">
+      <a href="#about">About</a>
+      <a href="#principles">Principles</a>
+      <a href="#work">Work</a>
+      <a href="#process">Process</a>
+      <a href="#path">Path</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <!-- HERO -->
+  <section class="hero" aria-labelledby="hero-h">
+    <div class="wrap">
+      <div class="kicker"><span class="dot" aria-hidden="true"></span><span class="eyebrow">A Product &amp; UX Monograph · 2019 — 2024</span></div>
+      <h1 id="hero-h">I design products people<br><em>love</em>, for brands that<br>actually care.</h1>
+      <div class="lede">
+        <p>Self-taught Product/UX designer with a computer-science mind and a researcher's patience. I make complex products simple and take startups from zero to one — one honest pixel at a time.</p>
+        <div class="facts">
+          <b>Based in</b>Jaipur, India — working worldwide, remote.
+          <b style="margin-top:12px">Practice</b>Research → Design → Ship → Measure.
+          <b style="margin-top:12px">Status</b>Open to select product work.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about" aria-labelledby="about-h">
+    <div class="wrap grid">
+      <div class="margin-col">
+        <div class="idx">i.</div>
+        <h2 class="small" id="about-h">On the record</h2>
+        <p class="note">A short, jargon-free account of how I think and why it works.</p>
+      </div>
+      <div>
+        <div class="essay">
+          <p class="dropcap">Design, for me, starts as a question, not a canvas. Before a single frame exists I want to know who is stuck, where, and why — because a beautiful screen that solves the wrong problem is just expensive decoration. I came to this work from computer engineering, which is a fancy way of saying I like understanding how things actually work before I try to make them better.</p>
+          <p>Three years in, across an agency and a bench of freelance clients, the pattern holds: talk to real users, find the friction, design the smallest change that moves the metric, then watch what happens after launch. I care about the number <em style="font-family:var(--display);font-style:italic">and</em> the feeling — solve the problem first, then earn the delight.</p>
+          <div class="antijargon">
+            <div class="eyebrow muted">What I don't do</div>
+            <p class="strike" style="margin:10px 0 0">Foster innovation by synergizing aesthetics and functionality, orchestrate design revolutions, and perpetuate narratives that transcend boundaries.</p>
+            <p class="plain">I hate jargon. I make hard things easy to use. That's it.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRINCIPLES -->
+  <section id="principles" aria-labelledby="prin-h">
+    <div class="wrap grid">
+      <div class="margin-col">
+        <div class="idx">ii.</div>
+        <h2 class="small" id="prin-h">Four working beliefs</h2>
+        <p class="note">Not a manifesto — just the rules I actually design by.</p>
+      </div>
+      <div class="principles">
+        <div class="principle"><div class="n">01</div><h3>Consistency beats talent</h3><p>Talent is a nice head start. Showing up for the craft every single day is what compounds into work that lasts.</p></div>
+        <div class="principle"><div class="n">02</div><h3>Let curiosity guide you</h3><p>I know a little about a lot. That breadth is how I connect scattered signals into an insight nobody was looking for.</p></div>
+        <div class="principle"><div class="n">03</div><h3>Form follows function</h3><p>Problems are solved with functionality, not ornament. Once it works, beauty is the extra mile — and humans remember delight.</p></div>
+        <div class="principle"><div class="n">04</div><h3>Give a damn</h3><p>Founder's mindset, high agency, full ownership. Success is shared; I go the extra mile to get us there.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WORK -->
+  <section id="work" aria-labelledby="work-h" style="padding-bottom:0">
+    <div class="wrap">
+      <div class="work-head">
+        <div>
+          <div class="eyebrow">Selected Work</div>
+          <h2 id="work-h" style="font-size:clamp(32px,5vw,56px);letter-spacing:-.02em;margin-top:8px;font-weight:400">Four studies, told<br>the way I work them.</h2>
+        </div>
+        <p class="note" style="font-family:var(--display);font-style:italic;color:var(--ink-faint);max-width:26ch;text-align:right">Problem, the move, and the number it moved. The full stories live behind each.</p>
+      </div>
+    </div>
+
+    <!-- Article 1 -->
+    <article class="article">
+      <div class="wrap a-grid">
+        <div class="a-meta">
+          <div class="no">01</div>
+          <dl>
+            <dt>Client</dt><dd>Asian Paints — via Thence</dd>
+            <dt>Year</dt><dd>2021</dd>
+            <dt>Role</dt><dd>UX Research, UX &amp; UI Design</dd>
+            <dt>Team</dt><dd>UI Designer, PM, Design Manager, Client</dd>
+          </dl>
+        </div>
+        <div>
+          <h3 class="title">The dealer portal that <em>paid for itself</em></h3>
+          <p class="sub">Digitising order placement and supply-chain tracking for paint dealers who were tired of phoning a salesman for everything.</p>
+          <figure class="fig" role="img" aria-label="Case-study hero placeholder: Asian Paints dealer portal — order and tracking interface across web and mobile">
+            <div class="frame" aria-hidden="true"></div>
+            <div class="chips" aria-hidden="true"><span></span><span></span><span></span></div>
+            <span class="tag">Case hero — placeholder</span>
+            <span class="cap">Asian Paints · dealer order &amp; tracking UI</span>
+          </figure>
+          <div class="two">
+            <div>
+              <h4>The problem</h4>
+              <p>Dealers didn't want to call a rep for every order. Every competitor already had a portal — all of them frustrating. Asian Paints held demand data it wasn't using to nudge the right buy.</p>
+            </div>
+            <div>
+              <h4>The move</h4>
+              <ul>
+                <li>End-to-end redesign after a full heuristic audit</li>
+                <li>10-second reorder by scanning a product barcode</li>
+                <li>Recommendations &amp; loyalty from order history</li>
+                <li>Data-driven promos tied to regional demand</li>
+              </ul>
+            </div>
+          </div>
+          <div class="outcome">
+            <div class="big">+20%</div>
+            <div class="lbl">increase in online transaction volume, plus a healthy lift in dealer engagement and loyalty.</div>
+          </div>
+          <a class="readmore" href="#contact">Read the full study →</a>
+        </div>
+      </div>
+    </article>
+
+    <!-- Article 2 -->
+    <article class="article">
+      <div class="wrap a-grid">
+        <div class="a-meta">
+          <div class="no">02</div>
+          <dl>
+            <dt>Client</dt><dd>Boost360 / NowFloats — via Thence</dd>
+            <dt>Year</dt><dd>2021</dd>
+            <dt>Role</dt><dd>UX Research, UX &amp; UI, Usability Testing</dd>
+            <dt>Team</dt><dd>UI, Motion, PM, Design Manager, Client</dd>
+          </dl>
+        </div>
+        <div>
+          <h3 class="title">Fixing an onboarding that <em>lost users in four hours</em></h3>
+          <p class="sub">People were uninstalling before they ever signed up. Only 1 in 5 got through — and it took them half an hour to fail.</p>
+          <figure class="fig" role="img" aria-label="Case-study hero placeholder: Boost360 visual signup and onboarding flow, mobile screens">
+            <div class="frame" aria-hidden="true"></div>
+            <div class="chips" aria-hidden="true"><span></span><span></span><span></span></div>
+            <span class="tag">Onboarding flow — placeholder</span>
+            <span class="cap">Boost360 · visual signup, step by step</span>
+          </figure>
+          <div class="two">
+            <div>
+              <h4>The real reason</h4>
+              <p>Not crashes or OTPs. Signup UX was confusing, and the app didn't deliver what the ads had promised. An expectation gap, dressed up as a technical one.</p>
+            </div>
+            <div>
+              <h4>The move</h4>
+              <ul>
+                <li>Made signup visual and self-explanatory</li>
+                <li>Communicated the real USPs during onboarding</li>
+                <li>Built trust with social proof</li>
+                <li>Engineered quick wins — value before commitment</li>
+              </ul>
+            </div>
+          </div>
+          <div class="outcome">
+            <div class="big">−60%</div>
+            <div class="lbl">drop in the uninstall rate, with signup time cut dramatically — validated in usability testing.</div>
+          </div>
+          <a class="readmore" href="#contact">Read the full study →</a>
+        </div>
+      </div>
+    </article>
+
+    <!-- Article 3 -->
+    <article class="article">
+      <div class="wrap a-grid">
+        <div class="a-meta">
+          <div class="no">03</div>
+          <dl>
+            <dt>Client</dt><dd>Wikimedia Foundation — via Hureo</dd>
+            <dt>Year</dt><dd>2020</dd>
+            <dt>Role</dt><dd>UX Research, Personas, Journey Mapping</dd>
+            <dt>Field</dt><dd>Pune · Mumbai · Delhi</dd>
+          </dl>
+        </div>
+        <div>
+          <h3 class="title">Listening to <em>the next billion readers</em></h3>
+          <p class="sub">Why do people choose a JioPhone over a smartphone — and how does Wikipedia need to change to reach them?</p>
+          <figure class="fig" role="img" aria-label="Research placeholder: Wikipedia KaiOS study — field interview notes, personas and journey maps">
+            <div class="frame" aria-hidden="true"></div>
+            <div class="chips" aria-hidden="true"><span></span><span></span><span></span></div>
+            <span class="tag">Research artefact — placeholder</span>
+            <span class="cap">KaiOS study · personas &amp; journey maps</span>
+          </figure>
+          <div class="two">
+            <div>
+              <h4>The study</h4>
+              <p>25 in-person interviews across three cities, with people aged 18–40 on smart feature phones. First the conversation, then watching them use their device on real tasks.</p>
+            </div>
+            <div>
+              <h4>What we recommended</h4>
+              <ul>
+                <li>Voice-first interaction over the keypad</li>
+                <li>Readability for small screens, video over walls of text</li>
+                <li>Make in-article search discoverable</li>
+                <li>SEO for regional languages</li>
+              </ul>
+            </div>
+          </div>
+          <div class="outcome">
+            <div class="big">25</div>
+            <div class="lbl">participants, three cities — insights that reframed how content should reach low-cost devices.</div>
+          </div>
+          <a class="readmore" href="#contact">Read the full study →</a>
+        </div>
+      </div>
+    </article>
+
+    <!-- Article 4 -->
+    <article class="article">
+      <div class="wrap a-grid">
+        <div class="a-meta">
+          <div class="no">04</div>
+          <dl>
+            <dt>Context</dt><dd>Independent / Freelance</dd>
+            <dt>Years</dt><dd>2021 — 2023</dd>
+            <dt>Role</dt><dd>Research → UI → Web build</dd>
+            <dt>Clients</dt><dd>Turns, Gadivan, LetsConnect &amp; more</dd>
+          </dl>
+        </div>
+        <div>
+          <h3 class="title">Zero to one, <em>on repeat</em></h3>
+          <p class="sub">A run of independent products where I owned the whole arc — research, design system, and often the build.</p>
+          <figure class="fig" role="img" aria-label="Placeholder: freelance project collage — Turns, Gadivan and LetsConnect product screens">
+            <div class="frame" aria-hidden="true"></div>
+            <div class="chips" aria-hidden="true"><span></span><span></span><span></span></div>
+            <span class="tag">Project collage — placeholder</span>
+            <span class="cap">Turns · Gadivan · LetsConnect</span>
+          </figure>
+          <div class="two">
+            <div>
+              <h4>Turns</h4>
+              <p>Website &amp; landing redesign, a multi-platform brand system, and UX audits. The revamp lifted conversions and helped them raise <b style="font-family:var(--display)">$500K</b> in pre-seed funding.</p>
+            </div>
+            <div>
+              <h4>Gadivan &amp; LetsConnect</h4>
+              <p>Gadivan: an end-to-end product designed from scratch, 0→1, across apps for different stakeholders. LetsConnect: a feedback-led redesign that reached <b style="font-family:var(--display)">4.8★</b> on the Play Store.</p>
+            </div>
+          </div>
+          <div class="outcome">
+            <div class="big">$500K</div>
+            <div class="lbl">raised by Turns after the revamp — one of several independent 0→1 bets.</div>
+          </div>
+          <a class="readmore" href="#contact">Ask about the rest →</a>
+        </div>
+      </div>
+    </article>
+  </section>
+
+  <!-- PROCESS -->
+  <section id="process" aria-labelledby="proc-h">
+    <div class="wrap grid">
+      <div class="margin-col">
+        <div class="idx">iii.</div>
+        <h2 class="small" id="proc-h">How the work moves</h2>
+        <p class="note">Six stages. Linear on paper, looping in practice.</p>
+      </div>
+      <div class="process-list">
+        <div class="step"><div class="sn">01</div><div class="body"><h3>Research.</h3> <p>Understand the problem, learn the customer, and map the possible solutions before falling for any of them.</p></div></div>
+        <div class="step"><div class="sn">02</div><div class="body"><h3>User Journey.</h3> <p>Personas, journeys and the real decision-making — where people hesitate, drop, and decide.</p></div></div>
+        <div class="step"><div class="sn">03</div><div class="body"><h3>Design Exploration.</h3> <p>Go wide. Test, iterate, and collaborate through the problem instead of around it.</p></div></div>
+        <div class="step"><div class="sn">04</div><div class="body"><h3>Design Refinement.</h3> <p>Refine one direction, polish the visual craft, and document every decision for handoff.</p></div></div>
+        <div class="step"><div class="sn">05</div><div class="body"><h3>Handoff.</h3> <p>Work shoulder-to-shoulder with engineering and product so what ships matches what was designed.</p></div></div>
+        <div class="step"><div class="sn">06</div><div class="body"><h3>Monitoring.</h3> <p>Live isn't done. Track the metrics that define success and keep improving from real behaviour.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PATH / TIMELINE -->
+  <section id="path" aria-labelledby="path-h">
+    <div class="wrap grid">
+      <div class="margin-col">
+        <div class="idx">iv.</div>
+        <h2 class="small" id="path-h">The path here</h2>
+        <p class="note">Graphic design → research → product. The generalist's route.</p>
+      </div>
+      <div>
+        <div class="timeline">
+          <div class="trow"><div class="yr">Apr 2022 — Present</div><div class="role">Product, UX &amp; Web Designer <span>· 0→1, redesigns, systems</span></div><div class="org">Freelance</div></div>
+          <div class="trow"><div class="yr">Apr 2021 — Mar 2022</div><div class="role">UX Designer <span>· research, testing, mentoring</span></div><div class="org">Thence</div></div>
+          <div class="trow"><div class="yr">Dec 2019 — Apr 2020</div><div class="role">UX Research Intern <span>· Wikimedia / KaiOS study</span></div><div class="org">Hureo</div></div>
+          <div class="trow"><div class="yr">2018 — 2019</div><div class="role">Graphic Design Intern <span>· brand, print, web</span></div><div class="org">HappleyFit</div></div>
+          <div class="trow"><div class="yr">2017 — 2018</div><div class="role">Graphic Design Intern <span>· identity &amp; illustration</span></div><div class="org">Skillovate</div></div>
+          <div class="trow"><div class="yr">2017 — 2021</div><div class="role">B.E. Computer Engineering <span>· SPPU, Pune</span></div><div class="org">Education</div></div>
+        </div>
+        <div style="margin-top:34px">
+          <div class="eyebrow muted" style="margin-bottom:14px">Selected clients</div>
+          <div class="clients">
+            <span>Thence</span><span>Turns</span><span>Gadivan</span><span>LetsConnect</span><span>LearnApp</span><span>Parentverse</span><span>Venyou</span><span>Spirinova</span><span>Learn Theta</span><span>and more</span>
+          </div>
+        </div>
+        <div style="margin-top:34px">
+          <div class="eyebrow muted" style="margin-bottom:14px">In the toolkit</div>
+          <p style="font-family:var(--display);font-style:italic;font-size:20px;color:var(--ink-soft);max-width:60ch">Figma, FigJam, Miro, Framer, Adobe XD, Illustrator &amp; Photoshop, Webflow, Protopie — and, increasingly, code.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CODA -->
+  <section aria-labelledby="coda-h">
+    <div class="wrap grid">
+      <div class="margin-col">
+        <div class="idx">v.</div>
+        <h2 class="small" id="coda-h">Off the record</h2>
+        <p class="note">The generalist doesn't clock out.</p>
+      </div>
+      <div>
+        <p class="essay" style="font-size:19px;margin-bottom:24px">When I'm not designing, I'm re-learning to code, deep in a personal-finance spreadsheet, or losing to a video game. My co-worker Jerry — an indie dog of considerable opinions — says hi. Ask me about any of it:</p>
+        <div class="coda">
+          <span class="pill"><b>Jerry,</b> my indie dog</span>
+          <span class="pill"><b>Hip-hop</b> &amp; the crate-digging</span>
+          <span class="pill"><b>Video games</b></span>
+          <span class="pill"><b>Personal finance</b> &amp; investing</span>
+          <span class="pill"><b>Computers</b> &amp; tech</span>
+          <span class="pill"><b>Education</b></span>
+          <span class="pill">No drama — <b>easy to work with</b></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="contact" aria-labelledby="contact-h">
+    <div class="wrap">
+      <div class="eyebrow">Colophon &amp; contact</div>
+      <h2 id="contact-h" style="margin-top:14px">Got a product worth<br><em>getting right?</em></h2>
+      <a class="mail" href="mailto:madebynaman@gmail.com">madebynaman@gmail.com</a>
+      <div class="links">
+        <a href="https://madebynaman.com">madebynaman.com</a>
+        <a href="https://www.linkedin.com/in/madebynaman/">LinkedIn</a>
+        <a href="mailto:madebynaman@gmail.com">Email</a>
+        <span style="color:rgba(242,239,231,.45)">+91 82083 69219</span>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2024 Naman Sharma · Product &amp; UX Designer · Jaipur, India</span>
+    <span>Set in Fraunces &amp; Archivo · A monograph edition</span>
+  </div>
+</footer>
+
+<script>
+  (function(){
+    var rm = window.matchMedia && window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+    var els = document.querySelectorAll('.article, .principle, .step, .trow');
+    els.forEach(function(el){el.classList.add('reveal')});
+    if(rm || !('IntersectionObserver' in window)){els.forEach(function(el){el.classList.add('in')});return;}
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});
+    },{threshold:.12});
+    els.forEach(function(el){io.observe(el)});
+  })();
+</script>
+</body>
+</html>
