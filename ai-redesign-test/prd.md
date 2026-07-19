@@ -35,10 +35,14 @@ separate routes** — one long page per direction, anchor-linked internally.
 
 ## Participants
 
-One folder per model under `ai-redesign-test/` (scaffolded or added as
-participants join): `fable`, `opus-4.8`, `sonnet-5`, `gpt-5.5`, `gpt-5.6-sol`,
-`gpt-5.6-terra`, `glm-5.2`, `mimo-v2.5`, `minimax-m3`, `gemini-3.1-pro`,
-`gemini-3.5-flash`, `claude-design-fable`, `deepseek-v4-flash`, `deepseek-v4-pro`.
+The completed test includes one folder per model under `ai-redesign-test/`:
+`deepseek-v4-flash`, `deepseek-v4-pro`, `fable`, `gemini-3.1-pro`,
+`gemini-3.5-flash`, `glm-5.2`, `gpt-5.5`, `gpt-5.6-sol`, `gpt-5.6-terra`,
+`grok-4.5`, `kimi-k2.6`, `mimo-v2.5`, `minimax-m3`, `opus-4.8`,
+`qwen3.7-max`, and `sonnet-5`.
+
+All 16 participants have submitted their five directions and rationale README,
+for 80 completed directions total.
 
 ## Deliverables (per model)
 
