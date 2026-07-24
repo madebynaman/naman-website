@@ -1,43 +1,53 @@
-# grok-4.5 — Five portfolio directions
+# Grok 4.5 — Portfolio Redesign Directions
 
-Naman Sharma, Product/UX Designer. One long homepage per file. Self-contained HTML + CSS; Google Fonts only external dependency.
+Five distinct homepage directions for Naman Sharma (Product/UX Designer). Each is a self-contained long-scroll HTML file with Google Fonts only.
 
-## d1 — Field Report
+---
 
-**Concept:** Portfolio as a research dossier — sticky navy “spine,” mono labels, serif body, finding cards.
+## d1 — Evidence Room
 
-**Key decisions:** Evidence-first hierarchy (metrics before adjectives); case studies as field notes with HMW quotes; process as numbered protocol because sequence is the method.
+**Concept:** Portfolio as an annotated research war room — pinned outcomes, chalk-yellow sticky notes, red “insight string” down case studies.
 
-**Trade-offs:** Dense and formal; less “personality splash,” more hiring-manager trust. Desktop spine collapses on narrow widths.
+**Key decisions:** Cool paper + ink + signal blue (not cream/terracotta). Fraunces for voice, IBM Plex Sans for body. Case studies as evidence boards with labeled CSS mock placeholders.
 
-## d2 — Product Surface
+**Trade-offs:** Dense and analytical — strong for design leads who want receipts; less “startup flash” than d2. Sticky-note motif could feel gimmicky if overused; kept to accents.
 
-**Concept:** Portfolio framed as a product UI — browser chrome, sidebar workspace, panels, toggles, metric chips.
+---
 
-**Key decisions:** Plus Jakarta + Fraunces; indigo on warm gray; work as product cards with status pills; principles as “always-on settings.”
+## d2 — Launch Cadence
 
-**Trade-offs:** Metaphor can feel gimmicky if overdone — kept chrome quiet so content stays primary. Strongest for product/design-lead audiences who live in tools.
+**Concept:** 0→1 velocity. Dark charcoal with coral + soft mint. Full-bleed metric interrupt moments (`20%`, `60%`) break the scroll like launch milestones.
 
-## d3 — Poster Stack
+**Key decisions:** Syne display + Manrope. Cinematic vertical rhythm; outcomes as first-class layout, not footnotes. Pill meta and rounded cards for product-marketing energy.
 
-**Concept:** Portfolio as a vertical poster exhibition — full-bleed black, Archivo Black mega type, hot magenta, alternating work posters.
+**Trade-offs:** Dark UI risks blending with generic “dev portfolio” dark themes — mint (not acid green) and coral keep it distinct. Metric interrupts sacrifice continuous reading for drama.
 
-**Key decisions:** One idea per viewport; impact strip under hero; process as a magenta “ticker strip”; contact inverts to white for a hard stop.
+---
 
-**Trade-offs:** Loud type risks drowning nuance; body copy kept short. Not for quiet-luxury tastes — deliberately the maximalist bet.
+## d3 — Jali Clarity
 
-## d4 — Gallery Quiet
+**Concept:** Jaipur jali (perforated screen) as information-architecture metaphor — complexity filtered into clarity. Indigo + sandstone + saffron sparingly.
 
-**Concept:** Portfolio as a museum hang — plaster walls, accession numbers, framed work, wall text, Cormorant + Outfit, teal accent.
+**Key decisions:** Literata + Source Sans 3. CSS radial jali lattice; case cards lift the overlay on hover. Place-rooted without tourist cliché.
 
-**Key decisions:** Restraint as the signature; case studies as labeled pieces (NS.2021.01…); principles as wall plaques; contact as a dark “alcove.”
+**Trade-offs:** Architectural metaphor needs restraint or it becomes decoration. Paper tone is warm but cooler/sandier than the default cream+terracotta cluster. Hover reveal is desktop-biased.
 
-**Trade-offs:** Can read precious if metrics disappear — frieze and impact lines keep outcomes present. Slowest scroll rhythm of the five.
+---
 
-## d5 — Signal Map
+## d4 — Plain Speak
 
-**Concept:** Portfolio as a night systems map — Space Grotesk + Source Serif, coral nodes on deep navy, constellation outcomes, network placeholders.
+**Concept:** Anti-jargon manifesto as the visual system. Hero is a struck-through buzzword block with his real plain sentence highlighted underneath.
 
-**Key decisions:** Work as “nodes” with coords/edges; process as a six-node graph; career as a lit path; glow reserved for metrics and CTAs.
+**Key decisions:** Newsreader + DM Sans. Essay column (~720px) with case studies as interruptions. Highlighter yellow as the only loud accent. Cool grey-white ground.
 
-**Trade-offs:** Dark UI + coral is a known tech vibe — differentiated via map/constellation structure and serif lede, not neon alone. Best when the reviewer wants systems thinking over editorial polish.
+**Trade-offs:** Narrow editorial measure feels less “portfolio spectacle.” Wins on personality and credibility; loses some scannability for recruiters who skim visually first.
+
+---
+
+## d5 — Workbench
+
+**Concept:** Craft bench / design-tool chrome — traffic lights, file tabs, layers panel, labeled frames. Portfolio as an open Figma file.
+
+**Key decisions:** Mint-grey workshop bench, cobalt tools, Space Grotesk + IBM Plex Mono. Placeholders are framed UI mocks with `img / …` labels. Tools list in contact.
+
+**Trade-offs:** Insider joke for designers; may confuse non-design hiring managers. Layers sidebar hidden on small screens. Risk of looking like a UI kit demo — content hierarchy kept essay-clear inside frames.

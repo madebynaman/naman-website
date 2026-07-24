@@ -1,1005 +1,917 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Naman Sharma — Field Report</title>
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Naman Sharma — Evidence Room</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --ink: #0b1f33;
-    --navy: #16324f;
-    --fog: #e8eef4;
-    --paper: #f7f5f0;
-    --amber: #c47a12;
-    --amber-soft: #f3e2c4;
-    --line: #c5d0db;
-    --muted: #5a6d7e;
-    --white: #ffffff;
-    --mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
-    --serif: "Libre Baskerville", Georgia, "Times New Roman", serif;
-  }
+:root {
+  --paper: #E8ECF1;
+  --paper-deep: #DDE3EB;
+  --ink: #1A2332;
+  --ink-soft: #3D4A5C;
+  --muted: #6B7A8D;
+  --chalk: #F5D76E;
+  --chalk-deep: #E8C84A;
+  --signal: #2B6CB0;
+  --signal-soft: #4A8BC7;
+  --string: #C45C4A;
+  --board: #F4F6F9;
+  --line: rgba(26, 35, 50, 0.12);
+  --focus: #2B6CB0;
+  --display: "Fraunces", "Georgia", "Times New Roman", serif;
+  --body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+}
 
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
-  @media (prefers-reduced-motion: reduce) {
-    html { scroll-behavior: auto; }
-    * { animation: none !important; transition: none !important; }
-  }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
 
-  body {
-    font-family: var(--serif);
-    color: var(--ink);
-    background: var(--paper);
-    line-height: 1.6;
-    font-size: 17px;
-  }
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  background-image:
+    radial-gradient(ellipse 80% 50% at 10% 0%, rgba(245, 215, 110, 0.18), transparent 55%),
+    radial-gradient(ellipse 60% 40% at 90% 20%, rgba(43, 108, 176, 0.08), transparent 50%),
+    linear-gradient(180deg, var(--paper) 0%, var(--paper-deep) 100%);
+  background-attachment: fixed;
+}
 
-  a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: 3px; }
-  a:hover { color: var(--amber); }
-  a:focus-visible { outline: 2px solid var(--amber); outline-offset: 3px; }
+a { color: var(--signal); text-underline-offset: 0.2em; }
+a:hover { color: var(--ink); }
+a:focus-visible, button:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 3px;
+}
 
-  .mono { font-family: var(--mono); }
-  .label {
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--muted);
-  }
+.wrap { width: min(1120px, calc(100% - 3rem)); margin-inline: auto; }
 
-  /* Shell: sticky research spine */
-  .shell {
-    display: grid;
-    grid-template-columns: 220px minmax(0, 1fr);
-    min-height: 100vh;
-  }
+/* —— Nav —— */
+.nav {
+  position: sticky; top: 0; z-index: 40;
+  backdrop-filter: blur(10px);
+  background: rgba(232, 236, 241, 0.86);
+  border-bottom: 1px solid var(--line);
+}
+.nav-inner {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0.85rem 0; gap: 1rem; flex-wrap: wrap;
+}
+.nav-brand {
+  font-family: var(--display);
+  font-weight: 600; font-size: 1.05rem;
+  color: var(--ink); text-decoration: none;
+  letter-spacing: -0.02em;
+}
+.nav-brand span { color: var(--signal); font-weight: 500; font-size: 0.75rem; margin-left: 0.5rem; font-family: var(--body); letter-spacing: 0.04em; text-transform: uppercase; }
+.nav-links { display: flex; gap: 1.25rem; flex-wrap: wrap; list-style: none; }
+.nav-links a {
+  color: var(--ink-soft); text-decoration: none; font-size: 0.875rem; font-weight: 500;
+}
+.nav-links a:hover { color: var(--ink); }
+.nav-cta {
+  background: var(--ink); color: var(--paper) !important;
+  padding: 0.45rem 0.9rem; border-radius: 2px; text-decoration: none !important;
+  font-size: 0.8125rem; font-weight: 600;
+}
+.nav-cta:hover { background: var(--signal); color: #fff !important; }
 
-  .spine {
-    position: sticky;
-    top: 0;
-    height: 100vh;
-    background: var(--ink);
-    color: var(--fog);
-    padding: 28px 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 28px;
-    border-right: 1px solid #0a1724;
-  }
+/* —— Hero —— */
+.hero {
+  padding: 4.5rem 0 3.5rem;
+  position: relative;
+}
+.hero-meta {
+  display: flex; align-items: center; gap: 0.75rem;
+  font-size: 0.75rem; font-weight: 600; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--muted); margin-bottom: 1.5rem;
+}
+.hero-meta .dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--chalk); box-shadow: 0 0 0 3px rgba(245, 215, 110, 0.35);
+  animation: pulse 2.4s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 0 3px rgba(245, 215, 110, 0.35); }
+  50% { box-shadow: 0 0 0 6px rgba(245, 215, 110, 0.12); }
+}
 
-  .spine-mark {
-    font-family: var(--mono);
-    font-size: 12px;
-    letter-spacing: 0.08em;
-    color: var(--amber);
-  }
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 2.5rem;
+  align-items: start;
+}
+@media (max-width: 860px) {
+  .hero-grid { grid-template-columns: 1fr; }
+}
 
-  .spine-title {
-    font-family: var(--serif);
-    font-size: 20px;
-    line-height: 1.25;
-    font-weight: 700;
-  }
+.hero h1 {
+  font-family: var(--display);
+  font-size: clamp(2.6rem, 5.5vw, 4.25rem);
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  margin-bottom: 1.25rem;
+}
+.hero h1 em {
+  font-style: italic; font-weight: 500; color: var(--signal);
+}
+.hero-lead {
+  font-size: 1.2rem; color: var(--ink-soft); max-width: 36ch;
+  margin-bottom: 1.75rem;
+}
+.hero-actions { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+.btn {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  padding: 0.7rem 1.15rem; font-size: 0.9rem; font-weight: 600;
+  text-decoration: none; border-radius: 2px; border: 1.5px solid transparent;
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+.btn:hover { transform: translateY(-1px); }
+.btn-primary { background: var(--ink); color: var(--paper); }
+.btn-primary:hover { background: var(--signal); color: #fff; }
+.btn-ghost { background: transparent; color: var(--ink); border-color: var(--line); }
+.btn-ghost:hover { border-color: var(--ink); color: var(--ink); }
 
-  .spine-meta {
-    font-family: var(--mono);
-    font-size: 11px;
-    color: #9bb0c3;
-    line-height: 1.7;
-  }
+.evidence-board {
+  background: var(--board);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 1.25rem;
+  position: relative;
+  box-shadow:
+    0 1px 0 rgba(255,255,255,0.7) inset,
+    0 18px 40px rgba(26, 35, 50, 0.08);
+}
+.evidence-board::before {
+  content: "";
+  position: absolute; inset: 10px;
+  border: 1px dashed rgba(26, 35, 50, 0.1);
+  pointer-events: none;
+}
+.board-label {
+  font-size: 0.7rem; font-weight: 600; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--muted); margin-bottom: 1rem;
+}
+.pin-row { display: grid; gap: 0.75rem; }
+.pin {
+  background: #fff;
+  border: 1px solid var(--line);
+  padding: 0.85rem 1rem;
+  position: relative;
+  transform: rotate(-0.4deg);
+}
+.pin:nth-child(2) { transform: rotate(0.6deg); margin-left: 0.75rem; }
+.pin:nth-child(3) { transform: rotate(-0.2deg); }
+.pin::after {
+  content: "";
+  position: absolute; top: -6px; left: 50%;
+  width: 12px; height: 12px; border-radius: 50%;
+  background: var(--string);
+  box-shadow: 0 2px 4px rgba(196, 92, 74, 0.35);
+  transform: translateX(-50%);
+}
+.pin strong {
+  display: block; font-family: var(--display);
+  font-size: 1.05rem; font-weight: 600; margin-bottom: 0.2rem;
+}
+.pin span { font-size: 0.8125rem; color: var(--muted); }
+.string-line {
+  height: 2px; margin: 0.35rem 0.5rem;
+  background: linear-gradient(90deg, transparent, var(--string), transparent);
+  opacity: 0.55;
+}
 
-  .spine nav {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-top: 8px;
-  }
+.annotation {
+  display: inline-block;
+  background: var(--chalk);
+  color: var(--ink);
+  font-size: 0.75rem; font-weight: 600;
+  padding: 0.25rem 0.55rem;
+  transform: rotate(-1.5deg);
+  box-shadow: 1px 2px 0 rgba(26, 35, 50, 0.08);
+  margin: 0.35rem 0;
+}
 
-  .spine nav a {
-    font-family: var(--mono);
-    font-size: 12px;
-    color: #c7d6e4;
-    text-decoration: none;
-    padding: 6px 0;
-    border-bottom: 1px solid transparent;
-  }
-  .spine nav a:hover,
-  .spine nav a:focus-visible {
-    color: var(--amber-soft);
-    border-bottom-color: var(--amber);
-  }
+/* —— Sections —— */
+section { padding: 4.5rem 0; }
+.section-head {
+  display: grid; grid-template-columns: 140px 1fr;
+  gap: 1.5rem; margin-bottom: 2.5rem; align-items: end;
+}
+@media (max-width: 700px) {
+  .section-head { grid-template-columns: 1fr; gap: 0.5rem; }
+}
+.section-tag {
+  font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--signal);
+  padding-bottom: 0.35rem;
+  border-bottom: 2px solid var(--chalk);
+  width: fit-content;
+}
+.section-title {
+  font-family: var(--display);
+  font-size: clamp(1.75rem, 3vw, 2.4rem);
+  font-weight: 600; letter-spacing: -0.02em; line-height: 1.15;
+}
+.section-sub {
+  color: var(--ink-soft); max-width: 52ch; margin-top: 0.75rem;
+}
 
-  .spine-footer {
-    margin-top: auto;
-    font-family: var(--mono);
-    font-size: 10px;
-    color: #7f94a8;
-    line-height: 1.6;
-  }
+/* —— Intro —— */
+.intro-split {
+  display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 2rem;
+}
+@media (max-width: 800px) { .intro-split { grid-template-columns: 1fr; } }
+.intro-copy p { margin-bottom: 1rem; color: var(--ink-soft); }
+.intro-copy p strong { color: var(--ink); font-weight: 600; }
+.aside-note {
+  background: #fff;
+  border-left: 4px solid var(--chalk);
+  padding: 1.25rem 1.35rem;
+  box-shadow: 0 10px 30px rgba(26, 35, 50, 0.06);
+}
+.aside-note h3 {
+  font-family: var(--display); font-size: 1.1rem; margin-bottom: 0.5rem;
+}
+.aside-note p { font-size: 0.95rem; color: var(--ink-soft); }
+.aside-note .jerry {
+  margin-top: 1rem; padding-top: 0.85rem; border-top: 1px dashed var(--line);
+  font-size: 0.85rem; color: var(--muted); font-style: italic;
+}
 
-  .main { min-width: 0; }
+/* —— Principles —— */
+.principles {
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem;
+}
+@media (max-width: 700px) { .principles { grid-template-columns: 1fr; } }
+.principle {
+  background: var(--board);
+  border: 1px solid var(--line);
+  padding: 1.5rem 1.35rem;
+  position: relative;
+}
+.principle::before {
+  content: attr(data-mark);
+  position: absolute; top: 0.85rem; right: 1rem;
+  font-family: var(--display); font-style: italic;
+  font-size: 1.5rem; color: var(--chalk-deep); opacity: 0.85;
+}
+.principle h3 {
+  font-family: var(--display); font-size: 1.2rem;
+  margin-bottom: 0.55rem; padding-right: 2rem;
+}
+.principle p { font-size: 0.95rem; color: var(--ink-soft); }
 
-  /* Top bar */
-  .dossier-bar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 16px;
-    padding: 14px 40px;
-    background: var(--fog);
-    border-bottom: 1px solid var(--line);
-    font-family: var(--mono);
-    font-size: 11px;
-    color: var(--muted);
-    flex-wrap: wrap;
-  }
-  .dossier-bar strong { color: var(--ink); font-weight: 600; }
-  .status-pill {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 4px 10px;
-    border: 1px solid var(--amber);
-    background: var(--amber-soft);
-    color: var(--ink);
-  }
-  .status-pill::before {
-    content: "";
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: var(--amber);
-  }
+/* —— Case studies —— */
+.case {
+  background: #fff;
+  border: 1px solid var(--line);
+  margin-bottom: 1.5rem;
+  position: relative;
+  overflow: hidden;
+}
+.case-string {
+  position: absolute; left: 28px; top: 0; bottom: 0; width: 2px;
+  background: repeating-linear-gradient(
+    180deg,
+    var(--string) 0 8px,
+    transparent 8px 16px
+  );
+  opacity: 0.45;
+}
+.case-inner {
+  display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 0;
+}
+@media (max-width: 860px) {
+  .case-inner { grid-template-columns: 1fr; }
+  .case-string { display: none; }
+}
+.case-copy { padding: 2rem 2rem 2rem 3.25rem; }
+.case-visual { min-height: 280px; position: relative; background: var(--paper-deep); }
+@media (max-width: 860px) { .case-copy { padding: 1.5rem; } }
 
-  section {
-    padding: 72px 40px;
-    border-bottom: 1px solid var(--line);
-  }
+.case-meta {
+  display: flex; flex-wrap: wrap; gap: 0.5rem 1rem;
+  font-size: 0.75rem; font-weight: 600; letter-spacing: 0.04em;
+  text-transform: uppercase; color: var(--muted); margin-bottom: 0.85rem;
+}
+.case h3 {
+  font-family: var(--display);
+  font-size: clamp(1.4rem, 2.5vw, 1.85rem);
+  letter-spacing: -0.02em; margin-bottom: 0.65rem;
+}
+.case .hmw {
+  font-size: 1.05rem; color: var(--ink); margin-bottom: 1rem;
+  padding: 0.75rem 0.9rem;
+  background: rgba(245, 215, 110, 0.35);
+  border-left: 3px solid var(--chalk-deep);
+}
+.case .findings { list-style: none; margin-bottom: 1.15rem; }
+.case .findings li {
+  position: relative; padding-left: 1.1rem;
+  font-size: 0.92rem; color: var(--ink-soft); margin-bottom: 0.4rem;
+}
+.case .findings li::before {
+  content: "→"; position: absolute; left: 0; color: var(--signal); font-weight: 600;
+}
+.impact-row {
+  display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center;
+}
+.impact-chip {
+  background: var(--ink); color: var(--paper);
+  padding: 0.45rem 0.75rem; font-size: 0.8125rem; font-weight: 600;
+}
+.impact-chip em {
+  font-family: var(--display); font-style: normal; font-size: 1.1rem;
+  color: var(--chalk); margin-right: 0.35rem;
+}
+.role-chip {
+  font-size: 0.75rem; color: var(--muted); border: 1px solid var(--line);
+  padding: 0.4rem 0.65rem;
+}
 
-  .section-head {
-    display: grid;
-    grid-template-columns: 140px 1fr;
-    gap: 24px;
-    margin-bottom: 36px;
-    align-items: start;
-  }
-  .section-head h2 {
-    font-size: clamp(28px, 3.5vw, 40px);
-    line-height: 1.15;
-    font-weight: 700;
-    letter-spacing: -0.02em;
-  }
-  .section-head p {
-    color: var(--muted);
-    max-width: 52ch;
-    font-size: 15px;
-  }
+/* Visual placeholders */
+.ph {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; justify-content: space-between;
+  padding: 1.25rem;
+}
+.ph-top {
+  display: flex; justify-content: space-between; align-items: flex-start;
+  font-size: 0.7rem; font-weight: 600; letter-spacing: 0.06em;
+  text-transform: uppercase; color: var(--muted);
+}
+.ph-frame {
+  flex: 1; margin: 1rem 0;
+  border: 2px dashed rgba(26, 35, 50, 0.18);
+  background:
+    linear-gradient(135deg, rgba(43, 108, 176, 0.08), transparent 40%),
+    linear-gradient(225deg, rgba(245, 215, 110, 0.2), transparent 45%),
+    repeating-linear-gradient(0deg, transparent, transparent 23px, rgba(26,35,50,0.04) 23px, rgba(26,35,50,0.04) 24px),
+    repeating-linear-gradient(90deg, transparent, transparent 23px, rgba(26,35,50,0.04) 23px, rgba(26,35,50,0.04) 24px);
+  display: grid; place-items: center; position: relative;
+}
+.ph-frame .label {
+  text-align: center; padding: 0.75rem 1rem;
+  background: rgba(255,255,255,0.92);
+  border: 1px solid var(--line);
+  font-size: 0.8rem; font-weight: 600; max-width: 22ch; line-height: 1.35;
+}
+.ph-ui {
+  width: 78%; height: 72%;
+  background: #fff; border: 1px solid var(--line);
+  box-shadow: 0 12px 28px rgba(26, 35, 50, 0.1);
+  display: grid; grid-template-rows: 28px 1fr; overflow: hidden;
+}
+.ph-ui-bar {
+  background: var(--paper); border-bottom: 1px solid var(--line);
+  display: flex; align-items: center; gap: 5px; padding: 0 10px;
+}
+.ph-ui-bar i { width: 7px; height: 7px; border-radius: 50%; background: #C9D2DC; display: block; }
+.ph-ui-body { padding: 12px; display: grid; gap: 8px; }
+.ph-ui-body .row {
+  height: 10px; background: var(--paper-deep); border-radius: 2px;
+}
+.ph-ui-body .row.w60 { width: 60%; }
+.ph-ui-body .row.w40 { width: 40%; }
+.ph-ui-body .block {
+  height: 48px; background: linear-gradient(90deg, rgba(43,108,176,0.15), rgba(245,215,110,0.25));
+  border: 1px solid var(--line);
+}
+.ph-mobile {
+  width: 120px; height: 210px; background: #fff;
+  border: 2px solid var(--ink); border-radius: 16px;
+  padding: 10px 8px; box-shadow: 0 16px 32px rgba(26,35,50,0.12);
+  display: flex; flex-direction: column; gap: 6px;
+}
+.ph-mobile .notch {
+  width: 36px; height: 4px; background: var(--ink); border-radius: 2px; margin: 0 auto 6px;
+}
+.ph-mobile .screen-line {
+  height: 8px; background: var(--paper-deep); border-radius: 2px;
+}
+.ph-mobile .screen-hero {
+  flex: 1; background: linear-gradient(160deg, rgba(43,108,176,0.2), rgba(245,215,110,0.35));
+  border-radius: 4px; margin-top: 4px;
+}
+.ph-map {
+  width: 85%; height: 70%;
+  background:
+    radial-gradient(circle at 30% 40%, rgba(43,108,176,0.35) 0 6px, transparent 7px),
+    radial-gradient(circle at 55% 55%, rgba(196,92,74,0.4) 0 5px, transparent 6px),
+    radial-gradient(circle at 70% 30%, rgba(245,215,110,0.7) 0 7px, transparent 8px),
+    linear-gradient(135deg, #d5dde8, #eef2f6);
+  border: 1px solid var(--line);
+  position: relative;
+}
+.ph-map::after {
+  content: "Pune · Mumbai · Delhi";
+  position: absolute; bottom: 10px; left: 10px;
+  font-size: 0.7rem; font-weight: 600; background: #fff;
+  padding: 0.25rem 0.5rem; border: 1px solid var(--line);
+}
 
-  /* Hero */
-  .hero {
-    padding: 80px 40px 88px;
-    background:
-      linear-gradient(180deg, var(--fog) 0%, var(--paper) 100%);
-  }
-  .hero-kicker {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px 24px;
-    margin-bottom: 28px;
-  }
-  .hero h1 {
-    font-size: clamp(40px, 6vw, 72px);
-    line-height: 1.05;
-    letter-spacing: -0.03em;
-    max-width: 14ch;
-    margin-bottom: 24px;
-  }
-  .hero-lede {
-    font-size: 18px;
-    max-width: 48ch;
-    color: var(--navy);
-    margin-bottom: 36px;
-  }
-  .hero-actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    margin-bottom: 48px;
-  }
-  .btn {
-    font-family: var(--mono);
-    font-size: 12px;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    text-decoration: none;
-    padding: 12px 18px;
-    border: 1px solid var(--ink);
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .btn-primary {
-    background: var(--ink);
-    color: var(--paper);
-  }
-  .btn-primary:hover { background: var(--navy); color: var(--paper); }
-  .btn-ghost { background: transparent; }
-  .btn-ghost:hover { background: var(--fog); color: var(--ink); }
+/* —— Process —— */
+.process-rail {
+  display: grid; grid-template-columns: repeat(6, 1fr); gap: 0.65rem;
+  position: relative;
+}
+@media (max-width: 900px) {
+  .process-rail { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 560px) {
+  .process-rail { grid-template-columns: 1fr 1fr; }
+}
+.process-step {
+  background: #fff; border: 1px solid var(--line); padding: 1.1rem 0.9rem;
+  min-height: 140px;
+}
+.process-step .n {
+  font-family: var(--display); font-size: 1.4rem; color: var(--signal);
+  font-weight: 600; margin-bottom: 0.35rem;
+}
+.process-step h3 { font-size: 0.95rem; margin-bottom: 0.35rem; }
+.process-step p { font-size: 0.8rem; color: var(--muted); line-height: 1.45; }
 
-  .finding-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1px;
-    background: var(--line);
-    border: 1px solid var(--line);
-  }
-  .finding {
-    background: var(--white);
-    padding: 22px 20px;
-  }
-  .finding .metric {
-    font-family: var(--mono);
-    font-size: 28px;
-    font-weight: 600;
-    color: var(--amber);
-    margin: 10px 0 6px;
-  }
-  .finding p {
-    font-size: 14px;
-    color: var(--muted);
-  }
+/* —— Timeline —— */
+.timeline {
+  border-left: 2px solid var(--line);
+  margin-left: 0.5rem; padding-left: 1.5rem;
+}
+.tl-item {
+  position: relative; padding-bottom: 1.75rem;
+}
+.tl-item::before {
+  content: "";
+  position: absolute; left: -1.85rem; top: 0.35rem;
+  width: 10px; height: 10px; border-radius: 50%;
+  background: var(--chalk); border: 2px solid var(--ink);
+}
+.tl-item.current::before { background: var(--signal); }
+.tl-when {
+  font-size: 0.75rem; font-weight: 600; letter-spacing: 0.06em;
+  text-transform: uppercase; color: var(--muted);
+}
+.tl-item h3 { font-family: var(--display); font-size: 1.2rem; margin: 0.2rem 0; }
+.tl-item p { font-size: 0.95rem; color: var(--ink-soft); max-width: 60ch; }
 
-  /* Case studies as research cards */
-  .cases {
-    display: flex;
-    flex-direction: column;
-    gap: 28px;
-  }
-  .case-card {
-    display: grid;
-    grid-template-columns: 1.1fr 1fr;
-    gap: 0;
-    border: 1px solid var(--line);
-    background: var(--white);
-  }
-  .case-visual {
-    min-height: 320px;
-    position: relative;
-    overflow: hidden;
-    border-right: 1px solid var(--line);
-  }
-  .case-body {
-    padding: 28px 28px 24px;
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-  }
-  .case-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-  }
-  .tag {
-    font-family: var(--mono);
-    font-size: 10px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    padding: 4px 8px;
-    border: 1px solid var(--line);
-    background: var(--fog);
-  }
-  .case-body h3 {
-    font-size: 24px;
-    line-height: 1.2;
-  }
-  .case-body .hmw {
-    font-style: italic;
-    color: var(--navy);
-    font-size: 15px;
-    border-left: 3px solid var(--amber);
-    padding-left: 14px;
-  }
-  .case-body .impact {
-    margin-top: auto;
-    padding-top: 16px;
-    border-top: 1px dashed var(--line);
-    font-family: var(--mono);
-    font-size: 12px;
-    color: var(--muted);
-  }
-  .case-body .impact strong {
-    color: var(--ink);
-    font-size: 16px;
-    display: block;
-    margin-bottom: 4px;
-  }
+/* —— Clients —— */
+.clients {
+  display: flex; flex-wrap: wrap; gap: 0.5rem;
+}
+.client {
+  background: var(--board); border: 1px solid var(--line);
+  padding: 0.55rem 0.85rem; font-size: 0.875rem; font-weight: 500;
+  color: var(--ink-soft);
+}
 
-  /* Placeholder visuals */
-  .ph {
-    width: 100%;
-    height: 100%;
-    min-height: 320px;
-    display: grid;
-    place-items: center;
-    position: relative;
-    background: var(--fog);
-  }
-  .ph-label {
-    position: absolute;
-    left: 14px;
-    bottom: 14px;
-    right: 14px;
-    font-family: var(--mono);
-    font-size: 10px;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: var(--muted);
-    background: rgba(247, 245, 240, 0.92);
-    border: 1px solid var(--line);
-    padding: 8px 10px;
-  }
-  .ph-ap {
-    background:
-      linear-gradient(135deg, #d9e4ef 0%, #f0ebe1 55%, #e7d2a8 100%);
-  }
-  .ph-ap .mock {
-    width: 78%;
-    height: 62%;
-    border: 1px solid var(--navy);
-    background: var(--white);
-    display: grid;
-    grid-template-columns: 48px 1fr;
-    box-shadow: 8px 12px 0 rgba(11, 31, 51, 0.08);
-  }
-  .ph-ap .mock-side { background: var(--ink); }
-  .ph-ap .mock-main {
-    padding: 12px;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-  .ph-ap .bar {
-    height: 8px;
-    background: var(--line);
-  }
-  .ph-ap .bar.w60 { width: 60%; }
-  .ph-ap .bar.w40 { width: 40%; }
-  .ph-ap .tiles {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 6px;
-    margin-top: 8px;
-    flex: 1;
-  }
-  .ph-ap .tile {
-    background: var(--fog);
-    border: 1px solid var(--line);
-  }
+/* —— Contact —— */
+.contact-block {
+  background: var(--ink); color: var(--paper);
+  padding: 3rem 2.5rem;
+  position: relative; overflow: hidden;
+}
+.contact-block::after {
+  content: "";
+  position: absolute; right: -40px; top: -40px;
+  width: 220px; height: 220px;
+  background: radial-gradient(circle, rgba(245,215,110,0.35), transparent 70%);
+  pointer-events: none;
+}
+.contact-block h2 {
+  font-family: var(--display);
+  font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+  letter-spacing: -0.02em; margin-bottom: 0.75rem; position: relative;
+}
+.contact-block p {
+  color: rgba(232, 236, 241, 0.75); max-width: 42ch; margin-bottom: 1.5rem; position: relative;
+}
+.contact-links {
+  display: flex; flex-wrap: wrap; gap: 0.75rem; position: relative;
+}
+.contact-links a {
+  background: var(--chalk); color: var(--ink);
+  text-decoration: none; font-weight: 600;
+  padding: 0.7rem 1.1rem; font-size: 0.9rem;
+}
+.contact-links a.secondary {
+  background: transparent; color: var(--paper);
+  border: 1px solid rgba(232, 236, 241, 0.35);
+}
+.contact-links a:hover { filter: brightness(1.05); }
 
-  .ph-b360 {
-    background:
-      radial-gradient(circle at 30% 40%, #f3e2c4 0%, transparent 45%),
-      linear-gradient(160deg, #16324f 0%, #0b1f33 100%);
-  }
-  .ph-b360 .phone {
-    width: 120px;
-    height: 220px;
-    border: 2px solid var(--amber-soft);
-    border-radius: 18px;
-    background: rgba(255,255,255,0.06);
-    padding: 18px 12px;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-  .ph-b360 .dot {
-    width: 28px;
-    height: 4px;
-    background: var(--amber);
-    margin: 0 auto 8px;
-    border-radius: 2px;
-  }
-  .ph-b360 .line {
-    height: 6px;
-    background: rgba(247,245,240,0.35);
-    border-radius: 2px;
-  }
-  .ph-b360 .cta-block {
-    margin-top: auto;
-    height: 28px;
-    background: var(--amber);
-  }
+footer {
+  padding: 2rem 0 3rem;
+  display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem;
+  font-size: 0.8rem; color: var(--muted);
+  border-top: 1px solid var(--line); margin-top: 0;
+}
+footer a { color: var(--muted); }
 
-  .ph-wiki {
-    background:
-      repeating-linear-gradient(
-        0deg,
-        transparent,
-        transparent 22px,
-        rgba(22,50,79,0.06) 22px,
-        rgba(22,50,79,0.06) 23px
-      ),
-      var(--white);
-  }
-  .ph-wiki .notepad {
-    width: 70%;
-    border: 1px solid var(--line);
-    background: var(--paper);
-    padding: 18px;
-    box-shadow: 0 10px 30px rgba(11,31,51,0.06);
-  }
-  .ph-wiki .row {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 10px;
-    align-items: center;
-  }
-  .ph-wiki .chip {
-    font-family: var(--mono);
-    font-size: 10px;
-    padding: 3px 6px;
-    border: 1px solid var(--line);
-    background: var(--fog);
-  }
-  .ph-wiki .note-line {
-    height: 5px;
-    background: var(--line);
-    flex: 1;
-  }
-
-  .ph-free {
-    background: linear-gradient(45deg, var(--fog) 25%, var(--paper) 25%, var(--paper) 50%, var(--fog) 50%, var(--fog) 75%, var(--paper) 75%);
-    background-size: 28px 28px;
-  }
-  .ph-free .stack {
-    display: flex;
-    gap: 10px;
-    align-items: flex-end;
-  }
-  .ph-free .card {
-    width: 90px;
-    height: 120px;
-    border: 1px solid var(--ink);
-    background: var(--white);
-  }
-  .ph-free .card:nth-child(2) { height: 150px; background: var(--amber-soft); }
-  .ph-free .card:nth-child(3) { height: 100px; background: var(--fog); }
-
-  /* Principles */
-  .principles {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
-  }
-  .principle {
-    border: 1px solid var(--line);
-    background: var(--white);
-    padding: 24px;
-  }
-  .principle h3 {
-    font-size: 18px;
-    margin: 8px 0 10px;
-  }
-  .principle p { font-size: 15px; color: var(--navy); }
-
-  /* Process as field protocol */
-  .protocol {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1px;
-    background: var(--line);
-    border: 1px solid var(--line);
-  }
-  .step {
-    background: var(--white);
-    padding: 22px;
-    min-height: 160px;
-  }
-  .step .num {
-    font-family: var(--mono);
-    font-size: 12px;
-    color: var(--amber);
-    margin-bottom: 10px;
-  }
-  .step h3 { font-size: 17px; margin-bottom: 8px; }
-  .step p { font-size: 14px; color: var(--muted); }
-
-  /* Timeline */
-  .timeline {
-    border-left: 2px solid var(--line);
-    margin-left: 8px;
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-  }
-  .tl-item {
-    position: relative;
-    padding: 0 0 28px 28px;
-  }
-  .tl-item::before {
-    content: "";
-    position: absolute;
-    left: -7px;
-    top: 6px;
-    width: 12px;
-    height: 12px;
-    background: var(--paper);
-    border: 2px solid var(--amber);
-  }
-  .tl-item h3 { font-size: 18px; margin: 4px 0; }
-  .tl-item p { font-size: 14px; color: var(--muted); max-width: 60ch; }
-
-  /* About */
-  .about-grid {
-    display: grid;
-    grid-template-columns: 1.2fr 0.8fr;
-    gap: 32px;
-  }
-  .about-copy p {
-    margin-bottom: 16px;
-    max-width: 58ch;
-  }
-  .about-side {
-    border: 1px solid var(--line);
-    background: var(--white);
-    padding: 22px;
-  }
-  .about-side h3 {
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 14px;
-  }
-  .chip-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-  }
-  .chip-list span {
-    font-family: var(--mono);
-    font-size: 11px;
-    padding: 6px 10px;
-    border: 1px solid var(--line);
-    background: var(--fog);
-  }
-  .clients {
-    margin-top: 28px;
-    font-family: var(--mono);
-    font-size: 12px;
-    color: var(--muted);
-    line-height: 1.9;
-  }
-
-  /* Contact */
-  .contact-panel {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 24px;
-    background: var(--ink);
-    color: var(--fog);
-    padding: 40px;
-  }
-  .contact-panel h2 {
-    font-size: clamp(28px, 4vw, 42px);
-    line-height: 1.15;
-    margin: 12px 0 18px;
-  }
-  .contact-panel p { color: #9bb0c3; max-width: 40ch; }
-  .contact-list {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-    justify-content: center;
-  }
-  .contact-list a {
-    font-family: var(--mono);
-    font-size: 14px;
-    color: var(--amber-soft);
-    text-decoration: none;
-    border-bottom: 1px solid transparent;
-    width: fit-content;
-  }
-  .contact-list a:hover { border-bottom-color: var(--amber); color: var(--amber); }
-
-  footer {
-    padding: 28px 40px 48px;
-    display: flex;
-    justify-content: space-between;
-    gap: 16px;
-    flex-wrap: wrap;
-    font-family: var(--mono);
-    font-size: 11px;
-    color: var(--muted);
-  }
-
-  @media (max-width: 960px) {
-    .shell { grid-template-columns: 1fr; }
-    .spine {
-      position: relative;
-      height: auto;
-      flex-direction: row;
-      flex-wrap: wrap;
-      align-items: flex-start;
-    }
-    .spine nav { flex-direction: row; flex-wrap: wrap; gap: 12px 18px; }
-    .spine-footer { width: 100%; margin-top: 0; }
-    .section-head { grid-template-columns: 1fr; gap: 10px; }
-    .finding-grid, .protocol, .case-card, .principles, .about-grid, .contact-panel {
-      grid-template-columns: 1fr;
-    }
-    .case-visual { border-right: 0; border-bottom: 1px solid var(--line); }
-    section, .hero, .dossier-bar, footer { padding-left: 20px; padding-right: 20px; }
-  }
+.ask-about {
+  margin-top: 2rem;
+  padding: 1.25rem;
+  border: 1px dashed rgba(26, 35, 50, 0.2);
+  background: rgba(255,255,255,0.45);
+}
+.ask-about h3 {
+  font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 0.75rem;
+}
+.ask-pills { display: flex; flex-wrap: wrap; gap: 0.45rem; }
+.ask-pills span {
+  font-size: 0.8125rem; background: #fff; border: 1px solid var(--line);
+  padding: 0.35rem 0.65rem; color: var(--ink-soft);
+}
 </style>
 </head>
 <body>
-  <div class="shell">
-    <aside class="spine" aria-label="Research spine">
-      <div class="spine-mark">FR-NS-001</div>
-      <div class="spine-title">Naman Sharma<br />Field Report</div>
-      <div class="spine-meta">
-        Subject: Product / UX Designer<br />
-        Base: Jaipur · Remote<br />
-        Status: Open to work
-      </div>
-      <nav>
-        <a href="#brief">Brief</a>
-        <a href="#findings">Key findings</a>
-        <a href="#work">Selected work</a>
-        <a href="#principles">Principles</a>
-        <a href="#process">Protocol</a>
-        <a href="#timeline">Timeline</a>
-        <a href="#about">Subject notes</a>
-        <a href="#contact">Contact</a>
-      </nav>
-      <div class="spine-footer">
-        Confidential to hiring managers,<br />
-        design leads &amp; collaborators.<br />
-        Evidence over adjectives.
-      </div>
-    </aside>
 
-    <div class="main">
-      <div class="dossier-bar">
-        <span><strong>Dossier</strong> · Product outcomes from research-led design</span>
-        <span class="status-pill">Field active · 2017–present</span>
-        <span>Rev · homepage long-form</span>
-      </div>
+<nav class="nav" aria-label="Primary">
+  <div class="wrap nav-inner">
+    <a class="nav-brand" href="#top">Naman Sharma <span>Evidence Room</span></a>
+    <ul class="nav-links">
+      <li><a href="#work">Work</a></li>
+      <li><a href="#process">Process</a></li>
+      <li><a href="#principles">Principles</a></li>
+      <li><a href="#path">Path</a></li>
+      <li><a href="#contact" class="nav-cta">Start a conversation</a></li>
+    </ul>
+  </div>
+</nav>
 
-      <header class="hero" id="brief">
-        <div class="hero-kicker">
-          <span class="label">Opening brief</span>
-          <span class="label">Audience: hiring managers · design leads · founders</span>
-        </div>
-        <h1>I make complex products easy enough to ship — and worth using.</h1>
-        <p class="hero-lede">
-          Product/UX designer working remotely from Jaipur. Research first,
-          then craft. I help startups go 0→1 and help established products
-          stop losing users to friction.
-        </p>
+<main id="top">
+  <header class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <div class="hero-meta"><span class="dot" aria-hidden="true"></span> Product / UX Designer · Jaipur · Worldwide remote</div>
+        <h1>I make complex products <em>easy to use</em> — and leave the evidence on the wall.</h1>
+        <p class="hero-lead">Research-led Product/UX design for startups and brands that care. No jargon. Real outcomes. One pixel at a time.</p>
         <div class="hero-actions">
-          <a class="btn btn-primary" href="#work">Review selected work</a>
-          <a class="btn btn-ghost" href="#contact">Request a conversation</a>
+          <a class="btn btn-primary" href="#work">See selected work</a>
+          <a class="btn btn-ghost" href="#contact">madebynaman@gmail.com</a>
         </div>
-        <div class="finding-grid" id="findings" aria-label="Key outcome findings">
-          <article class="finding">
-            <span class="label">Finding A · Asian Paints</span>
-            <div class="metric">+20%</div>
-            <p>Online transaction volume after dealer portal redesign</p>
-          </article>
-          <article class="finding">
-            <span class="label">Finding B · Boost360</span>
-            <div class="metric">−60%</div>
-            <p>App uninstall rate after onboarding rewrite</p>
-          </article>
-          <article class="finding">
-            <span class="label">Finding C · Turns</span>
-            <div class="metric">$500K</div>
-            <p>Pre-seed raised after site &amp; brand system revamp</p>
-          </article>
-        </div>
-      </header>
-
-      <section id="work">
-        <div class="section-head">
-          <span class="label">Case files</span>
-          <div>
-            <h2>Selected work, as evidence</h2>
-            <p>Each card is a field note: problem, intervention, what moved. Full artifacts available on request.</p>
+        <div class="annotation" style="margin-top:1.25rem">Note: self-taught · CS background · 0→1 builder</div>
+      </div>
+      <aside class="evidence-board" aria-label="Quick evidence board">
+        <div class="board-label">Pinned outcomes</div>
+        <div class="pin-row">
+          <div class="pin">
+            <strong>20% ↑ transaction volume</strong>
+            <span>Asian Paints dealer portal · Thence · 2021</span>
+          </div>
+          <div class="string-line" aria-hidden="true"></div>
+          <div class="pin">
+            <strong>60% ↓ uninstall rate</strong>
+            <span>Boost360 onboarding · Thence · 2021</span>
+          </div>
+          <div class="string-line" aria-hidden="true"></div>
+          <div class="pin">
+            <strong>25 field interviews</strong>
+            <span>Wikipedia × KaiOS · Hureo · 2020</span>
           </div>
         </div>
+      </aside>
+    </div>
+  </header>
 
-        <div class="cases">
-          <article class="case-card">
-            <div class="case-visual">
-              <div class="ph ph-ap" role="img" aria-label="Placeholder: Asian Paints dealer portal product surface">
-                <div class="mock" aria-hidden="true">
-                  <div class="mock-side"></div>
-                  <div class="mock-main">
-                    <div class="bar w60"></div>
-                    <div class="bar w40"></div>
-                    <div class="tiles">
-                      <div class="tile"></div>
-                      <div class="tile"></div>
-                      <div class="tile"></div>
-                    </div>
+  <section id="about" aria-labelledby="about-title">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="section-tag">About</div>
+        <div>
+          <h2 class="section-title" id="about-title">Hey — I’m Naman.</h2>
+          <p class="section-sub">Curious generalist. Research-rooted. Founder’s mindset on every brief.</p>
+        </div>
+      </div>
+      <div class="intro-split">
+        <div class="intro-copy">
+          <p>I design products that users love, for brands that care. That’s it.</p>
+          <p>I’m a self-taught Product/UX Designer with experience making complex products easy to use and helping startups build from <strong>0 to 1</strong>. Product/UX sits at the intersection of creativity, problem solving, and technology — which is exactly where I like to work.</p>
+          <p>I’ve done on-field research, usability testing, web and mobile product design, branding, packaging, and enough handoff with engineering to know that “done” means shipped — then monitored.</p>
+        </div>
+        <aside class="aside-note">
+          <h3>What I won’t do</h3>
+          <p>Foster innovation through synergizing aesthetics. Orchestrate design revolutions. Perpetuate narratives that transcend boundaries.</p>
+          <p class="jerry">When I’m not designing, I’m with Jerry — my indie dog. He says hi.</p>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section id="principles" aria-labelledby="principles-title">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="section-tag">Principles</div>
+        <div>
+          <h2 class="section-title" id="principles-title">How I show up on a project.</h2>
+        </div>
+      </div>
+      <div class="principles">
+        <article class="principle" data-mark="01">
+          <h3>Consistency beats talent</h3>
+          <p>Consistent effort compounds. I’m not chasing “most talented” — I’m chasing daily improvement that shows up in the work.</p>
+        </article>
+        <article class="principle" data-mark="02">
+          <h3>Let curiosity guide you</h3>
+          <p>I know a little about a lot. Connecting scattered dots is how I find the insight that actually changes the product.</p>
+        </article>
+        <article class="principle" data-mark="03">
+          <h3>Form follows function</h3>
+          <p>Solve the need first. Then go the extra mile for delight — because humans remember delight.</p>
+        </article>
+        <article class="principle" data-mark="04">
+          <h3>Give a damn</h3>
+          <p>Founder’s mindset. High agency. Shared ownership with product and engineering until the outcome lands.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="work" aria-labelledby="work-title">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="section-tag">Selected work</div>
+        <div>
+          <h2 class="section-title" id="work-title">Case studies with receipts.</h2>
+          <p class="section-sub">Problems, research, solutions, impact — teased hard enough to want the full story.</p>
+        </div>
+      </div>
+
+      <article class="case">
+        <div class="case-string" aria-hidden="true"></div>
+        <div class="case-inner">
+          <div class="case-copy">
+            <div class="case-meta">
+              <span>Asian Paints</span>
+              <span>Thence · 2021</span>
+              <span>UX Research · UX · UI</span>
+            </div>
+            <h3>Dealer Portal — digitize ordering without the sales call tax</h3>
+            <p class="hmw">How might we improve dealer experience by digitizing order placement and supply chain tracking while increasing transaction volumes and AOV?</p>
+            <ul class="findings">
+              <li>Dealers don’t want to call a salesperson for every new order</li>
+              <li>Competitor portals exist — but dealers hate using all of them</li>
+              <li>Privilege abstraction and data-driven nudges were missing</li>
+            </ul>
+            <div class="impact-row">
+              <div class="impact-chip"><em>20%</em> increase in online transaction volume</div>
+              <span class="role-chip">+ engagement &amp; loyalty lift</span>
+            </div>
+          </div>
+          <div class="case-visual" aria-hidden="true">
+            <div class="ph">
+              <div class="ph-top"><span>Placeholder · Case study hero</span><span>Dealer portal UI</span></div>
+              <div class="ph-frame">
+                <div class="ph-ui">
+                  <div class="ph-ui-bar"><i></i><i></i><i></i></div>
+                  <div class="ph-ui-body">
+                    <div class="row w60"></div>
+                    <div class="block"></div>
+                    <div class="row"></div>
+                    <div class="row w40"></div>
                   </div>
                 </div>
-                <div class="ph-label">Case-study hero — Asian Paints dealer portal · catalog / order / track</div>
               </div>
+              <div class="annotation">Barcode order &lt; 10s · Recs · Loyalty</div>
             </div>
-            <div class="case-body">
-              <div class="case-tags">
-                <span class="tag">Thence · 2021</span>
-                <span class="tag">UX research</span>
-                <span class="tag">UI design</span>
-                <span class="tag">B2B portal</span>
-              </div>
-              <h3>Asian Paints — Dealer Portal</h3>
-              <p class="hmw">How might we digitize order placement and supply-chain tracking so dealers place more, larger orders without calling sales every time?</p>
-              <p>Heuristic evaluation and end-to-end redesign: personalized recommendations, loyalty nudges, geo-demand promotions, barcode reorder under 10 seconds, role-based privileges.</p>
-              <div class="impact">
-                <strong>+20% online transaction volume</strong>
-                Engagement and loyalty lifted with the new ordering loops.
-              </div>
-            </div>
-          </article>
+          </div>
+        </div>
+      </article>
 
-          <article class="case-card">
-            <div class="case-visual">
-              <div class="ph ph-b360" role="img" aria-label="Placeholder: Boost360 onboarding mobile flow">
-                <div class="phone" aria-hidden="true">
-                  <div class="dot"></div>
-                  <div class="line"></div>
-                  <div class="line" style="width:70%"></div>
-                  <div class="line" style="width:85%"></div>
-                  <div class="cta-block"></div>
+      <article class="case">
+        <div class="case-string" aria-hidden="true"></div>
+        <div class="case-inner">
+          <div class="case-copy">
+            <div class="case-meta">
+              <span>Boost360</span>
+              <span>Thence · 2021</span>
+              <span>Research · Design · Usability testing</span>
+            </div>
+            <h3>Onboarding — stop the uninstall before signup</h3>
+            <p class="hmw">Signup success sat at 20%. Average time to success: 30 minutes. Users left within 4 hours of install.</p>
+            <ul class="findings">
+              <li>Root cause wasn’t crashes — it was expectation mismatch from ads</li>
+              <li>Signup UX was hard to understand; free vs paid unclear</li>
+              <li>Visual onboarding + quick wins + social proof rebuilt trust</li>
+            </ul>
+            <div class="impact-row">
+              <div class="impact-chip"><em>60%</em> decrease in uninstall rate</div>
+              <span class="role-chip">Signup time dropped significantly</span>
+            </div>
+          </div>
+          <div class="case-visual" aria-hidden="true">
+            <div class="ph">
+              <div class="ph-top"><span>Placeholder · Onboarding flow</span><span>Mobile mock</span></div>
+              <div class="ph-frame">
+                <div class="ph-mobile">
+                  <div class="notch"></div>
+                  <div class="screen-line"></div>
+                  <div class="screen-line" style="width:70%"></div>
+                  <div class="screen-hero"></div>
+                  <div class="screen-line" style="width:50%"></div>
                 </div>
-                <div class="ph-label">Project mockup — Boost360 onboarding flow · visual signup &amp; quick wins</div>
               </div>
+              <div class="annotation">Visual signup · USP first · Quick win</div>
             </div>
-            <div class="case-body">
-              <div class="case-tags">
-                <span class="tag">Thence · 2021</span>
-                <span class="tag">Onboarding</span>
-                <span class="tag">Usability testing</span>
-              </div>
-              <h3>Boost360 — Onboarding</h3>
-              <p class="hmw">How might we stop new installs from vanishing before signup when uninstalls hit within 4 hours and signup success sat at 20%?</p>
-              <p>Root cause: marketing promise vs. product reality. Redesigned for visual signup, USP clarity, social proof, quick website-creation wins, and optional skip paths. Usability testing confirmed users finally “got” the app.</p>
-              <div class="impact">
-                <strong>Up to 60% fewer uninstalls</strong>
-                Average time to successful signup dropped significantly.
-              </div>
-            </div>
-          </article>
+          </div>
+        </div>
+      </article>
 
-          <article class="case-card">
-            <div class="case-visual">
-              <div class="ph ph-wiki" role="img" aria-label="Placeholder: Wikipedia KaiOS field research notes">
-                <div class="notepad" aria-hidden="true">
-                  <div class="row"><span class="chip">Pune</span><div class="note-line"></div></div>
-                  <div class="row"><span class="chip">Mumbai</span><div class="note-line"></div></div>
-                  <div class="row"><span class="chip">Delhi</span><div class="note-line"></div></div>
-                  <div class="row"><span class="chip">n=25</span><div class="note-line"></div></div>
+      <article class="case">
+        <div class="case-string" aria-hidden="true"></div>
+        <div class="case-inner">
+          <div class="case-copy">
+            <div class="case-meta">
+              <span>Wikipedia × KaiOS</span>
+              <span>Hureo · 2020</span>
+              <span>UX Research · Personas · Journeys</span>
+            </div>
+            <h3>Field research — JioPhone users and Wikipedia</h3>
+            <p class="hmw">Wikimedia wanted to understand JioPhone users: phone habits, internet use, Wikipedia awareness, and why feature phones still win.</p>
+            <ul class="findings">
+              <li>25 one-on-one interviews across Pune, Mumbai, Delhi</li>
+              <li>Motivation: affordable smart features, durability, keypad familiarity, battery</li>
+              <li>Recommendations spanned VUI, readability, regional SEO, and UI for small screens</li>
+            </ul>
+            <div class="impact-row">
+              <div class="impact-chip"><em>25</em> in-person sessions</div>
+              <span class="role-chip">Personas · journeys · research reports</span>
+            </div>
+          </div>
+          <div class="case-visual" aria-hidden="true">
+            <div class="ph">
+              <div class="ph-top"><span>Placeholder · Field map</span><span>Research artifact</span></div>
+              <div class="ph-frame">
+                <div class="ph-map"></div>
+              </div>
+              <div class="annotation">Hindi · English · regional languages</div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="case">
+        <div class="case-string" aria-hidden="true"></div>
+        <div class="case-inner">
+          <div class="case-copy">
+            <div class="case-meta">
+              <span>Freelance</span>
+              <span>2021–Present</span>
+              <span>0→1 product · Web · Brand</span>
+            </div>
+            <h3>Independent work — products, sites, systems</h3>
+            <p class="hmw">From Turns’ brand system and conversion-focused site (helped raise $500K pre-seed) to Gadivan’s multi-stakeholder apps and LetsConnect’s 4.8★ Play Store experience.</p>
+            <ul class="findings">
+              <li>Turns — website, landing pages, multi-platform guidelines &amp; design system</li>
+              <li>Gadivan — end-to-end mobile experiences for multiple stakeholders</li>
+              <li>LetsConnect — usability-led redesign after user feedback</li>
+            </ul>
+            <div class="impact-row">
+              <div class="impact-chip"><em>$500K</em> pre-seed (Turns)</div>
+              <span class="role-chip">4.8★ LetsConnect · Play Store</span>
+            </div>
+          </div>
+          <div class="case-visual" aria-hidden="true">
+            <div class="ph">
+              <div class="ph-top"><span>Placeholder · Freelance collage</span><span>Multi-surface</span></div>
+              <div class="ph-frame">
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;width:80%;height:70%">
+                  <div style="background:#fff;border:1px solid var(--line)"></div>
+                  <div style="background:linear-gradient(160deg,rgba(43,108,176,.2),rgba(245,215,110,.3));border:1px solid var(--line)"></div>
+                  <div style="background:linear-gradient(20deg,rgba(196,92,74,.15),transparent);border:1px solid var(--line);grid-column:span 2"></div>
                 </div>
-                <div class="ph-label">Research artifact — Wikipedia KaiOS / JioPhone field study</div>
               </div>
+              <div class="annotation">Brand systems · 0→1 apps · UX audits</div>
             </div>
-            <div class="case-body">
-              <div class="case-tags">
-                <span class="tag">Hureo · 2020</span>
-                <span class="tag">Field research</span>
-                <span class="tag">Personas</span>
-                <span class="tag">Journey maps</span>
-              </div>
-              <h3>Wikipedia — KaiOS User Research</h3>
-              <p class="hmw">Who are JioPhone users, how do they use the internet, and what would make Wikipedia useful on a smart feature phone?</p>
-              <p>25 in-person interviews across Pune, Mumbai, and Delhi. Mapped motivations (price, durability, keypad comfort, battery) and a wishlist from voice search to simpler Hindi and better JioPhone UI. Delivered recommendations for Wikimedia Foundation.</p>
-              <div class="impact">
-                <strong>Field evidence, not assumptions</strong>
-                Personas, journeys, and actionable product recommendations.
-              </div>
-            </div>
-          </article>
-
-          <article class="case-card">
-            <div class="case-visual">
-              <div class="ph ph-free" role="img" aria-label="Placeholder: freelance product suite collage">
-                <div class="stack" aria-hidden="true">
-                  <div class="card"></div>
-                  <div class="card"></div>
-                  <div class="card"></div>
-                </div>
-                <div class="ph-label">Project suite — Turns · Gadivan · LetsConnect · freelance 0→1</div>
-              </div>
-            </div>
-            <div class="case-body">
-              <div class="case-tags">
-                <span class="tag">Independent · 2021–present</span>
-                <span class="tag">0→1</span>
-                <span class="tag">Web &amp; product</span>
-              </div>
-              <h3>Freelance — Products that had to work</h3>
-              <p class="hmw">How do you take founder ambition and ship experiences users finish — websites, multi-stakeholder apps, and store-ready products?</p>
-              <p>Turns: site, landing pages, multi-platform brand system, UX audits — conversions up, $500K pre-seed. Gadivan: end-to-end multi-app product from scratch. LetsConnect: usability redesign → 4.8★ Play Store.</p>
-              <div class="impact">
-                <strong>Outcomes founders can fund</strong>
-                From brand systems to multi-app product architecture.
-              </div>
-            </div>
-          </article>
-        </div>
-      </section>
-
-      <section id="principles">
-        <div class="section-head">
-          <span class="label">Operating beliefs</span>
-          <div>
-            <h2>Principles that survive contact with a real product</h2>
-            <p>Not manifesto wallpaper — filters for how decisions get made under constraint.</p>
           </div>
         </div>
-        <div class="principles">
-          <article class="principle">
-            <span class="label">P01</span>
-            <h3>Consistency beats talent</h3>
-            <p>Daily craft compounds. I’m not chasing “most talented” — I’m chasing reliable improvement that shows up in the work.</p>
-          </article>
-          <article class="principle">
-            <span class="label">P02</span>
-            <h3>Let curiosity guide you</h3>
-            <p>Knowing a little about a lot connects scattered signals. Curiosity is how research turns into products people actually need.</p>
-          </article>
-          <article class="principle">
-            <span class="label">P03</span>
-            <h3>Form follows function</h3>
-            <p>Solve the job first. Then go the extra mile for beauty — humans remember delight after the problem is gone.</p>
-          </article>
-          <article class="principle">
-            <span class="label">P04</span>
-            <h3>Give a damn</h3>
-            <p>Founder mindset on every engagement. High agency, shared responsibility, ownership past the handoff slide.</p>
-          </article>
-        </div>
-      </section>
-
-      <section id="process">
-        <div class="section-head">
-          <span class="label">Field protocol</span>
-          <div>
-            <h2>How a problem becomes a shipped surface</h2>
-            <p>Six stages from understanding to monitoring. Order matters; skipping research is how uninstall rates happen.</p>
-          </div>
-        </div>
-        <div class="protocol">
-          <article class="step">
-            <div class="num">STEP 01</div>
-            <h3>Research</h3>
-            <p>Problem space, possible solutions, and the customer as they actually behave.</p>
-          </article>
-          <article class="step">
-            <div class="num">STEP 02</div>
-            <h3>User journey</h3>
-            <p>Personas, journeys, and decision points where friction or drop-off hides.</p>
-          </article>
-          <article class="step">
-            <div class="num">STEP 03</div>
-            <h3>Design exploration</h3>
-            <p>Go wide. Test, iterate, collaborate through the real constraints.</p>
-          </article>
-          <article class="step">
-            <div class="num">STEP 04</div>
-            <h3>Design refinement</h3>
-            <p>Choose a direction. Polish visual design, document decisions, prepare handoff.</p>
-          </article>
-          <article class="step">
-            <div class="num">STEP 05</div>
-            <h3>Handoff</h3>
-            <p>Partner with engineering and product so implementation matches intent.</p>
-          </article>
-          <article class="step">
-            <div class="num">STEP 06</div>
-            <h3>Monitoring</h3>
-            <p>Live is not done. Track the metrics that prove success — or demand the next pass.</p>
-          </article>
-        </div>
-      </section>
-
-      <section id="timeline">
-        <div class="section-head">
-          <span class="label">Career log</span>
-          <div>
-            <h2>Where the fieldwork happened</h2>
-            <p>From graphic craft through research internships into product ownership.</p>
-          </div>
-        </div>
-        <div class="timeline">
-          <article class="tl-item">
-            <span class="label">Apr 2022 – Present</span>
-            <h3>Product / UX / Web Designer — Freelance</h3>
-            <p>0→1 products, UX audits, brand systems. Turns, Gadivan, LetsConnect, and a long client list across education, wellness, logistics, and consumer apps.</p>
-          </article>
-          <article class="tl-item">
-            <span class="label">Apr 2021 – Mar 2022</span>
-            <h3>UX Designer — Thence</h3>
-            <p>Competitive analysis, research, wireframes, prototypes, testing. Asian Paints dealer portal, Boost360 onboarding, Shiprocket marketing site. Mentored interns.</p>
-          </article>
-          <article class="tl-item">
-            <span class="label">Dec 2019 – Apr 2020</span>
-            <h3>UX Research Intern — Hureo</h3>
-            <p>Wikipedia KaiOS study: recruitment, questionnaires, F2F interviews in multiple cities, personas, journey maps, research reports.</p>
-          </article>
-          <article class="tl-item">
-            <span class="label">2017 – 2019</span>
-            <h3>Graphic design foundations</h3>
-            <p>HappleyFit and Skillovate internships plus freelance graphic work — logos, print, packaging, WordPress, social, and exhibition design.</p>
-          </article>
-        </div>
-      </section>
-
-      <section id="about">
-        <div class="section-head">
-          <span class="label">Subject notes</span>
-          <div>
-            <h2>About the designer in the field notes</h2>
-            <p>Self-taught Product/UX designer with a Computer Engineering degree and a bias for making complex things simple.</p>
-          </div>
-        </div>
-        <div class="about-grid">
-          <div class="about-copy">
-            <p>I design products that users love, for brands that care. That’s it. I hate jargon — no synergizing aesthetics, no paradigmatic evolutions.</p>
-            <p>Curious generalist: field research, usability testing, web and mobile apps, logos, print, packaging, and currently re-learning to code so ideas ship faster.</p>
-            <p>When I’m not designing, I’m with my dog Jerry. He says hi.</p>
-            <p class="clients"><span class="label" style="display:block;margin-bottom:8px;">Selected clients</span>
-              Thence · LearnApp · Turns · Gadivan · LetsConnect · Parentverse · Venyou · Sharent · Spirinova · Gorico · RedShilliz · DGlobalist · Pahoti Wellness · Ivy Malik · PhotoFinder · Olsub · Learn Theta · and more
-            </p>
-          </div>
-          <aside class="about-side">
-            <h3>Toolkit</h3>
-            <div class="chip-list">
-              <span>Figma</span><span>FigJam</span><span>Miro</span><span>Framer</span>
-              <span>Adobe XD</span><span>Illustrator</span><span>Photoshop</span>
-              <span>Webflow</span><span>Protopie</span>
-            </div>
-            <h3 style="margin-top:24px;">Ask me about</h3>
-            <div class="chip-list">
-              <span>Indie dog</span><span>Computers</span><span>Personal finance</span>
-              <span>Hip-hop</span><span>Video games</span><span>Education</span>
-            </div>
-            <h3 style="margin-top:24px;">Education</h3>
-            <p style="font-size:14px;color:var(--muted);">B.E. Computer Engineering · SPPU · 2017–2021</p>
-          </aside>
-        </div>
-      </section>
-
-      <section id="contact" style="padding:0;border:0;">
-        <div class="contact-panel">
-          <div>
-            <span class="label" style="color:#9bb0c3;">Next field assignment</span>
-            <h2>If you have a hard product problem, send the brief.</h2>
-            <p>Remote from Jaipur, collaborating worldwide. Best fit: research-heavy UX, 0→1 product, or redesigns where metrics actually matter.</p>
-          </div>
-          <ul class="contact-list">
-            <li><a href="mailto:madebynaman@gmail.com">madebynaman@gmail.com</a></li>
-            <li><a href="https://www.madebynaman.com">madebynaman.com</a></li>
-            <li><a href="https://www.linkedin.com/in/madebynaman/">LinkedIn · madebynaman</a></li>
-            <li><a href="tel:+918208369219">+91 82083 69219</a></li>
-          </ul>
-        </div>
-      </section>
-
-      <footer>
-        <span>Naman Sharma · Product / UX Designer · Field Report d1</span>
-        <span>Evidence · craft · no jargon</span>
-      </footer>
+      </article>
     </div>
+  </section>
+
+  <section id="process" aria-labelledby="process-title">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="section-tag">Process</div>
+        <div>
+          <h2 class="section-title" id="process-title">Six stages. No theater.</h2>
+          <p class="section-sub">Research through monitoring — because live doesn’t mean finished.</p>
+        </div>
+      </div>
+      <div class="process-rail">
+        <div class="process-step"><div class="n">01</div><h3>Research</h3><p>Problem, possibilities, customers.</p></div>
+        <div class="process-step"><div class="n">02</div><h3>User Journey</h3><p>Personas, journeys, decision points.</p></div>
+        <div class="process-step"><div class="n">03</div><h3>Exploration</h3><p>Go wide. Test. Collaborate.</p></div>
+        <div class="process-step"><div class="n">04</div><h3>Refinement</h3><p>Polish visuals. Document decisions.</p></div>
+        <div class="process-step"><div class="n">05</div><h3>Handoff</h3><p>Partner with eng &amp; product.</p></div>
+        <div class="process-step"><div class="n">06</div><h3>Monitoring</h3><p>Track the metrics that matter.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="path" aria-labelledby="path-title">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="section-tag">Path</div>
+        <div>
+          <h2 class="section-title" id="path-title">Career timeline</h2>
+        </div>
+      </div>
+      <div class="timeline">
+        <div class="tl-item current">
+          <div class="tl-when">Apr 2022 – Present</div>
+          <h3>Product / UX / Web Designer — Freelance</h3>
+          <p>0→1 products, UX education for clients, measurable impact on satisfaction and conversion. Clients include Turns, Gadivan, LetsConnect, LearnApp, and more.</p>
+        </div>
+        <div class="tl-item">
+          <div class="tl-when">Apr 2021 – Mar 2022</div>
+          <h3>UX Designer — Thence</h3>
+          <p>Competitive analysis, research, wireframes, prototypes, testing. Mentored interns. Asian Paints, Boost360, Shiprocket.</p>
+        </div>
+        <div class="tl-item">
+          <div class="tl-when">Dec 2019 – Apr 2020</div>
+          <h3>UX Research Intern — Hureo</h3>
+          <p>Wikipedia / KaiOS field research across cities. Recruitment, interviews, personas, journey maps, reports.</p>
+        </div>
+        <div class="tl-item">
+          <div class="tl-when">2017 – 2019</div>
+          <h3>Graphic design foundations</h3>
+          <p>HappleyFit, Skillovate, and freelance graphic work — logos, print, social, packaging — before the full shift into product/UX.</p>
+        </div>
+      </div>
+
+      <div style="margin-top:2.5rem">
+        <div class="section-tag" style="margin-bottom:1rem">Selected clients</div>
+        <div class="clients">
+          <span class="client">Thence</span>
+          <span class="client">LearnApp</span>
+          <span class="client">Turns</span>
+          <span class="client">Gadivan</span>
+          <span class="client">LetsConnect</span>
+          <span class="client">Parentverse</span>
+          <span class="client">Venyou</span>
+          <span class="client">Sharent</span>
+          <span class="client">Spirinova</span>
+          <span class="client">Gorico</span>
+          <span class="client">RedShilliz</span>
+          <span class="client">DGlobalist</span>
+          <span class="client">Pahoti Wellness</span>
+          <span class="client">Ivy Malik</span>
+          <span class="client">PhotoFinder</span>
+          <span class="client">Olsub</span>
+          <span class="client">Learn Theta</span>
+        </div>
+      </div>
+
+      <div class="ask-about">
+        <h3>Ask me about</h3>
+        <div class="ask-pills">
+          <span>My indie dog</span>
+          <span>Computers &amp; technology</span>
+          <span>Personal finance &amp; investing</span>
+          <span>Hip-hop</span>
+          <span>Video games</span>
+          <span>Education</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" aria-labelledby="contact-title" style="padding-bottom:3rem">
+    <div class="wrap">
+      <div class="contact-block">
+        <h2 id="contact-title">Got a messy product problem?</h2>
+        <p>I’m available for product/UX work remotely from Jaipur. Send the brief, the constraint, or just the confusing part — I’ll meet you there.</p>
+        <div class="contact-links">
+          <a href="mailto:madebynaman@gmail.com">Email Naman</a>
+          <a class="secondary" href="https://www.linkedin.com/in/madebynaman/" rel="noopener">LinkedIn</a>
+          <a class="secondary" href="https://www.madebynaman.com" rel="noopener">madebynaman.com</a>
+          <a class="secondary" href="tel:+918208369219">+91 82083 69219</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap" style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;width:100%">
+    <span>© Naman Sharma · Product/UX Designer</span>
+    <span>Direction d1 — Evidence Room · B.E. Computer Engineering, SPPU</span>
   </div>
+</footer>
+
 </body>
 </html>

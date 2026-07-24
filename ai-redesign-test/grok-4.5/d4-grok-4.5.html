@@ -1,912 +1,467 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Naman Sharma — Gallery Quiet</title>
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Naman Sharma — Plain Speak</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --wall: #fafaf8;
-    --plaster: #f0efea;
-    --ink: #1e1e1c;
-    --charcoal: #3a3a36;
-    --muted: #7a7a72;
-    --line: #d8d6ce;
-    --teal: #2a6b63;
-    --teal-soft: #e4f0ee;
-    --label: #9a9890;
-    --display: "Cormorant Garamond", "Palatino Linotype", Palatino, serif;
-    --sans: "Outfit", system-ui, sans-serif;
-  }
+:root {
+  --bg: #F3F4F2;
+  --bg-warm: #EEF0EC;
+  --ink: #141414;
+  --ink-2: #3A3A3A;
+  --muted: #6E6E6E;
+  --line: #D5D7D2;
+  --hi: #FFE566;
+  --hi-deep: #F0D24A;
+  --strike: #E24B4B;
+  --paper: #FFFFFF;
+  --display: "Newsreader", "Georgia", "Times New Roman", serif;
+  --body: "DM Sans", "Segoe UI", system-ui, sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: 1.125rem;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: var(--ink); text-underline-offset: 0.18em; }
+a:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+.wrap { width: min(720px, calc(100% - 2.5rem)); margin-inline: auto; }
+.wrap-wide { width: min(980px, calc(100% - 2.5rem)); margin-inline: auto; }
 
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
-  @media (prefers-reduced-motion: reduce) {
-    html { scroll-behavior: auto; }
-    * { animation: none !important; transition: none !important; }
-  }
+.nav {
+  position: sticky; top: 0; z-index: 30;
+  background: rgba(243, 244, 242, 0.94);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--line);
+}
+.nav-inner {
+  width: min(980px, calc(100% - 2.5rem)); margin: 0 auto;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 0.85rem 0; gap: 1rem; flex-wrap: wrap;
+}
+.nav-brand {
+  font-family: var(--display); font-weight: 600; font-size: 1.15rem;
+  text-decoration: none; color: var(--ink);
+}
+.nav-links { display: flex; gap: 1.25rem; list-style: none; flex-wrap: wrap; }
+.nav-links a {
+  text-decoration: none; font-size: 0.875rem; font-weight: 600; color: var(--ink-2);
+}
+.nav-links a:hover { text-decoration: underline; }
 
-  body {
-    font-family: var(--sans);
-    background: var(--wall);
-    color: var(--ink);
-    line-height: 1.6;
-    font-size: 16px;
-    font-weight: 400;
-  }
+.hero { padding: 4.5rem 0 3rem; }
+.hero .who {
+  font-size: 0.8rem; font-weight: 700; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--muted); margin-bottom: 1.5rem;
+}
+.hero h1 {
+  font-family: var(--display);
+  font-size: clamp(2.4rem, 5vw, 3.6rem);
+  font-weight: 600; line-height: 1.15;
+  letter-spacing: -0.025em; margin-bottom: 2rem;
+}
 
-  a { color: var(--teal); text-decoration: none; }
-  a:hover { text-decoration: underline; text-underline-offset: 3px; }
-  a:focus-visible { outline: 2px solid var(--teal); outline-offset: 3px; }
+/* Signature: jargon strike block */
+.jargon-block {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  padding: 1.75rem 1.5rem;
+  margin-bottom: 1.75rem;
+  position: relative;
+}
+.jargon-block::before {
+  content: "What I don’t say";
+  position: absolute; top: -0.65rem; left: 1rem;
+  background: var(--hi); font-size: 0.7rem; font-weight: 700;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  padding: 0.2rem 0.5rem;
+}
+.jargon-block p {
+  font-family: var(--display); font-size: 1.15rem; line-height: 1.55;
+  color: var(--muted);
+}
+.jargon-block .strike {
+  text-decoration: line-through;
+  text-decoration-color: var(--strike);
+  text-decoration-thickness: 2px;
+}
+.plain-line {
+  font-family: var(--display);
+  font-size: clamp(1.4rem, 3vw, 1.85rem);
+  font-weight: 600; line-height: 1.3;
+  background: linear-gradient(180deg, transparent 55%, var(--hi) 55%);
+  display: inline;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+.hero-lead {
+  margin-top: 1.75rem; color: var(--ink-2); max-width: 42ch;
+}
+.hero-actions { margin-top: 1.75rem; display: flex; flex-wrap: wrap; gap: 0.75rem; }
+.btn {
+  display: inline-flex; padding: 0.7rem 1.1rem; font-weight: 700;
+  font-size: 0.9rem; text-decoration: none; border: 1.5px solid var(--ink);
+}
+.btn-fill { background: var(--ink); color: var(--bg); }
+.btn-fill:hover { background: var(--ink-2); color: var(--bg); }
+.btn-line { background: transparent; color: var(--ink); }
+.btn-line:hover { background: var(--hi); }
 
-  /* Museum header */
-  .museum-bar {
-    position: sticky;
-    top: 0;
-    z-index: 40;
-    background: rgba(250,250,248,0.92);
-    backdrop-filter: blur(8px);
-    border-bottom: 1px solid var(--line);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 16px 48px;
-    gap: 20px;
-    flex-wrap: wrap;
-  }
-  .museum-bar .logo {
-    font-family: var(--display);
-    font-size: 22px;
-    font-weight: 500;
-    letter-spacing: 0.02em;
-    color: var(--ink);
-    text-decoration: none;
-  }
-  .museum-bar .logo span {
-    font-family: var(--sans);
-    font-size: 11px;
-    font-weight: 400;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--muted);
-    display: block;
-    margin-top: 2px;
-  }
-  .museum-bar nav {
-    display: flex;
-    gap: 28px;
-    flex-wrap: wrap;
-  }
-  .museum-bar nav a {
-    font-size: 13px;
-    font-weight: 400;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: var(--charcoal);
-    text-decoration: none;
-  }
-  .museum-bar nav a:hover { color: var(--teal); }
+section { padding: 3.5rem 0; }
+.sec-label {
+  font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--muted); margin-bottom: 0.75rem;
+}
+.sec-title {
+  font-family: var(--display);
+  font-size: clamp(1.7rem, 3vw, 2.3rem);
+  font-weight: 600; letter-spacing: -0.02em; margin-bottom: 1rem;
+  line-height: 1.2;
+}
+.prose p { margin-bottom: 1rem; color: var(--ink-2); }
+.prose strong { color: var(--ink); font-weight: 600; }
 
-  .room {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 0 48px 80px;
-  }
+.aside {
+  border-left: 4px solid var(--hi);
+  padding: 0.25rem 0 0.25rem 1.15rem;
+  margin: 1.75rem 0;
+  font-family: var(--display); font-size: 1.2rem; font-style: italic;
+  color: var(--ink);
+}
 
-  /* Accession label component */
-  .accession {
-    font-family: var(--sans);
-    font-size: 11px;
-    font-weight: 400;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--label);
-    line-height: 1.7;
-  }
-  .accession strong {
-    color: var(--charcoal);
-    font-weight: 500;
-  }
+.principles { display: grid; gap: 1rem; }
+.principle {
+  display: grid; grid-template-columns: 7rem 1fr; gap: 1rem;
+  padding: 1.15rem 0; border-bottom: 1px solid var(--line);
+}
+@media (max-width: 560px) { .principle { grid-template-columns: 1fr; gap: 0.25rem; } }
+.principle h3 {
+  font-family: var(--display); font-size: 1.15rem; font-weight: 600;
+}
+.principle p { font-size: 1rem; color: var(--ink-2); }
 
-  /* Hero wall */
-  .hero-wall {
-    padding: 100px 0 80px;
-    text-align: center;
-    border-bottom: 1px solid var(--line);
-    margin-bottom: 80px;
-  }
-  .hero-wall .accession { margin-bottom: 28px; }
-  .hero-wall h1 {
-    font-family: var(--display);
-    font-size: clamp(42px, 7vw, 72px);
-    font-weight: 500;
-    line-height: 1.1;
-    letter-spacing: -0.02em;
-    max-width: 16ch;
-    margin: 0 auto 24px;
-    color: var(--ink);
-  }
-  .hero-wall .lede {
-    font-family: var(--display);
-    font-size: clamp(18px, 2.2vw, 22px);
-    font-weight: 400;
-    font-style: italic;
-    color: var(--charcoal);
-    max-width: 36ch;
-    margin: 0 auto 40px;
-    line-height: 1.45;
-  }
-  .hero-wall .actions {
-    display: flex;
-    justify-content: center;
-    gap: 16px;
-    flex-wrap: wrap;
-  }
-  .btn {
-    font-family: var(--sans);
-    font-size: 12px;
-    font-weight: 500;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    padding: 14px 28px;
-    text-decoration: none;
-    border: 1px solid var(--ink);
-    color: var(--ink);
-    transition: background 0.2s, color 0.2s;
-  }
-  .btn-fill {
-    background: var(--ink);
-    color: var(--wall);
-  }
-  .btn-fill:hover { background: var(--teal); border-color: var(--teal); color: var(--wall); text-decoration: none; }
-  .btn-line:hover { background: var(--plaster); text-decoration: none; color: var(--ink); }
+/* Essay interruptions = case studies */
+.case {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  margin: 2.5rem 0;
+  overflow: hidden;
+}
+.case-visual {
+  height: 200px; position: relative;
+  background: var(--bg-warm);
+  border-bottom: 1px solid var(--line);
+}
+.case-visual .ph {
+  position: absolute; inset: 0; display: grid; place-items: center;
+  padding: 1.5rem; text-align: center;
+}
+.case-visual .ph-frame {
+  width: 70%; height: 70%;
+  border: 2px dashed var(--line);
+  background:
+    linear-gradient(135deg, rgba(255,229,102,0.45), transparent 50%),
+    repeating-linear-gradient(0deg, transparent, transparent 14px, rgba(20,20,20,0.04) 14px, rgba(20,20,20,0.04) 15px);
+  display: grid; place-items: center;
+}
+.case-visual .ph-frame span {
+  font-size: 0.75rem; font-weight: 700; letter-spacing: 0.04em;
+  text-transform: uppercase; color: var(--muted); max-width: 20ch; line-height: 1.4;
+  background: var(--paper); padding: 0.5rem 0.75rem; border: 1px solid var(--line);
+}
+.case-body { padding: 1.75rem 1.5rem 2rem; }
+.case-meta {
+  font-size: 0.75rem; font-weight: 700; letter-spacing: 0.06em;
+  text-transform: uppercase; color: var(--muted); margin-bottom: 0.5rem;
+}
+.case h3 {
+  font-family: var(--display); font-size: 1.5rem; font-weight: 600;
+  margin-bottom: 0.75rem; letter-spacing: -0.015em;
+}
+.case .problem {
+  background: var(--hi); padding: 0.85rem 1rem;
+  font-family: var(--display); font-size: 1.1rem; margin-bottom: 1rem;
+}
+.case ul { margin: 0 0 1.15rem 1.1rem; color: var(--ink-2); }
+.case li { margin-bottom: 0.35rem; }
+.case .result {
+  font-weight: 700; font-size: 1.05rem;
+  border-top: 1px solid var(--line); padding-top: 1rem;
+}
+.case .result em {
+  font-family: var(--display); font-style: normal; font-size: 1.35rem;
+  background: var(--hi); padding: 0 0.2rem;
+}
 
-  /* Outcome frieze */
-  .frieze {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0;
-    border: 1px solid var(--line);
-    margin: 0 auto 80px;
-    max-width: 1100px;
-  }
-  .frieze-cell {
-    padding: 32px 28px;
-    text-align: center;
-    border-right: 1px solid var(--line);
-  }
-  .frieze-cell:last-child { border-right: 0; }
-  .frieze-cell .n {
-    font-family: var(--display);
-    font-size: 40px;
-    font-weight: 500;
-    color: var(--teal);
-    line-height: 1;
-    margin: 8px 0 10px;
-  }
-  .frieze-cell p {
-    font-size: 13px;
-    color: var(--muted);
-    letter-spacing: 0.02em;
-  }
+.process-list { counter-reset: step; list-style: none; }
+.process-list li {
+  counter-increment: step;
+  display: grid; grid-template-columns: 3rem 1fr; gap: 0.75rem;
+  padding: 1rem 0; border-bottom: 1px solid var(--line);
+}
+.process-list li::before {
+  content: counter(step, decimal-leading-zero);
+  font-family: var(--display); font-weight: 600; font-size: 1.2rem; color: var(--muted);
+}
+.process-list h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.2rem; }
+.process-list p { font-size: 0.95rem; color: var(--ink-2); }
 
-  /* Section titles */
-  .room-title {
-    text-align: center;
-    margin-bottom: 56px;
-  }
-  .room-title .accession { margin-bottom: 12px; }
-  .room-title h2 {
-    font-family: var(--display);
-    font-size: clamp(32px, 4vw, 44px);
-    font-weight: 500;
-    letter-spacing: -0.01em;
-  }
-  .room-title p {
-    margin-top: 12px;
-    color: var(--muted);
-    font-size: 15px;
-    max-width: 42ch;
-    margin-left: auto;
-    margin-right: auto;
-  }
+.timeline { border-top: 1px solid var(--line); }
+.tl {
+  padding: 1.25rem 0; border-bottom: 1px solid var(--line);
+}
+.tl-when { font-size: 0.8rem; font-weight: 700; color: var(--muted); margin-bottom: 0.25rem; }
+.tl h3 { font-family: var(--display); font-size: 1.2rem; font-weight: 600; }
+.tl p { color: var(--ink-2); font-size: 0.98rem; margin-top: 0.3rem; }
 
-  /* Gallery hang — works */
-  .hang {
-    display: flex;
-    flex-direction: column;
-    gap: 96px;
-    margin-bottom: 100px;
-  }
+.clients {
+  display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 1.5rem;
+}
+.client {
+  font-size: 0.85rem; border: 1px solid var(--line);
+  padding: 0.4rem 0.7rem; background: var(--paper); color: var(--ink-2);
+}
 
-  .piece {
-    display: grid;
-    grid-template-columns: 1.4fr 0.9fr;
-    gap: 48px;
-    align-items: start;
-  }
-  .piece:nth-child(even) {
-    grid-template-columns: 0.9fr 1.4fr;
-  }
-  .piece:nth-child(even) .piece-frame { order: 2; }
-  .piece:nth-child(even) .piece-label { order: 1; }
+.ask {
+  margin-top: 2rem; padding: 1.25rem; background: var(--paper); border: 1px solid var(--line);
+}
+.ask h3 { font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.75rem; }
+.ask-pills { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.ask-pills span {
+  font-size: 0.85rem; background: var(--hi); padding: 0.3rem 0.6rem; font-weight: 600;
+}
 
-  .piece-frame {
-    background: var(--plaster);
-    border: 1px solid var(--line);
-    padding: 16px;
-    position: relative;
-  }
-  .piece-frame::before {
-    content: "";
-    position: absolute;
-    inset: 8px;
-    border: 1px solid rgba(30,30,28,0.08);
-    pointer-events: none;
-  }
-  .frame-inner {
-    min-height: 340px;
-    position: relative;
-    background: var(--wall);
-  }
+.contact {
+  background: var(--ink); color: var(--bg); padding: 3rem 0; margin-top: 2rem;
+}
+.contact .wrap h2 {
+  font-family: var(--display); font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+  font-weight: 600; margin-bottom: 0.75rem;
+}
+.contact p { color: rgba(243,244,242,0.7); margin-bottom: 1.5rem; max-width: 40ch; }
+.contact a {
+  color: var(--ink); background: var(--hi); text-decoration: none;
+  font-weight: 700; padding: 0.7rem 1rem; margin: 0 0.5rem 0.5rem 0;
+  display: inline-block;
+}
+.contact a.ghost {
+  background: transparent; color: var(--bg); border: 1px solid rgba(243,244,242,0.3);
+}
 
-  .piece-label {
-    padding-top: 8px;
-  }
-  .piece-label h3 {
-    font-family: var(--display);
-    font-size: 28px;
-    font-weight: 500;
-    margin: 12px 0 14px;
-    line-height: 1.15;
-  }
-  .piece-label .medium {
-    font-size: 13px;
-    color: var(--muted);
-    margin-bottom: 16px;
-    line-height: 1.5;
-  }
-  .piece-label .wall-text {
-    font-family: var(--display);
-    font-size: 18px;
-    font-style: italic;
-    color: var(--charcoal);
-    line-height: 1.5;
-    margin-bottom: 18px;
-    border-left: 2px solid var(--teal);
-    padding-left: 16px;
-  }
-  .piece-label .impact {
-    font-size: 14px;
-    font-weight: 500;
-    color: var(--teal);
-    letter-spacing: 0.02em;
-  }
-  .piece-label .dims {
-    margin-top: 20px;
-    padding-top: 16px;
-    border-top: 1px solid var(--line);
-    font-size: 12px;
-    color: var(--label);
-    letter-spacing: 0.04em;
-  }
-
-  /* Placeholders — quiet gallery art */
-  .ph {
-    width: 100%;
-    height: 100%;
-    min-height: 340px;
-    display: grid;
-    place-items: center;
-    position: relative;
-  }
-  .ph-cap {
-    position: absolute;
-    left: 12px; right: 12px; bottom: 12px;
-    font-size: 10px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--muted);
-    background: rgba(250,250,248,0.95);
-    border: 1px solid var(--line);
-    padding: 8px 10px;
-    text-align: center;
-  }
-
-  .ph-ap {
-    background:
-      linear-gradient(180deg, #e8f0ee 0%, var(--wall) 100%);
-  }
-  .ph-ap .canvas {
-    width: 70%;
-    height: 58%;
-    border: 1px solid var(--line);
-    background: white;
-    display: grid;
-    grid-template-rows: 20% 1fr;
-    box-shadow: 0 20px 40px rgba(30,30,28,0.06);
-  }
-  .ph-ap .canvas-top { background: var(--teal); opacity: 0.85; }
-  .ph-ap .canvas-body {
-    padding: 14px;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 8px;
-  }
-  .ph-ap .sq {
-    background: var(--plaster);
-    border: 1px solid var(--line);
-  }
-
-  .ph-b360 {
-    background: radial-gradient(ellipse at center, var(--teal-soft), var(--plaster));
-  }
-  .ph-b360 .device {
-    width: 100px;
-    height: 180px;
-    border: 1px solid var(--teal);
-    border-radius: 14px;
-    background: var(--wall);
-    padding: 16px 12px;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    box-shadow: 0 16px 32px rgba(42,107,99,0.12);
-  }
-  .ph-b360 .device .bar {
-    height: 4px;
-    background: var(--line);
-    border-radius: 2px;
-  }
-  .ph-b360 .device .cta {
-    margin-top: auto;
-    height: 24px;
-    background: var(--teal);
-    border-radius: 4px;
-    opacity: 0.8;
-  }
-
-  .ph-wiki {
-    background:
-      repeating-linear-gradient(
-        0deg,
-        transparent,
-        transparent 28px,
-        rgba(42,107,99,0.06) 28px,
-        rgba(42,107,99,0.06) 29px
-      ),
-      var(--wall);
-  }
-  .ph-wiki .folio {
-    width: 65%;
-    border: 1px solid var(--line);
-    background: var(--plaster);
-    padding: 24px 20px;
-    box-shadow: 0 12px 28px rgba(30,30,28,0.05);
-  }
-  .ph-wiki .folio-line {
-    height: 3px;
-    background: var(--line);
-    margin-bottom: 12px;
-  }
-  .ph-wiki .folio-line:nth-child(1) { width: 40%; background: var(--teal); opacity: 0.5; }
-  .ph-wiki .folio-line:nth-child(2) { width: 90%; }
-  .ph-wiki .folio-line:nth-child(3) { width: 75%; }
-  .ph-wiki .folio-line:nth-child(4) { width: 85%; }
-
-  .ph-free {
-    background: var(--plaster);
-  }
-  .ph-free .triptych {
-    display: flex;
-    gap: 12px;
-    align-items: flex-end;
-  }
-  .ph-free .panel {
-    width: 70px;
-    border: 1px solid var(--line);
-    background: var(--wall);
-  }
-  .ph-free .panel:nth-child(1) { height: 100px; }
-  .ph-free .panel:nth-child(2) { height: 140px; background: var(--teal-soft); border-color: #b8d4d0; }
-  .ph-free .panel:nth-child(3) { height: 90px; }
-
-  /* Principles as wall plaques */
-  .plaques {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 24px;
-    margin-bottom: 100px;
-  }
-  .plaque {
-    border: 1px solid var(--line);
-    background: var(--wall);
-    padding: 32px 28px;
-    position: relative;
-  }
-  .plaque::after {
-    content: "";
-    position: absolute;
-    top: 12px; right: 12px;
-    width: 6px; height: 6px;
-    border-radius: 50%;
-    background: var(--teal);
-    opacity: 0.5;
-  }
-  .plaque h3 {
-    font-family: var(--display);
-    font-size: 24px;
-    font-weight: 500;
-    margin: 10px 0 12px;
-  }
-  .plaque p {
-    font-size: 15px;
-    color: var(--charcoal);
-    line-height: 1.6;
-  }
-
-  /* Process as numbered wall labels only when sequential — ok here */
-  .process-rail {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1px;
-    background: var(--line);
-    border: 1px solid var(--line);
-    margin-bottom: 100px;
-  }
-  .proc {
-    background: var(--wall);
-    padding: 28px 24px;
-    min-height: 160px;
-  }
-  .proc .accession { margin-bottom: 10px; }
-  .proc h3 {
-    font-family: var(--display);
-    font-size: 22px;
-    font-weight: 500;
-    margin-bottom: 8px;
-  }
-  .proc p { font-size: 14px; color: var(--muted); }
-
-  /* Timeline as catalog entries */
-  .catalog {
-    border-top: 1px solid var(--line);
-    margin-bottom: 100px;
-  }
-  .catalog-row {
-    display: grid;
-    grid-template-columns: 160px 1fr;
-    gap: 32px;
-    padding: 28px 0;
-    border-bottom: 1px solid var(--line);
-  }
-  .catalog-row h3 {
-    font-family: var(--display);
-    font-size: 22px;
-    font-weight: 500;
-    margin-bottom: 6px;
-  }
-  .catalog-row p {
-    font-size: 14px;
-    color: var(--muted);
-    max-width: 56ch;
-  }
-
-  /* About salon */
-  .salon {
-    display: grid;
-    grid-template-columns: 1.3fr 0.9fr;
-    gap: 48px;
-    margin-bottom: 80px;
-    padding-top: 20px;
-  }
-  .salon-copy h2 {
-    font-family: var(--display);
-    font-size: 36px;
-    font-weight: 500;
-    margin: 12px 0 20px;
-  }
-  .salon-copy p {
-    font-size: 16px;
-    color: var(--charcoal);
-    margin-bottom: 14px;
-    max-width: 48ch;
-  }
-  .salon-side {
-    background: var(--plaster);
-    border: 1px solid var(--line);
-    padding: 28px;
-  }
-  .salon-side h3 {
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--label);
-    margin-bottom: 14px;
-  }
-  .salon-side + .salon-side,
-  .salon-side .block + .block { margin-top: 28px; }
-  .salon-side ul {
-    list-style: none;
-    font-size: 14px;
-    color: var(--charcoal);
-    line-height: 1.9;
-  }
-
-  /* Contact alcove */
-  .alcove {
-    background: var(--ink);
-    color: var(--wall);
-    padding: 64px 48px;
-    text-align: center;
-    margin: 0 -48px;
-  }
-  .alcove .accession { color: #8a8a84; }
-  .alcove h2 {
-    font-family: var(--display);
-    font-size: clamp(32px, 4vw, 48px);
-    font-weight: 500;
-    margin: 16px 0 16px;
-  }
-  .alcove p {
-    color: #a8a8a0;
-    max-width: 40ch;
-    margin: 0 auto 32px;
-    font-family: var(--display);
-    font-style: italic;
-    font-size: 18px;
-  }
-  .alcove-links {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 12px 28px;
-  }
-  .alcove-links a {
-    color: var(--wall);
-    font-size: 13px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    border-bottom: 1px solid rgba(250,250,248,0.3);
-    padding-bottom: 2px;
-    text-decoration: none;
-  }
-  .alcove-links a:hover { color: #7ecfc4; border-color: #7ecfc4; }
-
-  footer {
-    text-align: center;
-    padding: 40px 24px 60px;
-    font-size: 11px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--label);
-  }
-
-  @media (max-width: 900px) {
-    .museum-bar, .room { padding-left: 20px; padding-right: 20px; }
-    .alcove { margin: 0 -20px; padding: 48px 20px; }
-    .piece, .piece:nth-child(even), .plaques, .salon, .process-rail, .frieze {
-      grid-template-columns: 1fr;
-    }
-    .piece:nth-child(even) .piece-frame { order: 0; }
-    .frieze-cell { border-right: 0; border-bottom: 1px solid var(--line); }
-    .frieze-cell:last-child { border-bottom: 0; }
-    .catalog-row { grid-template-columns: 1fr; gap: 8px; }
-    .process-rail { grid-template-columns: 1fr; }
-  }
+footer {
+  padding: 2rem 0 3rem; font-size: 0.8rem; color: var(--muted);
+}
+footer .wrap-wide {
+  display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem;
+}
 </style>
 </head>
 <body>
-  <header class="museum-bar">
-    <a class="logo" href="#top">
-      Naman Sharma
-      <span>Product / UX · Collection</span>
-    </a>
-    <nav>
-      <a href="#collection">Collection</a>
-      <a href="#principles">Principles</a>
-      <a href="#process">Process</a>
-      <a href="#catalog">Catalog</a>
-      <a href="#about">About</a>
-      <a href="#contact">Visit</a>
-    </nav>
-  </header>
+<nav class="nav" aria-label="Primary">
+  <div class="nav-inner">
+    <a class="nav-brand" href="#top">Naman Sharma</a>
+    <ul class="nav-links">
+      <li><a href="#work">Work</a></li>
+      <li><a href="#process">Process</a></li>
+      <li><a href="#path">Path</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
 
-  <div class="room" id="top">
-    <header class="hero-wall">
-      <div class="accession">Permanent collection · 2017–present · Jaipur / remote</div>
-      <h1>Work that holds up under close looking.</h1>
-      <p class="lede">Product and UX design measured by what users complete — and what businesses keep.</p>
-      <div class="actions">
-        <a class="btn btn-fill" href="#collection">View collection</a>
-        <a class="btn btn-line" href="#contact">Arrange a visit</a>
+<main id="top">
+  <header class="hero">
+    <div class="wrap">
+      <div class="who">Product / UX Designer · Jaipur · Remote</div>
+      <h1>I design products people can use. I write like a human.</h1>
+      <div class="jargon-block">
+        <p>
+          <span class="strike">Foster innovation through synergizing aesthetics and functionality.</span>
+          <span class="strike"> Navigate the confluence of form and function.</span>
+          <span class="strike"> Orchestrate design revolutions.</span>
+          <span class="strike"> Instigate paradigmatic evolutions.</span>
+          <span class="strike"> Seamlessly integrate cutting-edge methodologies.</span>
+        </p>
       </div>
-    </header>
-
-    <div class="frieze" aria-label="Key outcomes">
-      <div class="frieze-cell">
-        <div class="accession">Asian Paints</div>
-        <div class="n">+20%</div>
-        <p>Online transaction volume</p>
-      </div>
-      <div class="frieze-cell">
-        <div class="accession">Boost360</div>
-        <div class="n">−60%</div>
-        <p>App uninstall rate</p>
-      </div>
-      <div class="frieze-cell">
-        <div class="accession">Turns</div>
-        <div class="n">$500K</div>
-        <p>Pre-seed after revamp</p>
+      <p class="plain-line">I design products that users love, for brands that care. That’s it.</p>
+      <p class="hero-lead">Self-taught Product/UX designer. Computer Science background. Research-rooted. Helps startups go 0→1 and makes complex products feel obvious.</p>
+      <div class="hero-actions">
+        <a class="btn btn-fill" href="#work">Read the work</a>
+        <a class="btn btn-line" href="mailto:madebynaman@gmail.com">Email me</a>
       </div>
     </div>
+  </header>
 
-    <section id="collection">
-      <div class="room-title">
-        <div class="accession">Gallery one</div>
-        <h2>Selected works</h2>
-        <p>Each piece is labeled with medium, problem, and what changed after it left the studio.</p>
-      </div>
-
-      <div class="hang">
-        <article class="piece">
-          <div class="piece-frame">
-            <div class="frame-inner">
-              <div class="ph ph-ap" role="img" aria-label="Placeholder: Asian Paints dealer portal">
-                <div class="canvas" aria-hidden="true">
-                  <div class="canvas-top"></div>
-                  <div class="canvas-body">
-                    <div class="sq"></div><div class="sq"></div><div class="sq"></div>
-                    <div class="sq"></div><div class="sq"></div><div class="sq"></div>
-                  </div>
-                </div>
-                <div class="ph-cap">Case-study hero — Asian Paints dealer portal</div>
-              </div>
-            </div>
-          </div>
-          <div class="piece-label">
-            <div class="accession"><strong>NS.2021.01</strong> · Thence · 2021</div>
-            <h3>Asian Paints — Dealer Portal</h3>
-            <p class="medium">UX research, UX design, UI design · multi-platform B2B portal</p>
-            <p class="wall-text">How might we digitize order placement and supply-chain tracking while raising transaction volumes and AOV?</p>
-            <p class="impact">+20% online transaction volume · higher engagement &amp; loyalty</p>
-            <p class="dims">Recommendations · loyalty · geo promotions · barcode reorder &lt;10s · role privileges</p>
-          </div>
-        </article>
-
-        <article class="piece">
-          <div class="piece-frame">
-            <div class="frame-inner">
-              <div class="ph ph-b360" role="img" aria-label="Placeholder: Boost360 onboarding">
-                <div class="device" aria-hidden="true">
-                  <div class="bar" style="width:40%"></div>
-                  <div class="bar" style="width:80%"></div>
-                  <div class="bar" style="width:65%"></div>
-                  <div class="cta"></div>
-                </div>
-                <div class="ph-cap">Project mockup — Boost360 onboarding flow</div>
-              </div>
-            </div>
-          </div>
-          <div class="piece-label">
-            <div class="accession"><strong>NS.2021.02</strong> · Thence · 2021</div>
-            <h3>Boost360 — Onboarding</h3>
-            <p class="medium">UX research, design, usability testing · mobile onboarding</p>
-            <p class="wall-text">Signup success at 20%. Uninstalls within four hours. The real issue: marketing promise vs. product reality.</p>
-            <p class="impact">Up to 60% fewer uninstalls · faster successful signup</p>
-            <p class="dims">Visual signup · USP clarity · social proof · quick website wins · skip paths</p>
-          </div>
-        </article>
-
-        <article class="piece">
-          <div class="piece-frame">
-            <div class="frame-inner">
-              <div class="ph ph-wiki" role="img" aria-label="Placeholder: Wikipedia KaiOS research">
-                <div class="folio" aria-hidden="true">
-                  <div class="folio-line"></div>
-                  <div class="folio-line"></div>
-                  <div class="folio-line"></div>
-                  <div class="folio-line"></div>
-                </div>
-                <div class="ph-cap">Research artifact — Wikipedia KaiOS field study</div>
-              </div>
-            </div>
-          </div>
-          <div class="piece-label">
-            <div class="accession"><strong>NS.2020.01</strong> · Hureo · 2020</div>
-            <h3>Wikipedia — KaiOS User Research</h3>
-            <p class="medium">Field research · personas · journey maps · 25 participants</p>
-            <p class="wall-text">Who uses JioPhones, why they choose them, and what would make Wikipedia useful on a smart feature phone?</p>
-            <p class="impact">Actionable recommendations for Wikimedia Foundation</p>
-            <p class="dims">Pune · Mumbai · Delhi · voice UI · readability · regional SEO</p>
-          </div>
-        </article>
-
-        <article class="piece">
-          <div class="piece-frame">
-            <div class="frame-inner">
-              <div class="ph ph-free" role="img" aria-label="Placeholder: freelance suite">
-                <div class="triptych" aria-hidden="true">
-                  <div class="panel"></div>
-                  <div class="panel"></div>
-                  <div class="panel"></div>
-                </div>
-                <div class="ph-cap">Project suite — Turns · Gadivan · LetsConnect</div>
-              </div>
-            </div>
-          </div>
-          <div class="piece-label">
-            <div class="accession"><strong>NS.2022+</strong> · Independent · 2021–present</div>
-            <h3>Freelance — 0→1 products</h3>
-            <p class="medium">UX, UI, web design &amp; development · multi-client practice</p>
-            <p class="wall-text">Turns: site, brand system, UX audits → conversions and $500K pre-seed. Gadivan: multi-app product from scratch. LetsConnect: 4.8★ Play Store after usability redesign.</p>
-            <p class="impact">Founder-stage outcomes with measurable traction</p>
-            <p class="dims">Brand systems · multi-stakeholder apps · store-ready product UX</p>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <section id="principles">
-      <div class="room-title">
-        <div class="accession">Gallery two</div>
-        <h2>Principles</h2>
-        <p>Beliefs that stay on the wall when the brief gets difficult.</p>
-      </div>
-      <div class="plaques">
-        <article class="plaque">
-          <div class="accession">Plaque I</div>
-          <h3>Consistency beats talent</h3>
-          <p>Daily craft compounds. I’m not the most talented designer in the room — I am the one who keeps improving.</p>
-        </article>
-        <article class="plaque">
-          <div class="accession">Plaque II</div>
-          <h3>Let curiosity guide you</h3>
-          <p>Knowing a little about a lot connects scattered information. Curiosity is how work becomes useful.</p>
-        </article>
-        <article class="plaque">
-          <div class="accession">Plaque III</div>
-          <h3>Form follows function</h3>
-          <p>Problems are solved with function first. Beauty is the extra mile that makes humans remember delight.</p>
-        </article>
-        <article class="plaque">
-          <div class="accession">Plaque IV</div>
-          <h3>Give a damn</h3>
-          <p>Founder mindset. High agency. Own the project past the handoff — success is shared responsibility.</p>
-        </article>
-      </div>
-    </section>
-
-    <section id="process">
-      <div class="room-title">
-        <div class="accession">Method room</div>
-        <h2>Process</h2>
-        <p>Six stages from understanding to monitoring. Sequence is the method.</p>
-      </div>
-      <div class="process-rail">
-        <div class="proc">
-          <div class="accession">Stage 01</div>
-          <h3>Research</h3>
-          <p>Problem space, possible solutions, and the customer as they behave.</p>
-        </div>
-        <div class="proc">
-          <div class="accession">Stage 02</div>
-          <h3>User journey</h3>
-          <p>Personas, paths, and decision points where drop-off hides.</p>
-        </div>
-        <div class="proc">
-          <div class="accession">Stage 03</div>
-          <h3>Exploration</h3>
-          <p>Go wide. Test, iterate, collaborate through real constraints.</p>
-        </div>
-        <div class="proc">
-          <div class="accession">Stage 04</div>
-          <h3>Refinement</h3>
-          <p>Choose a direction. Polish visual design. Document decisions.</p>
-        </div>
-        <div class="proc">
-          <div class="accession">Stage 05</div>
-          <h3>Handoff</h3>
-          <p>Partner with engineering and product so intent survives build.</p>
-        </div>
-        <div class="proc">
-          <div class="accession">Stage 06</div>
-          <h3>Monitoring</h3>
-          <p>Live is not done. Track the metrics that prove success.</p>
-        </div>
-      </div>
-    </section>
-
-    <section id="catalog">
-      <div class="room-title">
-        <div class="accession">Archive</div>
-        <h2>Career catalog</h2>
-      </div>
-      <div class="catalog">
-        <div class="catalog-row">
-          <div class="accession">2022 – Present</div>
-          <div>
-            <h3>Product / UX / Web Designer — Freelance</h3>
-            <p>0→1 products, UX audits, brand systems. Turns, Gadivan, LetsConnect, and a long client list across education, wellness, and consumer apps.</p>
-          </div>
-        </div>
-        <div class="catalog-row">
-          <div class="accession">2021 – 2022</div>
-          <div>
-            <h3>UX Designer — Thence</h3>
-            <p>Asian Paints, Boost360, Shiprocket. Research through testing. Mentored interns on principles and process.</p>
-          </div>
-        </div>
-        <div class="catalog-row">
-          <div class="accession">2019 – 2020</div>
-          <div>
-            <h3>UX Research Intern — Hureo</h3>
-            <p>Wikipedia KaiOS study: recruitment, F2F interviews, personas, journey maps, research reports.</p>
-          </div>
-        </div>
-        <div class="catalog-row">
-          <div class="accession">2017 – 2019</div>
-          <div>
-            <h3>Graphic design — HappleyFit, Skillovate, freelance</h3>
-            <p>Logos, print, packaging, WordPress, exhibition design, kids products — craft foundations for product work.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="salon" id="about">
-      <div class="salon-copy">
-        <div class="accession">Artist note</div>
-        <h2>About Naman</h2>
-        <p>Self-taught Product/UX designer with a Computer Engineering degree. I make complex products easy to use and help startups build 0→1.</p>
-        <p>I hate jargon. I design products users love, for brands that care. Curious generalist: field research, mobile, web, brand, print — currently re-learning to code.</p>
-        <p>When I’m not designing, I’m with Jerry, my dog. He says hi.</p>
-      </div>
-      <aside class="salon-side">
-        <div class="block">
-          <h3>Mediums</h3>
-          <ul>
-            <li>User research &amp; testing</li>
-            <li>UX / UI &amp; prototyping</li>
-            <li>Web design &amp; no-code</li>
-            <li>Branding &amp; interdisciplinary</li>
-          </ul>
-        </div>
-        <div class="block">
-          <h3>Tools</h3>
-          <ul>
-            <li>Figma, FigJam, Miro, Framer</li>
-            <li>Adobe XD, Illustrator, Photoshop</li>
-            <li>Webflow, Protopie</li>
-          </ul>
-        </div>
-        <div class="block">
-          <h3>Ask about</h3>
-          <ul>
-            <li>Indie dog · Hip-hop · Games</li>
-            <li>Personal finance · Education · Tech</li>
-          </ul>
-        </div>
-      </aside>
-    </section>
-  </div>
-
-  <section class="alcove" id="contact">
-    <div class="accession">Visiting hours · open for commissions</div>
-    <h2>If the work should feel considered — write.</h2>
-    <p>Remote from Jaipur. Worldwide. Best for research-heavy product work and founder-stage builds.</p>
-    <div class="alcove-links">
-      <a href="mailto:madebynaman@gmail.com">madebynaman@gmail.com</a>
-      <a href="https://www.madebynaman.com">madebynaman.com</a>
-      <a href="https://www.linkedin.com/in/madebynaman/">LinkedIn</a>
-      <a href="tel:+918208369219">+91 82083 69219</a>
+  <section id="about">
+    <div class="wrap prose">
+      <div class="sec-label">About</div>
+      <h2 class="sec-title">Hey, I’m Naman.</h2>
+      <p>My work is rooted in research and constant improvement. Improving people’s lives with design and tech, one pixel at a time.</p>
+      <p>Product/UX sits at the intersection of creativity, problem solving, and technology — which is why it stuck. I’m a curious generalist: field research, usability testing, web apps, mobile apps, logos, websites, print, social, packaging. I’ve done the messy range.</p>
+      <p class="aside">When I’m not designing, I’m with Jerry — my adorable furry friend. He says hi.</p>
     </div>
   </section>
 
-  <footer>Naman Sharma · Gallery Quiet d4 · Look closely</footer>
+  <section id="principles">
+    <div class="wrap">
+      <div class="sec-label">Principles</div>
+      <h2 class="sec-title">What I actually believe</h2>
+      <div class="principles">
+        <article class="principle"><h3>Consistency beats talent</h3><p>Consistent effort compounds. I’m not the most talented designer in the world — I show up and improve.</p></article>
+        <article class="principle"><h3>Let curiosity guide you</h3><p>I know a little about a lot. That helps me connect scattered information into something useful.</p></article>
+        <article class="principle"><h3>Form follows function</h3><p>Solve the need first. Then go the extra mile for delight — humans remember delight.</p></article>
+        <article class="principle"><h3>Give a damn</h3><p>Founder’s mindset. Own the project. Collaborate hard with product and engineering.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section id="work">
+    <div class="wrap">
+      <div class="sec-label">Selected work</div>
+      <h2 class="sec-title">The stories, without the fluff</h2>
+      <p style="color:var(--ink-2);margin-bottom:0.5rem">Case studies interrupted into the essay — problems, what we learned, what moved.</p>
+
+      <article class="case">
+        <div class="case-visual" aria-hidden="true">
+          <div class="ph"><div class="ph-frame"><span>Placeholder · Asian Paints dealer portal</span></div></div>
+        </div>
+        <div class="case-body">
+          <div class="case-meta">Asian Paints · Thence · 2021 · UX Research, UX, UI</div>
+          <h3>Dealer Portal</h3>
+          <p class="problem">Dealers didn’t want to call sales for every order. Competitor portals existed — and everyone hated them.</p>
+          <ul>
+            <li>End-to-end redesign of ordering &amp; supply tracking</li>
+            <li>Personalized recommendations, discounts, loyalty</li>
+            <li>Barcode reorder in under 10 seconds</li>
+          </ul>
+          <p class="result"><em>20%</em> increase in online transaction volume</p>
+        </div>
+      </article>
+
+      <article class="case">
+        <div class="case-visual" aria-hidden="true">
+          <div class="ph"><div class="ph-frame"><span>Placeholder · Boost360 onboarding</span></div></div>
+        </div>
+        <div class="case-body">
+          <div class="case-meta">Boost360 · Thence · 2021 · Research, Design, Usability Testing</div>
+          <h3>Onboarding</h3>
+          <p class="problem">Users uninstalled within 4 hours. Signup success: 20%. Average time: 30 minutes.</p>
+          <ul>
+            <li>Root cause: ads promised one thing; onboarding delivered another</li>
+            <li>Visual signup, USP clarity, social proof, quick wins</li>
+            <li>Usability testing confirmed the new flow made sense</li>
+          </ul>
+          <p class="result"><em>60%</em> decrease in uninstall rate</p>
+        </div>
+      </article>
+
+      <article class="case">
+        <div class="case-visual" aria-hidden="true">
+          <div class="ph"><div class="ph-frame"><span>Placeholder · Wikipedia KaiOS research</span></div></div>
+        </div>
+        <div class="case-body">
+          <div class="case-meta">Wikipedia × KaiOS · Hureo · 2020 · UX Research</div>
+          <h3>JioPhone field study</h3>
+          <p class="problem">Wikimedia wanted to understand JioPhone users — phone habits, Wikipedia awareness, why feature phones win.</p>
+          <ul>
+            <li>25 in-person interviews in Pune, Mumbai, Delhi</li>
+            <li>Affordability, durability, keypad, battery as motivations</li>
+            <li>Recommendations: VUI, readability, regional SEO, small-screen UI</li>
+          </ul>
+          <p class="result"><em>25</em> sessions · personas · journey maps · reports</p>
+        </div>
+      </article>
+
+      <article class="case">
+        <div class="case-visual" aria-hidden="true">
+          <div class="ph"><div class="ph-frame"><span>Placeholder · Freelance product work</span></div></div>
+        </div>
+        <div class="case-body">
+          <div class="case-meta">Freelance · 2021–Present · UX, UI, Web</div>
+          <h3>Turns, Gadivan, LetsConnect</h3>
+          <p class="problem">Founders needed 0→1 product clarity, conversion-focused sites, and usability fixes that show up in store ratings.</p>
+          <ul>
+            <li>Turns — site, brand guidelines, design system; helped raise $500K pre-seed</li>
+            <li>Gadivan — end-to-end multi-stakeholder mobile apps</li>
+            <li>LetsConnect — redesign to 4.8★ on Play Store</li>
+          </ul>
+          <p class="result"><em>$500K</em> pre-seed · <em>4.8★</em> Play Store</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section id="process">
+    <div class="wrap">
+      <div class="sec-label">Process</div>
+      <h2 class="sec-title">How the work actually happens</h2>
+      <ol class="process-list">
+        <li><div><h3>Research</h3><p>Understand the problem, options, and customer.</p></div></li>
+        <li><div><h3>User Journey</h3><p>Personas, journeys, decision-making.</p></div></li>
+        <li><div><h3>Design Exploration</h3><p>Go wide. Test. Iterate. Collaborate.</p></div></li>
+        <li><div><h3>Design Refinement</h3><p>Polish visuals. Document decisions. Prep handoff.</p></div></li>
+        <li><div><h3>Handoff</h3><p>Work with engineering and product so it ships right.</p></div></li>
+        <li><div><h3>Monitoring</h3><p>Live isn’t done. Track the metrics that mean success.</p></div></li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="path">
+    <div class="wrap">
+      <div class="sec-label">Path</div>
+      <h2 class="sec-title">Where I’ve worked</h2>
+      <div class="timeline">
+        <div class="tl"><div class="tl-when">Apr 2022 – Present</div><h3>Product / UX / Web Designer — Freelance</h3><p>0→1 products. Helping clients measure UX impact. Turns, Gadivan, LetsConnect, LearnApp, and more.</p></div>
+        <div class="tl"><div class="tl-when">Apr 2021 – Mar 2022</div><h3>UX Designer — Thence</h3><p>Research through testing. Mentored interns. Asian Paints, Boost360, Shiprocket.</p></div>
+        <div class="tl"><div class="tl-when">Dec 2019 – Apr 2020</div><h3>UX Research Intern — Hureo</h3><p>Wikipedia / KaiOS field research across cities.</p></div>
+        <div class="tl"><div class="tl-when">2017 – 2019</div><h3>Graphic design — HappleyFit, Skillovate, freelance</h3><p>Logos, print, social, packaging — the foundation before product/UX.</p></div>
+      </div>
+      <div class="clients">
+        <span class="client">Thence</span><span class="client">LearnApp</span><span class="client">Turns</span><span class="client">Gadivan</span>
+        <span class="client">LetsConnect</span><span class="client">Parentverse</span><span class="client">Venyou</span><span class="client">Sharent</span>
+        <span class="client">Spirinova</span><span class="client">Gorico</span><span class="client">RedShilliz</span><span class="client">DGlobalist</span>
+        <span class="client">Pahoti Wellness</span><span class="client">Ivy Malik</span><span class="client">PhotoFinder</span><span class="client">Olsub</span><span class="client">Learn Theta</span>
+      </div>
+      <div class="ask">
+        <h3>Ask me about</h3>
+        <div class="ask-pills">
+          <span>My indie dog</span><span>Computers &amp; tech</span><span>Personal finance</span>
+          <span>Hip-hop</span><span>Video games</span><span>Education</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact" id="contact">
+    <div class="wrap">
+      <h2>If the brief is messy, send it anyway.</h2>
+      <p>I’m available for product/UX work remotely from Jaipur. No synergy required.</p>
+      <a href="mailto:madebynaman@gmail.com">madebynaman@gmail.com</a>
+      <a class="ghost" href="https://www.linkedin.com/in/madebynaman/" rel="noopener">LinkedIn</a>
+      <a class="ghost" href="https://www.madebynaman.com" rel="noopener">Website</a>
+      <a class="ghost" href="tel:+918208369219">+91 82083 69219</a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap-wide">
+    <span>© Naman Sharma · Product/UX Designer</span>
+    <span>Direction d4 — Plain Speak · B.E. Computer Engineering, SPPU</span>
+  </div>
+</footer>
 </body>
 </html>

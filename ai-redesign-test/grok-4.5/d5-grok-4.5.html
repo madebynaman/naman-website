@@ -1,925 +1,546 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Naman Sharma — Signal Map</title>
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Naman Sharma — Workbench</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --night: #0c1220;
-    --deep: #141c2e;
-    --steel: #8b9bb4;
-    --mist: #c5d0e0;
-    --white: #eef2f8;
-    --coral: #ff6b4a;
-    --coral-dim: #c44a32;
-    --node: #1e2a42;
-    --line: rgba(139,155,180,0.22);
-    --glow: rgba(255,107,74,0.15);
-    --sans: "Space Grotesk", system-ui, sans-serif;
-    --serif: "Source Serif 4", Georgia, serif;
-  }
+:root {
+  --bench: #D8E2DC;
+  --bench-deep: #C5D4CB;
+  --panel: #F4F7F5;
+  --ink: #1E2420;
+  --muted: #5E6B63;
+  --cobalt: #3D5A80;
+  --cobalt-bright: #4E759E;
+  --line: rgba(30, 36, 32, 0.14);
+  --frame: #2F2F2F;
+  --layer: #EEF3F0;
+  --accent: #E07A5F;
+  --display: "Space Grotesk", "Arial", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", "Consolas", "Courier New", monospace;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+body {
+  background: var(--bench);
+  color: var(--ink);
+  font-family: var(--display);
+  font-size: 1.05rem;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  background-image:
+    linear-gradient(rgba(30,36,32,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(30,36,32,0.03) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+a { color: var(--cobalt); }
+a:focus-visible { outline: 2px solid var(--cobalt); outline-offset: 3px; }
+.wrap { width: min(1140px, calc(100% - 2rem)); margin-inline: auto; }
 
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
-  @media (prefers-reduced-motion: reduce) {
-    html { scroll-behavior: auto; }
-    * { animation: none !important; transition: none !important; }
-  }
+/* App chrome */
+.chrome {
+  position: sticky; top: 0; z-index: 50;
+  background: var(--panel);
+  border-bottom: 1px solid var(--line);
+  box-shadow: 0 1px 0 rgba(255,255,255,0.6);
+}
+.chrome-bar {
+  display: flex; align-items: center; gap: 0.75rem;
+  padding: 0.55rem 0; flex-wrap: wrap;
+}
+.traffic { display: flex; gap: 6px; }
+.traffic i {
+  width: 10px; height: 10px; border-radius: 50%; display: block;
+  background: #C9D2CC;
+}
+.traffic i:nth-child(1) { background: #E07A5F; }
+.traffic i:nth-child(2) { background: #E8B86D; }
+.traffic i:nth-child(3) { background: #81B29A; }
+.file-tabs { display: flex; gap: 0.25rem; flex-wrap: wrap; }
+.file-tabs a {
+  font-family: var(--mono); font-size: 0.72rem; text-decoration: none;
+  color: var(--muted); padding: 0.35rem 0.65rem; border-radius: 4px 4px 0 0;
+  border: 1px solid transparent;
+}
+.file-tabs a.active, .file-tabs a:hover {
+  background: var(--bench); color: var(--ink); border-color: var(--line); border-bottom-color: var(--bench);
+}
+.chrome-right {
+  margin-left: auto; font-family: var(--mono); font-size: 0.7rem; color: var(--muted);
+}
 
-  body {
-    font-family: var(--sans);
-    background: var(--night);
-    color: var(--white);
-    line-height: 1.55;
-    font-size: 16px;
-    background-image:
-      radial-gradient(ellipse at 20% 0%, rgba(255,107,74,0.08) 0%, transparent 45%),
-      radial-gradient(ellipse at 90% 40%, rgba(139,155,180,0.06) 0%, transparent 40%),
-      linear-gradient(180deg, var(--night) 0%, #0a101c 100%);
-    background-attachment: fixed;
-  }
+.workspace {
+  display: grid; grid-template-columns: 220px 1fr;
+  gap: 0; min-height: calc(100vh - 48px);
+  border-left: 1px solid var(--line); border-right: 1px solid var(--line);
+  background: var(--panel);
+  margin: 0 auto; width: min(1140px, 100%);
+}
+@media (max-width: 860px) {
+  .workspace { grid-template-columns: 1fr; }
+  .layers { display: none; }
+}
 
-  a { color: var(--coral); text-decoration: none; }
-  a:hover { color: #ff8a70; }
-  a:focus-visible { outline: 2px solid var(--coral); outline-offset: 3px; }
+.layers {
+  border-right: 1px solid var(--line);
+  background: var(--layer);
+  padding: 1rem 0.85rem;
+  position: sticky; top: 48px; height: calc(100vh - 48px); overflow: auto;
+}
+.layers h2 {
+  font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--muted); margin-bottom: 0.75rem;
+}
+.layer-item {
+  display: flex; align-items: center; gap: 0.45rem;
+  font-size: 0.8rem; padding: 0.4rem 0.45rem; border-radius: 4px;
+  color: var(--ink); text-decoration: none; margin-bottom: 0.15rem;
+}
+.layer-item:hover, .layer-item:focus-visible { background: rgba(61,90,128,0.1); }
+.layer-item .eye {
+  width: 14px; height: 14px; border: 1.5px solid var(--muted); border-radius: 2px;
+  flex-shrink: 0;
+}
+.layer-item .eye.on { background: var(--cobalt); border-color: var(--cobalt); }
 
-  .wrap {
-    max-width: 1120px;
-    margin: 0 auto;
-    padding: 0 28px 80px;
-  }
+.canvas { padding: 1.5rem; overflow: auto; }
 
-  /* Top map legend */
-  .map-nav {
-    position: sticky;
-    top: 0;
-    z-index: 40;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 16px;
-    padding: 16px 0;
-    background: linear-gradient(180deg, rgba(12,18,32,0.96), rgba(12,18,32,0.85));
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid var(--line);
-    flex-wrap: wrap;
-  }
-  .map-nav .brand {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    color: var(--white);
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 14px;
-  }
-  .map-nav .brand .pulse {
-    width: 10px; height: 10px;
-    border-radius: 50%;
-    background: var(--coral);
-    box-shadow: 0 0 12px var(--coral);
-  }
-  .map-nav nav {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px 4px;
-  }
-  .map-nav nav a {
-    font-size: 12px;
-    font-weight: 500;
-    color: var(--steel);
-    padding: 6px 10px;
-    border-radius: 999px;
-    text-decoration: none;
-    border: 1px solid transparent;
-  }
-  .map-nav nav a:hover {
-    color: var(--white);
-    border-color: var(--line);
-    background: var(--node);
-  }
+.frame {
+  background: #fff;
+  border: 1.5px solid var(--frame);
+  border-radius: 2px;
+  margin-bottom: 1.5rem;
+  box-shadow: 8px 8px 0 rgba(30,36,32,0.08);
+  position: relative;
+}
+.frame-label {
+  position: absolute; top: -0.7rem; left: 0.75rem;
+  background: var(--frame); color: #fff;
+  font-family: var(--mono); font-size: 0.65rem; font-weight: 500;
+  padding: 0.2rem 0.5rem; letter-spacing: 0.02em;
+}
+.frame-inner { padding: 2rem 1.75rem 1.75rem; }
 
-  /* Constellation hero */
-  .constellation {
-    padding: 72px 0 56px;
-    position: relative;
-  }
-  .constellation .kicker {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--coral);
-    margin-bottom: 20px;
-  }
-  .constellation .kicker::before {
-    content: "";
-    width: 18px; height: 1px;
-    background: var(--coral);
-  }
-  .constellation h1 {
-    font-size: clamp(36px, 5.5vw, 58px);
-    font-weight: 700;
-    line-height: 1.08;
-    letter-spacing: -0.03em;
-    max-width: 16ch;
-    margin-bottom: 20px;
-  }
-  .constellation h1 em {
-    font-style: normal;
-    color: var(--coral);
-  }
-  .constellation .lede {
-    font-family: var(--serif);
-    font-size: 19px;
-    color: var(--mist);
-    max-width: 44ch;
-    margin-bottom: 32px;
-    line-height: 1.5;
-  }
-  .cta-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    margin-bottom: 48px;
-  }
-  .btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 12px 18px;
-    font-size: 13px;
-    font-weight: 600;
-    border-radius: 999px;
-    text-decoration: none;
-    border: 1px solid transparent;
-  }
-  .btn-coral {
-    background: var(--coral);
-    color: var(--night);
-  }
-  .btn-coral:hover { background: #ff8a70; color: var(--night); }
-  .btn-ghost {
-    border-color: var(--line);
-    color: var(--white);
-    background: transparent;
-  }
-  .btn-ghost:hover { border-color: var(--steel); color: var(--white); background: var(--node); }
+.hero-frame .kicker {
+  font-family: var(--mono); font-size: 0.7rem; color: var(--cobalt);
+  letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 1rem;
+}
+.hero-frame h1 {
+  font-size: clamp(2.2rem, 4.5vw, 3.4rem);
+  font-weight: 700; letter-spacing: -0.035em; line-height: 1.05;
+  max-width: 14ch; margin-bottom: 1rem;
+}
+.hero-frame h1 span { color: var(--cobalt); }
+.hero-frame .lead {
+  color: var(--muted); max-width: 42ch; margin-bottom: 1.5rem; font-size: 1.05rem;
+}
+.btn-row { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+.btn {
+  display: inline-flex; align-items: center; gap: 0.35rem;
+  padding: 0.65rem 1rem; font-weight: 600; font-size: 0.9rem;
+  text-decoration: none; border-radius: 4px;
+}
+.btn-primary { background: var(--cobalt); color: #fff; }
+.btn-primary:hover { background: var(--cobalt-bright); color: #fff; }
+.btn-ghost { border: 1.5px solid var(--line); color: var(--ink); }
+.btn-ghost:hover { border-color: var(--ink); }
 
-  /* Signal nodes (outcomes) */
-  .signals {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 14px;
-  }
-  .signal {
-    background: var(--deep);
-    border: 1px solid var(--line);
-    border-radius: 16px;
-    padding: 20px;
-    position: relative;
-    overflow: hidden;
-  }
-  .signal::before {
-    content: "";
-    position: absolute;
-    top: 16px; right: 16px;
-    width: 8px; height: 8px;
-    border-radius: 50%;
-    background: var(--coral);
-    box-shadow: 0 0 10px var(--coral);
-  }
-  .signal .lab {
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--steel);
-    margin-bottom: 10px;
-  }
-  .signal .val {
-    font-size: 36px;
-    font-weight: 700;
-    letter-spacing: -0.03em;
-    color: var(--coral);
-    line-height: 1;
-    margin-bottom: 8px;
-  }
-  .signal p {
-    font-size: 13px;
-    color: var(--mist);
-  }
+.meta-row {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem;
+  margin-top: 1.75rem;
+}
+@media (max-width: 600px) { .meta-row { grid-template-columns: 1fr; } }
+.meta-chip {
+  border: 1px dashed var(--line); padding: 0.85rem;
+  font-family: var(--mono); font-size: 0.75rem;
+}
+.meta-chip strong {
+  display: block; font-family: var(--display); font-size: 1.4rem;
+  color: var(--cobalt); margin-bottom: 0.2rem;
+}
 
-  /* Section heads */
-  .sec {
-    padding: 72px 0 0;
-  }
-  .sec-head {
-    display: flex;
-    justify-content: space-between;
-    align-items: end;
-    gap: 20px;
-    margin-bottom: 28px;
-    flex-wrap: wrap;
-    border-bottom: 1px solid var(--line);
-    padding-bottom: 16px;
-  }
-  .sec-head h2 {
-    font-size: clamp(24px, 3vw, 32px);
-    font-weight: 700;
-    letter-spacing: -0.02em;
-  }
-  .sec-head .note {
-    font-size: 13px;
-    color: var(--steel);
-    max-width: 36ch;
-  }
+.sec-head {
+  display: flex; align-items: baseline; justify-content: space-between;
+  gap: 1rem; margin-bottom: 1.25rem; flex-wrap: wrap;
+}
+.sec-head h2 {
+  font-size: clamp(1.4rem, 2.5vw, 1.85rem); font-weight: 700; letter-spacing: -0.02em;
+}
+.sec-head .path {
+  font-family: var(--mono); font-size: 0.7rem; color: var(--muted);
+}
 
-  /* Work as connected map cards */
-  .map-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
-  }
-  .node-card {
-    background: var(--deep);
-    border: 1px solid var(--line);
-    border-radius: 18px;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-  }
-  .node-card:hover {
-    border-color: rgba(255,107,74,0.35);
-    box-shadow: 0 0 0 1px rgba(255,107,74,0.1), 0 20px 40px rgba(0,0,0,0.25);
-  }
-  .node-visual {
-    height: 180px;
-    position: relative;
-    border-bottom: 1px solid var(--line);
-  }
-  .node-body {
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    flex: 1;
-  }
-  .node-body .coords {
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--coral);
-  }
-  .node-body h3 {
-    font-size: 18px;
-    font-weight: 700;
-    letter-spacing: -0.01em;
-  }
-  .node-body p {
-    font-size: 14px;
-    color: var(--steel);
-    line-height: 1.5;
-    flex: 1;
-  }
-  .node-foot {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 8px;
-    padding-top: 12px;
-    border-top: 1px solid var(--line);
-    font-size: 12px;
-    font-weight: 600;
-  }
-  .node-foot .metric { color: var(--coral); }
-  .node-foot .edge { color: var(--steel); }
+.about-grid {
+  display: grid; grid-template-columns: 1.3fr 0.7fr; gap: 1.25rem;
+}
+@media (max-width: 720px) { .about-grid { grid-template-columns: 1fr; } }
+.about-grid p { color: var(--muted); margin-bottom: 0.85rem; }
+.about-grid p strong { color: var(--ink); }
+.note {
+  background: #FFF8F0; border: 1px solid rgba(224,122,95,0.35);
+  padding: 1rem; font-size: 0.9rem;
+}
+.note h3 { font-size: 0.8rem; font-family: var(--mono); color: var(--accent); margin-bottom: 0.4rem; }
 
-  /* Placeholders with network aesthetic */
-  .ph {
-    width: 100%; height: 100%;
-    display: grid;
-    place-items: center;
-    position: relative;
-  }
-  .ph-cap {
-    position: absolute;
-    left: 10px; right: 10px; bottom: 10px;
-    font-size: 10px;
-    font-weight: 600;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: var(--steel);
-    background: rgba(12,18,32,0.88);
-    border: 1px solid var(--line);
-    border-radius: 6px;
-    padding: 6px 8px;
-  }
+.principles {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;
+}
+@media (max-width: 600px) { .principles { grid-template-columns: 1fr; } }
+.principle {
+  border: 1px solid var(--line); padding: 1rem;
+  background: var(--layer);
+}
+.principle .id { font-family: var(--mono); font-size: 0.7rem; color: var(--cobalt); margin-bottom: 0.35rem; }
+.principle h3 { font-size: 1rem; margin-bottom: 0.35rem; }
+.principle p { font-size: 0.85rem; color: var(--muted); }
 
-  .ph-ap {
-    background:
-      radial-gradient(circle at 30% 40%, var(--glow), transparent 40%),
-      linear-gradient(135deg, var(--node), var(--deep));
-  }
-  .ph-ap .net {
-    width: 70%;
-    height: 55%;
-    position: relative;
-  }
-  .ph-ap .net::before {
-    content: "";
-    position: absolute;
-    inset: 20% 10%;
-    border: 1px solid rgba(255,107,74,0.4);
-    border-radius: 8px;
-  }
-  .ph-ap .hub {
-    position: absolute;
-    width: 12px; height: 12px;
-    border-radius: 50%;
-    background: var(--coral);
-    box-shadow: 0 0 12px var(--coral);
-  }
-  .ph-ap .hub:nth-child(1) { top: 20%; left: 15%; }
-  .ph-ap .hub:nth-child(2) { top: 50%; left: 55%; width: 16px; height: 16px; }
-  .ph-ap .hub:nth-child(3) { top: 70%; left: 30%; }
-  .ph-ap .hub:nth-child(4) { top: 35%; left: 75%; }
+/* Case study as Figma-like frames */
+.case-board {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
+}
+@media (max-width: 800px) { .case-board { grid-template-columns: 1fr; } }
+.case-card {
+  border: 1.5px solid var(--frame);
+  background: #fff;
+  display: grid; grid-template-rows: 160px 1fr;
+}
+.case-art {
+  position: relative; background: var(--bench-deep);
+  border-bottom: 1px solid var(--line);
+  overflow: hidden;
+}
+.case-art .art-label {
+  position: absolute; top: 8px; left: 8px; z-index: 2;
+  font-family: var(--mono); font-size: 0.6rem;
+  background: rgba(47,47,47,0.9); color: #fff; padding: 0.15rem 0.4rem;
+}
+.ph-ui {
+  position: absolute; inset: 24px 20px 16px;
+  background: #fff; border: 1px solid var(--line);
+  box-shadow: 0 8px 20px rgba(30,36,32,0.12);
+  display: grid; grid-template-rows: 22px 1fr;
+}
+.ph-ui .bar {
+  background: var(--layer); border-bottom: 1px solid var(--line);
+  display: flex; align-items: center; gap: 4px; padding: 0 8px;
+}
+.ph-ui .bar i { width: 5px; height: 5px; border-radius: 50%; background: #C9D2CC; }
+.ph-ui .body { padding: 8px; display: grid; gap: 6px; }
+.ph-ui .r { height: 7px; background: var(--bench); border-radius: 2px; }
+.ph-ui .block {
+  height: 40px;
+  background: linear-gradient(120deg, rgba(61,90,128,0.2), rgba(224,122,95,0.2));
+  border: 1px solid var(--line);
+}
+.ph-phone {
+  width: 70px; height: 120px; background: #fff;
+  border: 2px solid var(--frame); border-radius: 10px;
+  position: absolute; right: 28px; bottom: 18px;
+  padding: 8px 6px; box-shadow: 0 10px 24px rgba(30,36,32,0.15);
+}
+.ph-phone .n { width: 20px; height: 3px; background: var(--frame); margin: 0 auto 6px; border-radius: 2px; }
+.ph-phone .s { height: 50px; background: linear-gradient(160deg, var(--cobalt), #81B29A); border-radius: 4px; opacity: 0.85; margin-bottom: 6px; }
+.case-copy { padding: 1.1rem; }
+.case-copy .meta {
+  font-family: var(--mono); font-size: 0.65rem; color: var(--muted);
+  letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 0.4rem;
+}
+.case-copy h3 { font-size: 1.15rem; margin-bottom: 0.45rem; letter-spacing: -0.02em; }
+.case-copy p { font-size: 0.88rem; color: var(--muted); margin-bottom: 0.75rem; }
+.case-copy .impact {
+  font-family: var(--mono); font-size: 0.8rem; font-weight: 600;
+  color: var(--cobalt); border-top: 1px dashed var(--line); padding-top: 0.65rem;
+}
 
-  .ph-b360 {
-    background: linear-gradient(160deg, #1a1020, var(--deep) 50%, #1a2438);
-  }
-  .ph-b360 .path {
-    display: flex;
-    align-items: center;
-    gap: 0;
-  }
-  .ph-b360 .step-n {
-    width: 36px; height: 36px;
-    border-radius: 50%;
-    border: 2px solid var(--coral);
-    background: var(--night);
-    display: grid;
-    place-items: center;
-    font-size: 11px;
-    font-weight: 700;
-    color: var(--coral);
-  }
-  .ph-b360 .wire {
-    width: 28px; height: 2px;
-    background: linear-gradient(90deg, var(--coral), rgba(255,107,74,0.2));
-  }
+.process-steps {
+  display: grid; grid-template-columns: repeat(6, 1fr); gap: 0.5rem;
+}
+@media (max-width: 900px) { .process-steps { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 520px) { .process-steps { grid-template-columns: 1fr 1fr; } }
+.step {
+  border: 1px solid var(--line); padding: 0.85rem; background: var(--layer);
+  min-height: 120px;
+}
+.step .n { font-family: var(--mono); font-size: 0.7rem; color: var(--accent); }
+.step h3 { font-size: 0.9rem; margin: 0.3rem 0; }
+.step p { font-size: 0.75rem; color: var(--muted); }
 
-  .ph-wiki {
-    background:
-      radial-gradient(circle at 50% 50%, rgba(139,155,180,0.12), transparent 50%),
-      var(--node);
-  }
-  .ph-wiki .cities {
-    display: flex;
-    gap: 20px;
-  }
-  .ph-wiki .city {
-    text-align: center;
-  }
-  .ph-wiki .city i {
-    display: block;
-    width: 14px; height: 14px;
-    border-radius: 50%;
-    background: var(--mist);
-    margin: 0 auto 8px;
-    box-shadow: 0 0 10px rgba(197,208,224,0.4);
-  }
-  .ph-wiki .city span {
-    font-size: 10px;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--steel);
-  }
-  .ph-wiki .city:nth-child(2) i { background: var(--coral); box-shadow: 0 0 12px var(--coral); }
+.tl { border-top: 1px solid var(--line); }
+.tl-row {
+  display: grid; grid-template-columns: 150px 1fr; gap: 1rem;
+  padding: 1rem 0; border-bottom: 1px solid var(--line);
+}
+@media (max-width: 600px) { .tl-row { grid-template-columns: 1fr; gap: 0.2rem; } }
+.tl-row .when { font-family: var(--mono); font-size: 0.72rem; color: var(--cobalt); }
+.tl-row h3 { font-size: 1.05rem; margin-bottom: 0.2rem; }
+.tl-row p { font-size: 0.9rem; color: var(--muted); }
 
-  .ph-free {
-    background: linear-gradient(45deg, var(--deep) 0%, var(--node) 100%);
-  }
-  .ph-free .orbit {
-    width: 120px; height: 120px;
-    border: 1px dashed rgba(139,155,180,0.35);
-    border-radius: 50%;
-    position: relative;
-  }
-  .ph-free .orbit::before {
-    content: "";
-    position: absolute;
-    top: 50%; left: 50%;
-    width: 16px; height: 16px;
-    margin: -8px 0 0 -8px;
-    border-radius: 50%;
-    background: var(--coral);
-    box-shadow: 0 0 16px var(--coral);
-  }
-  .ph-free .sat {
-    position: absolute;
-    width: 10px; height: 10px;
-    border-radius: 50%;
-    background: var(--mist);
-  }
-  .ph-free .sat:nth-child(1) { top: 0; left: 50%; margin-left: -5px; }
-  .ph-free .sat:nth-child(2) { bottom: 12%; right: 8%; }
-  .ph-free .sat:nth-child(3) { bottom: 12%; left: 8%; }
+.clients { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 1.25rem; }
+.client {
+  font-family: var(--mono); font-size: 0.72rem;
+  border: 1px solid var(--line); padding: 0.4rem 0.6rem; color: var(--muted);
+}
 
-  /* Process as network graph */
-  .graph {
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    gap: 10px;
-    position: relative;
-  }
-  .graph-node {
-    background: var(--deep);
-    border: 1px solid var(--line);
-    border-radius: 14px;
-    padding: 16px 12px;
-    text-align: center;
-    position: relative;
-  }
-  .graph-node .ring {
-    width: 28px; height: 28px;
-    border-radius: 50%;
-    border: 2px solid var(--coral);
-    margin: 0 auto 10px;
-    display: grid;
-    place-items: center;
-    font-size: 11px;
-    font-weight: 700;
-    color: var(--coral);
-  }
-  .graph-node h3 {
-    font-size: 13px;
-    font-weight: 700;
-    margin-bottom: 4px;
-  }
-  .graph-node p {
-    font-size: 11px;
-    color: var(--steel);
-    line-height: 1.35;
-  }
+.contact-frame .grid {
+  display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 1.25rem;
+}
+@media (max-width: 700px) { .contact-frame .grid { grid-template-columns: 1fr; } }
+.contact-frame h2 { font-size: 1.7rem; letter-spacing: -0.02em; margin-bottom: 0.5rem; }
+.contact-frame p { color: var(--muted); margin-bottom: 1.25rem; }
+.contact-links { display: flex; flex-direction: column; gap: 0.5rem; }
+.contact-links a {
+  font-family: var(--mono); font-size: 0.85rem; text-decoration: none;
+  color: var(--ink); border: 1px solid var(--line); padding: 0.65rem 0.85rem;
+  background: var(--layer);
+}
+.contact-links a:hover { border-color: var(--cobalt); color: var(--cobalt); }
+.tools-box {
+  border: 1px dashed var(--line); padding: 1rem; background: var(--layer);
+}
+.tools-box h3 {
+  font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--muted); margin-bottom: 0.75rem;
+}
+.tools-box ul { list-style: none; font-size: 0.85rem; color: var(--muted); }
+.tools-box li { margin-bottom: 0.3rem; }
+.tools-box li::before { content: "▸ "; color: var(--cobalt); font-family: var(--mono); }
 
-  /* Principles as connected beliefs */
-  .beliefs {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-  }
-  .belief {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    gap: 16px;
-    align-items: start;
-    background: var(--deep);
-    border: 1px solid var(--line);
-    border-radius: 14px;
-    padding: 20px;
-  }
-  .belief .orb {
-    width: 36px; height: 36px;
-    border-radius: 50%;
-    background: var(--glow);
-    border: 1px solid rgba(255,107,74,0.4);
-    display: grid;
-    place-items: center;
-    font-size: 12px;
-    font-weight: 700;
-    color: var(--coral);
-    flex-shrink: 0;
-  }
-  .belief h3 {
-    font-size: 16px;
-    font-weight: 700;
-    margin-bottom: 6px;
-  }
-  .belief p {
-    font-size: 14px;
-    color: var(--steel);
-    font-family: var(--serif);
-  }
-
-  /* Career path */
-  .path-list {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-    border-left: 2px solid var(--line);
-    margin-left: 12px;
-  }
-  .path-item {
-    position: relative;
-    padding: 0 0 28px 28px;
-  }
-  .path-item::before {
-    content: "";
-    position: absolute;
-    left: -7px;
-    top: 4px;
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background: var(--night);
-    border: 2px solid var(--coral);
-    box-shadow: 0 0 8px rgba(255,107,74,0.4);
-  }
-  .path-item .when {
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--coral);
-    margin-bottom: 4px;
-  }
-  .path-item h3 {
-    font-size: 17px;
-    font-weight: 700;
-    margin-bottom: 4px;
-  }
-  .path-item p {
-    font-size: 14px;
-    color: var(--steel);
-    max-width: 58ch;
-  }
-
-  /* About + contact */
-  .split {
-    display: grid;
-    grid-template-columns: 1.15fr 0.85fr;
-    gap: 16px;
-  }
-  .about-panel, .contact-panel {
-    background: var(--deep);
-    border: 1px solid var(--line);
-    border-radius: 18px;
-    padding: 28px;
-  }
-  .about-panel h2, .contact-panel h2 {
-    font-size: 22px;
-    font-weight: 700;
-    margin: 8px 0 14px;
-    letter-spacing: -0.02em;
-  }
-  .about-panel p {
-    font-family: var(--serif);
-    font-size: 15px;
-    color: var(--mist);
-    margin-bottom: 12px;
-  }
-  .tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    margin-top: 16px;
-  }
-  .tags span {
-    font-size: 11px;
-    font-weight: 600;
-    padding: 5px 10px;
-    border-radius: 999px;
-    border: 1px solid var(--line);
-    color: var(--steel);
-  }
-  .contact-panel {
-    background: linear-gradient(160deg, #1a1420, var(--deep));
-    border-color: rgba(255,107,74,0.25);
-  }
-  .contact-panel .lab {
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--coral);
-  }
-  .contact-panel p {
-    font-size: 14px;
-    color: var(--steel);
-    margin-bottom: 18px;
-  }
-  .contact-panel a {
-    display: block;
-    color: var(--white);
-    font-weight: 600;
-    font-size: 14px;
-    padding: 10px 0;
-    border-bottom: 1px solid var(--line);
-    text-decoration: none;
-  }
-  .contact-panel a:hover { color: var(--coral); }
-
-  footer {
-    text-align: center;
-    padding: 48px 16px 24px;
-    font-size: 12px;
-    color: var(--steel);
-    letter-spacing: 0.04em;
-  }
-
-  @media (max-width: 900px) {
-    .signals, .map-grid, .beliefs, .split, .graph {
-      grid-template-columns: 1fr;
-    }
-    .graph { grid-template-columns: 1fr 1fr; }
-  }
+footer {
+  width: min(1140px, 100%); margin: 0 auto;
+  padding: 1.25rem 1.5rem 2rem; font-family: var(--mono);
+  font-size: 0.7rem; color: var(--muted);
+  display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem;
+  border: 1px solid var(--line); border-top: none; background: var(--panel);
+}
 </style>
 </head>
 <body>
-  <div class="wrap">
-    <header class="map-nav">
-      <a class="brand" href="#top">
-        <span class="pulse" aria-hidden="true"></span>
-        Naman Sharma · Signal Map
-      </a>
-      <nav>
-        <a href="#signals">Signals</a>
-        <a href="#work">Work nodes</a>
-        <a href="#process">Process</a>
-        <a href="#principles">Principles</a>
-        <a href="#path">Path</a>
-        <a href="#about">About</a>
-        <a href="#contact">Connect</a>
-      </nav>
-    </header>
-
-    <section class="constellation" id="top">
-      <div class="kicker">Product / UX · systems view</div>
-      <h1>Map the problem. <em>Ship</em> the path users finish.</h1>
-      <p class="lede">
-        Research-led Product/UX designer in Jaipur, remote worldwide. I connect messy product systems into experiences that convert, retain, and measure.
-      </p>
-      <div class="cta-row">
-        <a class="btn btn-coral" href="#work">Explore work nodes</a>
-        <a class="btn btn-ghost" href="#contact">Open a channel</a>
-      </div>
-
-      <div class="signals" id="signals">
-        <article class="signal">
-          <div class="lab">Node · Asian Paints</div>
-          <div class="val">+20%</div>
-          <p>Transaction volume after dealer portal redesign</p>
-        </article>
-        <article class="signal">
-          <div class="lab">Node · Boost360</div>
-          <div class="val">−60%</div>
-          <p>Uninstall rate after onboarding rewrite</p>
-        </article>
-        <article class="signal">
-          <div class="lab">Node · Turns</div>
-          <div class="val">$500K</div>
-          <p>Pre-seed after site &amp; brand system revamp</p>
-        </article>
-      </div>
-    </section>
-
-    <section class="sec" id="work">
-      <div class="sec-head">
-        <h2>Work nodes</h2>
-        <p class="note">Four connected projects — each a system of research, design, and measurable signal.</p>
-      </div>
-      <div class="map-grid">
-        <article class="node-card">
-          <div class="node-visual">
-            <div class="ph ph-ap" role="img" aria-label="Placeholder: Asian Paints dealer portal network">
-              <div class="net" aria-hidden="true">
-                <span class="hub"></span>
-                <span class="hub"></span>
-                <span class="hub"></span>
-                <span class="hub"></span>
-              </div>
-              <div class="ph-cap">Case-study hero — Asian Paints dealer portal</div>
-            </div>
-          </div>
-          <div class="node-body">
-            <span class="coords">Thence · 2021 · B2B system</span>
-            <h3>Asian Paints — Dealer Portal</h3>
-            <p>End-to-end redesign of ordering and supply tracking. Personalized recommendations, loyalty, geo-demand nudges, barcode reorder under 10 seconds.</p>
-            <div class="node-foot">
-              <span class="metric">+20% txn volume</span>
-              <span class="edge">UX · UI · research</span>
-            </div>
-          </div>
-        </article>
-
-        <article class="node-card">
-          <div class="node-visual">
-            <div class="ph ph-b360" role="img" aria-label="Placeholder: Boost360 onboarding path">
-              <div class="path" aria-hidden="true">
-                <div class="step-n">1</div>
-                <div class="wire"></div>
-                <div class="step-n">2</div>
-                <div class="wire"></div>
-                <div class="step-n">3</div>
-                <div class="wire"></div>
-                <div class="step-n">✓</div>
-              </div>
-              <div class="ph-cap">Project mockup — Boost360 onboarding flow</div>
-            </div>
-          </div>
-          <div class="node-body">
-            <span class="coords">Thence · 2021 · activation path</span>
-            <h3>Boost360 — Onboarding</h3>
-            <p>Uninstalls within 4 hours; signup success at 20%. Root cause: marketing vs. product mismatch. Visual signup, USPs, social proof, quick wins.</p>
-            <div class="node-foot">
-              <span class="metric">−60% uninstalls</span>
-              <span class="edge">Usability tested</span>
-            </div>
-          </div>
-        </article>
-
-        <article class="node-card">
-          <div class="node-visual">
-            <div class="ph ph-wiki" role="img" aria-label="Placeholder: Wikipedia KaiOS research cities">
-              <div class="cities" aria-hidden="true">
-                <div class="city"><i></i><span>Pune</span></div>
-                <div class="city"><i></i><span>Mumbai</span></div>
-                <div class="city"><i></i><span>Delhi</span></div>
-              </div>
-              <div class="ph-cap">Research artifact — Wikipedia KaiOS field study</div>
-            </div>
-          </div>
-          <div class="node-body">
-            <span class="coords">Hureo · 2020 · field graph</span>
-            <h3>Wikipedia — KaiOS Research</h3>
-            <p>25 in-person interviews. Mapped JioPhone motivations and Wikipedia wishlist. Recommendations: voice UI, readability, regional SEO, JioPhone UI.</p>
-            <div class="node-foot">
-              <span class="metric">n=25 · 3 cities</span>
-              <span class="edge">Personas · journeys</span>
-            </div>
-          </div>
-        </article>
-
-        <article class="node-card">
-          <div class="node-visual">
-            <div class="ph ph-free" role="img" aria-label="Placeholder: freelance product orbit">
-              <div class="orbit" aria-hidden="true">
-                <span class="sat"></span>
-                <span class="sat"></span>
-                <span class="sat"></span>
-              </div>
-              <div class="ph-cap">Project suite — Turns · Gadivan · LetsConnect</div>
-            </div>
-          </div>
-          <div class="node-body">
-            <span class="coords">Independent · 2021–present · 0→1 cluster</span>
-            <h3>Freelance product systems</h3>
-            <p>Turns: site + brand system → pre-seed. Gadivan: multi-stakeholder apps from scratch. LetsConnect: usability redesign → 4.8★ Play Store.</p>
-            <div class="node-foot">
-              <span class="metric">$500K · 4.8★</span>
-              <span class="edge">Founder-stage</span>
-            </div>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <section class="sec" id="process">
-      <div class="sec-head">
-        <h2>Process graph</h2>
-        <p class="note">Six linked stages — research in, metrics out. Order is the method.</p>
-      </div>
-      <div class="graph">
-        <div class="graph-node">
-          <div class="ring">01</div>
-          <h3>Research</h3>
-          <p>Problem, options, customer</p>
-        </div>
-        <div class="graph-node">
-          <div class="ring">02</div>
-          <h3>Journey</h3>
-          <p>Personas &amp; decisions</p>
-        </div>
-        <div class="graph-node">
-          <div class="ring">03</div>
-          <h3>Explore</h3>
-          <p>Wide solutions, test</p>
-        </div>
-        <div class="graph-node">
-          <div class="ring">04</div>
-          <h3>Refine</h3>
-          <p>Polish &amp; document</p>
-        </div>
-        <div class="graph-node">
-          <div class="ring">05</div>
-          <h3>Handoff</h3>
-          <p>Eng + product</p>
-        </div>
-        <div class="graph-node">
-          <div class="ring">06</div>
-          <h3>Monitor</h3>
-          <p>Live metrics</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="sec" id="principles">
-      <div class="sec-head">
-        <h2>Principle nodes</h2>
-        <p class="note">Stable signals that guide every engagement.</p>
-      </div>
-      <div class="beliefs">
-        <article class="belief">
-          <div class="orb">01</div>
-          <div>
-            <h3>Consistency beats talent</h3>
-            <p>Daily craft compounds into results that talent alone never reaches.</p>
-          </div>
-        </article>
-        <article class="belief">
-          <div class="orb">02</div>
-          <div>
-            <h3>Let curiosity guide you</h3>
-            <p>Scattered knowledge connects. Curiosity makes work that matters.</p>
-          </div>
-        </article>
-        <article class="belief">
-          <div class="orb">03</div>
-          <div>
-            <h3>Form follows function</h3>
-            <p>Solve the job first. Then design delight people remember.</p>
-          </div>
-        </article>
-        <article class="belief">
-          <div class="orb">04</div>
-          <div>
-            <h3>Give a damn</h3>
-            <p>Founder mindset. Own the outcome past the handoff.</p>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <section class="sec" id="path">
-      <div class="sec-head">
-        <h2>Career path</h2>
-        <p class="note">From graphic craft through field research into product ownership.</p>
-      </div>
-      <div class="path-list">
-        <article class="path-item">
-          <div class="when">Apr 2022 – Present</div>
-          <h3>Product / UX / Web Designer — Freelance</h3>
-          <p>0→1 products, UX audits, brand systems. Turns, Gadivan, LetsConnect, Parentverse, Venyou, and more.</p>
-        </article>
-        <article class="path-item">
-          <div class="when">Apr 2021 – Mar 2022</div>
-          <h3>UX Designer — Thence</h3>
-          <p>Asian Paints dealer portal, Boost360 onboarding, Shiprocket marketing site. Mentored interns.</p>
-        </article>
-        <article class="path-item">
-          <div class="when">Dec 2019 – Apr 2020</div>
-          <h3>UX Research Intern — Hureo</h3>
-          <p>Wikipedia KaiOS study: interviews across Pune, Mumbai, Delhi; personas, journeys, reports.</p>
-        </article>
-        <article class="path-item">
-          <div class="when">2017 – 2019</div>
-          <h3>Graphic design foundations</h3>
-          <p>HappleyFit, Skillovate, freelance — logos, print, packaging, WordPress, exhibition design.</p>
-        </article>
-      </div>
-    </section>
-
-    <section class="sec" id="about">
-      <div class="sec-head">
-        <h2>Operator &amp; channel</h2>
-        <p class="note">Who’s behind the map — and how to reach them.</p>
-      </div>
-      <div class="split">
-        <div class="about-panel">
-          <div class="lab" style="font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--coral);">About</div>
-          <h2>Naman Sharma</h2>
-          <p>Self-taught Product/UX designer with a Computer Engineering degree. I make complex products easy and help startups go 0→1.</p>
-          <p>I hate jargon. I design products users love, for brands that care. Curious generalist — research, apps, brand, print — re-learning to code so ideas ship faster.</p>
-          <p>When I’m not designing, Jerry (my dog) is usually on the network.</p>
-          <div class="tags">
-            <span>User research</span><span>UX / UI</span><span>Prototyping</span>
-            <span>Usability testing</span><span>Web design</span><span>Branding</span>
-            <span>Figma</span><span>Webflow</span><span>Framer</span>
-          </div>
-        </div>
-        <div class="contact-panel" id="contact">
-          <div class="lab">Connect</div>
-          <h2>Open a channel.</h2>
-          <p>Remote from Jaipur. Worldwide. Best for research-heavy UX, conversion crises, and 0→1 product systems.</p>
-          <a href="mailto:madebynaman@gmail.com">madebynaman@gmail.com</a>
-          <a href="https://www.madebynaman.com">madebynaman.com</a>
-          <a href="https://www.linkedin.com/in/madebynaman/">LinkedIn · madebynaman</a>
-          <a href="tel:+918208369219">+91 82083 69219</a>
-        </div>
-      </div>
-    </section>
-
-    <footer>Naman Sharma · Signal Map d5 · Connect the nodes · ship the path</footer>
+<div class="chrome">
+  <div class="wrap chrome-bar">
+    <div class="traffic" aria-hidden="true"><i></i><i></i><i></i></div>
+    <nav class="file-tabs" aria-label="Sections">
+      <a class="active" href="#top">naman — portfolio</a>
+      <a href="#work">selected-work</a>
+      <a href="#process">process</a>
+      <a href="#path">timeline</a>
+      <a href="#contact">contact</a>
+    </nav>
+    <div class="chrome-right">Auto · 100% · Jaipur</div>
   </div>
+</div>
+
+<div class="workspace">
+  <aside class="layers" aria-label="Page layers">
+    <h2>Layers</h2>
+    <a class="layer-item" href="#top"><span class="eye on"></span> Hero / Intro</a>
+    <a class="layer-item" href="#about"><span class="eye on"></span> About</a>
+    <a class="layer-item" href="#principles"><span class="eye on"></span> Principles</a>
+    <a class="layer-item" href="#work"><span class="eye on"></span> Case studies</a>
+    <a class="layer-item" href="#process"><span class="eye on"></span> Process</a>
+    <a class="layer-item" href="#path"><span class="eye on"></span> Career</a>
+    <a class="layer-item" href="#contact"><span class="eye on"></span> Contact</a>
+  </aside>
+
+  <div class="canvas" id="top">
+    <article class="frame hero-frame">
+      <div class="frame-label">Frame · Hero / 1440 × auto</div>
+      <div class="frame-inner">
+        <div class="kicker">Product / UX Designer · madebynaman</div>
+        <h1>On the bench: making complex products <span>usable</span>.</h1>
+        <p class="lead">Research, UX, UI, handoff, monitoring. Self-taught. CS background. Remote from Jaipur. No jargon — just shipped clarity.</p>
+        <div class="btn-row">
+          <a class="btn btn-primary" href="#work">Open case studies</a>
+          <a class="btn btn-ghost" href="mailto:madebynaman@gmail.com">madebynaman@gmail.com</a>
+        </div>
+        <div class="meta-row">
+          <div class="meta-chip"><strong>20%</strong>↑ transactions · Asian Paints</div>
+          <div class="meta-chip"><strong>60%</strong>↓ uninstalls · Boost360</div>
+          <div class="meta-chip"><strong>4.8★</strong>LetsConnect · Play Store</div>
+        </div>
+      </div>
+    </article>
+
+    <article class="frame" id="about">
+      <div class="frame-label">Frame · About</div>
+      <div class="frame-inner">
+        <div class="sec-head">
+          <h2>Component: Naman</h2>
+          <span class="path">/about</span>
+        </div>
+        <div class="about-grid">
+          <div>
+            <p>I design products that users love, for brands that care. That’s it.</p>
+            <p>Curious generalist with proven experience taking startups <strong>0→1</strong> and making dense products feel simple. Field research to visual design to engineering handoff.</p>
+            <p>Currently freelancing — also re-learning to code so ideas can leave the frame.</p>
+          </div>
+          <aside class="note">
+            <h3>// sticky note</h3>
+            <p>Consistency beats talent. Form follows function. Give a damn. Jerry the indie dog says hi.</p>
+          </aside>
+        </div>
+      </div>
+    </article>
+
+    <article class="frame" id="principles">
+      <div class="frame-label">Frame · Principles / 4 variants</div>
+      <div class="frame-inner">
+        <div class="sec-head">
+          <h2>Design tokens (beliefs)</h2>
+          <span class="path">/principles</span>
+        </div>
+        <div class="principles">
+          <div class="principle"><div class="id">token / consistency</div><h3>Consistency beats talent</h3><p>Daily craft compounds into results.</p></div>
+          <div class="principle"><div class="id">token / curiosity</div><h3>Let curiosity guide you</h3><p>Connect scattered dots into insight.</p></div>
+          <div class="principle"><div class="id">token / function</div><h3>Form follows function</h3><p>Solve needs — then design delight.</p></div>
+          <div class="principle"><div class="id">token / agency</div><h3>Give a damn</h3><p>Founder’s mindset. Own the outcome.</p></div>
+        </div>
+      </div>
+    </article>
+
+    <article class="frame" id="work">
+      <div class="frame-label">Frame · Selected work</div>
+      <div class="frame-inner">
+        <div class="sec-head">
+          <h2>Case study frames</h2>
+          <span class="path">/work · placeholders for real screens</span>
+        </div>
+        <div class="case-board">
+          <article class="case-card">
+            <div class="case-art" aria-hidden="true">
+              <span class="art-label">img / asian-paints-portal</span>
+              <div class="ph-ui"><div class="bar"><i></i><i></i><i></i></div><div class="body"><div class="r" style="width:55%"></div><div class="block"></div><div class="r"></div><div class="r" style="width:40%"></div></div></div>
+            </div>
+            <div class="case-copy">
+              <div class="meta">Asian Paints · Thence · 2021</div>
+              <h3>Dealer Portal</h3>
+              <p>Digitized ordering &amp; tracking. Recommendations, loyalty, barcode reorder. Dealers stop calling sales for every SKU.</p>
+              <div class="impact">impact: 20% ↑ online transaction volume</div>
+            </div>
+          </article>
+          <article class="case-card">
+            <div class="case-art" aria-hidden="true">
+              <span class="art-label">img / boost360-onboarding</span>
+              <div class="ph-ui" style="right:100px"><div class="bar"><i></i><i></i><i></i></div><div class="body"><div class="r" style="width:70%"></div><div class="block"></div></div></div>
+              <div class="ph-phone"><div class="n"></div><div class="s"></div><div class="r" style="height:6px;background:var(--bench);border-radius:2px"></div></div>
+            </div>
+            <div class="case-copy">
+              <div class="meta">Boost360 · Thence · 2021</div>
+              <h3>Onboarding</h3>
+              <p>Signup success 20%, 30 min average. Fixed expectation mismatch with visual onboarding, USPs, quick wins.</p>
+              <div class="impact">impact: 60% ↓ uninstall rate</div>
+            </div>
+          </article>
+          <article class="case-card">
+            <div class="case-art" aria-hidden="true">
+              <span class="art-label">img / wikipedia-kaios-map</span>
+              <div class="ph-ui"><div class="bar"><i></i><i></i><i></i></div><div class="body">
+                <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;height:100%">
+                  <div class="block" style="height:auto"></div><div class="block" style="height:auto;opacity:.7"></div><div class="block" style="height:auto;opacity:.5"></div>
+                </div>
+              </div></div>
+            </div>
+            <div class="case-copy">
+              <div class="meta">Wikipedia × KaiOS · Hureo · 2020</div>
+              <h3>JioPhone research</h3>
+              <p>25 F2F interviews across Pune, Mumbai, Delhi. Motivations, Wikipedia wishlist, product recommendations.</p>
+              <div class="impact">output: personas · journeys · reports</div>
+            </div>
+          </article>
+          <article class="case-card">
+            <div class="case-art" aria-hidden="true">
+              <span class="art-label">img / freelance-collage</span>
+              <div class="ph-ui"><div class="bar"><i></i><i></i><i></i></div><div class="body"><div class="block"></div><div class="r" style="width:60%"></div><div class="r" style="width:35%"></div></div></div>
+            </div>
+            <div class="case-copy">
+              <div class="meta">Freelance · 2021–Present</div>
+              <h3>Turns · Gadivan · LetsConnect</h3>
+              <p>Brand systems &amp; conversion sites. Multi-stakeholder 0→1 apps. Usability redesign to 4.8★.</p>
+              <div class="impact">impact: $500K pre-seed · 4.8★ Play Store</div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </article>
+
+    <article class="frame" id="process">
+      <div class="frame-label">Frame · Process / 6 steps</div>
+      <div class="frame-inner">
+        <div class="sec-head">
+          <h2>Pipeline</h2>
+          <span class="path">/process</span>
+        </div>
+        <div class="process-steps">
+          <div class="step"><div class="n">01</div><h3>Research</h3><p>Problem, options, customer.</p></div>
+          <div class="step"><div class="n">02</div><h3>Journey</h3><p>Personas &amp; decisions.</p></div>
+          <div class="step"><div class="n">03</div><h3>Explore</h3><p>Wide options. Test.</p></div>
+          <div class="step"><div class="n">04</div><h3>Refine</h3><p>Visual polish &amp; docs.</p></div>
+          <div class="step"><div class="n">05</div><h3>Handoff</h3><p>Eng + product.</p></div>
+          <div class="step"><div class="n">06</div><h3>Monitor</h3><p>Track success metrics.</p></div>
+        </div>
+      </div>
+    </article>
+
+    <article class="frame" id="path">
+      <div class="frame-label">Frame · Timeline</div>
+      <div class="frame-inner">
+        <div class="sec-head">
+          <h2>Version history</h2>
+          <span class="path">/career</span>
+        </div>
+        <div class="tl">
+          <div class="tl-row"><div class="when">2022 – Now</div><div><h3>Freelance — Product / UX / Web</h3><p>0→1 products, UX impact education, conversion work across Turns, Gadivan, LetsConnect, and more.</p></div></div>
+          <div class="tl-row"><div class="when">2021 – 2022</div><div><h3>UX Designer — Thence</h3><p>Research through testing. Mentored interns. Asian Paints, Boost360, Shiprocket.</p></div></div>
+          <div class="tl-row"><div class="when">2019 – 2020</div><div><h3>UX Research Intern — Hureo</h3><p>Wikipedia / KaiOS field research in multiple cities.</p></div></div>
+          <div class="tl-row"><div class="when">2017 – 2019</div><div><h3>Graphic design foundation</h3><p>HappleyFit, Skillovate, freelance graphic work.</p></div></div>
+        </div>
+        <div class="clients">
+          <span class="client">Thence</span><span class="client">LearnApp</span><span class="client">Turns</span><span class="client">Gadivan</span>
+          <span class="client">LetsConnect</span><span class="client">Parentverse</span><span class="client">Venyou</span><span class="client">Sharent</span>
+          <span class="client">Spirinova</span><span class="client">Gorico</span><span class="client">PhotoFinder</span><span class="client">Learn Theta</span>
+        </div>
+      </div>
+    </article>
+
+    <article class="frame contact-frame" id="contact">
+      <div class="frame-label">Frame · Contact / export</div>
+      <div class="frame-inner">
+        <div class="grid">
+          <div>
+            <h2>Ready to drop into your file?</h2>
+            <p>Remote product/UX from Jaipur. Send the brief — I’ll meet you in the messy middle.</p>
+            <div class="contact-links">
+              <a href="mailto:madebynaman@gmail.com">mailto: madebynaman@gmail.com</a>
+              <a href="https://www.linkedin.com/in/madebynaman/" rel="noopener">link: linkedin.com/in/madebynaman</a>
+              <a href="https://www.madebynaman.com" rel="noopener">link: madebynaman.com</a>
+              <a href="tel:+918208369219">tel: +91 82083 69219</a>
+            </div>
+          </div>
+          <aside class="tools-box">
+            <h3>Tools on the bench</h3>
+            <ul>
+              <li>Figma · FigJam · Miro</li>
+              <li>Framer · ProtoPie · Adobe XD</li>
+              <li>Illustrator · Photoshop</li>
+              <li>Webflow · no-code builds</li>
+            </ul>
+          </aside>
+        </div>
+      </div>
+    </article>
+  </div>
+</div>
+
+<footer>
+  <span>© Naman Sharma · Product/UX Designer · B.E. Computer Engineering, SPPU</span>
+  <span>Direction d5 — Workbench</span>
+</footer>
 </body>
 </html>
