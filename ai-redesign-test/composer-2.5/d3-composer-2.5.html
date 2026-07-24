@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Naman Sharma — Ship Products People Keep</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;1,9..40,400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --void: #0a0a0a;
+      --surface: #141414;
+      --surface-2: #1e1e1e;
+      --flame: #ff4d1a;
+      --flame-dim: #ff4d1a33;
+      --white: #f5f2ed;
+      --gray: #8a8680;
+      --display: 'Syne', system-ui, sans-serif;
+      --body: 'DM Sans', system-ui, sans-serif;
+    }
+    html { scroll-behavior: smooth; }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      * { animation: none !important; transition: none !important; }
+    }
+    body {
+      font-family: var(--body);
+      background: var(--void);
+      color: var(--white);
+      line-height: 1.6;
+    }
+    a { color: var(--flame); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    a:focus-visible { outline: 2px solid var(--flame); outline-offset: 3px; }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.25rem 2.5rem;
+      border-bottom: 1px solid var(--surface-2);
+      position: sticky;
+      top: 0;
+      background: rgba(10,10,10,0.9);
+      backdrop-filter: blur(12px);
+      z-index: 50;
+    }
+    nav .brand {
+      font-family: var(--display);
+      font-weight: 800;
+      font-size: 1rem;
+      letter-spacing: -0.02em;
+    }
+    nav ul {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+      font-size: 0.8rem;
+      font-weight: 500;
+    }
+    nav a { color: var(--gray); }
+    nav a:hover { color: var(--white); text-decoration: none; }
+
+    /* Hero — metric thesis */
+    .hero {
+      padding: 6rem 2.5rem 4rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .hero-tag {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--flame);
+      border: 1px solid var(--flame-dim);
+      padding: 0.4rem 0.8rem;
+      border-radius: 2px;
+      margin-bottom: 2rem;
+    }
+    .hero h1 {
+      font-family: var(--display);
+      font-size: clamp(3rem, 7vw, 5.5rem);
+      font-weight: 800;
+      line-height: 0.95;
+      letter-spacing: -0.03em;
+      max-width: 14ch;
+      margin-bottom: 2rem;
+    }
+    .hero h1 span { color: var(--flame); }
+    .hero-sub {
+      font-size: 1.15rem;
+      color: var(--gray);
+      max-width: 42ch;
+      margin-bottom: 3rem;
+    }
+
+    /* Bento signature grid */
+    .bento {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      grid-auto-rows: minmax(120px, auto);
+      gap: 12px;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2.5rem 4rem;
+    }
+    .bento-cell {
+      background: var(--surface);
+      border: 1px solid var(--surface-2);
+      border-radius: 4px;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.2s;
+    }
+    .bento-cell:hover { border-color: var(--flame-dim); }
+    .bento-cell--metric {
+      background: linear-gradient(135deg, var(--surface) 0%, #1a0f0a 100%);
+    }
+    .bento-cell--wide { grid-column: span 6; }
+    .bento-cell--tall { grid-row: span 2; }
+    .bento-cell--hero { grid-column: span 8; grid-row: span 2; min-height: 280px; }
+    .bento-cell--stat { grid-column: span 4; }
+    .bento-cell--third { grid-column: span 4; }
+    .bento-cell--half { grid-column: span 6; }
+    .bento-cell--full { grid-column: span 12; }
+
+    .bento-label {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--gray);
+      margin-bottom: 0.5rem;
+    }
+    .bento-metric {
+      font-family: var(--display);
+      font-size: clamp(3rem, 6vw, 5rem);
+      font-weight: 800;
+      color: var(--flame);
+      line-height: 1;
+      letter-spacing: -0.03em;
+    }
+    .bento-metric small {
+      font-size: 0.35em;
+      color: var(--gray);
+      font-weight: 600;
+    }
+    .bento-title {
+      font-family: var(--display);
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+    .bento-desc { font-size: 0.85rem; color: var(--gray); line-height: 1.5; }
+
+    /* Visual placeholders in bento */
+    .bento-visual {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0.15;
+      pointer-events: none;
+    }
+    .bento-visual-inner {
+      width: 70%;
+      height: 60%;
+      border: 1px dashed var(--gray);
+      border-radius: 4px;
+    }
+    .bento-visual-label {
+      position: absolute;
+      bottom: 1rem;
+      right: 1rem;
+      font-size: 0.6rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--gray);
+      z-index: 1;
+    }
+
+    /* Sections */
+    section { padding: 5rem 2.5rem; max-width: 1200px; margin: 0 auto; }
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 3rem;
+      border-bottom: 1px solid var(--surface-2);
+      padding-bottom: 1.5rem;
+    }
+    .section-head h2 {
+      font-family: var(--display);
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+    .section-head span { font-size: 0.8rem; color: var(--gray); }
+
+    /* Case rows */
+    .case-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      padding: 2.5rem 0;
+      border-bottom: 1px solid var(--surface-2);
+    }
+    .case-row:last-child { border-bottom: none; }
+    .case-visual-block {
+      background: var(--surface);
+      border: 1px solid var(--surface-2);
+      border-radius: 4px;
+      min-height: 240px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+    .case-visual-block .mock {
+      width: 80%;
+      max-width: 260px;
+      aspect-ratio: 16/10;
+      background: var(--surface-2);
+      border-radius: 3px;
+      position: relative;
+    }
+    .case-visual-block .mock::before {
+      content: '';
+      position: absolute;
+      top: 8px; left: 8px; right: 8px;
+      height: 6px;
+      background: var(--flame-dim);
+      border-radius: 2px;
+    }
+    .case-visual-block span {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--gray);
+      margin-top: 1rem;
+      text-align: center;
+    }
+    .case-info h3 {
+      font-family: var(--display);
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+    .case-meta { font-size: 0.75rem; color: var(--flame); margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.08em; }
+    .case-info p { color: var(--gray); font-size: 0.95rem; margin-bottom: 1rem; }
+    .case-outcome {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 0.5rem;
+      background: var(--flame-dim);
+      padding: 0.5rem 1rem;
+      border-radius: 2px;
+      margin-top: 0.5rem;
+    }
+    .case-outcome strong {
+      font-family: var(--display);
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--flame);
+    }
+    .case-outcome span { font-size: 0.8rem; color: var(--gray); }
+
+    /* Process pills */
+    .process-row {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+    .process-pill {
+      background: var(--surface);
+      border: 1px solid var(--surface-2);
+      padding: 1rem 1.25rem;
+      border-radius: 4px;
+      flex: 1;
+      min-width: 140px;
+    }
+    .process-pill strong {
+      display: block;
+      font-family: var(--display);
+      font-size: 0.85rem;
+      margin-bottom: 0.25rem;
+    }
+    .process-pill span { font-size: 0.75rem; color: var(--gray); }
+
+    /* About strip */
+    .about-strip {
+      background: var(--surface);
+      border: 1px solid var(--surface-2);
+      border-radius: 4px;
+      padding: 2.5rem;
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 2rem;
+    }
+    .about-strip h3 {
+      font-family: var(--display);
+      font-size: 1.25rem;
+      font-weight: 700;
+    }
+    .about-strip p { color: var(--gray); font-size: 0.95rem; }
+
+    /* Contact */
+    .contact-cta {
+      background: var(--flame);
+      color: var(--void);
+      padding: 4rem 2.5rem;
+      text-align: center;
+      margin-top: 4rem;
+    }
+    .contact-cta h2 {
+      font-family: var(--display);
+      font-size: 2.5rem;
+      font-weight: 800;
+      margin-bottom: 1rem;
+    }
+    .contact-cta p { margin-bottom: 2rem; opacity: 0.8; }
+    .contact-cta a {
+      color: var(--void);
+      font-weight: 600;
+      margin: 0 1rem;
+      border-bottom: 2px solid var(--void);
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      font-size: 0.75rem;
+      color: var(--gray);
+    }
+
+    @media (max-width: 900px) {
+      nav ul { display: none; }
+      .bento-cell--hero, .bento-cell--wide, .bento-cell--stat,
+      .bento-cell--third, .bento-cell--half, .bento-cell--full { grid-column: span 12; }
+      .case-row, .about-strip { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <span class="brand">NAMAN SHARMA</span>
+    <ul>
+      <li><a href="#work">Work</a></li>
+      <li><a href="#process">Process</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <header class="hero">
+    <span class="hero-tag">Product / UX Designer · 0→1 Builder</span>
+    <h1>Ship products people <span>keep.</span></h1>
+    <p class="hero-sub">I help startups and brands turn research into products with real business outcomes. No jargon. No synergy. Just design that works.</p>
+  </header>
+
+  <div class="bento" aria-label="Impact metrics and highlights">
+    <div class="bento-cell bento-cell--stat bento-cell--metric">
+      <span class="bento-label">Asian Paints</span>
+      <div class="bento-metric" data-target="20">0<small>%</small></div>
+      <p class="bento-desc">Increase in online transaction volume</p>
+    </div>
+    <div class="bento-cell bento-cell--stat bento-cell--metric">
+      <span class="bento-label">Boost360</span>
+      <div class="bento-metric" data-target="60">0<small>%</small></div>
+      <p class="bento-desc">Decrease in app uninstall rate</p>
+    </div>
+    <div class="bento-cell bento-cell--stat bento-cell--metric">
+      <span class="bento-label">Turns</span>
+      <div class="bento-metric">$500<small>K</small></div>
+      <p class="bento-desc">Pre-seed raised post website revamp</p>
+    </div>
+    <div class="bento-cell bento-cell--hero">
+      <div class="bento-visual"><div class="bento-visual-inner"></div></div>
+      <span class="bento-visual-label">Hero visual — portfolio collage</span>
+      <span class="bento-label">Based in Jaipur · Remote worldwide</span>
+      <p class="bento-title">Self-taught designer. CS background. Founder mindset.</p>
+      <p class="bento-desc">Product/UX design at the intersection of creativity, problem solving, and technology. Re-learning code to ship my own ideas.</p>
+    </div>
+    <div class="bento-cell bento-cell--third">
+      <span class="bento-label">LetsConnect</span>
+      <div class="bento-metric" style="font-size: 2.5rem;">4.8<small>★</small></div>
+      <p class="bento-desc">Play Store rating after usability overhaul</p>
+    </div>
+    <div class="bento-cell bento-cell--third">
+      <span class="bento-label">Wikipedia study</span>
+      <div class="bento-metric" style="font-size: 2.5rem;">25</div>
+      <p class="bento-desc">In-person interviews across 3 cities</p>
+    </div>
+    <div class="bento-cell bento-cell--third">
+      <span class="bento-label">Experience</span>
+      <div class="bento-metric" style="font-size: 2.5rem;">7<small>+</small></div>
+      <p class="bento-desc">Years designing across B2B, mobile, and research</p>
+    </div>
+  </div>
+
+  <section id="work">
+    <div class="section-head">
+      <h2>Selected work</h2>
+      <span>Thence · Freelance · Hureo</span>
+    </div>
+
+    <article class="case-row">
+      <div class="case-visual-block">
+        <div class="mock"></div>
+        <span>Case study — Asian Paints dealer portal</span>
+      </div>
+      <div class="case-info">
+        <p class="case-meta">Thence · 2021 · B2B Portal</p>
+        <h3>Asian Paints — Dealer Portal</h3>
+        <p>Dealers hated every digital portal in the market. We redesigned end-to-end: barcode ordering in under 10 seconds, personalized recommendations, loyalty incentives, and role-based access for varying dealer privileges.</p>
+        <div class="case-outcome"><strong>20%</strong><span>more online transactions</span></div>
+      </div>
+    </article>
+
+    <article class="case-row">
+      <div class="case-visual-block">
+        <div class="mock" style="aspect-ratio: 9/16; max-width: 120px;"></div>
+        <span>Mockup — Boost360 onboarding flow</span>
+      </div>
+      <div class="case-info">
+        <p class="case-meta">Thence · 2021 · Mobile App</p>
+        <h3>Boost360 — Onboarding</h3>
+        <p>20% signup rate. 4-hour uninstall window. Root cause: UX mismatch with marketing promises. Visual onboarding, social proof, and quick wins turned abandonment into activation.</p>
+        <div class="case-outcome"><strong>60%</strong><span>fewer uninstalls</span></div>
+      </div>
+    </article>
+
+    <article class="case-row">
+      <div class="case-visual-block">
+        <div class="mock" style="aspect-ratio: 1/1; max-width: 180px;"></div>
+        <span>Research — Wikipedia KaiOS personas</span>
+      </div>
+      <div class="case-info">
+        <p class="case-meta">Hureo · 2020 · UX Research</p>
+        <h3>Wikipedia — KaiOS User Research</h3>
+        <p>25 participants across Pune, Mumbai, Delhi. In-person interviews + device observation on JioPhones. Delivered personas, journey maps, and recommendations for voice UI and regional language SEO.</p>
+        <div class="case-outcome"><strong>25</strong><span>participant study</span></div>
+      </div>
+    </article>
+
+    <article class="case-row">
+      <div class="case-visual-block">
+        <div class="mock"></div>
+        <span>Freelance — Turns, Gadivan, LetsConnect</span>
+      </div>
+      <div class="case-info">
+        <p class="case-meta">Independent · 2021–2023</p>
+        <h3>Freelance — 0 to 1 Products</h3>
+        <p>Turns: brand system + website → $500K pre-seed. Gadivan: multi-stakeholder mobile apps from scratch. LetsConnect: usability redesign → 4.8★ on Play Store.</p>
+        <div class="case-outcome"><strong>15+</strong><span>clients shipped</span></div>
+      </div>
+    </article>
+  </section>
+
+  <section id="process">
+    <div class="section-head">
+      <h2>How I ship</h2>
+      <span>Research → Monitor</span>
+    </div>
+    <div class="process-row">
+      <div class="process-pill"><strong>Research</strong><span>Problem, customer, solutions</span></div>
+      <div class="process-pill"><strong>Journey</strong><span>Personas & decisions</span></div>
+      <div class="process-pill"><strong>Explore</strong><span>Wide, test, iterate</span></div>
+      <div class="process-pill"><strong>Refine</strong><span>Polish & document</span></div>
+      <div class="process-pill"><strong>Handoff</strong><span>Ship with engineering</span></div>
+      <div class="process-pill"><strong>Monitor</strong><span>Track what matters</span></div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="about-strip">
+      <div>
+        <h3>Principles</h3>
+        <p style="margin-top: 1rem; font-size: 0.85rem;">Consistency beats talent · Curiosity guides · Form follows function · Give a damn</p>
+      </div>
+      <div>
+        <p>I'm Naman Sharma — a Product/UX Designer from Jaipur, India. I hate jargon. I don't foster innovation through synergizing aesthetics. I design products users love, for brands that care. That's it.</p>
+        <p style="margin-top: 1rem;">When I'm not designing, I'm with my dog Jerry. Ask me about hip-hop, video games, or personal finance.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="contact-cta" id="contact">
+    <h2>Let's build</h2>
+    <p>Product roles, freelance, or a conversation about your next 0→1.</p>
+    <a href="mailto:madebynaman@gmail.com">Email me</a>
+    <a href="https://www.linkedin.com/in/madebynaman/">LinkedIn</a>
+    <a href="https://www.madebynaman.com">madebynaman.com</a>
+  </div>
+
+  <footer>Naman Sharma · Product/UX Designer · Jerry says hi</footer>
+
+  <script>
+    (function() {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      var metrics = document.querySelectorAll('.bento-metric[data-target]');
+      var animated = false;
+      function animateMetric(el) {
+        var target = parseInt(el.dataset.target, 10);
+        var duration = 1200;
+        var start = performance.now();
+        function tick(now) {
+          var progress = Math.min((now - start) / duration, 1);
+          var eased = 1 - Math.pow(1 - progress, 3);
+          el.childNodes[0].textContent = Math.round(target * eased);
+          if (progress < 1) requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
+      }
+      var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting && !animated) {
+            animated = true;
+            metrics.forEach(animateMetric);
+            observer.disconnect();
+          }
+        });
+      }, { threshold: 0.3 });
+      if (metrics.length) observer.observe(metrics[0].closest('.bento'));
+    })();
+  </script>
+
+</body>
+</html>

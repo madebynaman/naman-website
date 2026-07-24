@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Naman Sharma — Research-Led Product Design</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --paper: #f8f6f1;
+      --paper-dark: #ede9e0;
+      --ink: #1c1b19;
+      --pencil: #4a4845;
+      --margin-red: #c0392b;
+      --field-green: #2d5a47;
+      --highlight: #fff9c4;
+      --display: 'Newsreader', Georgia, serif;
+      --mono: 'IBM Plex Mono', 'Courier New', monospace;
+    }
+    html { scroll-behavior: smooth; }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      * { animation: none !important; transition: none !important; }
+    }
+    body {
+      font-family: var(--display);
+      font-size: 1.1rem;
+      line-height: 1.7;
+      color: var(--ink);
+      background: var(--paper);
+      background-image:
+        linear-gradient(90deg, transparent 79px, var(--margin-red) 79px, var(--margin-red) 81px, transparent 81px),
+        repeating-linear-gradient(transparent, transparent 27px, #d4d0c8 27px, #d4d0c8 28px);
+      background-size: 100% 28px;
+      background-position: 0 8px;
+    }
+    a { color: var(--field-green); }
+    a:focus-visible { outline: 2px solid var(--margin-red); outline-offset: 2px; }
+
+    /* Margin annotation signature */
+    .margin-note {
+      position: absolute;
+      left: -120px;
+      width: 100px;
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      color: var(--margin-red);
+      text-align: right;
+      line-height: 1.4;
+      transform: rotate(-2deg);
+    }
+    .margin-note::before {
+      content: '→';
+      margin-right: 4px;
+    }
+
+    .page {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 3rem 2rem 3rem 5rem;
+      position: relative;
+    }
+
+    header {
+      margin-bottom: 4rem;
+      position: relative;
+    }
+    .file-stamp {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--pencil);
+      border: 1px solid var(--pencil);
+      display: inline-block;
+      padding: 0.3rem 0.6rem;
+      margin-bottom: 2rem;
+      transform: rotate(-1deg);
+    }
+    h1 {
+      font-size: 2.8rem;
+      font-weight: 600;
+      line-height: 1.15;
+      margin-bottom: 1rem;
+    }
+    .subtitle {
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      color: var(--field-green);
+      margin-bottom: 1.5rem;
+    }
+    .intro-block {
+      background: var(--highlight);
+      padding: 1rem 1.25rem;
+      font-style: italic;
+      border-left: 3px solid var(--field-green);
+      margin-bottom: 2rem;
+    }
+
+    section {
+      margin-bottom: 4rem;
+      position: relative;
+    }
+    .section-id {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--margin-red);
+      margin-bottom: 0.5rem;
+    }
+    h2 {
+      font-size: 1.75rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid var(--ink);
+      padding-bottom: 0.5rem;
+    }
+    h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin: 1.5rem 0 0.75rem;
+    }
+    p { margin-bottom: 1rem; color: var(--pencil); }
+
+    /* Sticky notes */
+    .sticky-board {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+    .sticky {
+      padding: 1rem;
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      line-height: 1.5;
+      min-height: 100px;
+      box-shadow: 2px 3px 8px rgba(0,0,0,0.1);
+    }
+    .sticky--yellow { background: #fff9b0; transform: rotate(-1.5deg); }
+    .sticky--pink { background: #ffd6e0; transform: rotate(1deg); }
+    .sticky--blue { background: #c8e6ff; transform: rotate(-0.5deg); }
+    .sticky--green { background: #c8f0d4; transform: rotate(2deg); }
+    .sticky strong { display: block; margin-bottom: 0.5rem; color: var(--ink); }
+
+    /* Research cards */
+    .study-card {
+      border: 1px solid var(--ink);
+      margin-bottom: 2.5rem;
+      background: white;
+    }
+    .study-header {
+      background: var(--ink);
+      color: var(--paper);
+      padding: 0.75rem 1.25rem;
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      display: flex;
+      justify-content: space-between;
+    }
+    .study-body {
+      padding: 1.5rem;
+      display: grid;
+      grid-template-columns: 1fr 180px;
+      gap: 1.5rem;
+    }
+    .study-visual {
+      background: var(--paper-dark);
+      border: 1px dashed var(--pencil);
+      min-height: 140px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 1rem;
+    }
+    .study-visual span {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      color: var(--pencil);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .finding {
+      background: var(--paper-dark);
+      padding: 0.75rem 1rem;
+      margin: 0.75rem 0;
+      font-size: 0.95rem;
+      border-left: 3px solid var(--field-green);
+    }
+    .finding strong { color: var(--ink); }
+    .metric {
+      font-family: var(--mono);
+      font-size: 2rem;
+      font-weight: 500;
+      color: var(--margin-red);
+      line-height: 1;
+    }
+    .metric-label {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--pencil);
+      margin-top: 0.25rem;
+    }
+
+    /* Interview transcript style */
+    .transcript {
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      line-height: 1.8;
+      background: white;
+      border: 1px solid #ccc;
+      padding: 1.25rem;
+      margin: 1.5rem 0;
+    }
+    .transcript .q { color: var(--field-green); font-weight: 500; }
+    .transcript .a { color: var(--pencil); margin-bottom: 0.75rem; display: block; }
+
+    /* Process as methodology */
+    .method-list {
+      list-style: none;
+      counter-reset: method;
+    }
+    .method-list li {
+      counter-increment: method;
+      padding: 1rem 0 1rem 3rem;
+      border-bottom: 1px dotted var(--pencil);
+      position: relative;
+    }
+    .method-list li::before {
+      content: counter(method, decimal-leading-zero);
+      position: absolute;
+      left: 0;
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--margin-red);
+    }
+    .method-list strong { color: var(--ink); }
+
+    /* Timeline */
+    .timeline-entry {
+      display: grid;
+      grid-template-columns: 100px 1fr;
+      gap: 1rem;
+      padding: 0.75rem 0;
+      border-bottom: 1px dotted #ccc;
+      font-size: 0.95rem;
+    }
+    .timeline-entry .date {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      color: var(--margin-red);
+    }
+
+    /* Principles checklist */
+    .checklist { list-style: none; }
+    .checklist li {
+      padding: 0.75rem 0 0.75rem 1.75rem;
+      position: relative;
+      border-bottom: 1px solid var(--paper-dark);
+    }
+    .checklist li::before {
+      content: '☐';
+      position: absolute;
+      left: 0;
+      color: var(--field-green);
+      font-size: 1rem;
+    }
+
+    .contact-block {
+      background: var(--ink);
+      color: var(--paper);
+      padding: 2rem;
+      font-family: var(--mono);
+      font-size: 0.8rem;
+    }
+    .contact-block a { color: #8fd4b0; }
+    .contact-block h2 { color: var(--paper); border-color: rgba(255,255,255,0.2); }
+
+    footer {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      color: var(--pencil);
+      text-align: center;
+      padding: 2rem;
+    }
+
+    @media (max-width: 768px) {
+      body { background-image: none; }
+      .page { padding: 2rem 1.25rem; }
+      .margin-note { display: none; }
+      .sticky-board { grid-template-columns: 1fr; }
+      .study-body { grid-template-columns: 1fr; }
+      .timeline-entry { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="page">
+    <header>
+      <span class="margin-note">subject profile</span>
+      <div class="file-stamp">Research Portfolio · NDA Compliant</div>
+      <h1>Naman Sharma</h1>
+      <p class="subtitle">Product / UX Designer · Jaipur, IN · Remote</p>
+      <div class="intro-block">
+        I design products that users love, for brands that care. My work is rooted in research and constant improvement — one pixel, one interview, one usability test at a time.
+      </div>
+      <p>Self-taught Product/UX Designer with a background in Computer Science. I make complex products easy to use and help startups build from 0 to 1. Whether it's on-field UX research in Mumbai, usability testing for a mobile app, or redesigning a B2B dealer portal — I start with understanding people.</p>
+    </header>
+
+    <section id="hypothesis">
+      <span class="margin-note">key insight</span>
+      <p class="section-id">Research hypothesis</p>
+      <h2>Problems are solved with functionality, not aesthetics</h2>
+      <p>But once the problem is solved, beautiful design creates delight. And humans remember delight. This tension — rigor first, craft second — defines how I work.</p>
+      <div class="sticky-board">
+        <div class="sticky sticky--yellow"><strong>Finding</strong>Dealers don't want to call sales every time they order.</div>
+        <div class="sticky sticky--pink"><strong>Finding</strong>Users uninstall apps when onboarding doesn't match marketing promises.</div>
+        <div class="sticky sticky--blue"><strong>Finding</strong>JioPhone users prefer voice search over typing on small keypads.</div>
+        <div class="sticky sticky--green"><strong>Principle</strong>Consistency beats talent. Show up every day.</div>
+      </div>
+    </section>
+
+    <section id="studies">
+      <p class="section-id">Case studies</p>
+      <h2>Selected research & design work</h2>
+
+      <article class="study-card">
+        <div class="study-header">
+          <span>Study 01 — Asian Paints Dealer Portal</span>
+          <span>Thence · 2021</span>
+        </div>
+        <div class="study-body">
+          <div>
+            <h3>Problem statement</h3>
+            <p>How might we improve dealer UX by digitizing order placement and supply chain tracking while increasing transaction volumes and AOV?</p>
+            <div class="finding"><strong>Key finding:</strong> Every competitor has a digital portal, but dealers are frustrated with all of them. Opportunity: be the one they don't hate.</div>
+            <p>Solution: Heuristic evaluation, end-to-end redesign, barcode ordering in &lt;10 seconds, personalized recommendations, role-based access.</p>
+            <div class="metric">20%</div>
+            <div class="metric-label">Increase in online transaction volume</div>
+          </div>
+          <div class="study-visual">
+            <span>Wireframe placeholder — dealer portal home, catalog, place order</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="study-card">
+        <div class="study-header">
+          <span>Study 02 — Boost360 Onboarding</span>
+          <span>Thence · 2021</span>
+        </div>
+        <div class="study-body">
+          <div>
+            <h3>Problem statement</h3>
+            <p>20% signup success rate. Users uninstall within 4 hours. Average signup time: 30 minutes.</p>
+            <div class="finding"><strong>Root cause:</strong> Poor signup UX + mismatch between marketing communication and app reality.</div>
+            <p>Solution: Visual signup flow, USP communication during onboarding, social proof, quick wins, in-app support access.</p>
+            <div class="metric">60%</div>
+            <div class="metric-label">Decrease in app uninstall rate</div>
+          </div>
+          <div class="study-visual">
+            <span>Mobile mockup placeholder — Boost360 onboarding screens</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="study-card">
+        <div class="study-header">
+          <span>Study 03 — Wikipedia KaiOS Research</span>
+          <span>Hureo · 2020</span>
+        </div>
+        <div class="study-body">
+          <div>
+            <h3>Methodology</h3>
+            <p>25 one-on-one, in-person interviews across Pune, Mumbai, Delhi. 45–60 min sessions: background interview + device observation tasks.</p>
+            <div class="transcript">
+              <span class="q">Q: Why JioPhone over smartphone?</span>
+              <span class="a">A: Smart features at affordable price. Durable. Good battery. Familiar keypad.</span>
+              <span class="q">Q: What would improve Wikipedia?</span>
+              <span class="a">A: Voice search. Bigger fonts. Videos. Table of contents. Regional language SEO.</span>
+            </div>
+            <p>Deliverables: Personas, journey maps, ecosystem maps, research report with recommendations for voice UI and readability optimization.</p>
+          </div>
+          <div class="study-visual">
+            <span>Research artifact — participant persona card, journey map</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="study-card">
+        <div class="study-header">
+          <span>Study 04 — Freelance 0-to-1</span>
+          <span>Independent · 2021–2023</span>
+        </div>
+        <div class="study-body">
+          <div>
+            <h3>Selected outcomes</h3>
+            <div class="finding"><strong>Turns:</strong> Website revamp + brand system → helped raise $500K pre-seed.</div>
+            <div class="finding"><strong>Gadivan:</strong> End-to-end mobile apps for multiple stakeholders, built from scratch.</div>
+            <div class="finding"><strong>LetsConnect:</strong> Usability overhaul → 4.8 stars on Play Store.</div>
+          </div>
+          <div class="study-visual">
+            <span>Collage placeholder — Turns landing page, Gadivan app, LetsConnect UI</span>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section id="methodology">
+      <span class="margin-note">process doc</span>
+      <p class="section-id">Methodology</p>
+      <h2>Six-stage design process</h2>
+      <ol class="method-list">
+        <li><strong>Research</strong> — Understanding the problem, solutions, and customer.</li>
+        <li><strong>User journey</strong> — Personas, journeys, decision-making insights.</li>
+        <li><strong>Design exploration</strong> — Going wide, testing, iterating, collaborating.</li>
+        <li><strong>Design refinement</strong> — Polishing visuals, documenting for handoff.</li>
+        <li><strong>Handoff</strong> — Close collaboration with engineering and product.</li>
+        <li><strong>Monitoring</strong> — Tracking success metrics post-launch.</li>
+      </ol>
+    </section>
+
+    <section id="principles">
+      <p class="section-id">Operating principles</p>
+      <h2>What I believe</h2>
+      <ul class="checklist">
+        <li><strong>Consistency beats talent</strong> — Daily effort compounds into results talent alone can't reach.</li>
+        <li><strong>Let curiosity guide you</strong> — Knowing a little about a lot helps connect scattered dots.</li>
+        <li><strong>Form follows function</strong> — Solve the problem first. Then make it beautiful.</li>
+        <li><strong>Give a damn</strong> — Founder's mindset. Shared responsibility. Ownership on every project.</li>
+      </ul>
+    </section>
+
+    <section id="background">
+      <p class="section-id">Background</p>
+      <h2>Career timeline</h2>
+      <div class="timeline-entry"><span class="date">2022–now</span><span>Product, UX & Web Designer — Freelance</span></div>
+      <div class="timeline-entry"><span class="date">2021–22</span><span>UX Designer — Thence (Asian Paints, Boost360, Shiprocket)</span></div>
+      <div class="timeline-entry"><span class="date">2019–20</span><span>UX Research Intern — Hureo (Wikipedia/KaiOS)</span></div>
+      <div class="timeline-entry"><span class="date">2017–21</span><span>B.Tech Computer Engineering — SPPU, Pune</span></div>
+      <p style="margin-top: 1.5rem; font-size: 0.9rem;">Tools: Figma, FigJam, Miro, Framer, Adobe XD, Protopie, Webflow</p>
+    </section>
+
+    <section class="contact-block" id="contact">
+      <h2>Continue this conversation</h2>
+      <p>madebynaman@gmail.com · +91 82083 69219 · <a href="https://www.madebynaman.com">madebynaman.com</a> · <a href="https://www.linkedin.com/in/madebynaman/">LinkedIn</a></p>
+      <p style="margin-top: 1rem; opacity: 0.6;">Ask me about: my indie dog Jerry, hip-hop, video games, personal finance.</p>
+    </section>
+
+    <footer>Field Notes · Naman Sharma · Product/UX Designer</footer>
+  </div>
+
+</body>
+</html>

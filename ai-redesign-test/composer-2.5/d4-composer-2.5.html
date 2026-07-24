@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Naman Sharma — No Synergy Zone</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Work+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --white: #ffffff;
+      --black: #000000;
+      --red: #e8192c;
+      --gray: #666666;
+      --display: 'Archivo Black', Impact, sans-serif;
+      --body: 'Work Sans', system-ui, sans-serif;
+    }
+    html { scroll-behavior: smooth; }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      * { animation: none !important; transition: none !important; }
+    }
+    body {
+      font-family: var(--body);
+      background: var(--white);
+      color: var(--black);
+      line-height: 1.5;
+    }
+    a { color: var(--black); }
+    a:focus-visible { outline: 3px solid var(--red); outline-offset: 2px; }
+
+    /* Buzzword wall — signature */
+    .buzzwall {
+      background: var(--black);
+      color: var(--white);
+      padding: 3rem 2rem;
+      overflow: hidden;
+      position: relative;
+    }
+    .buzzwall-inner {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem 1.5rem;
+      justify-content: center;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .buzz {
+      font-family: var(--display);
+      font-size: clamp(0.7rem, 2vw, 1rem);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      white-space: nowrap;
+      position: relative;
+      opacity: 0.35;
+    }
+    .buzz--killed {
+      opacity: 1;
+      color: var(--red);
+    }
+    .buzz--killed::after {
+      content: '';
+      position: absolute;
+      left: -4px;
+      right: -4px;
+      top: 50%;
+      height: 3px;
+      background: var(--red);
+      transform: rotate(-3deg);
+    }
+
+    /* Hero manifesto */
+    .hero {
+      padding: 4rem 2rem 5rem;
+      max-width: 1100px;
+      margin: 0 auto;
+      border-bottom: 4px solid var(--black);
+    }
+    .hero-kicker {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      margin-bottom: 2rem;
+    }
+    .hero h1 {
+      font-family: var(--display);
+      font-size: clamp(2.5rem, 8vw, 6rem);
+      line-height: 0.95;
+      text-transform: uppercase;
+      letter-spacing: -0.02em;
+      margin-bottom: 2rem;
+    }
+    .hero h1 .strike {
+      text-decoration: line-through;
+      text-decoration-color: var(--red);
+      text-decoration-thickness: 4px;
+      color: var(--gray);
+    }
+    .hero-lede {
+      font-size: 1.25rem;
+      max-width: 50ch;
+      font-weight: 400;
+      line-height: 1.6;
+    }
+    .hero-lede strong {
+      font-weight: 600;
+      background: var(--black);
+      color: var(--white);
+      padding: 0 0.3rem;
+    }
+
+    /* Nav */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      border-bottom: 2px solid var(--black);
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      position: sticky;
+      top: 0;
+      background: var(--white);
+      z-index: 50;
+    }
+    nav ul { display: flex; gap: 2rem; list-style: none; }
+    nav a:hover { color: var(--red); text-decoration: none; }
+
+    section {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+      border-bottom: 2px solid var(--black);
+    }
+    .section-tag {
+      font-family: var(--display);
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--red);
+      margin-bottom: 1rem;
+    }
+    h2 {
+      font-family: var(--display);
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      text-transform: uppercase;
+      letter-spacing: -0.01em;
+      margin-bottom: 2rem;
+      line-height: 1.1;
+    }
+
+    /* Work blocks */
+    .work-block {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      border: 3px solid var(--black);
+      margin-bottom: 2rem;
+    }
+    .work-block:nth-child(even) .work-visual { order: 2; }
+    .work-visual {
+      background: var(--black);
+      min-height: 280px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+    .work-visual-frame {
+      width: 75%;
+      max-width: 240px;
+      aspect-ratio: 4/3;
+      border: 2px solid var(--white);
+      position: relative;
+    }
+    .work-visual-frame::before {
+      content: '';
+      position: absolute;
+      top: 12px; left: 12px; right: 12px;
+      height: 8px;
+      background: var(--red);
+    }
+    .work-visual-label {
+      font-size: 0.6rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: rgba(255,255,255,0.5);
+      margin-top: 1rem;
+      text-align: center;
+    }
+    .work-content {
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .work-content .client {
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--gray);
+      margin-bottom: 0.5rem;
+    }
+    .work-content h3 {
+      font-family: var(--display);
+      font-size: 1.5rem;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+    .work-content p { color: var(--gray); margin-bottom: 1rem; font-size: 0.95rem; }
+    .impact {
+      font-family: var(--display);
+      font-size: 3rem;
+      color: var(--red);
+      line-height: 1;
+    }
+    .impact-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    /* Principles as manifesto lines */
+    .manifesto-lines {
+      list-style: none;
+    }
+    .manifesto-lines li {
+      font-family: var(--display);
+      font-size: clamp(1.2rem, 3vw, 2rem);
+      text-transform: uppercase;
+      padding: 1.25rem 0;
+      border-bottom: 2px solid var(--black);
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 1rem;
+    }
+    .manifesto-lines li span {
+      font-family: var(--body);
+      font-size: 0.8rem;
+      font-weight: 400;
+      text-transform: none;
+      color: var(--gray);
+      text-align: right;
+      max-width: 40ch;
+    }
+
+    /* Process — no numbers, just verbs */
+    .verb-row {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 0;
+      border: 3px solid var(--black);
+    }
+    .verb {
+      padding: 1.5rem 1rem;
+      text-align: center;
+      border-right: 2px solid var(--black);
+      font-weight: 600;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .verb:last-child { border-right: none; }
+    .verb:hover { background: var(--black); color: var(--white); }
+
+    /* About */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 3rem;
+    }
+    .about-grid p { color: var(--gray); margin-bottom: 1rem; }
+    .about-facts {
+      border-left: 4px solid var(--red);
+      padding-left: 1.5rem;
+    }
+    .about-facts dt {
+      font-weight: 600;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-top: 1rem;
+    }
+    .about-facts dt:first-child { margin-top: 0; }
+    .about-facts dd { color: var(--gray); font-size: 0.9rem; margin-top: 0.25rem; }
+
+    /* Contact */
+    .contact {
+      background: var(--red);
+      color: var(--white);
+      text-align: center;
+      padding: 5rem 2rem;
+      border-bottom: none;
+      max-width: none;
+    }
+    .contact h2 { color: var(--white); }
+    .contact a {
+      color: var(--white);
+      font-family: var(--display);
+      font-size: 1.25rem;
+      text-transform: uppercase;
+      margin: 0 1.5rem;
+      border-bottom: 3px solid var(--white);
+      display: inline-block;
+      margin-top: 1rem;
+    }
+    .contact a:hover { opacity: 0.8; text-decoration: none; }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    @media (max-width: 768px) {
+      nav ul { display: none; }
+      .work-block { grid-template-columns: 1fr; }
+      .work-block:nth-child(even) .work-visual { order: 0; }
+      .verb-row { grid-template-columns: repeat(2, 1fr); }
+      .verb { border-bottom: 2px solid var(--black); }
+      .about-grid { grid-template-columns: 1fr; }
+      .manifesto-lines li { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="buzzwall" aria-hidden="true">
+    <div class="buzzwall-inner">
+      <span class="buzz buzz--killed">foster innovation</span>
+      <span class="buzz buzz--killed">synergizing aesthetics</span>
+      <span class="buzz buzz--killed">navigate the confluence</span>
+      <span class="buzz buzz--killed">orchestrate design revolutions</span>
+      <span class="buzz buzz--killed">paradigmatic evolutions</span>
+      <span class="buzz buzz--killed">cutting-edge methodologies</span>
+      <span class="buzz buzz--killed">experiential marvels</span>
+      <span class="buzz buzz--killed">transformative ideation</span>
+      <span class="buzz buzz--killed">ever-evolving design ethos</span>
+      <span class="buzz buzz--killed">transcend boundaries</span>
+      <span class="buzz">user-centric</span>
+      <span class="buzz">design thinking</span>
+      <span class="buzz">disrupt</span>
+      <span class="buzz">pivot</span>
+      <span class="buzz">leverage</span>
+    </div>
+  </div>
+
+  <nav>
+    <a href="#">Naman Sharma</a>
+    <ul>
+      <li><a href="#work">Work</a></li>
+      <li><a href="#beliefs">Beliefs</a></li>
+      <li><a href="#process">Process</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <header class="hero">
+    <p class="hero-kicker">Product / UX Designer · Jaipur · Remote</p>
+    <h1>I design products people love. <span class="strike">I don't synergize paradigms.</span></h1>
+    <p class="hero-lede">I hate jargon. I don't foster innovation through synergizing aesthetics and functionality. I design products that <strong>users love</strong>, for brands that <strong>care</strong>. That's it.</p>
+  </header>
+
+  <section id="work">
+    <p class="section-tag">Real work · Real outcomes</p>
+    <h2>Case studies</h2>
+
+    <article class="work-block">
+      <div class="work-visual">
+        <div class="work-visual-frame"></div>
+        <span class="work-visual-label">Dealer portal — Asian Paints</span>
+      </div>
+      <div class="work-content">
+        <p class="client">Thence · 2021</p>
+        <h3>Asian Paints Dealer Portal</h3>
+        <p>Dealers hated every portal in the market. We redesigned order placement, added barcode scanning under 10 seconds, personalized recommendations, and role-based access.</p>
+        <div class="impact">20%</div>
+        <div class="impact-label">More online transactions</div>
+      </div>
+    </article>
+
+    <article class="work-block">
+      <div class="work-visual">
+        <div class="work-visual-frame" style="aspect-ratio: 9/16; max-width: 120px;"></div>
+        <span class="work-visual-label">Onboarding — Boost360 app</span>
+      </div>
+      <div class="work-content">
+        <p class="client">Thence · 2021</p>
+        <h3>Boost360 Onboarding</h3>
+        <p>20% signup rate. Users gone in 4 hours. Marketing promised one thing, the app delivered another. Visual onboarding + social proof + quick wins fixed it.</p>
+        <div class="impact">60%</div>
+        <div class="impact-label">Fewer uninstalls</div>
+      </div>
+    </article>
+
+    <article class="work-block">
+      <div class="work-visual">
+        <div class="work-visual-frame" style="aspect-ratio: 1/1; max-width: 160px;"></div>
+        <span class="work-visual-label">Research — Wikipedia KaiOS</span>
+      </div>
+      <div class="work-content">
+        <p class="client">Hureo · 2020</p>
+        <h3>Wikipedia KaiOS Research</h3>
+        <p>25 in-person interviews across Pune, Mumbai, Delhi. JioPhone users want voice search, bigger fonts, videos, and regional language content. Personas and journey maps delivered.</p>
+        <div class="impact">25</div>
+        <div class="impact-label">Participants interviewed</div>
+      </div>
+    </article>
+
+    <article class="work-block">
+      <div class="work-visual">
+        <div class="work-visual-frame"></div>
+        <span class="work-visual-label">Freelance — Turns, Gadivan, LetsConnect</span>
+      </div>
+      <div class="work-content">
+        <p class="client">Independent · 2021–2023</p>
+        <h3>0 to 1 Products</h3>
+        <p>Turns: website revamp helped raise $500K pre-seed. Gadivan: mobile apps from scratch. LetsConnect: usability overhaul → 4.8★ on Play Store.</p>
+        <div class="impact">$500K</div>
+        <div class="impact-label">Pre-seed raised by Turns</div>
+      </div>
+    </article>
+  </section>
+
+  <section id="beliefs">
+    <p class="section-tag">What I actually believe</p>
+    <h2>Principles</h2>
+    <ul class="manifesto-lines">
+      <li>Consistency beats talent <span>Daily effort compounds. I'm not the most talented — I'm the most consistent.</span></li>
+      <li>Curiosity guides <span>Know a little about a lot. Connect the dots others miss.</span></li>
+      <li>Form follows function <span>Solve the problem first. Then make it beautiful. Humans remember delight.</span></li>
+      <li>Give a damn <span>Founder's mindset. Ownership on every project. Go the extra mile.</span></li>
+    </ul>
+  </section>
+
+  <section id="process">
+    <p class="section-tag">How I work</p>
+    <h2>Process</h2>
+    <div class="verb-row">
+      <div class="verb">Research</div>
+      <div class="verb">Journey</div>
+      <div class="verb">Explore</div>
+      <div class="verb">Refine</div>
+      <div class="verb">Handoff</div>
+      <div class="verb">Monitor</div>
+    </div>
+  </section>
+
+  <section id="about">
+    <p class="section-tag">About</p>
+    <h2>Who I am</h2>
+    <div class="about-grid">
+      <div>
+        <p>Self-taught Product/UX Designer with a Computer Science degree. I make complex products easy and help startups build from zero to one. On-field research, usability testing, web apps, mobile apps, branding — I've done it all.</p>
+        <p>Currently re-learning how to code. When I'm not designing, I'm with my dog Jerry. He says hi.</p>
+      </div>
+      <dl class="about-facts">
+        <dt>Location</dt><dd>Jaipur, India — Remote</dd>
+        <dt>Experience</dt><dd>Thence, Hureo, Freelance</dd>
+        <dt>Education</dt><dd>B.Tech Computer Engineering, SPPU</dd>
+        <dt>Tools</dt><dd>Figma, Miro, Framer, Protopie</dd>
+        <dt>Clients</dt><dd>LearnApp, Turns, Gadivan, LetsConnect + more</dd>
+      </dl>
+    </div>
+  </section>
+
+  <section class="contact" id="contact">
+    <h2>Work with me</h2>
+    <a href="mailto:madebynaman@gmail.com">Email</a>
+    <a href="https://www.linkedin.com/in/madebynaman/">LinkedIn</a>
+    <a href="tel:+918208369219">Call</a>
+  </section>
+
+  <footer>No synergy was harmed · Naman Sharma · madebynaman.com</footer>
+
+</body>
+</html>
