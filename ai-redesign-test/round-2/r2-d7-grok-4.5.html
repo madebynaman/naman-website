@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Naman Sharma — Specimen</title>
+<link rel="preconnect" href="https://api.fontshare.com">
+<link href="https://api.fontshare.com/v2/css?f[]=gambetta@400,500,600,700&f[]=satoshi@400,500,600,700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<style>
+:root {
+  --bone: #f3efe6;
+  --bone-2: #e8e2d4;
+  --ink: #1c1914;
+  --ink-soft: #4a453c;
+  --tag: #b83228;
+  --tag-soft: #d45a4a;
+  --rule: #cfc6b4;
+  --moss: #3d4f3a;
+  --display: 'Gambetta', 'Times New Roman', serif;
+  --body: 'Satoshi', system-ui, sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body {
+  background: var(--bone);
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: 16.5px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  background-image:
+    radial-gradient(ellipse 90% 60% at 10% -10%, rgba(61,79,58,0.06), transparent 50%),
+    radial-gradient(ellipse 70% 50% at 100% 100%, rgba(184,50,40,0.04), transparent 45%);
+}
+::selection { background: var(--tag); color: var(--bone); }
+a { color: inherit; text-decoration: none; }
+:focus-visible { outline: 2px solid var(--tag); outline-offset: 3px; }
+
+.wrap { width: min(1100px, calc(100% - 48px)); margin: 0 auto; }
+
+.nav {
+  position: sticky; top: 0; z-index: 40;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 1rem 0;
+  background: rgba(243,239,230,0.92);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--rule);
+}
+.nav-mark {
+  font-family: var(--display);
+  font-size: 1.4rem; font-weight: 600;
+  font-style: italic;
+}
+.nav-mark small {
+  font-family: var(--body);
+  font-style: normal; font-size: 0.65rem;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--tag); margin-left: 0.6rem; font-weight: 600;
+}
+.nav-links { display: flex; gap: 1.75rem; font-size: 0.8rem; font-weight: 600; }
+.nav-links a:hover { color: var(--tag); }
+.nav-cta {
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+  background: var(--ink); color: var(--bone);
+  padding: 0.5rem 1rem;
+  transition: background 0.2s;
+}
+.nav-cta:hover { background: var(--tag); }
+@media (max-width: 700px) {
+  .nav-links { display: none; }
+  .wrap { width: min(100% - 28px, 1100px); }
+}
+
+/* Hero as collection plate */
+.hero {
+  padding: 4.5rem 0 3.5rem;
+  display: grid;
+  grid-template-columns: 1fr 280px;
+  gap: 3rem;
+  align-items: end;
+  border-bottom: 1px solid var(--ink);
+}
+.hero h1 {
+  font-family: var(--display);
+  font-size: clamp(3.4rem, 8vw, 6.8rem);
+  font-weight: 500;
+  line-height: 0.92;
+  letter-spacing: -0.03em;
+  max-width: 11ch;
+}
+.hero h1 em { font-style: italic; color: var(--tag); }
+.hero-lead {
+  margin-top: 1.75rem;
+  font-size: 1.15rem;
+  color: var(--ink-soft);
+  max-width: 36ch;
+  font-weight: 400;
+}
+.specimen-card {
+  border: 1px solid var(--ink);
+  background: var(--bone-2);
+  padding: 1.25rem;
+  position: relative;
+}
+.specimen-card::before {
+  content: '';
+  position: absolute; top: -8px; left: 50%;
+  width: 16px; height: 16px;
+  background: var(--tag);
+  border-radius: 50%;
+  transform: translateX(-50%);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+.specimen-card .latin {
+  font-family: var(--display);
+  font-style: italic;
+  font-size: 1.1rem;
+  margin-bottom: 0.75rem;
+}
+.specimen-card dl { font-size: 0.78rem; }
+.specimen-card dt {
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--tag); font-weight: 700; font-size: 0.65rem;
+  margin-top: 0.65rem;
+}
+.specimen-card dd { color: var(--ink-soft); }
+@media (max-width: 800px) {
+  .hero { grid-template-columns: 1fr; }
+  .specimen-card { max-width: 280px; }
+}
+
+section { padding: 5.5rem 0; border-bottom: 1px solid var(--rule); }
+.sec-title {
+  font-family: var(--display);
+  font-size: clamp(2.4rem, 5vw, 4rem);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.025em;
+  margin-bottom: 0.75rem;
+}
+.sec-lead { color: var(--ink-soft); max-width: 48ch; margin-bottom: 3rem; }
+
+/* Catalog of cases */
+.catalog { display: flex; flex-direction: column; gap: 0; }
+.entry {
+  display: grid;
+  grid-template-columns: 100px 1fr 200px;
+  gap: 2rem;
+  padding: 2.25rem 0;
+  border-top: 1px solid var(--rule);
+  align-items: start;
+}
+.entry:hover { background: rgba(232,226,212,0.45); }
+.entry-id {
+  font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--tag); font-weight: 700;
+}
+.entry h3 {
+  font-family: var(--display);
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  font-weight: 500; line-height: 1.15;
+  margin-bottom: 0.65rem;
+}
+.entry p { color: var(--ink-soft); max-width: 48ch; font-size: 0.95rem; }
+.entry-impact {
+  text-align: right;
+}
+.entry-impact strong {
+  display: block;
+  font-family: var(--display);
+  font-size: 2rem; font-weight: 600;
+  color: var(--moss); line-height: 1;
+}
+.entry-impact span {
+  font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--ink-soft);
+}
+@media (max-width: 720px) {
+  .entry { grid-template-columns: 1fr; gap: 0.75rem; }
+  .entry-impact { text-align: left; margin-top: 0.5rem; }
+}
+
+/* Drawer of findings */
+.drawers {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  border: 1px solid var(--ink);
+}
+.drawer {
+  padding: 1.75rem 1.4rem;
+  border-right: 1px solid var(--ink);
+  min-height: 220px;
+}
+.drawer:last-child { border-right: 0; }
+.drawer:nth-child(2) { background: var(--moss); color: var(--bone); }
+.drawer:nth-child(2) .drawer-k { color: rgba(243,239,230,0.7); }
+.drawer:nth-child(4) { background: var(--tag); color: var(--bone); }
+.drawer:nth-child(4) .drawer-k { color: rgba(243,239,230,0.75); }
+.drawer-k {
+  font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--tag); font-weight: 700; margin-bottom: 2.5rem;
+}
+.drawer h3 {
+  font-family: var(--display);
+  font-size: 1.45rem; font-weight: 500;
+  margin-bottom: 0.65rem; line-height: 1.15;
+}
+.drawer p { font-size: 0.85rem; opacity: 0.85; }
+@media (max-width: 800px) {
+  .drawers { grid-template-columns: 1fr 1fr; }
+  .drawer:nth-child(2) { border-right: 0; }
+  .drawer { border-bottom: 1px solid var(--ink); }
+}
+
+/* Timeline as accession log */
+.log { display: flex; flex-direction: column; }
+.log-row {
+  display: grid; grid-template-columns: 140px 1fr;
+  gap: 2rem; padding: 1.1rem 0;
+  border-top: 1px solid var(--rule);
+  font-size: 0.95rem;
+}
+.log-row time {
+  font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--tag); font-weight: 700;
+}
+
+.about-grid {
+  display: grid; grid-template-columns: 1fr 1.3fr; gap: 3.5rem;
+}
+.plate {
+  aspect-ratio: 4/5;
+  background:
+    linear-gradient(160deg, var(--bone-2), #d9d2c2);
+  border: 1px solid var(--ink);
+  position: relative;
+  display: grid; place-items: center;
+}
+.plate-ring {
+  width: 70%; aspect-ratio: 1;
+  border: 1px dashed var(--rule);
+  border-radius: 50%;
+  display: grid; place-items: center;
+  font-family: var(--display);
+  font-style: italic;
+  font-size: 1.1rem;
+  color: var(--ink-soft);
+  text-align: center;
+  padding: 1rem;
+}
+.about-grid h2 {
+  font-family: var(--display);
+  font-size: clamp(2rem, 3.5vw, 3rem);
+  font-weight: 500; line-height: 1.1;
+  margin-bottom: 1.25rem;
+}
+.about-grid p { color: var(--ink-soft); margin-bottom: 1rem; }
+.principles { margin-top: 2rem; display: grid; gap: 0; }
+.principles div {
+  display: grid; grid-template-columns: 1fr 1fr;
+  padding: 0.9rem 0;
+  border-top: 1px solid var(--rule);
+}
+.principles b { font-family: var(--display); font-weight: 600; font-size: 1.05rem; }
+.principles span { color: var(--ink-soft); font-size: 0.9rem; }
+@media (max-width: 800px) {
+  .about-grid { grid-template-columns: 1fr; }
+  .principles div { grid-template-columns: 1fr; gap: 0.25rem; }
+}
+
+.contact {
+  text-align: center; padding: 6rem 0;
+  border-bottom: none;
+}
+.contact h2 {
+  font-family: var(--display);
+  font-size: clamp(2.8rem, 7vw, 5.5rem);
+  font-weight: 500; line-height: 0.95;
+  margin-bottom: 1.75rem;
+}
+.contact h2 em { font-style: italic; color: var(--tag); }
+.contact a {
+  font-weight: 700;
+  border-bottom: 2px solid var(--tag);
+  padding-bottom: 0.15rem;
+}
+.contact a:hover { color: var(--tag); }
+
+footer {
+  display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem;
+  padding: 1.5rem 0 2.5rem;
+  font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--ink-soft);
+  border-top: 1px solid var(--ink);
+}
+</style>
+</head>
+<body>
+<!--
+THESIS: Portfolio as a natural-history accession — the designer is Specimen NS-01; cases are catalogued finds.
+OWN-WORLD: Bone paper, vermillion tags, moss impact ink, Gambetta italic + Satoshi, pinned specimen card.
+STORY: Classify who Naman is, browse the collection of product evidence, request a loan (conversation).
+FIRST VIEWPORT: Oversized italic name, short lead, pinned specimen ID card — no badges over imagery.
+FORM: Natural history specimen · free assignment · Persuade.
+FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md
+-->
+<div class="wrap">
+  <nav class="nav">
+    <a class="nav-mark" href="#">Naman<small>NS-01</small></a>
+    <div class="nav-links">
+      <a href="#collection">Collection</a>
+      <a href="#method">Method</a>
+      <a href="#about">About</a>
+    </div>
+    <a class="nav-cta" href="mailto:madebynaman@gmail.com">Inquire</a>
+  </nav>
+
+  <header class="hero">
+    <div>
+      <h1 class="h-reveal">Naman<br><em>Sharma</em></h1>
+      <p class="hero-lead h-reveal">Product / UX designer. Specimens of research-led work from Jaipur: collected, labelled, and still in use.</p>
+    </div>
+    <aside class="specimen-card h-reveal">
+      <div class="latin">Homo productus</div>
+      <dl>
+        <dt>Accession</dt><dd>NS-01 / 2019–present</dd>
+        <dt>Habitat</dt><dd>Jaipur · worldwide remote</dd>
+        <dt>Traits</dt><dd>Research · 0→1 · systems</dd>
+        <dt>Companion</dt><dd>Jerry (canine)</dd>
+      </dl>
+    </aside>
+  </header>
+
+  <section id="collection">
+    <h2 class="sec-title reveal">The collection.</h2>
+    <p class="sec-lead reveal">Each entry is a real problem with receipts, not a moodboard of screenshots.</p>
+    <div class="catalog">
+      <article class="entry reveal">
+        <div class="entry-id">Cat. AP-21</div>
+        <div>
+          <h3>Asian Paints dealer portal</h3>
+          <p>Thence · 2021. Heuristic evaluation and redesign around how dealers actually reorder: permissions, recommendations, barcode speed.</p>
+        </div>
+        <div class="entry-impact"><strong>+20%</strong><span>online transactions</span></div>
+      </article>
+      <article class="entry reveal">
+        <div class="entry-id">Cat. B360-21</div>
+        <div>
+          <h3>Boost360 onboarding</h3>
+          <p>Thence · 2021. Closed the marketing–product expectation gap with visual signup, trust, and an early win.</p>
+        </div>
+        <div class="entry-impact"><strong>−60%</strong><span>uninstall rate</span></div>
+      </article>
+      <article class="entry reveal">
+        <div class="entry-id">Cat. WIKI-20</div>
+        <div>
+          <h3>Wikipedia on KaiOS</h3>
+          <p>Hureo · 2020. Twenty-five in-person sessions across Pune, Mumbai, Delhi on JioPhone use and knowledge seeking.</p>
+        </div>
+        <div class="entry-impact"><strong>25</strong><span>field interviews</span></div>
+      </article>
+    </div>
+  </section>
+
+  <section id="method">
+    <h2 class="sec-title reveal">Field method.</h2>
+    <p class="sec-lead reveal">A contact sport: listen, frame, make, ship.</p>
+    <div class="drawers">
+      <div class="drawer reveal"><div class="drawer-k">Listen</div><h3>Research without performance</h3><p>Interviews, observation, usability testing.</p></div>
+      <div class="drawer reveal"><div class="drawer-k">Frame</div><h3>Find the real problem</h3><p>Journeys, systems, shared decision context.</p></div>
+      <div class="drawer reveal"><div class="drawer-k">Make</div><h3>Go wide, then exact</h3><p>Prototypes, UI systems, motion, brand.</p></div>
+      <div class="drawer reveal"><div class="drawer-k">Ship</div><h3>Stay past handoff</h3><p>Partner through build; monitor what happens.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="sec-title reveal">Accession log.</h2>
+    <div class="log">
+      <div class="log-row reveal"><time>2022–now</time><div>Independent Product / UX / Web — startups to growth-stage teams</div></div>
+      <div class="log-row reveal"><time>2021–22</time><div>UX Designer, Thence — research, redesign, client collaboration</div></div>
+      <div class="log-row reveal"><time>2019–20</time><div>UX Research Intern, Hureo — Wikipedia × KaiOS field study</div></div>
+      <div class="log-row reveal"><time>2017–20</time><div>Graphic design — freelance and internships before UX</div></div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="about-grid">
+      <div class="plate reveal" role="img" aria-label="Portrait plate">
+        <div class="plate-ring">Portrait plate<br>Naman + Jerry</div>
+      </div>
+      <div class="reveal">
+        <h2>Curious generalist. Computer science background. Hates jargon.</h2>
+        <p>I design products people can actually use, for brands that care. Consistency, curiosity, function-first craft, and ownership.</p>
+        <p>Clients include Asian Paints, Boost360, Wikipedia, Shiprocket, Turns, LearnApp, and founding teams across India.</p>
+        <div class="principles">
+          <div><b>Consistency beats talent</b><span>Craft compounds</span></div>
+          <div><b>Let curiosity guide you</b><span>Connect the dots</span></div>
+          <div><b>Form follows function</b><span>Delight after</span></div>
+          <div><b>Give a damn</b><span>Own the outcome</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact" id="contact">
+    <h2 class="reveal">Request a<br><em>loan.</em></h2>
+    <a class="reveal" href="mailto:madebynaman@gmail.com">madebynaman@gmail.com</a>
+  </section>
+
+  <footer>
+    <span>Specimen Archive · Naman Sharma</span>
+    <span>© 2026</span>
+  </footer>
+</div>
+
+<script>
+gsap.registerPlugin(ScrollTrigger);
+const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+if (!reduce) {
+  gsap.from('.h-reveal', { y: 40, opacity: 0, duration: 0.9, stagger: 0.15, ease: 'power3.out' });
+  gsap.utils.toArray('.reveal').forEach((el) => {
+    gsap.from(el, {
+      scrollTrigger: { trigger: el, start: 'top 88%' },
+      y: 36, opacity: 0, duration: 0.75, ease: 'power3.out'
+    });
+  });
+  gsap.utils.toArray('.entry').forEach((el) => {
+    el.addEventListener('mouseenter', () => gsap.to(el, { x: 6, duration: 0.25, ease: 'power2.out' }));
+    el.addEventListener('mouseleave', () => gsap.to(el, { x: 0, duration: 0.3, ease: 'power2.out' }));
+  });
+}
+</script>
+</body>
+</html>

@@ -4,128 +4,620 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AI Redesign Test — Dashboard</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.cdnfonts.com">
+<link href="https://fonts.cdnfonts.com/css/cabinet-grotesk" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/@fontsource/open-sauce-sans@5.2.5/400.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/@fontsource/open-sauce-sans@5.2.5/600.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/@fontsource/open-sauce-sans@5.2.5/700.css" rel="stylesheet">
 <style>
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-body { background: #F8FAFC; color: #0F172A; font-family: 'Inter', system-ui, -apple-system, sans-serif; line-height: 1.6; padding: 3rem 2rem; -webkit-font-smoothing: antialiased; }
-.container { max-width: 960px; margin: 0 auto; }
 
-h1 { font-size: 2.5rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 0.25rem; }
-h1 .accent { color: #8B5CF6; }
-.subtitle { color: #64748B; margin-bottom: 2.5rem; font-size: 1.0625rem; }
-.subtitle a { color: #8B5CF6; text-decoration: none; border-bottom: 1px solid transparent; }
-.subtitle a:hover { border-bottom-color: #8B5CF6; }
+:root {
+  --bg: #FAFAFA;
+  --white: #FFFFFF;
+  --black: #000000;
+  --blue: #0055FF;
+  --gray-100: #F5F5F5;
+  --gray-200: #E5E5E5;
+  --gray-400: #999999;
+  --gray-600: #666666;
+  --gray-800: #333333;
+}
 
-.meta { font-family: 'DM Mono', 'Courier New', monospace; font-size: 0.75rem; color: #94A3B8; margin-bottom: 2rem; display: flex; gap: 1.5rem; }
+body {
+  background: var(--bg);
+  color: var(--black);
+  font-family: 'Open Sauce Sans', system-ui, -apple-system, sans-serif;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
 
-.model-grid { display: grid; gap: 1.5rem; }
-.model-card { background: #fff; border: 1px solid #E2E8F0; border-radius: 12px; padding: 1.5rem; transition: border-color 0.2s, box-shadow 0.2s; }
-.model-card:hover { border-color: #8B5CF6; box-shadow: 0 4px 20px rgba(139,92,246,0.08); }
-.model-card .model-name { font-size: 1.15rem; font-weight: 600; margin-bottom: 0.25rem; }
-.model-card .model-name .status-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 0.5rem; vertical-align: middle; }
-.model-card .model-name .dot-ready { background: #22C55E; }
-.model-card .model-name .dot-pending { background: #CBD5E1; }
-.model-card .model-path { font-family: 'DM Mono', 'Courier New', monospace; font-size: 0.7rem; color: #94A3B8; margin-bottom: 0.75rem; }
-.model-card .directions { display: flex; flex-wrap: wrap; gap: 0.5rem; }
-.model-card .directions a { display: inline-block; background: #F1F5F9; color: #475569; text-decoration: none; padding: 0.35rem 0.75rem; border-radius: 6px; font-size: 0.8125rem; font-family: 'DM Mono', 'Courier New', monospace; transition: all 0.15s; }
-.model-card .directions a:hover { background: #8B5CF6; color: #fff; }
-.model-card .directions a.pending-link { opacity: 0.4; cursor: default; }
-.model-card .no-files { font-size: 0.8125rem; color: #94A3B8; font-style: italic; }
+/* ─── Layout ─── */
+.page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
 
-.section-title { font-size: 1.25rem; font-weight: 600; margin: 2rem 0 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid #E2E8F0; }
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  width: 100%;
+}
 
-footer { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid #E2E8F0; font-family: 'DM Mono', 'Courier New', monospace; font-size: 0.75rem; color: #94A3B8; display: flex; justify-content: space-between; }
+/* ─── Header ─── */
+.header {
+  padding: 3rem 0 2rem;
+  border-bottom: 1px solid var(--black);
+}
+
+.header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 2rem;
+}
+
+.header-title {
+  flex: 1;
+}
+
+.eyebrow {
+  font-size: 0.625rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gray-600);
+  margin-bottom: 1rem;
+}
+
+h1 {
+  font-family: 'Cabinet Grotesk', system-ui, sans-serif;
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+h1 .accent { color: var(--blue); }
+
+.header-stats {
+  display: flex;
+  gap: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--gray-200);
+  margin-top: 1.5rem;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.stat-value {
+  font-family: 'Cabinet Grotesk', system-ui, sans-serif;
+  font-size: 1.5rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.stat-label {
+  font-size: 0.5625rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gray-400);
+}
+
+/* ─── Round Nav ─── */
+.round-nav {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid var(--black);
+}
+
+.round-tab {
+  font-family: 'Open Sauce Sans', system-ui, sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 1rem 1.5rem;
+  border: none;
+  background: none;
+  color: var(--gray-400);
+  cursor: pointer;
+  white-space: nowrap;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  transition: color 0.1s;
+  letter-spacing: 0.02em;
+}
+
+.round-tab:hover { color: var(--black); }
+
+.round-tab.active {
+  color: var(--blue);
+  border-bottom-color: var(--blue);
+}
+
+.round-tab .count {
+  font-weight: 400;
+  color: var(--gray-400);
+  margin-left: 0.5rem;
+}
+
+.round-tab.active .count { color: var(--blue); }
+
+/* ─── Content ─── */
+.content {
+  flex: 1;
+  padding: 2rem 0 4rem;
+}
+
+.content-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 2rem;
+}
+
+.content-title {
+  font-size: 0.6875rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gray-600);
+}
+
+.content-meta {
+  font-size: 0.625rem;
+  color: var(--gray-400);
+  letter-spacing: 0.05em;
+}
+
+/* ─── Model Grid ─── */
+.model-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1px;
+  background: var(--gray-200);
+  border: 1px solid var(--gray-200);
+}
+
+.model-card {
+  background: var(--white);
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.model-card:hover {
+  background: var(--gray-100);
+}
+
+.model-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.model-name {
+  font-family: 'Cabinet Grotesk', system-ui, sans-serif;
+  font-size: 0.8125rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.model-index {
+  font-size: 0.625rem;
+  color: var(--gray-400);
+  font-weight: 400;
+}
+
+.model-path {
+  font-size: 0.625rem;
+  color: var(--gray-400);
+  letter-spacing: 0.05em;
+}
+
+.directions-label {
+  font-size: 0.5625rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gray-400);
+}
+
+.directions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.375rem;
+}
+
+.directions a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2rem;
+  height: 1.75rem;
+  background: var(--black);
+  color: var(--white);
+  text-decoration: none;
+  padding: 0 0.5rem;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  transition: background 0.1s;
+}
+
+.directions a:hover {
+  background: var(--blue);
+}
+
+.no-directions {
+  font-size: 0.75rem;
+  color: var(--gray-400);
+}
+
+/* ─── Footer ─── */
+.footer {
+  border-top: 1px solid var(--black);
+  padding: 1.5rem 0;
+  margin-top: auto;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.625rem;
+  color: var(--gray-600);
+  letter-spacing: 0.05em;
+}
+
+.footer a {
+  color: var(--black);
+  text-decoration: none;
+}
+
+.footer a:hover { color: var(--blue); }
+
+/* ─── Responsive ─── */
+@media (max-width: 640px) {
+  .container { padding: 0 1.25rem; }
+  .header-stats { flex-wrap: wrap; gap: 1.5rem; }
+  .model-grid { grid-template-columns: 1fr; }
+  .footer-content { flex-direction: column; gap: 0.5rem; text-align: center; }
+}
 </style>
 </head>
 <body>
 
-<div class="container">
-  <h1><span class="accent">AI Redesign Test</span> — Portfolio Dashboard</h1>
-  <p class="subtitle">Side-by-side comparison of 17 AI models redesigning <a href="https://madebynaman.com" target="_blank" rel="noopener">Naman Sharma's</a> portfolio homepage. Each model produced 5 distinct design directions from the same brief.</p>
+<div class="page">
+  <header class="header">
+    <div class="container">
+      <div class="header-top">
+        <div class="header-title">
+          <div class="eyebrow">Portfolio comparison project</div>
+          <h1>AI Redesign <span class="accent">Test</span></h1>
+        </div>
+      </div>
 
-  <div class="meta">
-    <span>Models: 17</span>
-    <span>Directions per model: 5</span>
-    <span>Source: <a href="prd.md" style="color: #94A3B8;">prd.md</a></span>
-  </div>
+      <div class="header-stats">
+        <div class="stat">
+          <span class="stat-value">17</span>
+          <span class="stat-label">Models</span>
+        </div>
+        <div class="stat">
+          <span class="stat-value">85</span>
+          <span class="stat-label">Directions / round</span>
+        </div>
+        <div class="stat">
+          <span class="stat-value" id="total-directions">85</span>
+          <span class="stat-label">Total directions</span>
+        </div>
+      </div>
+    </div>
+  </header>
 
-  <div class="section-title">Model Directions</div>
-  <div class="model-grid" id="model-grid">
-    <!-- Populated by JS below -->
-  </div>
+  <nav class="container">
+    <div class="round-nav" id="round-nav"></div>
+  </nav>
 
-  <footer>
-    <span>AI Redesign Test — Q3 2025</span>
-    <span>Repo: github.com/naman/website</span>
+  <main class="content">
+    <div class="container">
+      <div class="content-header">
+        <span class="content-title" id="content-title">Round 1 — All models</span>
+        <span class="content-meta" id="content-meta">17 models · 85 directions</span>
+      </div>
+      <div class="model-grid" id="model-grid"></div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <span>AI Redesign Test — Q3 2025</span>
+        <span><a href="https://github.com/naman/website" target="_blank" rel="noopener">github.com/naman/website</a></span>
+      </div>
+    </div>
   </footer>
 </div>
 
 <script>
-const models = [
-  { name: 'deepseek-v4-flash', label: 'DeepSeek V4 Flash', files: [1,2,3,4,5] },
-  { name: 'deepseek-v4-pro', label: 'DeepSeek V4 Pro', files: [1,2,3,4,5] },
-  { name: 'kimi-k2.6', label: 'Kimi k2.6', files: [1,2,3,4,5] },
-  { name: 'fable', label: 'Fable', files: [1,2,3,4,5] },
-  { name: 'gemini-3.1-pro', label: 'Gemini 3.1 Pro', files: [1,2,3,4,5] },
-  { name: 'gemini-3.5-flash', label: 'Gemini 3.5 Flash', files: [1,2,3,4,5] },
-  { name: 'glm-5.2', label: 'GLM 5.2', files: [1,2,3,4,5] },
-  { name: 'gpt-5.5', label: 'GPT 5.5', files: [1,2,3,4,5] },
-  { name: 'gpt-5.6-sol', label: 'GPT 5.6 Sol', files: [1,2,3,4,5] },
-  { name: 'gpt-5.6-terra', label: 'GPT 5.6 Terra', files: [1,2,3,4,5] },
-  { name: 'grok-4.5', label: 'Grok 4.5', files: [1,2,3,4,5] },
-  { name: 'mimo-v2.5', label: 'Mimo v2.5', files: [1,2,3,4,5] },
-  { name: 'minimax-m3', label: 'MiniMax M3', files: [1,2,3,4,5] },
-  { name: 'opus-4.8', label: 'Opus 4.8', files: [1,2,3,4,5] },
-  { name: 'qwen3.7-max', label: 'Qwen 3.7 Max', files: [1,2,3,4,5] },
-  { name: 'sonnet-5', label: 'Sonnet 5', files: [1,2,3,4,5] },
-  { name: 'composer-2.5', label: 'Composer 2.5', files: [1,2,3,4,5] },
+const rounds = [
+  { id: 'round-1', label: 'Round 1', status: 'available' },
+  { id: 'round-2', label: 'Round 2', status: 'available' },
 ];
 
-const grid = document.getElementById('model-grid');
+const models = [
+  {
+    name: 'deepseek-v4-flash',
+    label: 'DeepSeek V4 Flash',
+    rounds: {
+      'round-1': [1,2,3,4,5],
+    }
+  },
+  {
+    name: 'deepseek-v4-pro',
+    label: 'DeepSeek V4 Pro',
+    rounds: {
+      'round-1': [6,7,8,9,10],
+    }
+  },
+  {
+    name: 'kimi-k2.6',
+    label: 'Kimi k2.6',
+    rounds: {
+      'round-1': [11,12,13,14,15],
+    }
+  },
+  {
+    name: 'fable',
+    label: 'Fable',
+    rounds: {
+      'round-1': [16,17,18,19,20],
+    }
+  },
+  {
+    name: 'gemini-3.1-pro',
+    label: 'Gemini 3.1 Pro',
+    rounds: {
+      'round-1': [21,22,23,24,25],
+    }
+  },
+  {
+    name: 'gemini-3.5-flash',
+    label: 'Gemini 3.5 Flash',
+    rounds: {
+      'round-1': [26,27,28,29,30],
+    }
+  },
+  {
+    name: 'glm-5.2',
+    label: 'GLM 5.2',
+    rounds: {
+      'round-1': [31,32,33,34,35],
+      'round-2': [11,12,13,14,15],
+    }
+  },
+  {
+    name: 'gpt-5.5',
+    label: 'GPT 5.5',
+    rounds: {
+      'round-1': [36,37,38,39,40],
+    }
+  },
+  {
+    name: 'gpt-5.6-sol',
+    label: 'GPT 5.6 Sol',
+    rounds: {
+      'round-1': [41,42,43,44,45],
+    }
+  },
+  {
+    name: 'gpt-5.6-terra',
+    label: 'GPT 5.6 Terra',
+    rounds: {
+      'round-1': [46,47,48,49,50],
+    }
+  },
+  {
+    name: 'grok-4.5',
+    label: 'Grok 4.5',
+    rounds: {
+      'round-1': [51,52,53,54,55],
+      'round-2': [6,7,8,9,10],
+    }
+  },
+  {
+    name: 'mimo-v2.5',
+    label: 'Mimo v2.5',
+    rounds: {
+      'round-1': [56,57,58,59,60],
+    }
+  },
+  {
+    name: 'minimax-m3',
+    label: 'MiniMax M3',
+    rounds: {
+      'round-1': [61,62,63,64,65],
+    }
+  },
+  {
+    name: 'opus-4.8',
+    label: 'Opus 4.8',
+    rounds: {
+      'round-1': [66,67,68,69,70],
+    }
+  },
+  {
+    name: 'qwen3.7-max',
+    label: 'Qwen 3.7 Max',
+    rounds: {
+      'round-1': [71,72,73,74,75],
+    }
+  },
+  {
+    name: 'sonnet-5',
+    label: 'Sonnet 5',
+    rounds: {
+      'round-1': [76,77,78,79,80],
+    }
+  },
+  {
+    name: 'composer-2.5',
+    label: 'Composer 2.5',
+    rounds: {
+      'round-1': [81,82,83,84,85],
+      'round-2': [1,2,3,4,5],
+    }
+  },
+];
 
-models.forEach(m => {
-  const card = document.createElement('div');
-  card.className = 'model-card';
+let activeRound = 'round-1';
 
-  const nameDiv = document.createElement('div');
-  nameDiv.className = 'model-name';
-  const dot = document.createElement('span');
-  dot.className = 'status-dot ' + (m.files ? 'dot-ready' : 'dot-pending');
-  nameDiv.appendChild(dot);
-  nameDiv.appendChild(document.createTextNode(m.label));
+function getTotalDirections() {
+  let total = 0;
+  models.forEach(m => {
+    Object.values(m.rounds).forEach(arr => { total += arr.length; });
+  });
+  return total;
+}
 
-  const pathDiv = document.createElement('div');
-  pathDiv.className = 'model-path';
-  pathDiv.textContent = `ai-redesign-test/${m.name}/`;
+function getRoundDirectionCount(roundId) {
+  let total = 0;
+  models.forEach(m => {
+    if (m.rounds[roundId]) total += m.rounds[roundId].length;
+  });
+  return total;
+}
 
-  const dirDiv = document.createElement('div');
-  dirDiv.className = 'directions';
+function getRoundModelCount(roundId) {
+  return models.filter(m => m.rounds[roundId] && m.rounds[roundId].length > 0).length;
+}
 
-  if (m.files) {
-    m.files.forEach(i => {
-      const a = document.createElement('a');
-      a.href = `${m.name}/d${i}-${m.name}.html`;
-      a.textContent = `d${i}`;
-      dirDiv.appendChild(a);
+function renderTabs() {
+  const nav = document.getElementById('round-nav');
+  nav.innerHTML = '';
+
+  rounds.forEach(r => {
+    const tab = document.createElement('button');
+    tab.className = 'round-tab' + (r.id === activeRound ? ' active' : '');
+
+    tab.appendChild(document.createTextNode(r.label));
+
+    const count = document.createElement('span');
+    count.className = 'count';
+    count.textContent = getRoundDirectionCount(r.id);
+    tab.appendChild(count);
+
+    tab.addEventListener('click', () => {
+      activeRound = r.id;
+      renderTabs();
+      renderGrid();
     });
-    const readme = document.createElement('a');
-    readme.href = `${m.name}/README.md`;
-    readme.textContent = 'README';
-    dirDiv.appendChild(readme);
-  } else {
-    const span = document.createElement('span');
-    span.className = 'no-files';
-    span.textContent = 'Awaiting directions';
-    dirDiv.appendChild(span);
+
+    nav.appendChild(tab);
+  });
+}
+
+function renderGrid() {
+  const grid = document.getElementById('model-grid');
+  const title = document.getElementById('content-title');
+  const meta = document.getElementById('content-meta');
+  const totalEl = document.getElementById('total-directions');
+
+  totalEl.textContent = getTotalDirections();
+
+  const round = rounds.find(r => r.id === activeRound);
+  const dirCount = getRoundDirectionCount(activeRound);
+  const modelCount = getRoundModelCount(activeRound);
+
+  title.textContent = `${round.label} — All models`;
+  meta.textContent = `${modelCount} model${modelCount !== 1 ? 's' : ''} · ${dirCount} direction${dirCount !== 1 ? 's' : ''}`;
+
+  grid.innerHTML = '';
+
+  const roundOrder = {
+    'round-2': ['composer-2.5', 'grok-4.5', 'glm-5.2'],
+  };
+
+  let entries = models.map((m, idx) => ({ m, idx }));
+
+  if (activeRound === 'round-2') {
+    entries = entries.filter(({ m }) => m.rounds[activeRound]?.length > 0);
+    const order = roundOrder[activeRound] || [];
+    entries.sort((a, b) => {
+      const ai = order.indexOf(a.m.name);
+      const bi = order.indexOf(b.m.name);
+      if (ai === -1 && bi === -1) return a.idx - b.idx;
+      if (ai === -1) return 1;
+      if (bi === -1) return -1;
+      return ai - bi;
+    });
   }
 
-  card.appendChild(nameDiv);
-  card.appendChild(pathDiv);
-  card.appendChild(dirDiv);
-  grid.appendChild(card);
-});
+  entries.forEach(({ m, idx }, displayIdx) => {
+    const dx = m.rounds[activeRound];
+    const hasData = dx && dx.length > 0;
+    const roundPrefix = activeRound === 'round-1' ? 'r1' : 'r2';
+
+    const card = document.createElement('article');
+    card.className = 'model-card';
+
+    const header = document.createElement('div');
+    header.className = 'model-card-header';
+
+    const name = document.createElement('div');
+    name.className = 'model-name';
+    name.appendChild(document.createTextNode(m.label));
+
+    const index = document.createElement('span');
+    index.className = 'model-index';
+    index.textContent = String(
+      activeRound === 'round-2' ? displayIdx + 1 : idx + 1
+    ).padStart(2, '0');
+
+    header.appendChild(name);
+    header.appendChild(index);
+    card.appendChild(header);
+
+    const path = document.createElement('div');
+    path.className = 'model-path';
+    path.textContent = `${activeRound}/`;
+    card.appendChild(path);
+
+    if (hasData) {
+      const label = document.createElement('div');
+      label.className = 'directions-label';
+      label.textContent = 'Directions';
+      card.appendChild(label);
+
+      const dirs = document.createElement('div');
+      dirs.className = 'directions';
+
+      dx.forEach(d => {
+        const a = document.createElement('a');
+        a.href = `${activeRound}/${roundPrefix}-d${d}-${m.name}.html`;
+        a.textContent = `d${d}`;
+        a.title = `Direction ${d} — ${m.label}`;
+        dirs.appendChild(a);
+      });
+
+      card.appendChild(dirs);
+    } else {
+      const noDirs = document.createElement('div');
+      noDirs.className = 'no-directions';
+      noDirs.textContent = 'Awaiting directions';
+      card.appendChild(noDirs);
+    }
+
+    grid.appendChild(card);
+  });
+}
+
+renderTabs();
+renderGrid();
 </script>
 
 </body>

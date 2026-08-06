@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Naman Sharma — The Design Brief</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;0,6..72,700;1,6..72,400&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --newsprint: #F2F0E8;
+  --newsprint-dark: #E5E2D8;
+  --ink: #121212;
+  --ink-soft: #4A4A4A;
+  --headline-red: #CC0000;
+  --rule: #C8C4B8;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--newsprint);
+  color: var(--ink);
+  font-family: 'Public Sans', system-ui, sans-serif;
+  font-size: 15px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+::selection { background: var(--headline-red); color: var(--newsprint); }
+a { color: var(--headline-red); text-decoration: none; }
+a:hover { text-decoration: underline; }
+h1, h2, h3 { font-family: 'Playfair Display', Georgia, serif; line-height: 1.08; text-wrap: balance; }
+.quote { font-family: 'Newsreader', Georgia, serif; }
+.meta { font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-soft); }
+.wrap { width: min(1100px, calc(100% - 40px)); margin: 0 auto; }
+
+/* Masthead */
+.masthead {
+  border-bottom: 4px double var(--ink);
+  padding: 1rem 0 0.75rem;
+  text-align: center;
+}
+.masthead-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+.masthead-sub {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.75rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--ink);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* Columns */
+.cols {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 0 24px;
+  padding: 2rem 0;
+  border-bottom: 1px solid var(--rule);
+}
+.col-8 { grid-column: span 8; }
+.col-4 { grid-column: span 4; }
+.col-6 { grid-column: span 6; }
+.col-12 { grid-column: span 12; }
+
+.hero-headline {
+  font-size: clamp(3rem, 7vw, 5.5rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  margin-bottom: 1rem;
+  border-bottom: 3px solid var(--headline-red);
+  padding-bottom: 1rem;
+}
+.hero-deck {
+  font-family: 'Newsreader', serif;
+  font-size: 1.35rem;
+  line-height: 1.4;
+  color: var(--ink-soft);
+  margin-bottom: 1.5rem;
+}
+.byline {
+  font-size: 0.8rem;
+  border-top: 1px solid var(--rule);
+  padding-top: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+.byline strong { color: var(--headline-red); }
+
+/* Drop cap */
+.drop-cap::first-letter {
+  font-family: 'Playfair Display', serif;
+  font-size: 4.5rem;
+  float: left;
+  line-height: 0.8;
+  margin: 0.1rem 0.5rem 0 0;
+  font-weight: 700;
+  color: var(--headline-red);
+}
+
+.sidebar-box {
+  border: 2px solid var(--ink);
+  padding: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+.sidebar-box h3 {
+  font-size: 1.1rem;
+  margin-bottom: 0.75rem;
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: 0.5rem;
+}
+.stat-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.4rem 0;
+  border-bottom: 1px dotted var(--rule);
+  font-size: 0.85rem;
+}
+.stat-row strong { font-family: 'Playfair Display', serif; font-size: 1.2rem; }
+
+/* Section header */
+.section-bar {
+  background: var(--ink);
+  color: var(--newsprint);
+  padding: 0.5rem 1rem;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  margin: 2rem 0 1.5rem;
+}
+
+/* Case article */
+.case-article {
+  padding: 2rem 0;
+  border-bottom: 1px solid var(--rule);
+}
+.case-article h3 {
+  font-size: clamp(1.8rem, 3vw, 2.5rem);
+  margin-bottom: 0.75rem;
+}
+.case-article .lead {
+  font-family: 'Newsreader', serif;
+  font-size: 1.15rem;
+  color: var(--ink-soft);
+  margin-bottom: 1rem;
+}
+.case-placeholder {
+  height: 180px;
+  background: var(--newsprint-dark);
+  border: 1px solid var(--rule);
+  margin: 1.25rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--ink-soft);
+}
+.pull-quote {
+  font-family: 'Newsreader', serif;
+  font-size: 1.5rem;
+  font-style: italic;
+  border-top: 3px solid var(--headline-red);
+  border-bottom: 1px solid var(--rule);
+  padding: 1rem 0;
+  margin: 1.5rem 0;
+  color: var(--ink);
+}
+
+/* Process columns */
+.process-cols {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+}
+.process-col {
+  background: var(--newsprint);
+  padding: 1rem 0.75rem;
+  min-height: 140px;
+}
+.process-col h4 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem;
+  margin-bottom: 0.35rem;
+}
+.process-col p { font-size: 0.75rem; color: var(--ink-soft); }
+
+/* Contact banner */
+.contact-banner {
+  background: var(--headline-red);
+  color: var(--newsprint);
+  padding: 4rem 2rem;
+  text-align: center;
+  margin-top: 3rem;
+}
+.contact-banner h2 {
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  color: var(--newsprint);
+  margin-bottom: 1rem;
+}
+.contact-banner a {
+  color: var(--newsprint);
+  font-family: 'Newsreader', serif;
+  font-size: 1.5rem;
+  text-decoration: underline;
+  text-underline-offset: 6px;
+}
+
+footer {
+  padding: 1.5rem 0;
+  border-top: 4px double var(--ink);
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.word { display: inline-block; opacity: 0; transform: translateY(20px); }
+.fold-panel {
+  transform-origin: top center;
+  transform: perspective(800px) rotateX(-90deg);
+  opacity: 0;
+}
+@media (prefers-reduced-motion: reduce) {
+  .word, .fold-panel { opacity: 1; transform: none; }
+}
+@media (max-width: 800px) {
+  .col-8, .col-4, .col-6 { grid-column: span 12; }
+  .process-cols { grid-template-columns: 1fr 1fr; }
+  .masthead-sub { flex-direction: column; gap: 0.25rem; text-align: center; }
+}
+</style>
+</head>
+<body>
+
+<header class="wrap masthead">
+  <div class="masthead-title">The Design Brief</div>
+  <div class="masthead-sub">
+    <span>Vol. II · Round 2</span>
+    <span>Naman Sharma — Product/UX Designer</span>
+    <span>Jaipur · Remote Worldwide</span>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="cols">
+    <div class="col-8">
+      <h1 class="hero-headline" id="headline">
+        <span class="word">Design</span> <span class="word">that</span> <span class="word">reads</span> <span class="word">like</span> <span class="word">evidence,</span> <span class="word">not</span> <span class="word">theatre.</span>
+      </h1>
+      <p class="hero-deck fold-panel" id="deck">A Product/UX designer who starts in the field, finishes in the metrics, and hates jargon along the way.</p>
+      <div class="byline fold-panel" id="byline"><strong>By Naman Sharma</strong> · Remote from Jaipur · Research-led design for complex platforms and 0→1 products</div>
+      <p class="drop-cap fold-panel" id="intro">I'm Naman — self-taught, engineer-background, curious generalist. I design products users love for brands that care. Whether it's dealer portals, onboarding flows, or field research on feature phones, my work begins where people actually are.</p>
+    </div>
+    <aside class="col-4">
+      <div class="sidebar-box fold-panel">
+        <h3>At a glance</h3>
+        <div class="stat-row"><span>Experience</span><strong>7+ years</strong></div>
+        <div class="stat-row"><span>Focus</span><strong>Product / UX</strong></div>
+        <div class="stat-row"><span>Base</span><strong>Jaipur</strong></div>
+        <div class="stat-row"><span>Status</span><strong style="color:var(--headline-red)">Available</strong></div>
+      </div>
+      <div class="sidebar-box fold-panel">
+        <h3>Impact highlights</h3>
+        <div class="stat-row"><span>Asian Paints</span><strong>+20%</strong></div>
+        <div class="stat-row"><span>Boost360</span><strong>−60%</strong></div>
+        <div class="stat-row"><span>Turns</span><strong>$500K</strong></div>
+        <div class="stat-row"><span>LetsConnect</span><strong>4.8★</strong></div>
+      </div>
+      <p class="quote fold-panel" style="font-size:1.1rem;font-style:italic;color:var(--ink-soft)">"Problems are solved with function. Delight is what people remember."</p>
+    </aside>
+  </div>
+
+  <div class="section-bar">Selected Work</div>
+
+  <article class="case-article fold-panel">
+    <div class="meta">Asian Paints · Thence · 2021</div>
+    <h3>Dealer portal — digitizing order placement without the friction dealers hated everywhere else.</h3>
+    <p class="lead">Heuristic evaluation and end-to-end redesign. Barcode re-orders in under 10 seconds, personalized recommendations, permission abstraction for varied dealer types.</p>
+    <div class="case-placeholder">Dealer portal screens — home / order / stock check / tracker</div>
+    <div class="pull-quote">+20% increase in online transaction volume, with healthier engagement and loyalty.</div>
+  </article>
+
+  <article class="case-article fold-panel">
+    <div class="meta">Boost360 · Thence · 2021</div>
+    <h3>Onboarding that closes the gap between what ads promised and what the app delivered.</h3>
+    <p class="lead">Visual signup, social proof, quick wins. Users understood value before friction. Usability testing confirmed: seamless, friendly, no technical knowledge required.</p>
+    <div class="case-placeholder">Onboarding flow — visual steps / trust signals / early win</div>
+    <div class="pull-quote">60% decrease in uninstall rate. Significant drop in signup time.</div>
+  </article>
+
+  <article class="case-article fold-panel">
+    <div class="meta">Wikipedia × KaiOS · Hureo · 2020</div>
+    <h3>Twenty-five people, three cities, one smart feature phone.</h3>
+    <p class="lead">In-person interviews and device observation on JioPhones. Affordability, keypad familiarity, language, and reading behavior — not smartphone assumptions.</p>
+    <div class="case-placeholder">KaiOS research — journeys / personas / device observations</div>
+    <div class="pull-quote">Recommendations: voice UI, readability optimization, regional language SEO, video content.</div>
+  </article>
+
+  <article class="case-article fold-panel">
+    <div class="meta">Freelance · 2021–2023</div>
+    <h3>Founding teams, growth-stage revamps, and brand systems end-to-end.</h3>
+    <p class="lead">Turns raised $500K after conversion-focused redesign. Gadivan 0→1 across stakeholder apps. LetsConnect hit 4.8 stars after usability-driven iteration.</p>
+    <div class="case-placeholder">Freelance work — web / product / brand / development</div>
+  </article>
+
+  <div class="section-bar">Method</div>
+  <div class="process-cols fold-panel">
+    <div class="process-col"><h4>Research</h4><p>Problem, customer, solutions.</p></div>
+    <div class="process-col"><h4>Journey</h4><p>Personas, decisions, friction.</p></div>
+    <div class="process-col"><h4>Explore</h4><p>Wide, test, iterate.</p></div>
+    <div class="process-col"><h4>Refine</h4><p>Polish, document.</p></div>
+    <div class="process-col"><h4>Handoff</h4><p>Ship with engineering.</p></div>
+    <div class="process-col"><h4>Monitor</h4><p>Measure, improve.</p></div>
+  </div>
+
+  <div class="section-bar">About the designer</div>
+  <div class="cols" style="padding-top:1rem">
+    <div class="col-6 fold-panel">
+      <p class="drop-cap">Consistency beats talent. Curiosity connects scattered dots. Form follows function — then delight earns its place. I give a damn about every project I touch.</p>
+      <p style="margin-top:1rem;color:var(--ink-soft)">Freelance since 2022. Thence 2021–22. Hureo 2019–20. B.E. Computer Engineering, SPPU Pune. When I'm not designing, I'm with Jerry. He says hi.</p>
+    </div>
+    <div class="col-6 fold-panel">
+      <p class="meta" style="margin-bottom:0.75rem">Selected clients</p>
+      <p>Thence, LearnApp, Turns, Gadivan, LetsConnect, Parentverse, Venyou, Sharent, Spirinova, Gorico, RedShilliz, DGlobalist, Pahoti Wellness, Ivy Malik, PhotoFinder, Olsub, Learn Theta, and more.</p>
+    </div>
+  </div>
+</main>
+
+<section class="contact-banner fold-panel" id="contact">
+  <h2>Have a difficult product problem?</h2>
+  <a href="mailto:madebynaman@gmail.com">madebynaman@gmail.com</a>
+</section>
+
+<footer class="wrap">
+  <span>The Design Brief · Naman Sharma</span>
+  <span>madebynaman.com · 2026</span>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script>
+if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  var tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+  tl.to('.word', {
+    opacity: 1, y: 0,
+    duration: 0.5,
+    stagger: 0.08,
+    delay: 0.3
+  });
+  tl.to('#deck, #byline, #intro', {
+    opacity: 1,
+    rotationX: 0,
+    transformPerspective: 800,
+    duration: 0.8,
+    stagger: 0.15
+  }, '-=0.3');
+  tl.to('.fold-panel', {
+    opacity: 1,
+    rotationX: 0,
+    transformPerspective: 800,
+    duration: 0.7,
+    stagger: 0.1,
+    ease: 'power2.out'
+  }, '-=0.4');
+}
+</script>
+</body>
+</html>

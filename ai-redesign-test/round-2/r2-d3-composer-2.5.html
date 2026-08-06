@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Naman Sharma — Silk Route</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Nunito+Sans:ital,wght@0,400;0,600;0,700;1,400&family=Spectral:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --cotton: #F4EFE6;
+  --cotton-dark: #E8E0D2;
+  --indigo: #1B365D;
+  --indigo-light: #2A4A73;
+  --madder: #A63429;
+  --gold: #C9A227;
+  --soot: #2A2420;
+  --soot-soft: #5C534A;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--cotton);
+  color: var(--soot);
+  font-family: 'Nunito Sans', system-ui, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+::selection { background: var(--indigo); color: var(--cotton); }
+a { color: var(--indigo); text-decoration: none; }
+a:hover { color: var(--madder); }
+h1, h2, h3 { font-family: 'Spectral', Georgia, serif; font-weight: 600; line-height: 1.15; text-wrap: balance; }
+.caption { font-family: 'Courier Prime', monospace; font-size: 0.72rem; letter-spacing: 0.04em; }
+.wrap { width: min(1100px, calc(100% - 44px)); margin: 0 auto; }
+
+/* Block print pattern */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.04;
+  background-image:
+    url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 5 L35 25 L55 30 L35 35 L30 55 L25 35 L5 30 L25 25 Z' fill='%231B365D'/%3E%3C/svg%3E");
+  background-size: 60px 60px;
+}
+
+/* Fabric band header */
+.band {
+  background: var(--indigo);
+  color: var(--cotton);
+  padding: 0.6rem 0;
+  text-align: center;
+  font-family: 'Courier Prime', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.25rem 0;
+  border-bottom: 2px solid var(--indigo);
+}
+.nav-mark {
+  font-family: 'Spectral', serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--indigo);
+}
+.nav-links { display: flex; gap: 1.75rem; font-weight: 700; font-size: 0.85rem; }
+.nav-links a { color: var(--soot); }
+.stamp {
+  border: 2px solid var(--madder);
+  color: var(--madder);
+  padding: 0.35rem 0.75rem;
+  font-family: 'Courier Prime', monospace;
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  transform: rotate(-2deg);
+}
+
+/* Hero */
+.hero {
+  padding: 4rem 0;
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 3rem;
+  align-items: center;
+}
+.hero h1 {
+  font-size: clamp(2.8rem, 6vw, 5rem);
+  letter-spacing: -0.02em;
+  color: var(--indigo);
+}
+.hero h1 em { font-style: italic; color: var(--madder); }
+.hero-lead { color: var(--soot-soft); font-size: 1.1rem; max-width: 40ch; margin-top: 1.5rem; }
+.block-print-art {
+  aspect-ratio: 1;
+  background: var(--cotton-dark);
+  border: 3px solid var(--indigo);
+  position: relative;
+  overflow: hidden;
+}
+.block-print-art::before {
+  content: '';
+  position: absolute;
+  inset: 15%;
+  background:
+    radial-gradient(circle at 30% 40%, var(--madder) 0 35%, transparent 36%),
+    radial-gradient(circle at 70% 60%, var(--gold) 0 25%, transparent 26%),
+    radial-gradient(circle at 50% 80%, var(--indigo) 0 20%, transparent 21%);
+  opacity: 0.85;
+}
+.block-print-art::after {
+  content: 'BLOCK PRINT / PLACEHOLDER';
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  font-family: 'Courier Prime', monospace;
+  font-size: 0.6rem;
+  color: var(--soot-soft);
+}
+.stamp-overlay {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: var(--gold);
+  color: var(--soot);
+  padding: 0.5rem 0.75rem;
+  font-family: 'Courier Prime', monospace;
+  font-size: 0.65rem;
+  border: 2px solid var(--soot);
+  transform: rotate(8deg);
+}
+
+/* Fabric strips */
+.fabric-strip {
+  height: 12px;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--indigo) 0 20px,
+    var(--madder) 20px 40px,
+    var(--gold) 40px 60px,
+    var(--indigo-light) 60px 80px
+  );
+}
+
+.section { padding: 4.5rem 0; }
+.section-head {
+  margin-bottom: 2.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px dashed var(--indigo);
+}
+.section-head h2 { font-size: clamp(2rem, 4vw, 3.2rem); color: var(--indigo); }
+
+/* Study rows */
+.study {
+  display: grid;
+  grid-template-columns: 100px 1fr 1.2fr;
+  gap: 2rem;
+  padding: 2.5rem 0;
+  border-top: 1px solid var(--cotton-dark);
+  align-items: start;
+}
+.study-year {
+  font-family: 'Courier Prime', monospace;
+  color: var(--madder);
+  font-weight: 700;
+}
+.study h3 { font-size: 1.6rem; margin-bottom: 0.75rem; }
+.study p { color: var(--soot-soft); font-size: 0.95rem; margin-bottom: 1rem; }
+.study-impact {
+  font-family: 'Spectral', serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--indigo);
+}
+.study-visual {
+  height: 200px;
+  border: 2px solid var(--indigo);
+  background: var(--cotton-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Courier Prime', monospace;
+  font-size: 0.65rem;
+  text-align: center;
+  padding: 1rem;
+  position: relative;
+}
+.study-visual::before {
+  content: '';
+  position: absolute;
+  inset: 8px;
+  border: 1px dashed var(--indigo);
+  opacity: 0.4;
+}
+
+/* Process blocks */
+.process-blocks {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+.process-block {
+  background: var(--indigo);
+  color: var(--cotton);
+  padding: 1.75rem;
+  position: relative;
+}
+.process-block:nth-child(even) { background: var(--madder); }
+.process-block h4 {
+  font-family: 'Spectral', serif;
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+.process-block p { font-size: 0.85rem; opacity: 0.9; }
+.process-block .stamp-mini {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 24px;
+  height: 24px;
+  border: 2px solid var(--gold);
+  border-radius: 50%;
+  opacity: 0.5;
+}
+
+/* Principles */
+.principles-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+.principle-card {
+  padding: 1.5rem;
+  border: 2px solid var(--indigo);
+  background: var(--cotton);
+}
+.principle-card h4 { font-family: 'Spectral', serif; font-size: 1.2rem; margin-bottom: 0.35rem; }
+.principle-card p { color: var(--soot-soft); font-size: 0.9rem; }
+
+/* Contact */
+.contact {
+  background: var(--indigo);
+  color: var(--cotton);
+  padding: 5rem 0;
+  text-align: center;
+}
+.contact h2 {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  color: var(--cotton);
+  margin-bottom: 1.25rem;
+}
+.contact a {
+  font-family: 'Spectral', serif;
+  font-size: 1.4rem;
+  color: var(--gold);
+  text-decoration: underline;
+  text-underline-offset: 6px;
+}
+
+footer {
+  padding: 1.5rem 0;
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  color: var(--soot-soft);
+}
+
+.stamp-in { opacity: 0; transform: scale(0.92) rotate(-4deg); }
+@media (prefers-reduced-motion: reduce) {
+  .stamp-in { opacity: 1; transform: none; }
+}
+
+@media (max-width: 800px) {
+  .hero { grid-template-columns: 1fr; }
+  .study { grid-template-columns: 1fr; }
+  .process-blocks, .principles-grid { grid-template-columns: 1fr; }
+  .nav-links { display: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="band">Jaipur · India · Product & UX Design · Remote Worldwide</div>
+
+<header class="wrap nav">
+  <a href="#" class="nav-mark">Naman Sharma</a>
+  <nav class="nav-links">
+    <a href="#work">Work</a>
+    <a href="#method">Method</a>
+    <a href="#about">About</a>
+  </nav>
+  <span class="stamp">Open to work</span>
+</header>
+
+<main>
+  <section class="wrap hero">
+    <div>
+      <h1 class="stamp-in" id="hero-title">Woven from <em>research</em>, dyed in use.</h1>
+      <p class="hero-lead stamp-in" id="hero-lead">I'm Naman — a Product/UX designer who starts in the field and finishes in the metrics. Complex platforms, 0→1 products, teams who care if design works.</p>
+    </div>
+    <div class="block-print-art stamp-in" id="hero-art">
+      <span class="stamp-overlay">CRAFT</span>
+    </div>
+  </section>
+
+  <div class="fabric-strip"></div>
+
+  <section class="section" id="work">
+    <div class="wrap">
+      <div class="section-head stamp-in">
+        <h2>Four studies in making systems understandable.</h2>
+      </div>
+
+      <article class="study stamp-in">
+        <div class="study-year">2021</div>
+        <div>
+          <div class="caption">Asian Paints · Thence</div>
+          <h3>Dealer portal — speed, context, permissions.</h3>
+          <p>Dealer ordering and supply-chain tracking, rethought around autonomy, barcode re-orders, and recommendations from order history.</p>
+          <div class="study-impact">+20% online transaction volume</div>
+        </div>
+        <div class="study-visual">Dealer portal — place order / stock / tracker</div>
+      </article>
+
+      <article class="study stamp-in">
+        <div class="study-year">2021</div>
+        <div>
+          <div class="caption">Boost360 · Thence</div>
+          <h3>Onboarding that closes the promise gap.</h3>
+          <p>Visual signup, social proof, quick wins — users understood value before friction. Marketing mismatch was the root cause.</p>
+          <div class="study-impact">−60% uninstall rate</div>
+        </div>
+        <div class="study-visual" style="background:var(--madder);color:var(--cotton)">Onboarding — visual steps / trust / early win</div>
+      </article>
+
+      <article class="study stamp-in">
+        <div class="study-year">2020</div>
+        <div>
+          <div class="caption">Wikipedia × KaiOS · Hureo</div>
+          <h3>25 interviews across Pune, Mumbai, Delhi.</h3>
+          <p>How JioPhone users find and consume knowledge — device, language, literacy, and affordability contexts.</p>
+          <div class="study-impact">45–60 min per session</div>
+        </div>
+        <div class="study-visual" style="background:var(--gold);color:var(--soot)">Research artifact — journeys / observations</div>
+      </article>
+
+      <article class="study stamp-in">
+        <div class="study-year">2021–23</div>
+        <div>
+          <div class="caption">Freelance · Independent</div>
+          <h3>Founding teams to growth-stage products.</h3>
+          <p>Turns raised $500K after redesign. Gadivan 0→1. LetsConnect 4.8★. Brand systems, web, product end-to-end.</p>
+          <div class="study-impact">Thence · LearnApp · Turns · Gadivan · more</div>
+        </div>
+        <div class="study-visual">Freelance — web / product / brand systems</div>
+      </article>
+    </div>
+  </section>
+
+  <div class="fabric-strip"></div>
+
+  <section class="section" id="method">
+    <div class="wrap">
+      <div class="section-head stamp-in"><h2>What repeats in my process.</h2></div>
+      <div class="process-blocks">
+        <div class="process-block stamp-in"><span class="stamp-mini"></span><h4>Research</h4><p>Problem, customer, plausible solutions.</p></div>
+        <div class="process-block stamp-in"><span class="stamp-mini"></span><h4>Journey</h4><p>Personas, decisions, friction maps.</p></div>
+        <div class="process-block stamp-in"><span class="stamp-mini"></span><h4>Explore</h4><p>Wide exploration, test, iterate.</p></div>
+        <div class="process-block stamp-in"><span class="stamp-mini"></span><h4>Refine</h4><p>Polish, document, prepare handoff.</p></div>
+        <div class="process-block stamp-in"><span class="stamp-mini"></span><h4>Handoff</h4><p>Partner through implementation.</p></div>
+        <div class="process-block stamp-in"><span class="stamp-mini"></span><h4>Monitor</h4><p>Metrics after launch — improve again.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="about">
+    <div class="wrap">
+      <div class="section-head stamp-in"><h2>Curious generalist. Engineer turned designer.</h2></div>
+      <div class="principles-grid stamp-in">
+        <div class="principle-card"><h4>Consistency beats talent</h4><p>Daily craft compounds into results talent alone can't reach.</p></div>
+        <div class="principle-card"><h4>Let curiosity guide you</h4><p>Connect scattered information into coherent products.</p></div>
+        <div class="principle-card"><h4>Form follows function</h4><p>Solve the need first. Delight earns its place.</p></div>
+        <div class="principle-card"><h4>Give a damn</h4><p>Founder mindset — ownership on every project.</p></div>
+      </div>
+      <p class="stamp-in" style="margin-top:2rem;color:var(--soot-soft)">Freelance since 2022 · Thence 2021–22 · Hureo 2019–20 · B.E. Computer Engineering, SPPU Pune. Jerry says hi.</p>
+    </div>
+  </section>
+
+  <section class="contact" id="contact">
+    <h2 class="stamp-in">Have a product that needs attention?</h2>
+    <a href="mailto:madebynaman@gmail.com" class="stamp-in">madebynaman@gmail.com</a>
+  </section>
+</main>
+
+<footer class="wrap">
+  <span class="caption">Naman Sharma · Product/UX Designer</span>
+  <span class="caption">madebynaman.com · 2026</span>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<script>
+if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  gsap.registerPlugin(ScrollTrigger);
+  gsap.utils.toArray('.stamp-in').forEach(function (el, i) {
+    var isHero = el.id && el.id.indexOf('hero') === 0;
+    gsap.fromTo(el,
+      { opacity: 0, scale: 0.92, rotation: -4 },
+      {
+        opacity: 1, scale: 1, rotation: 0,
+        duration: 0.7,
+        delay: isHero ? i * 0.15 : 0,
+        ease: 'back.out(1.4)',
+        scrollTrigger: isHero ? null : { trigger: el, start: 'top 88%', toggleActions: 'play none none none' }
+      }
+    );
+  });
+}
+</script>
+</body>
+</html>

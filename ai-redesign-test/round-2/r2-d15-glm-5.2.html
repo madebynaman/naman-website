@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Naman Sharma — Workshop / Shipping Dept.</title>
+<link rel="preconnect" href="https://api.fontshare.com">
+<link href="https://api.fontshare.com/v2/css?f[]=boska@400,500,600,700&f[]=spline-sans@400,500,600,700&f[]=spline-sans-mono@400,500,600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<style>
+:root{
+  --kraft:#D9C7A8;
+  --kraft-2:#CBB795;
+  --kraft-dark:#B39E78;
+  --ink:#1A1A1A;
+  --ink-soft:#4A4036;
+  --stamp:#B23A2E;
+  --stamp-2:#8E2A20;
+  --pencil:#2E4B7A;
+  --pencil-soft:#5A739B;
+  --chalk:#F2EAD8;
+  --display:'Boska',Georgia,serif;
+  --body:'Spline Sans',system-ui,sans-serif;
+  --mono:'Spline Sans Mono',ui-monospace,monospace;
+  --stamp-font:'Special Elite',monospace;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{
+  background:var(--kraft);
+  color:var(--ink);
+  font-family:var(--body);
+  font-size:16px;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+  background-image:
+    repeating-linear-gradient(90deg,transparent 0 119px,rgba(26,26,26,0.04) 119px 120px),
+    radial-gradient(rgba(74,64,54,0.05) 1px,transparent 1.4px);
+  background-size:120px 120px,5px 5px;
+}
+::selection{background:var(--stamp);color:var(--chalk)}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px dashed var(--stamp);outline-offset:3px}
+
+.wrap{max-width:1180px;margin:0 auto;padding:0 1.75rem;position:relative;z-index:2}
+
+/* tape strip */
+.tape{position:absolute;background:rgba(180,160,110,0.55);border:1px solid rgba(120,100,60,0.25);
+  box-shadow:0 1px 3px rgba(0,0,0,0.12);z-index:5}
+.tape::before,.tape::after{content:'';position:absolute;top:0;bottom:0;width:6px;background-image:linear-gradient(45deg,rgba(255,255,255,0.25) 25%,transparent 25%,transparent 50%,rgba(255,255,255,0.25) 50%,rgba(255,255,255,0.25) 75%,transparent 75%);background-size:6px 6px}
+.tape::before{left:0}.tape::after{right:0}
+
+/* top label */
+.shipping-label{display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;padding:0.9rem 0;border-bottom:2px solid var(--ink);font-family:var(--mono);font-size:0.7rem;letter-spacing:0.04em;text-transform:uppercase}
+.shipping-label .from{display:flex;align-items:center;gap:0.6rem}
+.shipping-label .from b{color:var(--stamp)}
+.shipping-label .to span{display:block;color:var(--ink-soft);font-size:0.62rem}
+.shipping-label .to b{font-size:0.78rem}
+
+/* nav */
+.nav{position:sticky;top:0;z-index:40;background:var(--kraft);border-bottom:2px solid var(--ink)}
+.nav-inner{display:flex;justify-content:space-between;align-items:center;height:56px}
+.nav-logo{font-family:var(--display);font-weight:700;font-size:1.2rem;letter-spacing:-0.01em}
+.nav-logo em{font-style:italic;color:var(--stamp)}
+.nav-links{display:flex;gap:1.4rem;flex-wrap:wrap;font-family:var(--mono);font-size:0.72rem;letter-spacing:0.04em;text-transform:uppercase}
+.nav-links a{padding:0.2rem 0;border-bottom:2px solid transparent;transition:border-color .15s}
+.nav-links a:hover{border-bottom-color:var(--stamp)}
+
+/* hero — packing crate */
+.hero{padding:4rem 0 4.5rem;position:relative}
+.hero-grid{position:relative;border:2px solid var(--ink);background:var(--chalk);padding:3rem 2.6rem}
+.hero-grid::before{content:'';position:absolute;inset:8px;border:1px dashed var(--ink);pointer-events:none}
+.tape.tl{top:-14px;left:18%;width:120px;height:34px;transform:rotate(-4deg)}
+.tape.tr{top:-14px;right:14%;width:100px;height:34px;transform:rotate(3deg)}
+.tape.bl{bottom:-14px;left:30%;width:110px;height:34px;transform:rotate(2deg)}
+
+.hero-eyebrow{font-family:var(--mono);font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--stamp);margin-bottom:1.4rem;display:flex;align-items:center;gap:0.6rem}
+.hero-eyebrow::before{content:'☛';color:var(--stamp)}
+.hero h1{font-family:var(--display);font-weight:600;font-size:clamp(2.6rem,6vw,5rem);line-height:1;letter-spacing:-0.02em;max-width:16ch}
+.hero h1 em{font-style:italic;color:var(--stamp);font-weight:500}
+.hero h1 .u{text-decoration:underline;text-decoration-color:var(--pencil);text-decoration-thickness:3px;text-underline-offset:6px}
+.hero-lead{max-width:52ch;margin-top:1.6rem;font-size:1.06rem;color:var(--ink-soft)}
+.hero-lead b{color:var(--ink);font-weight:600;background:rgba(180,160,110,0.4);padding:0 0.2rem}
+
+.hero-meta{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:2rem;border:2px solid var(--ink)}
+.hero-meta .cell{padding:1rem 1.1rem;border-right:1px solid var(--ink);background:var(--kraft)}
+.hero-meta .cell:last-child{border-right:0}
+.hero-meta .k{font-family:var(--mono);font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:0.3rem}
+.hero-meta .v{font-family:var(--display);font-weight:600;font-size:1.05rem;color:var(--ink)}
+.hero-meta .v small{display:block;font-family:var(--mono);font-weight:400;font-size:0.66rem;color:var(--ink-soft);margin-top:0.1rem}
+
+/* rubber stamp */
+.stamp{position:absolute;top:2rem;right:2.4rem;font-family:var(--stamp-font);color:var(--stamp);border:3px double var(--stamp);padding:0.5rem 0.9rem;font-size:0.86rem;letter-spacing:0.06em;text-transform:uppercase;transform:rotate(-8deg);opacity:0.85;text-align:center;line-height:1.1}
+.stamp small{display:block;font-size:0.6rem;letter-spacing:0.1em;margin-top:0.15rem}
+
+/* section */
+.section{padding:5rem 0;position:relative}
+.section + .section{border-top:2px solid var(--ink)}
+.sec-head{display:flex;justify-content:space-between;align-items:flex-end;gap:1rem;flex-wrap:wrap;margin-bottom:2.6rem}
+.sec-head h2{font-family:var(--display);font-weight:600;font-size:clamp(2.2rem,5vw,3.6rem);line-height:0.95;letter-spacing:-0.02em}
+.sec-head h2 em{font-style:italic;color:var(--stamp)}
+.sec-head .tag-no{font-family:var(--stamp-font);font-size:0.86rem;color:var(--stamp);border:2px solid var(--stamp);padding:0.3rem 0.7rem;transform:rotate(2deg);letter-spacing:0.06em}
+.sec-intro{max-width:60ch;margin-bottom:2.8rem;color:var(--ink-soft);font-size:1.02rem}
+
+/* cases as work orders */
+.cases{display:flex;flex-direction:column;gap:1.4rem}
+.case{position:relative;border:2px solid var(--ink);background:var(--chalk);padding:1.8rem 1.8rem 1.6rem}
+.case .tape{top:-16px;left:1.4rem;width:90px;height:30px;transform:rotate(-3deg)}
+.case .case-no{position:absolute;top:1rem;right:1.4rem;font-family:var(--stamp-font);font-size:0.78rem;color:var(--stamp);border:2px solid var(--stamp);padding:0.2rem 0.5rem;transform:rotate(4deg);letter-spacing:0.04em}
+.case h3{font-family:var(--display);font-weight:600;font-size:clamp(1.6rem,3vw,2.4rem);line-height:1;letter-spacing:-0.015em;margin-bottom:0.5rem;max-width:24ch}
+.case .case-meta{font-family:var(--mono);font-size:0.68rem;letter-spacing:0.04em;text-transform:uppercase;color:var(--pencil);margin-bottom:1rem}
+.case p{max-width:62ch;color:var(--ink-soft);margin-bottom:1.1rem}
+.case .impact{display:inline-block;font-family:var(--stamp-font);font-size:0.8rem;color:var(--chalk);background:var(--stamp);padding:0.25rem 0.6rem;letter-spacing:0.04em;transform:rotate(-1deg)}
+.case-fig{margin-top:1.2rem;height:90px;border:1px solid var(--ink);background:
+  repeating-linear-gradient(45deg,transparent 0 12px,rgba(26,26,26,0.06) 12px 13px),
+  var(--kraft-2);position:relative;font-family:var(--mono);font-size:0.62rem;color:var(--ink-soft);display:flex;align-items:center;padding-left:0.8rem;letter-spacing:0.04em;text-transform:uppercase}
+.case-fig::after{content:'☛ FIG.';position:absolute;right:0.8rem;font-family:var(--stamp-font);color:var(--stamp)}
+
+/* process as numbered tags */
+.process{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem}
+.step{border:1.5px solid var(--ink);background:var(--chalk);padding:1.4rem 1.3rem;position:relative}
+.step .n{font-family:var(--stamp-font);font-size:1rem;color:var(--stamp);border:1.5px solid var(--stamp);width:34px;height:34px;display:flex;align-items:center;justify-content:center;margin-bottom:0.8rem;transform:rotate(-3deg)}
+.step h4{font-family:var(--display);font-weight:600;font-size:1.25rem;letter-spacing:-0.01em;margin-bottom:0.4rem}
+.step p{font-size:0.92rem;color:var(--ink-soft);line-height:1.55}
+
+/* principles as stenciled cards */
+.principles{display:grid;grid-template-columns:repeat(2,1fr);gap:1.4rem}
+.principle{border:2px solid var(--ink);padding:1.8rem 1.6rem;background:var(--kraft-2);position:relative}
+.principle .pn{font-family:var(--mono);font-size:0.64rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--stamp);margin-bottom:0.7rem}
+.principle h4{font-family:var(--display);font-weight:700;font-size:clamp(1.4rem,2.6vw,1.9rem);line-height:1.05;letter-spacing:-0.01em;margin-bottom:0.6rem;text-transform:uppercase}
+.principle:nth-child(1) h4{color:var(--stamp)}
+.principle:nth-child(2) h4{color:var(--pencil)}
+.principle p{font-size:0.95rem;color:var(--ink-soft);max-width:42ch}
+
+/* timeline as clipboard log */
+.timeline{border:2px solid var(--ink);background:var(--chalk);padding:1.6rem 1.6rem 0.4rem}
+.t-item{display:grid;grid-template-columns:130px 1fr auto;gap:1.4rem;align-items:baseline;padding:1.1rem 0;border-bottom:1px dashed var(--ink)}
+.t-item:last-child{border-bottom:0}
+.t-item .t-date{font-family:var(--mono);font-size:0.7rem;letter-spacing:0.04em;text-transform:uppercase;color:var(--stamp)}
+.t-item .t-role{font-family:var(--display);font-weight:600;font-size:1.15rem;letter-spacing:-0.01em}
+.t-item .t-role small{display:block;font-family:var(--mono);font-weight:400;font-size:0.72rem;color:var(--ink-soft);margin-top:0.15rem}
+.t-item .t-mark{font-family:var(--stamp-font);font-size:0.74rem;color:var(--stamp);border:1.5px solid var(--stamp);padding:0.15rem 0.4rem;transform:rotate(3deg)}
+.t-item.now .t-mark{background:var(--stamp);color:var(--chalk)}
+
+/* contact as shipping form */
+.contact{border:2px solid var(--ink);background:var(--chalk);padding:2.6rem 2.2rem;position:relative}
+.contact .tape{top:-14px;right:8%;width:130px;height:34px;transform:rotate(4deg)}
+.contact .form-no{position:absolute;top:1rem;right:1.4rem;font-family:var(--mono);font-size:0.66rem;color:var(--ink-soft);letter-spacing:0.06em}
+.contact h2{font-family:var(--display);font-weight:600;font-size:clamp(2rem,4.4vw,3.2rem);line-height:1;letter-spacing:-0.02em;max-width:18ch;margin-bottom:1rem}
+.contact h2 em{font-style:italic;color:var(--stamp)}
+.contact p{max-width:48ch;color:var(--ink-soft);margin-bottom:1.8rem}
+.contact-links{display:flex;flex-wrap:wrap;gap:0.8rem}
+.contact-links a{font-family:var(--stamp-font);font-size:0.82rem;border:2px solid var(--ink);background:var(--kraft);padding:0.45rem 0.8rem;letter-spacing:0.04em;transition:transform .15s, background .15s}
+.contact-links a:hover{transform:translate(-2px,-2px);background:var(--stamp);color:var(--chalk)}
+
+.footer{padding:2rem 0;border-top:2px solid var(--ink);font-family:var(--mono);font-size:0.66rem;letter-spacing:0.04em;text-transform:uppercase;color:var(--ink-soft);display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+
+.reveal{opacity:0;transform:translateY(20px)}
+
+@media (max-width:760px){
+  .hero-meta{grid-template-columns:1fr}
+  .hero-meta .cell{border-right:0;border-bottom:1px solid var(--ink)}
+  .hero-meta .cell:last-child{border-bottom:0}
+  .process{grid-template-columns:1fr}
+  .principles{grid-template-columns:1fr}
+  .t-item{grid-template-columns:1fr;gap:0.3rem}
+  .stamp{position:static;display:inline-block;margin-bottom:1rem}
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <div class="shipping-label">
+    <div class="from"><span>☛ FROM:</span><b>NAMAN SHARMA — WORKSHOP</b></div>
+    <div class="to"><span>☛ SHIP TO:</span><b>YOU, THE READER</b></div>
+    <div>PARCEL № 15 / 15 · FRAGILE ✓</div>
+  </div>
+</div>
+
+<nav class="nav">
+  <div class="wrap nav-inner">
+    <a href="#" class="nav-logo">Naman <em>Sharma</em></a>
+    <div class="nav-links">
+      <a href="#work">Work</a>
+      <a href="#process">Process</a>
+      <a href="#principles">Principles</a>
+      <a href="#timeline">Timeline</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero wrap">
+  <div class="hero-grid">
+    <span class="tape tl" aria-hidden="true"></span>
+    <span class="tape tr" aria-hidden="true"></span>
+    <span class="tape bl" aria-hidden="true"></span>
+    <div class="stamp" aria-hidden="true">Made by hand<small>Jaipur · IN</small></div>
+    <div class="hero-eyebrow">Workshop Notes — Product &amp; UX Design</div>
+    <h1>Product / UX designer, <em>building products</em> <span class="u">users love.</span></h1>
+    <p class="hero-lead">Self-taught designer with a Computer Science background. Three years of UX helping startups build <b>0 to 1</b>, making complex products easy to use. No jargon. Consistency beats talent; curiosity creates work that makes a difference.</p>
+    <div class="hero-meta">
+      <div class="cell"><div class="k">☛ Origin</div><div class="v">Jaipur, IN<small>26.9°N 75.8°E</small></div></div>
+      <div class="cell"><div class="k">☛ Ships to</div><div class="v">Worldwide<small>Remote / async</small></div></div>
+      <div class="cell"><div class="k">☛ Foreman</div><div class="v">Jerry 🐕<small>Morale, 0 y</small></div></div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="section wrap" id="work">
+    <div class="sec-head">
+      <h2 class="reveal">Selected <em>work</em>.</h2>
+      <span class="tag-no reveal">Work Orders · 04</span>
+    </div>
+    <p class="sec-intro reveal">Real case studies with real outcomes. Four projects that shaped my understanding of research-led design and business impact.</p>
+
+    <div class="cases">
+      <article class="case reveal">
+        <span class="tape" aria-hidden="true"></span>
+        <span class="case-no">№ 01</span>
+        <h3>Dealer Portal Redesign</h3>
+        <div class="case-meta">Client: Asian Paints · Role: UX Design · 2021</div>
+        <p>End-to-end redesign of a multi-platform dealer portal for India's largest paint company. Heuristic evaluation, new features to reduce dealer–salesman friction, intelligent product recommendations, barcode quick-order, and data-driven promotions.</p>
+        <span class="impact">+20% online transaction volume</span>
+        <div class="case-fig">Dealer dashboard, primary view</div>
+      </article>
+
+      <article class="case reveal">
+        <span class="tape" aria-hidden="true"></span>
+        <span class="case-no">№ 02</span>
+        <h3>Onboarding Experience</h3>
+        <div class="case-meta">Client: Boost360 · Role: UX Design · 2021</div>
+        <p>Redesigned onboarding for a small-business app suffering 80% signup drop-off. Root cause: expectation mismatch from paid acquisition. Visual signup flow, trust-building social proof, quick wins, and screen-level UX fixes.</p>
+        <span class="impact">−60% app uninstall rate</span>
+        <div class="case-fig">Onboarding flow, 5 screens</div>
+      </article>
+
+      <article class="case reveal">
+        <span class="tape" aria-hidden="true"></span>
+        <span class="case-no">№ 03</span>
+        <h3>KaiOS User Research</h3>
+        <div class="case-meta">Client: Wikipedia / Hureo · Role: UX Research · 2020</div>
+        <p>One-on-one interviews with 25 JioPhone users across Pune, Mumbai, and Delhi. Uncovered insights about voice interaction, regional content discovery, and readability constraints on smart feature phones.</p>
+        <span class="impact">25 participants · 3 cities</span>
+        <div class="case-fig">Research map, western India</div>
+      </article>
+
+      <article class="case reveal">
+        <span class="tape" aria-hidden="true"></span>
+        <span class="case-no">№ 04</span>
+        <h3>Independent Product Design</h3>
+        <div class="case-meta">Clients: Turns · Gadivan · LetsConnect · Role: Product Design · 2022–23</div>
+        <p>End-to-end product experiences: website redesigns, 0-to-1 mobile apps, design systems, and UX audits. Turns raised $500K pre-seed post-revamp; LetsConnect hit 4.8 stars on the Play Store.</p>
+        <span class="impact">0 → 1 product builds</span>
+        <div class="case-fig">Product suite, three surfaces</div>
+      </article>
+    </div>
+  </section>
+
+  <section class="section wrap" id="process">
+    <div class="sec-head">
+      <h2 class="reveal">The <em>process</em>.</h2>
+      <span class="tag-no reveal">Phases · 06</span>
+    </div>
+    <p class="sec-intro reveal">No two projects follow the exact same path, but every project starts with research and ends with monitoring. This is the backbone.</p>
+    <div class="process">
+      <div class="step reveal"><div class="n">01</div><h4>Research</h4><p>Understand the problem, consider possible solutions, and learn the customer. I don't start drawing until I know who I'm drawing for.</p></div>
+      <div class="step reveal"><div class="n">02</div><h4>User Journey</h4><p>Dive deep into the journey to uncover insights. Personas, journeys, and decision-making at every touchpoint.</p></div>
+      <div class="step reveal"><div class="n">03</div><h4>Design Exploration</h4><p>Go wide and explore a range of solutions. Test, iterate, collaborate — work the problem without premature convergence.</p></div>
+      <div class="step reveal"><div class="n">04</div><h4>Design Refinement</h4><p>Refine the chosen direction and polish the visual design. Prepare for handoff and document the decisions made along the way.</p></div>
+      <div class="step reveal"><div class="n">05</div><h4>Handoff</h4><p>Work closely with engineering and product to ensure successful implementation. A design is only as good as its execution.</p></div>
+      <div class="step reveal"><div class="n">06</div><h4>Monitoring</h4><p>Once live, the work isn't done. Monitor performance and track metrics that indicate success — and find the next thing to improve.</p></div>
+    </div>
+  </section>
+
+  <section class="section wrap" id="principles">
+    <div class="sec-head">
+      <h2 class="reveal"><em>Principles</em>.</h2>
+      <span class="tag-no reveal">Beliefs · 04</span>
+    </div>
+    <p class="sec-intro reveal">These aren't posters on a wall. They're heuristics I use when I'm stuck, when the path forward is unclear, or when I need to decide what matters.</p>
+    <div class="principles">
+      <div class="principle reveal"><div class="pn">P-01</div><h4>Consistency beats talent</h4><p>I'm not the most talented designer in the world, but I strive for consistency and constant improvement — everyday. Consistency compounds into unimaginable results.</p></div>
+      <div class="principle reveal"><div class="pn">P-02</div><h4>Let curiosity guide you</h4><p>Curiosity fuels my endless quest for understanding. I know a little about a lot of things — it helps me connect the dots between scattered information.</p></div>
+      <div class="principle reveal"><div class="pn">P-03</div><h4>Form follows function</h4><p>Problems are solved with functionality, not aesthetics. But once the problem is solved, going the extra mile creates delight. Humans remember delight.</p></div>
+      <div class="principle reveal"><div class="pn">P-04</div><h4>Give a damn</h4><p>I'm highly entrepreneurial and strive to have a founder's mindset. Success is a shared responsibility. I take ownership for each project I work on.</p></div>
+    </div>
+  </section>
+
+  <section class="section wrap" id="timeline">
+    <div class="sec-head">
+      <h2 class="reveal">Career <em>log</em>.</h2>
+      <span class="tag-no reveal">Entries · 06</span>
+    </div>
+    <p class="sec-intro reveal">From graphic design internships in Pune to product design for India's largest paint company — and everything in between.</p>
+    <div class="timeline">
+      <div class="t-item now reveal"><div class="t-date">Apr 2022 — Present</div><div class="t-role">Product, UX &amp; Web Designer<small>Freelance — Turns, Gadivan, LetsConnect, and more</small></div><div class="t-mark">Active</div></div>
+      <div class="t-item reveal"><div class="t-date">Apr 2021 — Mar 2022</div><div class="t-role">UX Designer<small>Thence — Asian Paints, Boost360, Shiprocket</small></div><div class="t-mark">Shipped</div></div>
+      <div class="t-item reveal"><div class="t-date">Dec 2019 — Apr 2020</div><div class="t-role">UX Research Intern<small>Hureo — Wikipedia KaiOS Research</small></div><div class="t-mark">Shipped</div></div>
+      <div class="t-item reveal"><div class="t-date">Jul 2018 — May 2019</div><div class="t-role">Graphic Design Intern<small>HappleyFit — Branding, WordPress, Social</small></div><div class="t-mark">Shipped</div></div>
+      <div class="t-item reveal"><div class="t-date">Dec 2017 — Mar 2018</div><div class="t-role">Graphic Design Intern<small>Skillovate — Mascot, eBook, Board Game</small></div><div class="t-mark">Shipped</div></div>
+      <div class="t-item reveal"><div class="t-date">Jul 2017 — Apr 2020</div><div class="t-role">Graphic Designer<small>Freelance — Logos, print collateral, social graphics</small></div><div class="t-mark">Shipped</div></div>
+    </div>
+  </section>
+
+  <section class="section wrap" id="contact">
+    <div class="sec-head">
+      <h2 class="reveal"><em>Contact</em>.</h2>
+      <span class="tag-no reveal">Form · 01</span>
+    </div>
+    <div class="contact reveal">
+      <span class="tape" aria-hidden="true"></span>
+      <span class="form-no">FORM NS-01 / REV 2024</span>
+      <h2>Let's build something <em>useful</em> together.</h2>
+      <p>Always open to conversations about product design, research, or that indie dog you also love. No jargon required.</p>
+      <div class="contact-links">
+        <a href="mailto:madebynaman@gmail.com">madebynaman@gmail.com</a>
+        <a href="https://madebynaman.com" target="_blank" rel="noopener">madebynaman.com</a>
+        <a href="tel:+918208369219">+91 82083 69219</a>
+        <a href="#" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap footer">
+  <span>Naman Sharma — Product / UX Designer — Jaipur, India</span>
+  <span>End of parcel · Workshop · © 2024</span>
+</footer>
+
+<script>
+(function(){
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (window.gsap && window.ScrollTrigger) gsap.registerPlugin(ScrollTrigger);
+
+  if (reduce){
+    document.querySelectorAll('.reveal').forEach(function(el){ el.style.opacity=1; el.style.transform='none'; });
+    return;
+  }
+
+  // Stamp drop-in on hero
+  gsap.from('.stamp', { scale:2.4, opacity:0, rotation:-25, duration:0.5, ease:'back.out(1.6)', delay:0.5 });
+  gsap.from('.hero-eyebrow', { y:14, opacity:0, duration:0.5, ease:'power2.out' });
+  gsap.from('.hero h1', { y:28, opacity:0, duration:0.9, ease:'power3.out', delay:0.15 });
+  gsap.from('.hero-lead', { y:18, opacity:0, duration:0.7, ease:'power2.out', delay:0.5 });
+  gsap.from('.hero-meta .cell', { y:16, opacity:0, duration:0.5, stagger:0.1, delay:0.7 });
+  gsap.from('.hero-grid .tape', { scaleX:0, opacity:0, duration:0.4, stagger:0.08, transformOrigin:'center', delay:0.3 });
+
+  // Scroll reveals
+  gsap.utils.toArray('.reveal').forEach(function(el){
+    if (el.closest('.hero')) return;
+    gsap.fromTo(el, { y:24, opacity:0 }, {
+      y:0, opacity:1, duration:0.7, ease:'power2.out',
+      scrollTrigger:{ trigger:el, start:'top 90%' }
+    });
+  });
+
+  // Case stamps drop in with rotation
+  gsap.utils.toArray('.case .case-no').forEach(function(el){
+    gsap.from(el, { scale:2.2, opacity:0, rotation:20, duration:0.4, ease:'back.out(1.7)',
+      scrollTrigger:{ trigger:el, start:'top 92%' } });
+  });
+
+  // Tape strips wiggle in
+  gsap.utils.toArray('.case .tape').forEach(function(el){
+    gsap.from(el, { scaleX:0, opacity:0, duration:0.4, transformOrigin:'center',
+      scrollTrigger:{ trigger:el, start:'top 95%' } });
+  });
+
+  // Timeline marks stamp in
+  gsap.utils.toArray('.t-item .t-mark').forEach(function(el){
+    gsap.from(el, { scale:2.4, opacity:0, rotation:-15, duration:0.35, ease:'back.out(1.8)',
+      scrollTrigger:{ trigger:el, start:'top 92%' } });
+  });
+})();
+</script>
+</body>
+</html>

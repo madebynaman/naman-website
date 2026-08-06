@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Naman Sharma — Tide</title>
+<link rel="preconnect" href="https://api.fontshare.com">
+<link href="https://api.fontshare.com/v2/css?f[]=zodiak@400,500,600,700&f[]=cabinet-grotesk@400,500,700,800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<style>
+:root {
+  --deep: #0b2e34;
+  --sea: #134e56;
+  --foam: #d8efe8;
+  --sand: #f0e6d4;
+  --coral: #e07a5f;
+  --ink: #0d2428;
+  --mute: #5a7a7e;
+  --display: 'Zodiak', Georgia, serif;
+  --body: 'Cabinet Grotesk', system-ui, sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .wave-path { animation: none !important; }
+}
+body {
+  background: var(--sand);
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: 16.5px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+::selection { background: var(--coral); color: #fff; }
+a { color: inherit; text-decoration: none; }
+:focus-visible { outline: 2px solid var(--coral); outline-offset: 3px; }
+
+.wrap { width: min(1120px, calc(100% - 48px)); margin: 0 auto; }
+
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 1rem 2rem;
+  background: rgba(240,230,212,0.88);
+  backdrop-filter: blur(10px);
+}
+.nav-mark {
+  font-family: var(--display);
+  font-size: 1.45rem; font-weight: 600;
+  color: var(--deep);
+}
+.nav-mark span { color: var(--coral); font-style: italic; font-weight: 400; }
+.nav-links { display: flex; gap: 1.75rem; font-size: 0.82rem; font-weight: 700; color: var(--sea); }
+.nav-links a:hover { color: var(--coral); }
+.nav-cta {
+  font-size: 0.78rem; font-weight: 700;
+  background: var(--deep); color: var(--foam);
+  padding: 0.5rem 1.1rem;
+  border-radius: 999px;
+  transition: background 0.2s;
+}
+.nav-cta:hover { background: var(--coral); }
+@media (max-width: 720px) {
+  .nav-links { display: none; }
+  .nav { padding: 0.9rem 1.15rem; }
+  .wrap { width: min(100% - 28px, 1120px); }
+}
+
+.hero {
+  min-height: 100vh;
+  padding: 7rem 0 0;
+  position: relative;
+  display: flex; flex-direction: column;
+  background:
+    radial-gradient(ellipse 100% 80% at 50% 100%, rgba(19,78,86,0.18), transparent 55%),
+    linear-gradient(180deg, var(--sand) 40%, #e5ddd0 100%);
+  overflow: hidden;
+}
+.hero-inner {
+  flex: 1;
+  display: flex; flex-direction: column; justify-content: center;
+  padding-bottom: 4rem;
+}
+.hero h1 {
+  font-family: var(--display);
+  font-size: clamp(3.6rem, 9vw, 7.5rem);
+  font-weight: 500;
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  color: var(--deep);
+  max-width: 12ch;
+}
+.hero h1 em {
+  font-style: italic;
+  font-weight: 400;
+  color: var(--coral);
+}
+.hero-lead {
+  margin-top: 1.75rem;
+  font-size: 1.2rem;
+  color: var(--mute);
+  max-width: 38ch;
+  font-weight: 500;
+}
+.wave-wrap {
+  height: 140px; width: 100%;
+  margin-top: auto;
+  position: relative;
+}
+.wave-wrap svg {
+  position: absolute; bottom: 0; left: 0; width: 100%; height: 100%;
+  display: block;
+}
+.wave-path { fill: var(--deep); }
+
+section { padding: 5.5rem 0; }
+.sec-label {
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--coral); margin-bottom: 0.75rem;
+}
+.sec-title {
+  font-family: var(--display);
+  font-size: clamp(2.4rem, 5vw, 3.8rem);
+  font-weight: 500; line-height: 1.05;
+  color: var(--deep); letter-spacing: -0.025em;
+  margin-bottom: 1rem;
+}
+.sec-lead { color: var(--mute); max-width: 46ch; margin-bottom: 3rem; }
+
+.case {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 3rem; align-items: center;
+  padding: 3rem 0;
+  border-top: 1px solid rgba(11,46,52,0.15);
+}
+.case:last-of-type { border-bottom: 1px solid rgba(11,46,52,0.15); }
+.case:nth-of-type(even) .case-visual { order: -1; }
+.case h3 {
+  font-family: var(--display);
+  font-size: clamp(1.8rem, 3vw, 2.5rem);
+  font-weight: 500; line-height: 1.1;
+  color: var(--deep); margin: 0.5rem 0 1rem;
+}
+.case .meta {
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--sea);
+}
+.case p { color: var(--mute); margin-bottom: 1.5rem; }
+.impact {
+  display: inline-flex; align-items: baseline; gap: 0.65rem;
+  background: var(--deep); color: var(--foam);
+  padding: 0.65rem 1.1rem;
+  border-radius: 999px;
+}
+.impact strong {
+  font-family: var(--display);
+  font-size: 1.5rem; font-weight: 600;
+  color: var(--coral);
+}
+.impact span { font-size: 0.75rem; font-weight: 600; }
+.case-visual {
+  aspect-ratio: 5/4;
+  border-radius: 40% 60% 55% 45% / 45% 40% 60% 55%;
+  background:
+    radial-gradient(circle at 30% 30%, rgba(216,239,232,0.5), transparent 50%),
+    linear-gradient(145deg, var(--sea), var(--deep));
+  position: relative;
+  overflow: hidden;
+}
+.case:nth-of-type(even) .case-visual {
+  background:
+    radial-gradient(circle at 70% 40%, rgba(224,122,95,0.35), transparent 50%),
+    linear-gradient(160deg, #1a6a74, var(--deep));
+}
+.case:nth-of-type(3) .case-visual {
+  background:
+    radial-gradient(circle at 50% 60%, rgba(240,230,212,0.25), transparent 45%),
+    linear-gradient(180deg, #2a7a6a, var(--deep));
+}
+.blob-label {
+  position: absolute; bottom: 1.25rem; left: 1.5rem;
+  font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--foam); opacity: 0.8;
+}
+@media (max-width: 800px) {
+  .case { grid-template-columns: 1fr; gap: 1.5rem; }
+  .case:nth-of-type(even) .case-visual { order: 0; }
+}
+
+.method-band {
+  background: var(--deep);
+  color: var(--foam);
+  padding: 5.5rem 0;
+  position: relative;
+  overflow: hidden;
+}
+.method-band .sec-title { color: var(--foam); }
+.method-band .sec-lead { color: rgba(216,239,232,0.7); }
+.method-band .sec-label { color: var(--coral); }
+.steps {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
+}
+.steps article {
+  padding: 1.75rem;
+  border: 1px solid rgba(216,239,232,0.2);
+  border-radius: 1.25rem;
+  background: rgba(19,78,86,0.4);
+}
+.steps h3 {
+  font-family: var(--display);
+  font-size: 1.5rem; font-weight: 500;
+  margin: 1rem 0 0.5rem;
+}
+.steps p { font-size: 0.9rem; color: rgba(216,239,232,0.7); }
+.steps .n { color: var(--coral); font-weight: 800; font-size: 0.75rem; letter-spacing: 0.1em; }
+@media (max-width: 700px) { .steps { grid-template-columns: 1fr; } }
+
+.about {
+  display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 3.5rem; align-items: center;
+}
+.portrait {
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 35% 30%, rgba(224,122,95,0.4), transparent 45%),
+    radial-gradient(circle at 70% 70%, rgba(216,239,232,0.5), transparent 40%),
+    linear-gradient(160deg, var(--sea), var(--deep));
+  position: relative;
+}
+.portrait::after {
+  content: 'Naman · Jerry';
+  position: absolute; bottom: 12%; left: 50%; transform: translateX(-50%);
+  font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--foam); white-space: nowrap;
+}
+.about h2 {
+  font-family: var(--display);
+  font-size: clamp(2rem, 3.5vw, 3rem);
+  font-weight: 500; line-height: 1.1;
+  color: var(--deep); margin-bottom: 1.25rem;
+}
+.about p { color: var(--mute); margin-bottom: 1rem; }
+.principles {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1.75rem;
+}
+.principles div {
+  padding: 1rem 0;
+  border-top: 2px solid var(--coral);
+}
+.principles b {
+  display: block;
+  font-family: var(--display);
+  font-size: 1.05rem; font-weight: 600;
+  color: var(--deep); margin-bottom: 0.25rem;
+}
+.principles span { font-size: 0.85rem; color: var(--mute); }
+@media (max-width: 800px) {
+  .about { grid-template-columns: 1fr; }
+  .portrait { max-width: 280px; margin: 0 auto; }
+  .principles { grid-template-columns: 1fr; }
+}
+
+.contact {
+  text-align: center; padding: 6rem 0 5rem;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 100%, rgba(19,78,86,0.12), transparent);
+}
+.contact h2 {
+  font-family: var(--display);
+  font-size: clamp(2.8rem, 7vw, 5.5rem);
+  font-weight: 500; line-height: 1;
+  color: var(--deep); margin-bottom: 1.5rem;
+}
+.contact h2 em { font-style: italic; color: var(--coral); }
+.contact a {
+  display: inline-block;
+  font-weight: 700; font-size: 1.1rem;
+  color: var(--foam); background: var(--deep);
+  padding: 0.85rem 1.75rem;
+  border-radius: 999px;
+  transition: background 0.2s;
+}
+.contact a:hover { background: var(--coral); }
+
+footer {
+  display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem;
+  padding: 1.5rem 0 2rem;
+  border-top: 1px solid rgba(11,46,52,0.15);
+  font-size: 0.72rem; font-weight: 600; letter-spacing: 0.06em;
+  text-transform: uppercase; color: var(--mute);
+}
+</style>
+</head>
+<body>
+<!--
+THESIS: Portfolio as coastal cartography — name arrives like a shoreline; work drifts in as tide pools of evidence.
+OWN-WORLD: Sand ground, deep teal sea, coral accent, Zodiak + Cabinet Grotesk, organic blob frames, SVG wave.
+STORY: Meet Naman at the waterline, wade through cases, send a message on the next tide.
+FIRST VIEWPORT: Brand as headline, italic Sharma, one lead, animated wave edge — no cards.
+FORM: Tide / coastal · free assignment · Persuade.
+FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md
+-->
+<nav class="nav">
+  <a class="nav-mark" href="#">Naman <span>Sharma</span></a>
+  <div class="nav-links">
+    <a href="#work">Work</a>
+    <a href="#method">Method</a>
+    <a href="#about">About</a>
+  </div>
+  <a class="nav-cta" href="mailto:madebynaman@gmail.com">Say hello</a>
+</nav>
+
+<main>
+  <header class="hero">
+    <div class="wrap hero-inner">
+      <h1 class="h-anim">Naman<br><em>Sharma</em></h1>
+      <p class="hero-lead h-anim">Product / UX designer. I start where people actually are — then design the current that carries them forward.</p>
+    </div>
+    <div class="wave-wrap" aria-hidden="true">
+      <svg viewBox="0 0 1440 140" preserveAspectRatio="none">
+        <path class="wave-path" id="wave" d="M0,80 C240,120 480,40 720,70 C960,100 1200,30 1440,60 L1440,140 L0,140 Z"></path>
+      </svg>
+    </div>
+  </header>
+
+  <section id="work">
+    <div class="wrap">
+      <h2 class="sec-title reveal">Evidence that held.</h2>
+      <p class="sec-lead reveal">Three studies in making systems clearer, more honest, and worth returning to.</p>
+
+      <article class="case reveal">
+        <div>
+          <div class="meta">Asian Paints · Thence · 2021</div>
+          <h3>A dealer portal tuned to real ordering habits</h3>
+          <p>Faster reorders, clearer permissions, recommendations from history — research through UI.</p>
+          <div class="impact"><strong>+20%</strong><span>online transactions</span></div>
+        </div>
+        <div class="case-visual"><span class="blob-label">Commerce current</span></div>
+      </article>
+
+      <article class="case reveal">
+        <div>
+          <div class="meta">Boost360 · Thence · 2021</div>
+          <h3>Onboarding that closes the promise gap</h3>
+          <p>Visual signup, social proof, and a quick win before asking for more commitment.</p>
+          <div class="impact"><strong>−60%</strong><span>uninstall rate</span></div>
+        </div>
+        <div class="case-visual"><span class="blob-label">First-run flow</span></div>
+      </article>
+
+      <article class="case reveal">
+        <div>
+          <div class="meta">Wikipedia × KaiOS · Hureo · 2020</div>
+          <h3>Field research on a tiny shoreline of screen</h3>
+          <p>Twenty-five interviews across three cities — keypad, language, reading, affordability.</p>
+          <div class="impact"><strong>25</strong><span>in-person sessions</span></div>
+        </div>
+        <div class="case-visual"><span class="blob-label">Field notes</span></div>
+      </article>
+    </div>
+  </section>
+
+  <section class="method-band" id="method">
+    <div class="wrap">
+      <h2 class="sec-title reveal">A tide cycle, not a waterfall.</h2>
+      <p class="sec-lead reveal">Listen, map, explore, refine, hand off, watch the metrics come back in.</p>
+      <div class="steps">
+        <article class="reveal"><div class="n">IN</div><h3>Research</h3><p>Understand the problem, the people, the context.</p></article>
+        <article class="reveal"><div class="n">MAP</div><h3>Journey</h3><p>Surface decisions and friction for the whole team.</p></article>
+        <article class="reveal"><div class="n">OUT</div><h3>Ship & monitor</h3><p>Partner through build. Measure. Improve again.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="wrap about">
+      <div class="portrait reveal" role="img" aria-label="Portrait placeholder"></div>
+      <div class="reveal">
+        <h2>Curious generalist from Jaipur. Computer science roots. Allergic to jargon.</h2>
+        <p>Self-taught Product/UX designer working remotely. Complex products, 0→1 startups, field research. Consistency, curiosity, function first, ownership.</p>
+        <div class="principles">
+          <div><b>Consistency beats talent</b><span>Craft compounds</span></div>
+          <div><b>Let curiosity guide you</b><span>Connect dots</span></div>
+          <div><b>Form follows function</b><span>Delight after</span></div>
+          <div><b>Give a damn</b><span>Own the outcome</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact" id="contact">
+    <div class="wrap">
+      <h2 class="reveal">Catch the<br><em>next tide.</em></h2>
+      <a class="reveal" href="mailto:madebynaman@gmail.com">madebynaman@gmail.com</a>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap">
+  <span>Naman Sharma · Tide</span>
+  <span>© 2026 · Jaipur</span>
+</footer>
+
+<script>
+gsap.registerPlugin(ScrollTrigger);
+const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+if (!reduce) {
+  gsap.from('.h-anim', { y: 50, opacity: 0, duration: 1, stagger: 0.2, ease: 'power3.out' });
+
+  // Organic wave morph
+  const wave = document.getElementById('wave');
+  const states = [
+    'M0,80 C240,120 480,40 720,70 C960,100 1200,30 1440,60 L1440,140 L0,140 Z',
+    'M0,60 C240,30 480,100 720,80 C960,50 1200,110 1440,70 L1440,140 L0,140 Z',
+    'M0,90 C240,50 480,90 720,50 C960,110 1200,40 1440,80 L1440,140 L0,140 Z'
+  ];
+  let i = 0;
+  function morphWave() {
+    i = (i + 1) % states.length;
+    gsap.to(wave, { attr: { d: states[i] }, duration: 3.5, ease: 'sine.inOut', onComplete: morphWave });
+  }
+  morphWave();
+
+  gsap.utils.toArray('.reveal').forEach((el) => {
+    gsap.from(el, {
+      scrollTrigger: { trigger: el, start: 'top 88%' },
+      y: 40, opacity: 0, duration: 0.85, ease: 'power3.out'
+    });
+  });
+
+  gsap.utils.toArray('.case-visual').forEach((el) => {
+    gsap.from(el, {
+      scrollTrigger: { trigger: el, start: 'top 85%' },
+      borderRadius: '50%',
+      scale: 0.85,
+      duration: 1.1,
+      ease: 'power2.out'
+    });
+  });
+}
+</script>
+</body>
+</html>
