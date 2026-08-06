@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Naman Sharma — Paper Collage</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Work+Sans:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&family=Amatic+SC:wght@400;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<style>
+:root{
+  --paper:#F6F0E1;
+  --paper-warm:#F0E5D2;
+  --kraft-light:#D4A574;
+  --kraft-mid:#B08968;
+  --kraft-dark:#8B6914;
+  --ink:#2D2D2D;
+  --ink-soft:#5C5348;
+  --terracotta:#E07A5F;
+  --olive:#4A6741;
+  --rust:#C44B4B;
+  --blue:#3D5A80;
+  --cream:#FDF8F0;
+  --display:'DM Serif Display',Georgia,serif;
+  --body:'Work Sans',system-ui,sans-serif;
+  --mono:'Space Mono',monospace;
+  --hand:'Amatic SC',cursive;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--body);
+  font-size:16px;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+  background-image:radial-gradient(circle at 1px 1px,rgba(45,45,45,.04) 1px,transparent 0);
+  background-size:32px 32px;
+}
+::selection{background:var(--terracotta);color:var(--cream)}
+a{color:var(--ink);text-decoration:none}
+
+nav{
+  position:sticky;top:0;z-index:100;padding:16px 32px;
+  background:rgba(246,240,225,.92);backdrop-filter:blur(6px);
+  border-bottom:2px solid var(--ink);
+  display:flex;justify-content:space-between;align-items:center;
+}
+nav .logo{font-family:var(--hand);font-size:26px;font-weight:700;color:var(--ink);line-height:1}
+nav .links{display:flex;gap:20px}
+nav .links a{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.1em;padding:6px 0;border-bottom:2px solid transparent;transition:border-color .2s}
+nav .links a:hover{border-color:var(--terracotta)}
+@media(max-width:700px){nav .links{display:none}}
+
+.wrap{max-width:1080px;margin:0 auto;padding:0 28px}
+
+section{padding:80px 0}
+.tape-strip{
+  position:absolute;height:24px;background:rgba(212,165,116,.5);
+  z-index:1;transform:rotate(-2deg);
+}
+.scribble{font-family:var(--hand);font-size:22px;color:var(--terracotta);line-height:1;display:inline-block}
+.scribble.dark{color:var(--ink)}
+
+.hero{min-height:90vh;display:flex;align-items:center;position:relative}
+.hero-splat{
+  position:absolute;top:10%;right:5%;width:300px;height:300px;pointer-events:none;z-index:0;
+  background:radial-gradient(ellipse at center,var(--terracotta) 0%,rgba(224,122,95,.3) 40%,transparent 70%);
+  border-radius:50%;filter:blur(60px);opacity:.3;
+}
+.hero h1{font-family:var(--display);font-size:clamp(48px,9vw,120px);line-height:.9;position:relative;z-index:2}
+.hero h1 .highlight{position:relative;display:inline-block}
+.hero h1 .highlight::after{content:'';position:absolute;bottom:2px;left:-4px;right:-4px;height:.15em;background:rgba(224,122,95,.5);z-index:-1;transform:rotate(-1deg)}
+.hero .sub{
+  margin-top:32px;font-family:var(--body);font-size:18px;color:var(--ink-soft);max-width:500px;position:relative;z-index:2;
+  padding-left:16px;border-left:3px solid var(--olive);
+}
+.hero .hand-note{
+  position:absolute;right:8%;bottom:15%;font-family:var(--hand);font-size:24px;color:var(--olive);
+  transform:rotate(6deg);z-index:2;
+}
+
+.stat-banner{display:grid;grid-template-columns:repeat(4,1fr);gap:0}
+@media(max-width:860px){.stat-banner{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:500px){.stat-banner{grid-template-columns:1fr}}
+.stat-banner .st{padding:32px 24px;border:2px solid var(--ink);margin:-2px 0 0 -2px;transform:rotate(var(--r,0deg));position:relative;background:var(--cream)}
+.stat-banner .st:nth-child(1){--r:-.8deg}
+.stat-banner .st:nth-child(2){--r:.5deg}
+.stat-banner .st:nth-child(3){--r:-.4deg}
+.stat-banner .st:nth-child(4){--r:.7deg}
+.stat-banner .st .val{font-family:var(--display);font-size:clamp(36px,5vw,56px);line-height:1}
+.stat-banner .st .lbl{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.06em;margin-top:8px;color:var(--ink-soft)}
+
+.sec-label{
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.14em;
+  background:var(--ink);color:var(--cream);padding:8px 16px;margin-bottom:32px;
+  transform:rotate(-.5deg);
+}
+.sec-label::before{content:'✦';font-size:8px}
+
+.jargon-scatter{position:relative;padding:40px 0}
+.jargon-scatter s{
+  display:inline-block;text-decoration:line-through;text-decoration-color:var(--terracotta);text-decoration-thickness:3px;
+  padding:4px 8px;margin:4px;font-size:15px;color:var(--ink-soft);transform:rotate(var(--r,0deg));
+}
+.jargon-scatter s:nth-child(odd){--r:-1.5deg}
+.jargon-scatter s:nth-child(even){--r:1deg}
+
+.truth-block{
+  margin-top:36px;padding:32px;background:var(--cream);border:2px solid var(--ink);
+  font-family:var(--display);font-size:clamp(26px,4vw,40px);line-height:1.1;transform:rotate(.3deg);
+}
+.truth-block em{font-style:italic;color:var(--terracotta)}
+
+.work-board{display:flex;flex-direction:column;gap:20px}
+.work-card{
+  display:grid;grid-template-columns:1.2fr .8fr;gap:28px;padding:36px;
+  background:var(--cream);border:2px solid var(--ink);position:relative;
+  transform:rotate(var(--r,0deg));cursor:pointer;transition:transform .2s;
+}
+.work-card:nth-child(1){--r:-.6deg}.work-card:nth-child(2){--r:.4deg}
+.work-card:nth-child(3){--r:-.3deg}.work-card:nth-child(4){--r:.7deg}
+.work-card:hover{transform:rotate(0deg) scale(1.01)}
+@media(max-width:800px){.work-card{grid-template-columns:1fr}}
+.work-card .tape{
+  position:absolute;top:-12px;left:40px;width:80px;height:26px;
+  background:rgba(212,165,116,.55);transform:rotate(-3deg);
+}
+.work-card .left .client{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--terracotta);margin-bottom:8px}
+.work-card .left h3{font-family:var(--display);font-size:30px;line-height:1.05;margin-bottom:12px}
+.work-card .left p{font-size:14px;color:var(--ink-soft);line-height:1.55}
+.work-card .right{display:flex;flex-direction:column;justify-content:space-between}
+.work-card .right .metric{font-family:var(--display);font-size:36px;color:var(--terracotta)}
+.work-card .right .metric .unit{font-family:var(--mono);font-size:9px;display:block;color:var(--ink-soft);text-transform:uppercase}
+.work-card .right .doodle{
+  width:100%;height:120px;background:var(--paper-warm);border:2px dashed var(--kraft-light);
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--hand);font-size:18px;color:var(--ink-soft);
+  background-image:linear-gradient(45deg,var(--paper) 25%,transparent 25%),linear-gradient(-45deg,var(--paper) 25%,transparent 25%);
+  background-size:20px 20px;background-position:0 0,10px 10px;
+}
+
+.process-strip{display:grid;grid-template-columns:repeat(6,1fr);gap:0}
+@media(max-width:1100px){.process-strip{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:600px){.process-strip{grid-template-columns:repeat(2,1fr)}}
+.process-strip .step{
+  padding:28px 20px;border:2px solid var(--ink);margin:-2px 0 0 -2px;
+  transform:rotate(var(--r,0deg));background:var(--cream);
+}
+.process-strip .step:nth-child(odd){--r:-.5deg}
+.process-strip .step:nth-child(even){--r:.5deg}
+.process-strip .step .num{font-family:var(--hand);font-size:28px;color:var(--terracotta);margin-bottom:8px;font-weight:700}
+.process-strip .step h4{font-family:var(--display);font-size:16px;margin-bottom:6px}
+.process-strip .step p{font-size:12px;color:var(--ink-soft);line-height:1.5}
+
+.principles-boards{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+@media(max-width:700px){.principles-boards{grid-template-columns:1fr}}
+.principle-board{padding:32px;background:var(--cream);border:2px solid var(--ink);transform:rotate(var(--r,0deg));position:relative}
+.principle-board:nth-child(1){--r:-.7deg}.principle-board:nth-child(2){--r:.5deg}
+.principle-board:nth-child(3){--r:.3deg}.principle-board:nth-child(4){--r:-.4deg}
+.principle-board .pin{position:absolute;top:-10px;left:50%;transform:translateX(-50%);width:16px;height:16px;border-radius:50%;background:var(--terracotta);box-shadow:0 2px 4px rgba(0,0,0,.2)}
+.principle-board h3{font-family:var(--display);font-size:22px;margin-bottom:10px;line-height:1.1}
+.principle-board p{font-size:14px;color:var(--ink-soft);line-height:1.5}
+
+.about-collage{display:grid;grid-template-columns:1.2fr .8fr;gap:20px}
+@media(max-width:700px){.about-collage{grid-template-columns:1fr}}
+.about-collage .bio{background:var(--cream);border:2px solid var(--ink);padding:36px;transform:rotate(-.3deg)}
+.about-collage .bio p{font-size:16px;line-height:1.6;margin-bottom:14px}
+.about-collage .bio .hand-sign{font-family:var(--hand);font-size:24px;color:var(--terracotta);margin-top:20px;display:block}
+.about-collage .sticky-block{background:var(--cream);border:2px solid var(--ink);padding:32px;transform:rotate(.5deg)}
+.about-collage .sticky-block h3{font-family:var(--display);font-size:18px;margin-bottom:16px}
+.about-collage .sticky-block .interests{display:flex;flex-wrap:wrap;gap:6px}
+.about-collage .sticky-block .interests span{
+  font-family:var(--mono);font-size:11px;background:var(--paper-warm);border:1px solid var(--ink);padding:6px 10px
+}
+.about-collage .sticky-block .tape-top{
+  position:absolute;top:-12px;left:30px;width:70px;height:22px;background:rgba(212,165,116,.5);transform:rotate(5deg);border-radius:2px
+}
+
+.timeline-block{padding:36px;background:var(--cream);border:2px solid var(--ink);transform:rotate(-.3deg);position:relative}
+.timeline-block::after{content:'';position:absolute;top:-14px;right:50px;width:76px;height:26px;background:rgba(74,103,65,.35);transform:rotate(-4deg)}
+.tl-row{display:flex;justify-content:space-between;padding:16px 0;border-bottom:1px dashed var(--kraft-light);gap:16px}
+.tl-row:last-child{border-bottom:none}
+.tl-row .year{font-family:var(--display);font-size:20px;color:var(--terracotta);min-width:80px}
+.tl-row .desc{font-size:14px;color:var(--ink-soft)}
+
+.contact-card{padding:64px;text-align:center;background:var(--cream);border:2px solid var(--ink);transform:rotate(.3deg);position:relative;margin-top:40px}
+.contact-card .scribble-pre{font-family:var(--hand);font-size:20px;color:var(--olive);margin-bottom:24px}
+.contact-card h2{font-family:var(--display);font-size:clamp(36px,6vw,64px);line-height:1.05;margin-bottom:32px}
+.contact-card .email{display:inline-block;font-family:var(--display);font-size:clamp(20px,3vw,30px);font-style:italic;color:var(--terracotta);border-bottom:3px solid var(--terracotta);padding-bottom:6px}
+.contact-card .tape-strip{top:-12px;left:60px;width:90px}
+.contact-card .alt-links{display:flex;justify-content:center;gap:16px;flex-wrap:wrap;margin-top:32px;font-family:var(--mono);font-size:11px}
+.contact-card .alt-links a,.contact-card .alt-links span{color:var(--ink-soft);padding:4px 12px;border:1px solid var(--kraft-light)}
+
+footer{padding:24px 28px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-soft);border-top:2px solid var(--ink)}
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="logo">Naman Sharma</span>
+  <div class="links">
+    <a href="#work">Work</a>
+    <a href="#process">Process</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-splat"></div>
+  <div class="wrap" style="position:relative">
+    <h1>I untangle<br>messy <span class="highlight">products.</span></h1>
+    <p class="sub">Naman Sharma / Product & UX Designer / Jaipur, worldwide. Self-taught, designing since 2017, in UX since 2019.</p>
+    <span class="hand-note">← he's good at this</span>
+  </div>
+</section>
+
+<div class="wrap">
+  <div class="stat-banner">
+    <div class="st"><div class="val">$500K</div><div class="lbl">Pre-seed raised / Turns</div></div>
+    <div class="st"><div class="val">4.8★</div><div class="lbl">Play Store / LetsConnect</div></div>
+    <div class="st"><div class="val">25</div><div class="lbl">Interviews / Wikipedia</div></div>
+    <div class="st"><div class="val">+20%</div><div class="lbl">Transactions / Asian Paints</div></div>
+  </div>
+</div>
+
+<section>
+  <div class="wrap">
+    <span class="sec-label">01 · A promise, no jargon</span>
+    <div class="jargon-scatter">
+      <s>synergize aesthetics with functionality,</s><s>navigate the confluence of form and function,</s>
+      <s>orchestrate design revolutions,</s><s>instigate paradigmatic evolutions,</s>
+      <s>seamlessly integrate cutting-edge methodologies,</s><s>engineer experiential marvels,</s>
+      <s>champion transformative ideation,</s><s>perpetuate narratives that transcend boundaries.</s>
+    </div>
+    <div class="truth-block">
+      I do research. I design. I ship. <em>Then I check if it worked.</em> That's the whole trick.
+    </div>
+  </div>
+</section>
+
+<section id="work">
+  <div class="wrap">
+    <span class="sec-label">02 · Selected work</span>
+    <div class="work-board">
+      <div class="work-card">
+        <div class="tape"></div>
+        <div class="left">
+          <div class="client">Thence · 2021</div>
+          <h3>Asian Paints Dealer Portal</h3>
+          <p>Dealers hated calling a salesperson for every order — and hated every portal in the category. Redesigned the whole thing: barcode ordering in under 10 seconds, personalised recommendations, region-driven promotions.</p>
+        </div>
+        <div class="right">
+          <div class="metric">+20%<span class="unit">Online transaction volume</span></div>
+          <div class="doodle">portal mockup goes here</div>
+        </div>
+      </div>
+
+      <div class="work-card">
+        <div class="tape" style="left:auto;right:40px;transform:rotate(2deg)"></div>
+        <div class="left">
+          <div class="client">Thence · NowFloats · 2021</div>
+          <h3>Boost360 Onboarding</h3>
+          <p>Uninstalled within 4 hours. 20% signup success. The real bug: marketing promised what the product didn't deliver. Rebuilt onboarding around honesty and one quick win — your website, live in minutes.</p>
+        </div>
+        <div class="right">
+          <div class="metric">−60%<span class="unit">App uninstall rate</span></div>
+          <div class="doodle">onboarding flow goes here</div>
+        </div>
+      </div>
+
+      <div class="work-card">
+        <div class="tape"></div>
+        <div class="left">
+          <div class="client">Hureo · 2020</div>
+          <h3>Wikipedia × KaiOS Research</h3>
+          <p>25 face-to-face interviews across Pune, Mumbai and Delhi with JioPhone users for the Wikimedia Foundation. Personas, journey maps, ecosystem maps. Keypad typing is the real barrier.</p>
+        </div>
+        <div class="right">
+          <div class="metric">25<span class="unit">Users · 3 cities · In person</span></div>
+          <div class="doodle">field notes go here</div>
+        </div>
+      </div>
+
+      <div class="work-card">
+        <div class="tape" style="left:auto;right:50px;transform:rotate(-2deg)"></div>
+        <div class="left">
+          <div class="client">Independent · 2022–Present</div>
+          <h3>Freelance, End to End</h3>
+          <p>Turns (web + brand revamp → $500K pre-seed). Gadivan (0-to-1 multi-app product). LetsConnect (redesign from user feedback → 4.8★). 15+ clients, across product, brand, and web.</p>
+        </div>
+        <div class="right">
+          <div class="metric">0 → 1<span class="unit">Again &amp; again</span></div>
+          <div class="doodle">client collage goes here</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="process">
+  <div class="wrap">
+    <span class="sec-label">03 · How I work</span>
+    <div class="process-strip">
+      <div class="step"><div class="num">1</div><h4>Research</h4><p>Understand the problem and customer before drawing.</p></div>
+      <div class="step"><div class="num">2</div><h4>Journey</h4><p>Map the full experience. Find where it breaks.</p></div>
+      <div class="step"><div class="num">3</div><h4>Explore</h4><p>Go wide. Test, iterate, collaborate.</p></div>
+      <div class="step"><div class="num">4</div><h4>Refine</h4><p>Pick the winner. Sweat the details.</p></div>
+      <div class="step"><div class="num">5</div><h4>Ship</h4><p>Stay with engineering until it's live.</p></div>
+      <div class="step"><div class="num">6</div><h4>Monitor</h4><p>Watch the numbers. Fix what didn't move.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="sec-label">04 · What I believe</span>
+    <div class="principles-boards">
+      <div class="principle-board"><div class="pin"></div><h3>Consistency beats talent.</h3><p>I'm not the most talented designer. I show up every day instead, and that compounds. Designing since 2017, in UX since 2019 — no year off.</p></div>
+      <div class="principle-board"><div class="pin"></div><h3>Curiosity is the job.</h3><p>Knowing a little about a lot connects scattered dots. The Wikipedia study proved this: understanding why someone picks a keypad phone shaped the recommendations more than interface knowledge.</p></div>
+      <div class="principle-board"><div class="pin"></div><h3>Form follows function.</h3><p>Function solves. Beauty makes people remember. Earn the second by doing the first. On Boost360, no visual polish would have moved the number until research found the real problem.</p></div>
+      <div class="principle-board"><div class="pin"></div><h3>Give a damn.</h3><p>Founder's mindset. Full ownership. At Turns, that meant building brand guidelines and a design system nobody asked for, so the team could keep shipping after I left.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="wrap">
+    <span class="sec-label">05 · The human</span>
+    <div class="about-collage">
+      <div class="bio">
+        <p>Self-taught Product/UX designer with a Computer Engineering degree. Designing since 2017, in UX since 2019. A curious generalist: field research in three cities, usability testing, web apps, mobile apps, logos, print, packaging — done it all. Currently re-learning to code to build ideas directly.</p>
+        <p>Speaks fluent product and fluent engineering. Easy to work with, no drama. When not designing: quality time with an adorable indie dog.</p>
+        <span class="hand-sign">Jerry says hi! 🐾</span>
+      </div>
+      <div class="sticky-block" style="position:relative">
+        <div class="tape-top"></div>
+        <h3>Ask me about</h3>
+        <div class="interests">
+          <span>My indie dog, Jerry</span>
+          <span>Computers &amp; Tech</span>
+          <span>Personal Finance</span>
+          <span>Hip-Hop Music</span>
+          <span>Video Games</span>
+          <span>Education</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="sec-label">06 · The record</span>
+    <div class="timeline-block">
+      <div class="tl-row"><span class="year">2022 →</span><span class="desc">Independent Product, UX & Web Designer. Turns, Gadivan, LetsConnect, LearnApp, plus 15+ more clients.</span></div>
+      <div class="tl-row"><span class="year">2021–22</span><span class="desc">UX Designer at Thence, a UX studio. Client work for large Indian brands, plus mentoring interns.</span></div>
+      <div class="tl-row"><span class="year">2019–20</span><span class="desc">UX Research Intern at Hureo. 25 field interviews for the Wikimedia Foundation.</span></div>
+      <div class="tl-row"><span class="year">2017–19</span><span class="desc">Graphic Design at Skillovate and HappleyFit. Logos, a mascot, posters, a board game, a kids' eBook.</span></div>
+      <div class="tl-row"><span class="year">2017–21</span><span class="desc">B.E. Computer Engineering, SPPU, Pune.</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap">
+    <span class="sec-label">07 · Say hi</span>
+    <div class="contact-card">
+      <div class="tape-strip"></div>
+      <div class="scribble-pre">Stuck on a UX problem? Hiring? Or just want to talk design?</div>
+      <h2>Let's pin something<br>new to the wall.</h2>
+      <a class="email" href="mailto:madebynaman@gmail.com">madebynaman@gmail.com</a>
+      <div class="alt-links">
+        <a href="https://linkedin.com/in/madebynaman">LinkedIn</a>
+        <a href="tel:+918208369219">+91 82083 69219</a>
+        <a href="https://madebynaman.com">madebynaman.com</a>
+        <span>Jaipur, India · Remote worldwide</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>© Naman Sharma</span>
+  <span>Direction 19 — Paper Collage</span>
+  <span>No jargon was used on this website.</span>
+</footer>
+
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+gsap.from('.hero h1',{opacity:0,y:60,duration:1,delay:.2,ease:'power3.out'});
+gsap.from('.hero .sub',{opacity:0,x:-30,duration:.8,delay:.5});
+gsap.from('.hand-note',{opacity:0,scale:.5,rotation:15,duration:.8,delay:.8});
+
+gsap.utils.toArray('.st').forEach((s,i)=>{
+  gsap.from(s,{scrollTrigger:{trigger:s,start:'top 90%'},opacity:0,rotation:8,y:30,duration:.6,delay:i*.1});
+});
+
+gsap.utils.toArray('.work-card').forEach((c,i)=>{
+  gsap.from(c,{scrollTrigger:{trigger:c,start:'top 85%'},opacity:0,y:50,rotation:5,duration:.7,delay:i*.12});
+});
+
+gsap.utils.toArray('.step').forEach((s,i)=>{
+  gsap.from(s,{scrollTrigger:{trigger:s,start:'top 90%'},opacity:0,y:20,rotation:3,duration:.5,delay:i*.06});
+});
+
+gsap.utils.toArray('.principle-board').forEach((c,i)=>{
+  gsap.from(c,{scrollTrigger:{trigger:c,start:'top 90%'},opacity:0,y:40,duration:.6,delay:i*.08});
+});
+
+gsap.utils.toArray('.tl-row').forEach((t,i)=>{
+  gsap.from(t,{scrollTrigger:{trigger:t,start:'top 92%'},opacity:0,x:-15,duration:.5,delay:i*.05});
+});
+
+gsap.from('.contact-card',{scrollTrigger:{trigger:'.contact-card',start:'top 85%'},opacity:0,y:50,rotation:3,duration:.8});
+
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    e.preventDefault();
+    const t=document.querySelector(a.getAttribute('href'));
+    if(t)t.scrollIntoView({behavior:'smooth'});
+  });
+});
+</script>
+</body>
+</html>

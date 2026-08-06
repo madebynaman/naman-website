@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Naman Sharma — Liquid Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<style>
+:root{
+  --void:#09090B;
+  --deep-indigo:#0F0D1F;
+  --indigo:#1E1B4B;
+  --mid-indigo:#2D2755;
+  --violet:#7C3AED;
+  --violet-bright:#A78BFA;
+  --cyan:#06B6D4;
+  --cyan-dim:#0891B2;
+  --emerald:#10B981;
+  --rose:#F43F5E;
+  --text:#F1F5F9;
+  --text-soft:#94A3B8;
+  --panel:rgba(15,13,31,0.7);
+  --glass:rgba(30,27,75,0.5);
+  --glass-border:rgba(124,58,237,0.2);
+  --glass-border-strong:rgba(124,58,237,0.4);
+  --display:'Plus Jakarta Sans',system-ui,sans-serif;
+  --body:'Inter',system-ui,sans-serif;
+  --mono:'JetBrains Mono',monospace;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+body{
+  background:var(--void);
+  color:var(--text);
+  font-family:var(--body);
+  font-size:16px;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+  position:relative;
+  isolation:isolate;
+}
+::selection{background:var(--violet);color:var(--text)}
+a{color:var(--violet-bright);text-decoration:none;transition:color .2s}
+a:hover{color:var(--cyan)}
+
+.gradient-orb{
+  position:fixed;pointer-events:none;z-index:0;border-radius:50%;filter:blur(120px);opacity:.35;
+  animation:float 20s ease-in-out infinite;
+}
+.orb-1{width:600px;height:600px;background:var(--violet);top:-200px;left:-200px;animation-delay:0s}
+.orb-2{width:500px;height:500px;background:var(--cyan);bottom:-200px;right:-150px;animation-delay:-7s}
+.orb-3{width:350px;height:350px;background:var(--indigo);top:60%;left:40%;animation-delay:-14s}
+@keyframes float{
+  0%,100%{transform:translate(0,0) scale(1)}
+  25%{transform:translate(60px,-40px) scale(1.15)}
+  50%{transform:translate(-30px,50px) scale(.9)}
+  75%{transform:translate(-50px,-30px) scale(1.1)}
+}
+
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;padding:20px 48px;
+  display:flex;align-items:center;justify-content:space-between;
+  background:linear-gradient(180deg,var(--void) 40%,transparent);
+}
+nav .logo{font-family:var(--display);font-weight:800;font-size:18px;letter-spacing:-.02em}
+nav .logo .dot{display:inline-block;width:8px;height:8px;background:var(--violet);border-radius:50%;margin-left:4px;vertical-align:middle;animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(1.5)}}
+nav .links{display:flex;gap:28px}
+nav .links a{font-family:var(--body);font-size:13px;font-weight:500;color:var(--text-soft);position:relative}
+nav .links a:hover{color:var(--text)}
+nav .links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:2px;background:var(--violet);border-radius:1px;transition:width .3s}
+nav .links a:hover::after{width:100%}
+@media(max-width:700px){nav .links{display:none}nav{padding:16px 24px}}
+
+.wrap{max-width:1100px;margin:0 auto;padding:0 32px;position:relative;z-index:2}
+
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding-top:80px}
+.hero .chip{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--glass);border:1px solid var(--glass-border);
+  border-radius:100px;padding:8px 16px;
+  font-family:var(--mono);font-size:11px;color:var(--violet-bright);
+  margin-bottom:32px;backdrop-filter:blur(10px);
+  animation:chipIn .8s ease-out;
+}
+.hero .chip .green-dot{width:7px;height:7px;background:var(--emerald);border-radius:50%;animation:pulse 2s infinite}
+@keyframes chipIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.hero h1{
+  font-family:var(--display);font-weight:800;font-size:clamp(48px,8vw,110px);
+  line-height:.95;letter-spacing:-.03em;color:var(--text);
+}
+.hero h1 .gradient-text{
+  background:linear-gradient(135deg,var(--violet-bright),var(--cyan));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.hero .sub{font-size:18px;color:var(--text-soft);max-width:520px;margin-top:28px;line-height:1.55}
+
+.glass-panel{
+  background:var(--glass);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border:1px solid var(--glass-border);border-radius:20px;
+  transition:border-color .3s,transform .3s;
+}
+.glass-panel:hover{border-color:var(--glass-border-strong)}
+
+.stat-cards{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:48px
+}
+.stat-cards .stat-card{padding:24px;text-align:center}
+.stat-cards .stat-card .val{font-family:var(--display);font-weight:800;font-size:clamp(30px,4vw,44px);line-height:1;background:linear-gradient(135deg,var(--violet-bright),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.stat-cards .stat-card .lbl{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--text-soft);margin-top:10px}
+@media(max-width:860px){.stat-cards{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:500px){.stat-cards{grid-template-columns:1fr}}
+
+section{padding:100px 0}
+.section-label{
+  font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.16em;
+  color:var(--violet-bright);margin-bottom:16px;
+  display:flex;align-items:center;gap:10px;
+}
+.section-label::after{content:'';flex:1;height:1px;background:var(--glass-border)}
+.section-title{font-family:var(--display);font-weight:800;font-size:clamp(28px,4vw,42px);line-height:1.1;margin-bottom:48px}
+
+.jargon-wall{padding:0}
+.jargon-wall .jargon-tags{display:flex;flex-wrap:wrap;gap:10px}
+.jargon-wall .jargon-tags s{
+  display:inline-block;padding:12px 20px;background:var(--panel);border:1px solid var(--glass-border);
+  border-radius:100px;font-size:13px;color:var(--text-soft);text-decoration:line-through var(--rose);text-decoration-thickness:2px;
+}
+.jargon-wall .truth{font-family:var(--display);font-weight:700;font-size:clamp(24px,3.5vw,40px);line-height:1.15;margin-top:48px}
+.jargon-wall .truth strong{background:linear-gradient(135deg,var(--violet-bright),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+
+.work-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+@media(max-width:800px){.work-grid{grid-template-columns:1fr}}
+.work-card{padding:36px;cursor:pointer;display:flex;flex-direction:column;justify-content:space-between;min-height:380px}
+.work-card .tag-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
+.work-card .tag-row span{font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:.08em;color:var(--violet-bright);border:1px solid var(--glass-border);padding:4px 10px;border-radius:100px}
+.work-card h3{font-family:var(--display);font-weight:700;font-size:26px;line-height:1.15;margin-bottom:12px}
+.work-card p{font-size:14px;color:var(--text-soft);line-height:1.55}
+.work-card .bot-row{display:flex;justify-content:space-between;align-items:flex-end;margin-top:24px;padding-top:20px;border-top:1px solid var(--glass-border)}
+.work-card .bot-row .impact{font-family:var(--display);font-weight:800;font-size:28px;background:linear-gradient(135deg,var(--violet-bright),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.work-card .bot-row .impact-unit{font-family:var(--mono);font-size:9px;color:var(--text-soft);display:block}
+.work-card .viz-placeholder{width:100%;height:100px;border-radius:12px;background:var(--indigo);border:1px solid var(--glass-border);margin-bottom:20px;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:10px;color:var(--text-soft);letter-spacing:.02em}
+
+.process-cards{display:grid;grid-template-columns:repeat(6,1fr);gap:10px}
+@media(max-width:1100px){.process-cards{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:600px){.process-cards{grid-template-columns:repeat(2,1fr)}}
+.proc-card{padding:28px 20px;text-align:center}
+.proc-card .num{font-family:var(--display);font-weight:800;font-size:28px;background:linear-gradient(135deg,var(--violet-bright),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:10px}
+.proc-card h4{font-family:var(--display);font-weight:700;font-size:15px;margin-bottom:8px}
+.proc-card p{font-size:12px;color:var(--text-soft);line-height:1.5}
+
+.principles-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+@media(max-width:700px){.principles-grid{grid-template-columns:1fr}}
+.principle-panel{padding:36px}
+.principle-panel h3{font-family:var(--display);font-weight:700;font-size:22px;margin-bottom:12px;line-height:1.15}
+.principle-panel p{font-size:14px;color:var(--text-soft);line-height:1.55}
+
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:700px){.about-grid{grid-template-columns:1fr}}
+.about-grid .bio-panel{padding:40px}
+.about-grid .bio-panel p{font-size:16px;line-height:1.6;margin-bottom:16px}
+.about-grid .bio-panel .jerry-tag{margin-top:24px;padding-top:20px;border-top:1px solid var(--glass-border);font-family:var(--mono);font-size:12px;color:var(--violet-bright)}
+.about-grid .ask-me-panel{padding:40px}
+.about-grid .ask-me-panel h3{font-family:var(--display);font-weight:700;font-size:18px;margin-bottom:20px}
+.about-grid .ask-me-panel .tag-grid{display:flex;flex-wrap:wrap;gap:8px}
+.about-grid .ask-me-panel .tag-grid span{font-family:var(--mono);font-size:12px;padding:10px 16px;background:var(--indigo);border:1px solid var(--glass-border);border-radius:100px;color:var(--text-soft)}
+
+.timeline .tl-item{display:flex;gap:28px;padding:28px 0;border-bottom:1px solid var(--glass-border);align-items:baseline}
+.timeline .tl-item .tl-year{font-family:var(--display);font-weight:800;font-size:22px;white-space:nowrap;background:linear-gradient(135deg,var(--violet-bright),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.timeline .tl-item .tl-desc{font-size:14px;color:var(--text-soft)}
+
+.contact-panel{padding:64px;text-align:center}
+.contact-panel .pre{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--violet-bright);margin-bottom:24px}
+.contact-panel h2{font-family:var(--display);font-weight:800;font-size:clamp(36px,6vw,64px);line-height:1.05;margin-bottom:36px}
+.contact-panel .email{display:inline-block;font-family:var(--display);font-weight:700;font-size:clamp(20px,3vw,30px);background:linear-gradient(135deg,var(--violet-bright),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;border-bottom:3px solid var(--violet);padding-bottom:6px}
+.contact-panel .links-row{display:flex;justify-content:center;gap:16px;flex-wrap:wrap;margin-top:36px;font-family:var(--mono);font-size:11px}
+.contact-panel .links-row a,.contact-panel .links-row span{padding:10px 18px;border-radius:100px;border:1px solid var(--glass-border);color:var(--text-soft)}
+.contact-panel .links-row a:hover{border-color:var(--violet);color:var(--text)}
+
+footer{padding:28px 32px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-family:var(--mono);font-size:10px;color:var(--text-soft);border-top:1px solid var(--glass-border)}
+</style>
+</head>
+<body>
+
+<div class="gradient-orb orb-1"></div>
+<div class="gradient-orb orb-2"></div>
+<div class="gradient-orb orb-3"></div>
+
+<nav>
+  <span class="logo">Naman Sharma<span class="dot"></span></span>
+  <div class="links">
+    <a href="#work">Work</a>
+    <a href="#process">Process</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="chip"><span class="green-dot"></span>Available for work · Remote worldwide</div>
+    <h1>
+      I make<br>
+      <span class="gradient-text">complex</span> products<br>
+      feel simple.
+    </h1>
+    <p class="sub">Naman Sharma / Product &amp; UX Designer / Jaipur, India. Designing since 2017. In UX since 2019. Open to freelance and full-time.</p>
+    <div class="stat-cards">
+      <div class="glass-panel stat-card"><div class="val">$500K</div><div class="lbl">Pre-seed raised — Turns</div></div>
+      <div class="glass-panel stat-card"><div class="val">4.8★</div><div class="lbl">Play Store — LetsConnect</div></div>
+      <div class="glass-panel stat-card"><div class="val">25</div><div class="lbl">Interviews — Wikipedia</div></div>
+      <div class="glass-panel stat-card"><div class="val">+20%</div><div class="lbl">Transactions — Asian Paints</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="jargon-wall">
+  <div class="wrap">
+    <div class="section-label">01 / The premise</div>
+    <div class="jargon-tags">
+      <s>synergize aesthetics with functionality,</s>
+      <s>navigate the confluence of form and function,</s>
+      <s>orchestrate design revolutions,</s>
+      <s>instigate paradigmatic evolutions,</s>
+      <s>seamlessly integrate cutting-edge methodologies,</s>
+      <s>engineer experiential marvels,</s>
+      <s>champion transformative ideation,</s>
+      <s>perpetuate narratives that transcend boundaries.</s>
+    </div>
+    <p class="truth">I do research. I do design. I ship. <strong>The numbers below did the transcending.</strong></p>
+  </div>
+</section>
+
+<section id="work">
+  <div class="wrap">
+    <div class="section-label">02 / Selected work</div>
+    <div class="work-grid">
+      <div class="glass-panel work-card">
+        <div>
+          <div class="tag-row"><span>Thence</span><span>2021</span><span>UX Design</span></div>
+          <div class="viz-placeholder">[ mockup: dealer portal — catalog ]</div>
+          <h3>Asian Paints Dealer Portal</h3>
+          <p>Redesigned the end-to-end portal experience. Barcode ordering in under 10 seconds, personalised recommendations, region-driven promotions. Dealers stopped calling salespeople for every order.</p>
+        </div>
+        <div class="bot-row"><div><div class="impact">+20%</div><div class="impact-unit">Online transaction volume</div></div><span style="font-family:var(--mono);font-size:10px;color:var(--text-soft)">→</span></div>
+      </div>
+
+      <div class="glass-panel work-card">
+        <div>
+          <div class="tag-row"><span>Thence</span><span>2021</span><span>UX Design</span><span>Testing</span></div>
+          <div class="viz-placeholder">[ mockup: Boost360 onboarding — mobile ]</div>
+          <h3>Boost360 Onboarding Rescue</h3>
+          <p>Uninstalled within 4 hours. 20% signup success. The real bug: marketing promised what the product didn't deliver. Rebuilt onboarding around a single quick win.</p>
+        </div>
+        <div class="bot-row"><div><div class="impact">-60%</div><div class="impact-unit">App uninstall rate</div></div><span style="font-family:var(--mono);font-size:10px;color:var(--text-soft)">→</span></div>
+      </div>
+
+      <div class="glass-panel work-card">
+        <div>
+          <div class="tag-row"><span>Hureo</span><span>2020</span><span>Field Research</span></div>
+          <div class="viz-placeholder">[ artifact: personas & journey maps ]</div>
+          <h3>Wikipedia × KaiOS Study</h3>
+          <p>25 in-person interviews across Pune, Mumbai, and Delhi. JioPhone users, 45-60 min each. Deep insights on how people read and search on keypad devices for the Wikimedia Foundation.</p>
+        </div>
+        <div class="bot-row"><div><div class="impact">25</div><div class="impact-unit">Users · 3 cities · In person</div></div><span style="font-family:var(--mono);font-size:10px;color:var(--text-soft)">→</span></div>
+      </div>
+
+      <div class="glass-panel work-card">
+        <div>
+          <div class="tag-row"><span>Independent</span><span>2022-Now</span><span>Product</span><span>Web</span></div>
+          <div class="viz-placeholder">[ collage: Turns / Gadivan / LetsConnect ]</div>
+          <h3>Freelance, End to End</h3>
+          <p>Turns: brand and web revamp → $500K pre-seed. Gadivan: 0-to-1 multi-app product. LetsConnect: redesigned from user feedback → 4.8★ on Play Store. 15+ clients.</p>
+        </div>
+        <div class="bot-row"><div><div class="impact">0 → 1</div><div class="impact-unit">Again &amp; again</div></div><span style="font-family:var(--mono);font-size:10px;color:var(--text-soft)">→</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="process">
+  <div class="wrap">
+    <div class="section-label">03 / How I work</div>
+    <div class="process-cards">
+      <div class="glass-panel proc-card"><div class="num">01</div><h4>Research</h4><p>Understand the problem and the customer before drawing.</p></div>
+      <div class="glass-panel proc-card"><div class="num">02</div><h4>Journey</h4><p>Map the full experience. Find where it breaks.</p></div>
+      <div class="glass-panel proc-card"><div class="num">03</div><h4>Explore</h4><p>Go wide. Test, iterate, collaborate.</p></div>
+      <div class="glass-panel proc-card"><div class="num">04</div><h4>Refine</h4><p>Pick the winner. Sweat the details.</p></div>
+      <div class="glass-panel proc-card"><div class="num">05</div><h4>Ship</h4><p>Stay with engineering through the build.</p></div>
+      <div class="glass-panel proc-card"><div class="num">06</div><h4>Monitor</h4><p>Watch the numbers. Fix what moved. Fix what didn't.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="section-label">04 / What I believe</div>
+    <div class="principles-grid">
+      <div class="glass-panel principle-panel"><h3>Consistency beats talent.</h3><p>I'm not the most talented designer. I show up every day instead. Designing since 2017, in UX since 2019, no year off.</p></div>
+      <div class="glass-panel principle-panel"><h3>Curiosity is the job.</h3><p>Knowing a little about a lot connects scattered dots. The Wikipedia study proved this: understanding why someone picks a keypad phone shaped the recommendations more than interface knowledge.</p></div>
+      <div class="glass-panel principle-panel"><h3>Form follows function.</h3><p>Function solves. Beauty makes people remember. Earn the second by doing the first. On Boost360, no visual polish would have moved the metric until research found the real problem.</p></div>
+      <div class="glass-panel principle-panel"><h3>Give a damn.</h3><p>Founder's mindset. Full ownership. At Turns, that meant building brand guidelines and a design system nobody asked for, so the team could ship after I left. No drama, high agency.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="wrap">
+    <div class="section-label">05 / The person</div>
+    <div class="about-grid">
+      <div class="glass-panel bio-panel">
+        <p>Self-taught Product/UX designer with a Computer Engineering degree. Designing since 2017, in UX since 2019. A curious generalist: field research in three cities, usability testing, web apps, mobile apps, brand design — done it all. Currently re-learning to code to build ideas directly.</p>
+        <p>Speaks fluent product and fluent engineering. Easy to work with, no drama. When not designing: quality time with an adorable indie dog. Jerry says hi.</p>
+        <div class="jerry-tag">● Jerry — four-year-old indie street dog, chief morale officer, currently asleep under the desk.</div>
+      </div>
+      <div class="glass-panel ask-me-panel">
+        <h3>Ask me about</h3>
+        <div class="tag-grid">
+          <span>My indie dog, Jerry</span>
+          <span>Computers &amp; Tech</span>
+          <span>Personal Finance</span>
+          <span>Hip-Hop Music</span>
+          <span>Video Games</span>
+          <span>Education</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="section-label">06 / The record</div>
+    <div class="glass-panel" style="padding:36px">
+      <div class="timeline">
+        <div class="tl-item"><span class="tl-year">2022 →</span><span class="tl-desc">Independent Product, UX &amp; Web Designer. Turns, Gadivan, LetsConnect, LearnApp, plus 15+ more.</span></div>
+        <div class="tl-item"><span class="tl-year">2021–22</span><span class="tl-desc">UX Designer at Thence. Client work for large Indian brands, mentoring interns.</span></div>
+        <div class="tl-item"><span class="tl-year">2019–20</span><span class="tl-desc">UX Research Intern at Hureo. 25 field interviews for the Wikimedia Foundation.</span></div>
+        <div class="tl-item"><span class="tl-year">2017–19</span><span class="tl-desc">Graphic Design at Skillovate and HappleyFit. Logos, posters, a board game, a kids' eBook.</span></div>
+        <div class="tl-item"><span class="tl-year">2017–21</span><span class="tl-desc">B.E. Computer Engineering, SPPU, Pune.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap">
+    <div class="glass-panel contact-panel">
+      <div class="pre">Hiring? Stuck on a UX problem? Raising and need the product to look like it deserves the money?</div>
+      <h2>Let's make<br>something good.</h2>
+      <a class="email" href="mailto:madebynaman@gmail.com">madebynaman@gmail.com</a>
+      <div class="links-row">
+        <a href="https://linkedin.com/in/madebynaman">LinkedIn</a>
+        <a href="tel:+918208369219">+91 82083 69219</a>
+        <a href="https://madebynaman.com">madebynaman.com</a>
+        <span>Jaipur, India · Remote worldwide</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>© Naman Sharma</span>
+  <span>Direction 18 — Liquid Studio</span>
+  <span>No jargon was used on this website.</span>
+</footer>
+
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+gsap.from('.hero .chip',{opacity:0,y:20,duration:.6,delay:.2});
+gsap.from('.hero h1',{opacity:0,y:50,duration:1,delay:.4,ease:'power3.out'});
+gsap.from('.hero .sub',{opacity:0,y:20,duration:.7,delay:.7});
+
+gsap.utils.toArray('.stat-card').forEach((c,i)=>{
+  gsap.from(c,{scrollTrigger:{trigger:c,start:'top 85%'},opacity:0,y:30,scale:.95,duration:.6,delay:i*.1});
+});
+
+gsap.utils.toArray('.work-card').forEach((c,i)=>{
+  gsap.from(c,{scrollTrigger:{trigger:c,start:'top 85%'},opacity:0,y:40,duration:.7,delay:i*.12});
+});
+
+gsap.utils.toArray('.proc-card').forEach((c,i)=>{
+  gsap.from(c,{scrollTrigger:{trigger:c,start:'top 90%'},opacity:0,y:25,scale:.95,duration:.5,delay:i*.06});
+});
+
+gsap.utils.toArray('.principle-panel').forEach((c,i)=>{
+  gsap.from(c,{scrollTrigger:{trigger:c,start:'top 90%'},opacity:0,y:30,duration:.6,delay:i*.08});
+});
+
+gsap.from('.contact-panel',{scrollTrigger:{trigger:'.contact-panel',start:'top 85%'},opacity:0,y:40,duration:.8});
+
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    e.preventDefault();
+    const t=document.querySelector(a.getAttribute('href'));
+    if(t)t.scrollIntoView({behavior:'smooth'});
+  });
+});
+</script>
+</body>
+</html>

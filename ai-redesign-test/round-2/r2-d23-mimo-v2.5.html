@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Naman Sharma — GRID</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+:root{
+  --paper:#F5F2EC;
+  --ink:#1A1A1A;
+  --ink-soft:#6B6560;
+  --accent:#E85D3A;
+  --blue:#2B5EA7;
+  --muted:#9A9590;
+  --line:rgba(26,26,26,.1);
+  --line-strong:rgba(26,26,26,.2);
+  --display:'Instrument Serif',Georgia,serif;
+  --body:'DM Sans',system-ui,sans-serif;
+  --mono:'IBM Plex Mono',monospace;
+}
+
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--body);
+  font-size:14.5px;
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+::selection{background:var(--accent);color:var(--paper)}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+
+.wrap{max-width:1280px;margin:0 auto;padding:0 clamp(1.25rem,3vw,2.5rem)}
+h1,h2,h3{font-family:var(--display);font-weight:400;letter-spacing:-.015em}
+
+/* ─── MASTHEAD ─── */
+.masthead{
+  border-bottom:1px solid var(--ink);
+  padding:.8rem 0;
+  font-family:var(--mono);font-size:.6rem;
+  letter-spacing:.08em;text-transform:uppercase;
+}
+.masthead-inner{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem}
+.masthead-inner .brand{font-weight:600;font-size:.7rem;letter-spacing:.12em}
+.masthead-inner .issue{color:var(--accent)}
+
+/* ─── NAV ─── */
+.nav{
+  position:sticky;top:0;z-index:50;
+  background:rgba(245,242,236,.92);
+  backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--ink);
+}
+.nav-inner{display:flex;align-items:stretch;justify-content:space-between;height:42px}
+.nav-links{display:flex;gap:0}
+.nav-links a{
+  font-family:var(--mono);font-size:.65rem;letter-spacing:.08em;
+  text-transform:uppercase;padding:0 1.2rem;
+  display:flex;align-items:center;
+  border-right:1px solid var(--line);
+  color:var(--ink-soft);transition:color .15s,background .15s;
+}
+.nav-links a:first-child{border-left:1px solid var(--line)}
+.nav-links a:hover{color:var(--ink);background:rgba(26,26,26,.04)}
+.nav-page{
+  font-family:var(--mono);font-size:.6rem;color:var(--muted);
+  display:flex;align-items:center;padding:0 1.2rem;
+}
+
+/* ─── HERO ─── */
+.hero{padding:clamp(2.5rem,6vw,5rem) 0 clamp(2rem,5vw,4rem)}
+.hero-grid{display:grid;grid-template-columns:1fr 340px;gap:3rem;align-items:start}
+.hero-main .label{
+  font-family:var(--mono);font-size:.6rem;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--accent);margin-bottom:1.2rem;
+}
+.hero h1{
+  font-size:clamp(2.8rem,6.5vw,5.5rem);
+  line-height:.95;letter-spacing:-.03em;
+}
+.hero h1 em{font-style:italic;color:var(--accent)}
+.hero-sub{
+  max-width:38ch;margin-top:1.8rem;
+  font-size:1rem;color:var(--ink-soft);line-height:1.7;
+}
+.hero-sub strong{color:var(--ink);font-weight:600}
+.hero-cta{display:flex;gap:.8rem;margin-top:2rem;flex-wrap:wrap}
+.btn{
+  display:inline-flex;align-items:center;gap:.4rem;
+  font-family:var(--mono);font-size:.7rem;letter-spacing:.06em;
+  text-transform:uppercase;padding:.65rem 1.2rem;
+  border:1px solid var(--ink);transition:all .2s;
+}
+.btn-fill{background:var(--ink);color:var(--paper)}
+.btn-fill:hover{background:var(--accent);border-color:var(--accent)}
+.btn-ghost:hover{background:var(--ink);color:var(--paper)}
+
+.hero-side{
+  border:1px solid var(--ink);padding:1.5rem;
+  position:relative;
+}
+.hero-side::before{
+  content:'';position:absolute;top:-1px;left:-1px;
+  width:16px;height:16px;border-top:2px solid var(--accent);border-left:2px solid var(--accent);
+}
+.hero-side .side-label{
+  font-family:var(--mono);font-size:.55rem;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--accent);margin-bottom:1rem;
+}
+.hero-side .stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.hero-side .stat{padding-bottom:.8rem;border-bottom:1px solid var(--line)}
+.hero-side .stat .num{
+  font-family:var(--display);font-size:1.8rem;line-height:1;
+}
+.hero-side .stat .lbl{
+  font-family:var(--mono);font-size:.55rem;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--muted);margin-top:.25rem;
+}
+
+/* ─── MARQUEE ─── */
+.marquee{
+  border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);
+  padding:.6rem 0;overflow:hidden;
+}
+.marquee-track{
+  display:flex;width:max-content;will-change:transform;
+}
+.marquee-track span{
+  font-family:var(--mono);font-size:.65rem;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--muted);
+  padding:0 1.5rem;white-space:nowrap;
+  display:inline-flex;align-items:center;gap:1rem;
+}
+.marquee-track span::after{content:'◆';color:var(--accent);font-size:.5em}
+
+/* ─── SECTION ─── */
+.section{padding:clamp(2.5rem,6vw,4.5rem) 0}
+.section + .section{border-top:1px solid var(--line)}
+.sec-head{
+  display:grid;grid-template-columns:1fr auto;gap:2rem;
+  align-items:baseline;margin-bottom:2.5rem;
+  border-bottom:1px solid var(--line-strong);padding-bottom:1rem;
+}
+.sec-head h2{font-size:clamp(1.8rem,4vw,3rem);line-height:1}
+.sec-head .num{
+  font-family:var(--mono);font-size:.6rem;letter-spacing:.08em;
+  color:var(--accent);
+}
+
+/* ─── WORK ─── */
+.work-grid{display:flex;flex-direction:column}
+.work-row{
+  display:grid;grid-template-columns:70px 1fr 1fr;gap:2rem;
+  padding:2rem 0;border-bottom:1px solid var(--line);
+  align-items:start;
+}
+.work-row:first-child{border-top:1px solid var(--line)}
+.work-idx{
+  font-family:var(--mono);font-weight:600;font-size:.65rem;
+  letter-spacing:.08em;color:var(--accent);padding-top:.2rem;
+}
+.work-info h3{
+  font-size:clamp(1.4rem,2.5vw,2rem);margin-bottom:.5rem;
+}
+.work-tags{display:flex;flex-wrap:wrap;gap:.3rem;margin-bottom:.8rem}
+.work-tag{
+  font-family:var(--mono);font-size:.5rem;letter-spacing:.08em;
+  text-transform:uppercase;border:1px solid var(--line-strong);
+  padding:.15rem .45rem;color:var(--muted);
+}
+.work-info p{font-size:.88rem;color:var(--ink-soft);max-width:40ch;text-wrap:pretty}
+.work-info p strong{color:var(--ink);font-weight:600}
+.work-outcome{
+  margin-top:.8rem;font-family:var(--display);font-style:italic;
+  font-size:1.1rem;color:var(--accent);
+}
+.work-visual{
+  border:1px solid var(--line-strong);
+  aspect-ratio:16/10;background:rgba(26,26,26,.02);
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--mono);font-size:.55rem;color:var(--muted);
+  letter-spacing:.06em;text-transform:uppercase;
+  position:relative;
+}
+.work-visual::after{
+  content:'';position:absolute;bottom:6px;right:6px;
+  width:10px;height:10px;border:1px solid var(--muted);
+}
+
+.locked-row{
+  display:grid;grid-template-columns:1fr 1fr;gap:2rem;
+  padding:2rem 0;border-bottom:1px solid var(--line);
+  align-items:center;
+}
+.locked-row h3{
+  font-size:1.5rem;margin-bottom:.4rem;
+}
+.locked-row p{font-size:.88rem;color:var(--ink-soft);max-width:34ch;text-wrap:pretty}
+
+.more-clients{
+  margin-top:2rem;font-family:var(--mono);font-size:.7rem;
+  color:var(--muted);line-height:2.2;
+}
+
+/* ─── PROCESS ─── */
+.process-table{width:100%;border-collapse:collapse}
+.process-table th{
+  font-family:var(--mono);font-size:.55rem;letter-spacing:.1em;
+  text-transform:uppercase;text-align:left;color:var(--accent);
+  padding:.8rem 1rem;border-bottom:2px solid var(--ink);
+  font-weight:500;
+}
+.process-table td{
+  padding:.9rem 1rem;border-bottom:1px solid var(--line);
+  vertical-align:top;
+}
+.process-table .step-num{
+  font-family:var(--display);font-size:1.6rem;line-height:1;
+}
+.process-table .step-name{
+  font-family:var(--display);font-size:1.1rem;
+}
+.process-table .step-desc{
+  font-size:.82rem;color:var(--ink-soft);max-width:36ch;
+}
+.process-table .step-output{
+  font-family:var(--mono);font-size:.65rem;color:var(--muted);
+  letter-spacing:.04em;
+}
+
+/* ─── PRINCIPLES ─── */
+.principles-grid{
+  display:grid;grid-template-columns:repeat(2,1fr);gap:1px;
+  background:var(--line);
+}
+.principle{
+  padding:2rem;background:var(--paper);
+}
+.principle .idx{
+  font-family:var(--display);font-size:3.5rem;line-height:1;
+  color:var(--accent);margin-bottom:.3rem;
+}
+.principle h4{
+  font-family:var(--display);font-size:1.3rem;margin-bottom:.5rem;
+}
+.principle p{font-size:.88rem;color:var(--ink-soft);line-height:1.6;text-wrap:pretty}
+
+/* ─── ABOUT ─── */
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem}
+.about-col p{margin-top:1rem;font-size:.92rem;color:var(--ink-soft);text-wrap:pretty}
+.about-col p strong{color:var(--ink);font-weight:600}
+.about-col .pull-quote{
+  font-family:var(--display);font-style:italic;
+  font-size:1.4rem;line-height:1.4;margin-top:1.5rem;
+  padding-left:1.2rem;border-left:3px solid var(--accent);
+  color:var(--ink);
+}
+.jerry-box{
+  border:1px solid var(--ink);padding:2rem;position:relative;
+}
+.jerry-box::before{
+  content:'THE REAL BOSS';position:absolute;top:-.5rem;left:1.5rem;
+  background:var(--paper);padding:0 .5rem;
+  font-family:var(--mono);font-size:.55rem;letter-spacing:.12em;
+  color:var(--accent);
+}
+.jerry-box h3{font-size:1.6rem;margin-bottom:.5rem}
+.jerry-box p{font-size:.88rem;color:var(--ink-soft);line-height:1.6;text-wrap:pretty}
+.jerry-box .cap{
+  margin-top:1rem;font-family:var(--mono);font-size:.6rem;
+  letter-spacing:.08em;color:var(--muted);
+}
+
+/* ─── TIMELINE ─── */
+.t-table{width:100%;border-collapse:collapse}
+.t-table td{
+  padding:1rem;border-bottom:1px solid var(--line);
+  vertical-align:top;
+}
+.t-table .t-year{
+  font-family:var(--display);font-size:1.2rem;
+  white-space:nowrap;width:160px;
+}
+.t-table .t-role{
+  font-family:var(--display);font-size:1.1rem;
+}
+.t-table .t-org{font-size:.82rem;color:var(--ink-soft);margin-top:.2rem}
+
+/* ─── CONTACT ─── */
+.contact{
+  border:1px solid var(--ink);padding:3.5rem 3rem;
+  display:grid;grid-template-columns:1fr auto;gap:3rem;
+  align-items:center;
+}
+.contact h2{font-size:clamp(2rem,4.5vw,3.2rem);line-height:1.05}
+.contact p{margin-top:1rem;font-size:.92rem;color:var(--ink-soft);max-width:36ch;text-wrap:pretty}
+.contact-links{display:flex;flex-direction:column;gap:.6rem;align-items:flex-end}
+.contact-links a{
+  font-family:var(--mono);font-size:.7rem;letter-spacing:.06em;
+  text-transform:uppercase;border-bottom:1px solid var(--accent);
+  padding-bottom:.1rem;transition:color .2s;
+}
+.contact-links a:hover{color:var(--accent)}
+
+/* ─── FOOTER ─── */
+.footer{
+  border-top:1px solid var(--ink);padding:1.2rem 0;
+  font-family:var(--mono);font-size:.55rem;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--muted);
+}
+.footer-inner{display:flex;justify-content:space-between;flex-wrap:wrap;gap:.5rem}
+
+.reveal{opacity:0;transform:translateY(16px)}
+
+@media(max-width:900px){
+  .hero-grid{grid-template-columns:1fr}
+  .hero-side{order:-1}
+  .work-row{grid-template-columns:1fr;gap:.6rem}
+  .work-idx{display:none}
+  .work-visual{display:none}
+  .locked-row{grid-template-columns:1fr}
+  .process-table thead{display:none}
+  .process-table tbody{display:flex;flex-direction:column}
+  .process-table tr{display:grid;grid-template-columns:60px 1fr;gap:1rem;padding:1.2rem 0;border-bottom:1px solid var(--line)}
+  .process-table td{padding:0;border:0}
+  .process-table td:nth-child(4),.process-table td:nth-child(5){display:none}
+  .principles-grid{grid-template-columns:1fr}
+  .about-grid{grid-template-columns:1fr}
+  .contact{grid-template-columns:1fr;padding:2rem}
+  .contact-links{align-items:flex-start;flex-direction:row;flex-wrap:wrap}
+  .t-table td{display:grid;grid-template-columns:1fr;gap:.3rem}
+  .t-table .t-year{width:auto}
+  .nav-links{display:none}
+}
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="wrap masthead-inner">
+    <span class="brand">NAMAN SHARMA — PRODUCT & UX DESIGNER</span>
+    <span class="issue">Direction 023 · GRID · Issue 01</span>
+  </div>
+</header>
+
+<nav class="nav">
+  <div class="wrap nav-inner">
+    <div class="nav-links">
+      <a href="#work">Work</a>
+      <a href="#process">Process</a>
+      <a href="#about">About</a>
+      <a href="#principles">Principles</a>
+      <a href="#timeline">Timeline</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <div class="nav-page">Page 01 / 01</div>
+  </div>
+</nav>
+
+<main>
+
+  <!-- ══ HERO ══════════════════════════════════════════════ -->
+  <header class="hero wrap">
+    <div class="hero-grid">
+      <div class="hero-main">
+        <div class="label">Direction 023 — GRID</div>
+        <h1>Complex problems in. <em>Simple products out.</em></h1>
+        <p class="hero-sub">
+          <strong>Naman Sharma</strong> — Product & UX designer. Designing since 2017,
+          in UX since 2019. I help teams turn messy problems into products people
+          actually understand. Based in Jaipur, working everywhere.
+        </p>
+        <div class="hero-cta">
+          <a class="btn btn-fill" href="#work">See the work</a>
+          <a class="btn btn-ghost" href="#contact">Say hi</a>
+        </div>
+      </div>
+      <div class="hero-side">
+        <div class="side-label">At a glance</div>
+        <div class="stat-grid">
+          <div class="stat"><div class="num">$500K</div><div class="lbl">Pre-seed raised</div></div>
+          <div class="stat"><div class="num">4.8★</div><div class="lbl">Play Store rating</div></div>
+          <div class="stat"><div class="num">25</div><div class="lbl">Field interviews</div></div>
+          <div class="stat"><div class="num">15+</div><div class="lbl">Clients since '17</div></div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track" data-marquee data-dir="-1">
+      <span>Research</span><span>Sketch</span><span>Test</span><span>Simplify</span><span>Ship</span><span>Check</span>
+      <span>Research</span><span>Sketch</span><span>Test</span><span>Simplify</span><span>Ship</span><span>Check</span>
+      <span>Research</span><span>Sketch</span><span>Test</span><span>Simplify</span><span>Ship</span><span>Check</span>
+    </div>
+  </div>
+
+  <!-- ══ WORK ══════════════════════════════════════════════ -->
+  <section class="section wrap" id="work">
+    <div class="sec-head">
+      <h2>Selected work</h2>
+      <span class="num">04 favourites · 02 locked</span>
+    </div>
+
+    <div class="work-grid">
+      <article class="work-row reveal">
+        <div class="work-idx">01</div>
+        <div class="work-info">
+          <h3>Turns</h3>
+          <div class="work-tags"><span class="work-tag">Website</span><span class="work-tag">Brand</span><span class="work-tag">Design System</span></div>
+          <p>A young software company that needed a site investors could read in one sitting, and a brand that held together everywhere. <b>New website, new brand, new design system.</b></p>
+          <div class="work-outcome">→ $500K pre-seed raised after revamp</div>
+        </div>
+        <div class="work-visual">Fig. 01 — Website + brand suite</div>
+      </article>
+
+      <article class="work-row reveal">
+        <div class="work-idx">02</div>
+        <div class="work-info">
+          <h3>Wikipedia × KaiOS</h3>
+          <div class="work-tags"><span class="work-tag">Field Research</span><span class="work-tag">25 Users</span><span class="work-tag">3 Cities</span></div>
+          <p>25 face-to-face interviews with JioPhone users across Pune, Mumbai and Delhi for the Wikimedia Foundation. Tiny screens, real keypads. <b>Keypad typing is the real barrier.</b></p>
+          <div class="work-outcome">→ 25 participants · in person · 3 cities</div>
+        </div>
+        <div class="work-visual">Fig. 02 — Research map, western India</div>
+      </article>
+
+      <article class="work-row reveal">
+        <div class="work-idx">03</div>
+        <div class="work-info">
+          <h3>LetsConnect</h3>
+          <div class="work-tags"><span class="work-tag">Mobile App</span><span class="work-tag">UX Redesign</span></div>
+          <p>Read the reviews, grouped the complaints, redesigned the journeys where people got lost. <b>Now at 4.8★ on the Play Store.</b></p>
+          <div class="work-outcome">→ 4.8★ rating after redesign</div>
+        </div>
+        <div class="work-visual">Fig. 03 — Before / after screens</div>
+      </article>
+
+      <article class="work-row reveal">
+        <div class="work-idx">04</div>
+        <div class="work-info">
+          <h3>Gadivan</h3>
+          <div class="work-tags"><span class="work-tag">0 to 1</span><span class="work-tag">Multiple Apps</span></div>
+          <p>No product when we started. An idea, a founding team, and several groups of people who each needed something different. <b>Different apps for different users, one system underneath.</b></p>
+          <div class="work-outcome">→ Blank page → shipped product</div>
+        </div>
+        <div class="work-visual">Fig. 04 — Product suite, three surfaces</div>
+      </article>
+    </div>
+
+    <article class="locked-row reveal">
+      <div>
+        <h3>Two more, behind a password</h3>
+        <p>A dealer portal for one of India's largest paint companies. An onboarding rescue for a small-business app. Real numbers, real impact, both under NDA.</p>
+      </div>
+      <div style="text-align:right">
+        <a class="btn btn-ghost" href="mailto:madebynaman@gmail.com?subject=Password%20for%20NDA%20studies">Ask for the password →</a>
+      </div>
+    </article>
+
+    <p class="more-clients">also: Parentverse · Venyou · Sharent · Spirinova · Gorico · RedShilliz · DGlobalist · Pahoti Wellness · Ivy Malik · PhotoFinder · Olsub · Learn Theta</p>
+  </section>
+
+  <!-- ══ PROCESS ═══════════════════════════════════════════ -->
+  <section class="section wrap" id="process">
+    <div class="sec-head">
+      <h2>How I work</h2>
+      <span class="num">06 steps · order matters</span>
+    </div>
+
+    <table class="process-table reveal">
+      <thead>
+        <tr><th>Phase</th><th>Name</th><th>Description</th><th>Output</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="step-num">01</td><td class="step-name">Listen</td><td class="step-desc">Users, founders, analytics, support tickets. Most of what I need already exists inside the company.</td><td class="step-output">Insight doc</td></tr>
+        <tr><td class="step-num">02</td><td class="step-name">Map</td><td class="step-desc">The full journey, end to end, until I can see where it breaks.</td><td class="step-output">Journey map</td></tr>
+        <tr><td class="step-num">03</td><td class="step-name">Explore</td><td class="step-desc">Go wide before narrowing. I would rather throw away ten directions than defend the first one.</td><td class="step-output">Wireframes</td></tr>
+        <tr><td class="step-num">04</td><td class="step-name">Refine</td><td class="step-desc">Pick a direction and sweat the details. Document every decision.</td><td class="step-output">High-fi mockups</td></tr>
+        <tr><td class="step-num">05</td><td class="step-name">Ship</td><td class="step-desc">Stay with engineering through the build, screen by screen, until it's live.</td><td class="step-output">Shipped product</td></tr>
+        <tr><td class="step-num">06</td><td class="step-name">Monitor</td><td class="step-desc">Once live, the work isn't done. Track metrics. Fix what moved, and fix what didn't.</td><td class="step-output">Metrics report</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ══ ABOUT ═════════════════════════════════════════════ -->
+  <section class="section wrap" id="about">
+    <div class="sec-head">
+      <h2>The longer version</h2>
+      <span class="num">05 · the person behind the work</span>
+    </div>
+
+    <div class="about-grid">
+      <div class="about-col">
+        <p>I'm a <strong>self-taught designer with a computer engineering degree</strong>. Halfway through the degree I worked out that I liked designing products more than writing code, so I taught myself design properly: books, courses, YouTube, and a lot of bad early work.</p>
+        <p>It started in 2017 with graphic design. Logos, posters, a board game, a kids' eBook. In 2019 I found UX research and never looked back. Since then: field research, usability testing, web apps, mobile apps, websites, brands, packaging, social graphics. Print and pixels and most things in between.</p>
+        <p class="pull-quote">I'm a curious generalist, and I think that's the useful part. Range lets me see the whole problem rather than only my corner of it.</p>
+        <p style="margin-top:1.2rem"><strong>Right now:</strong> open to product design roles. Living in Jaipur with Jerry. Reading something good, playing something old.</p>
+      </div>
+      <div>
+        <div class="jerry-box">
+          <h3>Jerry</h3>
+          <p>A four-year-old indie street dog, and the love of my life. I met him when he was four weeks old: malnourished, separated from his mother, far too young to survive alone. So I brought him home.</p>
+          <p style="margin-top:.8rem">He grew up stubborn, smart and deeply introverted, and he is extremely selective about who may pet him. If he ever lets you, take it as a five-star review. He's asleep next to my desk right now, supervising. He says hi.</p>
+          <div class="cap">Dogs rescued: 1</div>
+        </div>
+        <div style="margin-top:1.5rem">
+          <div style="font-family:var(--mono);font-size:.55rem;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:.8rem">Ask me about</div>
+          <div style="display:flex;flex-wrap:wrap;gap:.4rem">
+            <span class="work-tag">hip-hop, old school to DHH</span>
+            <span class="work-tag">NFS: Most Wanted, 2005</span>
+            <span class="work-tag">taking computers apart</span>
+            <span class="work-tag">slow, boring investing</span>
+            <span class="work-tag">how people learn</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ PRINCIPLES ════════════════════════════════════════ -->
+  <section class="section wrap" id="principles">
+    <div class="sec-head">
+      <h2>Four things I design by</h2>
+      <span class="num">04 rules · non-negotiable</span>
+    </div>
+
+    <div class="principles-grid">
+      <div class="principle reveal">
+        <div class="idx">01</div>
+        <h4>Consistency beats talent</h4>
+        <p>I'm not the most talented designer alive. I show up every day instead, and that compounds. Designing since 2017, in UX since 2019, 15+ clients, no year off.</p>
+      </div>
+      <div class="principle reveal">
+        <div class="idx">02</div>
+        <h4>Curiosity is the job</h4>
+        <p>I know a little about a lot, which helps me connect things other people keep separate. Understanding why someone picks a keypad phone shaped the Wikipedia work more than anything I knew about interfaces.</p>
+      </div>
+      <div class="principle reveal">
+        <div class="idx">03</div>
+        <h4>Form follows function</h4>
+        <p>Function solves the problem. Beauty is what makes people remember it, and you earn the second by doing the first. On one onboarding project, no amount of visual polish moved the number until research found the real problem.</p>
+      </div>
+      <div class="principle reveal">
+        <div class="idx">04</div>
+        <h4>Give a damn</h4>
+        <p>I work with a founder's mindset and take ownership of what I touch. At Turns that meant brand guidelines and a design system so the team could keep shipping after I left. Nobody asked for that part.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ TIMELINE ══════════════════════════════════════════ -->
+  <section class="section wrap" id="timeline">
+    <div class="sec-head">
+      <h2>Where I've been</h2>
+      <span class="num">2017 → now · no year off</span>
+    </div>
+
+    <table class="t-table">
+      <tbody>
+        <tr class="reveal"><td class="t-year">2025 →</td><td><div class="t-role">Product designer, open to what's next</div><div class="t-org">Rebuilding this site in public, designing with AI most days</div></td></tr>
+        <tr class="reveal"><td class="t-year">2022 – 2025</td><td><div class="t-role">Independent product, UX & web designer</div><div class="t-org">Turns · Gadivan · LetsConnect · LearnApp and a dozen others</div></td></tr>
+        <tr class="reveal"><td class="t-year">2021 – 2022</td><td><div class="t-role">UX Designer at Thence</div><div class="t-org">A UX studio. Client work for large Indian brands</div></td></tr>
+        <tr class="reveal"><td class="t-year">2019 – 2020</td><td><div class="t-role">UX Research Intern at Hureo</div><div class="t-org">Field research for the Wikimedia Foundation</div></td></tr>
+        <tr class="reveal"><td class="t-year">2017 – 2019</td><td><div class="t-role">Graphic Design</div><div class="t-org">Skillovate · HappleyFit · Freelance</div></td></tr>
+        <tr class="reveal"><td class="t-year">2017 – 2021</td><td><div class="t-role">B.E. Computer Engineering</div><div class="t-org">Smt. Kashibai Navale College, Pune University</div></td></tr>
+      </tbody>
+    </table>
+
+    <div style="margin-top:2rem">
+      <div style="font-family:var(--mono);font-size:.55rem;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:.6rem">People I've worked with</div>
+      <p style="font-size:.85rem;color:var(--ink-soft);line-height:2;max-width:60ch">
+        Turns · LetsConnect · Gadivan · LearnApp · Parentverse · Venyou · Sharent · Spirinova · Gorico · RedShilliz · DGlobalist · Pahoti Wellness · Ivy Malik · PhotoFinder · Olsub · Learn Theta. Agency-side: Thence, and research for the Wikimedia Foundation via Hureo.
+      </p>
+    </div>
+  </section>
+
+  <!-- ══ CONTACT ═══════════════════════════════════════════ -->
+  <section class="section wrap" id="contact">
+    <div class="contact reveal">
+      <div>
+        <h2>Let's build<br>something good.</h2>
+        <p>Whether it's a role, a project, or a good conversation about design, hip-hop or dogs, my inbox is open.</p>
+      </div>
+      <div class="contact-links">
+        <a href="mailto:madebynaman@gmail.com">madebynaman@gmail.com</a>
+        <a href="https://madebynaman.com" target="_blank" rel="noopener">madebynaman.com</a>
+        <a href="tel:+918208369219">+91 82083 69219</a>
+        <a href="https://linkedin.com/in/madebynaman" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="wrap footer-inner">
+    <span>No jargon was used on this website.</span>
+    <span>Jerry approved this site.</span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(!window.gsap||reduce){
+    document.querySelectorAll('.reveal').forEach(function(e){e.style.opacity=1;e.style.transform='none'});
+    return;
+  }
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Hero entrance
+  var tl = gsap.timeline({defaults:{ease:'power3.out'}});
+  tl.from('.hero .label',{y:10,opacity:0,duration:.5})
+    .from('.hero h1',{y:24,opacity:0,duration:.9},'-=.2')
+    .from('.hero-sub',{y:16,opacity:0,duration:.7},'-=.4')
+    .from('.hero-cta',{y:12,opacity:0,duration:.5},'-=.3')
+    .from('.hero-side',{y:18,opacity:0,duration:.7},'-=.5');
+
+  // Marquee
+  var track = document.querySelector('[data-marquee]');
+  if(track){
+    var half = track.scrollWidth / 3;
+    var x = 0, dir = -1, boost = 0, lastY = window.scrollY;
+    function tick(){
+      var y = window.scrollY;
+      boost = Math.min(4, Math.abs(y - lastY) * 0.12) + boost * 0.86;
+      lastY = y;
+      x += dir * (0.5 + boost);
+      if(x <= -half) x += half;
+      track.style.transform = 'translate3d(' + x + 'px,0,0)';
+      requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
+
+  // Scroll reveals
+  gsap.utils.toArray('.reveal').forEach(function(el){
+    gsap.fromTo(el,{y:18,opacity:0},{
+      y:0,opacity:1,duration:.7,ease:'power2.out',
+      scrollTrigger:{trigger:el,start:'top 88%'}
+    });
+  });
+
+  // Process table rows
+  gsap.utils.toArray('.process-table tbody tr').forEach(function(tr,i){
+    gsap.from(tr,{
+      opacity:0,x:-12,duration:.5,ease:'power2.out',
+      scrollTrigger:{trigger:tr,start:'top 90%'},delay:i*.06
+    });
+  });
+})();
+</script>
+</body>
+</html>
