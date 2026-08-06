@@ -376,7 +376,6 @@ const models = [
     label: 'Fable',
     rounds: {
       'round-1': [16,17,18,19,20],
-      'round-2': [16,17,18,19,20],
     }
   },
   {
@@ -554,7 +553,7 @@ function renderGrid() {
   grid.innerHTML = '';
 
   const roundOrder = {
-    'round-2': ['glm-5.2', 'opus-5', 'fable-5', 'fable'],
+    'round-2': ['glm-5.2', 'opus-5', 'fable-5'],
   };
 
   let entries = models.map((m, idx) => ({ m, idx }));
