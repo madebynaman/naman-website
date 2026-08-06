@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Naman Sharma — Changelog · Consistency Compounds</title>
+<meta name="description" content="The career of Naman Sharma, Product/UX designer, told as a changelog: nine years of daily commits, measured releases, zero jargon.">
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/@fontsource/geist-mono@5.2.5/400.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/@fontsource/geist-mono@5.2.5/500.css" rel="stylesheet">
+<style>
+/*
+  CONSISTENCY COMPOUNDS — A CAREER AS A CHANGELOG
+  THESIS: "consistency beats talent" is provable — 9 years of small commits, shipped as release notes.
+  WORLD: clean repo-paper, passing-test green, diff red, Satoshi + Geist Mono.
+*/
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --paper: #FBFBF8;
+  --ink: #17150F;
+  --soft: #57544A;
+  --faint: #8B8779;
+  --hair: #E6E4DB;
+  --pass: #0E9F4E;
+  --pass-soft: #E3F4EA;
+  --diff: #E5484D;
+  --diff-soft: #FCE9E9;
+  --sans: 'Satoshi', system-ui, sans-serif;
+  --mono: 'Geist Mono', 'SFMono-Regular', Menlo, monospace;
+}
+
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 16.5px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection { background: var(--pass); color: #fff; }
+:focus-visible { outline: 2.5px solid var(--pass); outline-offset: 3px; border-radius: 2px; }
+html { scrollbar-color: #C9C6B9 var(--paper); scrollbar-width: thin; }
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: var(--paper); }
+::-webkit-scrollbar-thumb { background: #C9C6B9; border-radius: 5px; border: 2px solid var(--paper); }
+::-webkit-scrollbar-thumb:hover { background: var(--pass); }
+
+a { color: var(--ink); text-underline-offset: 3px; }
+a:hover { color: var(--pass); }
+
+.wrap { max-width: 1120px; margin: 0 auto; padding: 0 clamp(18px, 4vw, 44px); }
+
+/* ———— repo header ———— */
+.repo-bar {
+  display: flex; justify-content: space-between; align-items: center; gap: 14px; flex-wrap: wrap;
+  padding: 16px 0; border-bottom: 1px solid var(--ink);
+  font-family: var(--mono); font-size: 12.5px;
+}
+.repo-bar .repo-name { font-weight: 500; }
+.repo-bar .repo-name span { color: var(--faint); }
+.repo-bar nav { display: flex; gap: 4px; flex-wrap: wrap; }
+.repo-bar nav a {
+  text-decoration: none; color: var(--soft); padding: 6px 12px; border-radius: 6px;
+  transition: background .12s, color .12s;
+}
+.repo-bar nav a:hover { background: var(--pass-soft); color: var(--ink); }
+.repo-bar .branch {
+  border: 1px solid var(--hair); border-radius: 999px; padding: 5px 12px; color: var(--soft);
+  background: #fff;
+}
+.repo-bar .branch b { color: var(--pass); font-weight: 500; }
+
+/* ———— hero: the log ———— */
+.hero { padding: clamp(48px, 9vh, 100px) 0 clamp(36px, 6vh, 64px); }
+.hero h1 {
+  font-weight: 900; font-size: clamp(2.5rem, 6.4vw, 5rem);
+  line-height: 1.02; letter-spacing: -.03em; max-width: 16ch;
+}
+.hero h1 .g { color: var(--pass); }
+.hero .sub { margin-top: 22px; max-width: 58ch; color: var(--soft); font-size: 17.5px; }
+.hero .sub b { color: var(--ink); font-weight: 700; }
+.hero .meta-row { display: flex; flex-wrap: wrap; gap: 10px 26px; margin-top: 26px; font-family: var(--mono); font-size: 12px; color: var(--faint); }
+.hero .meta-row span b { color: var(--soft); font-weight: 500; }
+
+/* contribution graph */
+.contrib {
+  margin-top: clamp(34px, 6vh, 60px); border: 1px solid var(--hair); border-radius: 12px;
+  background: #fff; padding: clamp(16px, 3vw, 28px); overflow: hidden;
+}
+.contrib .cg-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; margin-bottom: 16px; }
+.contrib .cg-head .t { font-weight: 700; font-size: 15px; }
+.contrib .cg-head .legend { font-family: var(--mono); font-size: 11px; color: var(--faint); display: flex; align-items: center; gap: 5px; }
+.contrib .legend i { width: 10px; height: 10px; border-radius: 2.5px; display: inline-block; }
+#cg { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); gap: 2.5px; }
+#cg .wk { display: grid; grid-template-rows: repeat(7, 1fr); gap: 2.5px; }
+#cg .d { width: 100%; aspect-ratio: 1; border-radius: 2px; background: #EFEEE7; }
+#cg .d.l1 { background: #C9EBD6; }
+#cg .d.l2 { background: #8FD9AC; }
+#cg .d.l3 { background: #43BD77; }
+#cg .d.l4 { background: #0E9F4E; }
+#cg .d { opacity: 0; transform: scale(.4); }
+.no-motion #cg .d, .no-js #cg .d { opacity: 1; transform: none; }
+.contrib .cg-foot { margin-top: 12px; font-family: var(--mono); font-size: 11.5px; color: var(--faint); }
+.contrib .cg-foot b { color: var(--pass); font-weight: 500; }
+
+/* ———— test suite: principles ———— */
+.suite { border: 1px solid var(--hair); border-radius: 12px; background: #fff; overflow: hidden; }
+.suite .suite-head {
+  display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap;
+  padding: 14px 20px; border-bottom: 1px solid var(--hair);
+  font-family: var(--mono); font-size: 12.5px; color: var(--soft); background: #FDFDFB;
+}
+.suite .suite-head .summary .ok { color: var(--pass); font-weight: 500; }
+.test {
+  display: grid; grid-template-columns: auto 1fr auto; gap: 16px; align-items: baseline;
+  padding: 18px 20px; border-bottom: 1px solid var(--hair);
+}
+.test:last-child { border-bottom: none; }
+.test .badge {
+  font-family: var(--mono); font-size: 11px; font-weight: 500; letter-spacing: .06em;
+  color: var(--pass); background: var(--pass-soft); border-radius: 5px; padding: 4px 9px;
+  opacity: 0; transform: translateY(4px); display: inline-block; min-width: 58px; text-align: center;
+}
+.no-js .test .badge { opacity: 1; transform: none; }
+.test .badge.pending { color: var(--faint); background: #F1F0E9; opacity: 1; transform: none; }
+.test h3 { font-size: 17.5px; font-weight: 700; font-family: var(--mono); letter-spacing: -.01em; }
+.test h3 .fn { color: var(--faint); font-weight: 400; }
+.test p { color: var(--soft); font-size: 14.5px; margin-top: 6px; max-width: 62ch; }
+.test .time { font-family: var(--mono); font-size: 11.5px; color: var(--faint); white-space: nowrap; }
+@media (max-width: 640px) { .test { grid-template-columns: 1fr; gap: 8px; } .test .time { display: none; } }
+
+/* ———— releases (case studies) ———— */
+.release { border: 1px solid var(--hair); border-radius: 12px; background: #fff; margin-bottom: 20px; overflow: hidden; }
+.release .rel-head {
+  display: grid; grid-template-columns: auto 1fr auto; gap: 8px 18px; align-items: baseline;
+  padding: 18px 22px; border-bottom: 1px solid var(--hair); background: #FDFDFB;
+}
+.release .tag {
+  font-family: var(--mono); font-weight: 500; font-size: 14px; color: #fff;
+  background: var(--ink); border-radius: 6px; padding: 4px 10px; white-space: nowrap;
+}
+.release.latest .tag { background: var(--pass); }
+.release .rel-title { font-weight: 900; font-size: clamp(1.15rem, 2.4vw, 1.6rem); letter-spacing: -.02em; }
+.release .rel-date { font-family: var(--mono); font-size: 12px; color: var(--faint); white-space: nowrap; }
+.release .rel-body { padding: 20px 22px 22px; }
+.release .rel-body .role { font-family: var(--mono); font-size: 12px; color: var(--faint); margin-bottom: 14px; }
+.release p { color: var(--soft); font-size: 15px; max-width: 66ch; }
+.release p b { color: var(--ink); font-weight: 700; }
+.diff { margin-top: 16px; border: 1px solid var(--hair); border-radius: 8px; overflow: hidden; font-family: var(--mono); font-size: 13px; }
+.diff .dl { display: flex; gap: 12px; padding: 8px 14px; align-items: baseline; }
+.diff .dl .sign { width: 14px; flex: none; text-align: center; }
+.diff .dl.add { background: var(--pass-soft); color: #0A6B36; }
+.diff .dl.add .sign { color: var(--pass); }
+.diff .dl.del { background: var(--diff-soft); color: #A03336; }
+.diff .dl.del .sign { color: var(--diff); }
+.diff .dl.ctx { color: var(--faint); background: #FDFDFB; }
+@media (max-width: 640px) { .release .rel-head { grid-template-columns: 1fr; } }
+
+/* ———— section scaffolding ———— */
+section.blk { padding: clamp(56px, 10vh, 110px) 0 0; }
+.blk-head { display: flex; align-items: baseline; gap: 16px; margin-bottom: 30px; flex-wrap: wrap; }
+.blk-head h2 { font-weight: 900; font-size: clamp(1.8rem, 4.4vw, 3rem); letter-spacing: -.025em; }
+.blk-head .cmd { font-family: var(--mono); font-size: 12.5px; color: var(--faint); }
+.blk-head .cmd::before { content: "$ "; color: var(--pass); }
+.blk .lede { color: var(--soft); max-width: 62ch; margin: -14px 0 28px; }
+.blk .lede b { color: var(--ink); font-weight: 700; }
+
+/* ———— pipeline (process) ———— */
+.pipe { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; }
+.stage {
+  border: 1px solid var(--hair); border-radius: 10px; background: #fff; padding: 14px 14px 12px;
+  position: relative;
+}
+.stage .st-status { display: flex; align-items: center; gap: 7px; font-family: var(--mono); font-size: 10.5px; color: var(--pass); letter-spacing: .05em; }
+.stage .st-status i { width: 8px; height: 8px; border-radius: 50%; background: var(--pass); display: inline-block; }
+.stage h3 { font-size: 14.5px; font-weight: 700; margin: 34px 0 6px; }
+.stage p { font-size: 12px; color: var(--soft); line-height: 1.5; }
+@media (max-width: 960px) { .pipe { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 560px) { .pipe { grid-template-columns: 1fr 1fr; } }
+
+/* ———— signed-off-by (clients) ———— */
+.signoffs { display: flex; flex-wrap: wrap; gap: 8px; }
+.signoffs span {
+  font-family: var(--mono); font-size: 12.5px; color: var(--soft);
+  border: 1px solid var(--hair); background: #fff; border-radius: 999px; padding: 7px 14px;
+  transition: border-color .15s, color .15s, background .15s;
+}
+.signoffs span:hover { border-color: var(--pass); color: var(--ink); background: var(--pass-soft); }
+
+/* ———— install (contact) ———— */
+.install { border: 1px solid var(--ink); border-radius: 14px; background: var(--ink); color: #F4F3EC; padding: clamp(30px, 6vw, 64px); margin-top: clamp(56px, 10vh, 110px); }
+.install .cmdline { font-family: var(--mono); font-size: clamp(14px, 2.6vw, 19px); color: #B7B4A6; overflow-wrap: anywhere; }
+.install .cmdline .dollar { color: var(--pass); }
+.install h2 { font-weight: 900; font-size: clamp(2rem, 5.4vw, 3.8rem); letter-spacing: -.025em; line-height: 1.02; margin: 18px 0 14px; }
+.install h2 .g { color: #4ADE80; }
+.install p { color: #B7B4A6; max-width: 56ch; font-size: 15.5px; }
+.install .row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 26px; }
+.install .row a {
+  font-family: var(--mono); font-size: 13px; text-decoration: none;
+  border: 1px solid #4A483D; color: #F4F3EC; border-radius: 8px; padding: 12px 20px;
+  transition: background .15s, color .15s, border-color .15s;
+}
+.install .row a:hover { background: var(--pass); border-color: var(--pass); color: #062812; }
+.install .row a.primary { background: #F4F3EC; color: var(--ink); border-color: #F4F3EC; font-weight: 500; }
+.install .row a.primary:hover { background: #4ADE80; border-color: #4ADE80; color: #062812; }
+
+footer { padding: 34px 0 60px; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; font-family: var(--mono); font-size: 11.5px; color: var(--faint); }
+footer a { color: var(--soft); }
+</style>
+</head>
+<body class="no-js">
+<script>document.body.classList.remove("no-js");</script>
+
+<div class="wrap">
+
+  <header class="repo-bar">
+    <span class="repo-name">naman-sharma<span> / </span>career</span>
+    <nav aria-label="Sections">
+      <a href="#tests">Principles</a>
+      <a href="#releases">Releases</a>
+      <a href="#pipeline">Pipeline</a>
+      <a href="#signoffs">Sign-offs</a>
+      <a href="#install">Install</a>
+    </nav>
+    <span class="branch">branch: <b>main</b> · clean</span>
+  </header>
+
+  <main>
+
+    <!-- ———— HERO ———— -->
+    <section class="hero" id="top">
+      <h1>Consistency <span class="g">compounds.</span><br>Nine years, committed daily.</h1>
+      <p class="sub">
+        I'm <b>Naman Sharma</b>, Product/UX designer from Jaipur, working remotely worldwide. No overnight
+        genius here: just small, honest commits since 2017. Graphic design first, UX research
+        since 2019, products taken <b>0 → 1</b> since. This page is the repository; every claim
+        below is a released, measurable change.
+      </p>
+      <div class="meta-row">
+        <span>LICENSE: <b>NO-JARGON-1.0</b></span>
+        <span>LANGUAGE: <b>EMPATHY 60% · EVIDENCE 40%</b></span>
+        <span>MAINTAINED BY: <b>NAMAN + JERRY 🐕</b></span>
+      </div>
+
+      <div class="contrib">
+        <div class="cg-head">
+          <span class="t">3,285 contributions since Jul 2017</span>
+          <span class="legend">Less <i style="background:#EFEEE7"></i><i style="background:#C9EBD6"></i><i style="background:#8FD9AC"></i><i style="background:#43BD77"></i><i style="background:#0E9F4E"></i> More</span>
+        </div>
+        <div id="cg" role="img" aria-label="Contribution graph: a grid of days from 2017 to 2026, filling in green to represent nine years of consistent design work"></div>
+        <div class="cg-foot">Current streak: <b>every single day</b> · Longest gap: <b>never missed a deadline</b> · Weekends: <b>mostly Jerry</b></div>
+      </div>
+    </section>
+
+    <!-- ———— TEST SUITE / PRINCIPLES ———— -->
+    <section class="blk" id="tests">
+      <div class="blk-head">
+        <h2>Principles, under test</h2>
+        <span class="cmd">npm run principles --ci</span>
+      </div>
+      <p class="lede">Four beliefs, run in CI on every project since day one. <b>Zero failures tolerated.</b></p>
+      <div class="suite">
+        <div class="suite-head">
+          <span>PASS <span class="summary"><b class="ok" id="pass-count">0</b>/4</span> · suites/principles.test.js</span>
+          <span id="suite-time">0.000s</span>
+        </div>
+        <div class="test">
+          <span class="badge pending">RUN</span>
+          <div><h3>consistency_beats_talent <span class="fn">()</span></h3><p>Daily effort compounds into unimaginable results. Not the most talented designer — just the one who shows up and improves, everyday.</p></div>
+          <span class="time">9 yrs</span>
+        </div>
+        <div class="test">
+          <span class="badge pending">RUN</span>
+          <div><h3>let_curiosity_guide <span class="fn">()</span></h3><p>Knowing a little about a lot of things connects scattered dots. Every project: discovery, learning, exploration.</p></div>
+          <span class="time">always on</span>
+        </div>
+        <div class="test">
+          <span class="badge pending">RUN</span>
+          <div><h3>form_follows_function <span class="fn">()</span></h3><p>Solve the need first. Then the extra mile of beauty, because humans remember delight.</p></div>
+          <span class="time">per commit</span>
+        </div>
+        <div class="test">
+          <span class="badge pending">RUN</span>
+          <div><h3>give_a_damn <span class="fn">()</span></h3><p>Founder's mindset. High agency, shared responsibility, ownership of every project, start to finish.</p></div>
+          <span class="time">24×7</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ———— RELEASES / CASE STUDIES ———— -->
+    <section class="blk" id="releases">
+      <div class="blk-head">
+        <h2>Release notes</h2>
+        <span class="cmd">git tag --list --sort=-v:refname</span>
+      </div>
+      <p class="lede">Major versions only. Diffs show what changed for the business; <b>full changelogs available on request</b> (some work under NDA).</p>
+
+      <article class="release latest">
+        <div class="rel-head">
+          <span class="tag">v4.0.0</span>
+          <span class="rel-title">Independent practice: 0 → 1 for startups</span>
+          <span class="rel-date">2022 — LATEST</span>
+        </div>
+        <div class="rel-body">
+          <div class="role">UX RESEARCH · PRODUCT · WEB DESIGN + DEV · 17+ CLIENTS</div>
+          <p>Full product experiences from scratch (Gadivan's multi-app, multi-stakeholder platform). Redesigns driven by user feedback (<b>LetsConnect, now 4.8★ on Play Store</b>). And the Turns website revamp that lifted conversions and helped close a <b>$500K pre-seed</b>.</p>
+          <div class="diff">
+            <div class="dl add"><span class="sign">+</span><span>feat(turns): website revamp → conversions up, $500K pre-seed closed</span></div>
+            <div class="dl add"><span class="sign">+</span><span>feat(letsconnect): end-to-end redesign → 4.8★ Play Store rating</span></div>
+            <div class="dl add"><span class="sign">+</span><span>feat(gadivan): multi-app platform, designed 0→1</span></div>
+            <div class="dl del"><span class="sign">−</span><span>chore(jargon): removed from all client communication</span></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="release">
+        <div class="rel-head">
+          <span class="tag">v3.2.0</span>
+          <span class="rel-title">Boost360: onboarding overhaul</span>
+          <span class="rel-date">THENCE · 2021</span>
+        </div>
+        <div class="rel-body">
+          <div class="role">UX RESEARCH · UX · UI · USABILITY TESTING</div>
+          <p>New users uninstalled within 4 hours; signup success sat at <b>20%</b> and took 30 minutes. Twelve hypotheses tested; real culprits: a confusing signup and an expectation gap set by ads. The redesign made onboarding visual, added social proof, and shipped a quick win: <b>your business website, live in minutes</b>.</p>
+          <div class="diff">
+            <div class="dl del"><span class="sign">−</span><span>fix(onboarding): uninstall rate (−60%)</span></div>
+            <div class="dl del"><span class="sign">−</span><span>fix(signup): average time to success (30 min → minutes)</span></div>
+            <div class="dl add"><span class="sign">+</span><span>feat(onboarding): visual steps, social proof, support access</span></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="release">
+        <div class="rel-head">
+          <span class="tag">v3.1.0</span>
+          <span class="rel-title">Asian Paints: dealer portal</span>
+          <span class="rel-date">THENCE · 2021</span>
+        </div>
+        <div class="rel-body">
+          <div class="role">UX RESEARCH · UX · UI DESIGN</div>
+          <p>Dealers didn't want to phone a salesperson for every order — and every competing portal frustrated them. Heuristic evaluation, then an end-to-end redesign: <b>barcode reordering in under 10 seconds</b>, recommendations from order history, loyalty mechanics, region-wise demand-driven promotions.</p>
+          <div class="diff">
+            <div class="dl add"><span class="sign">+</span><span>perf(portal): online transaction volume +20%</span></div>
+            <div class="dl add"><span class="sign">+</span><span>feat(orders): barcode reorder in &lt;10 seconds</span></div>
+            <div class="dl del"><span class="sign">−</span><span>fix(sales-flow): dealer–salesman dependency reduced</span></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="release">
+        <div class="rel-head">
+          <span class="tag">v2.0.0</span>
+          <span class="rel-title">Wikipedia × KaiOS: field research</span>
+          <span class="rel-date">HUREO · 2020</span>
+        </div>
+        <div class="rel-body">
+          <div class="role">UX RESEARCH · PERSONAS · JOURNEY MAPPING</div>
+          <p>For the Wikimedia Foundation: <b>25 in-person interviews across Pune, Mumbai and Delhi</b> with JioPhone users: why millions choose a smart feature phone, and how they actually read on one. Findings became recommendations: voice interfaces, readability, regional-language discovery.</p>
+          <div class="diff">
+            <div class="dl add"><span class="sign">+</span><span>research(field): 25 participants · 3 cities · 45–60 min sessions</span></div>
+            <div class="dl add"><span class="sign">+</span><span>docs(recs): voice UI, readability, regional SEO for Wikipedia</span></div>
+            <div class="dl ctx"><span class="sign">·</span><span>note: ground truth only exists face to face</span></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="release">
+        <div class="rel-head">
+          <span class="tag">v1.0.0</span>
+          <span class="rel-title">Initial commit: graphic design</span>
+          <span class="rel-date">2017 — 2019</span>
+        </div>
+        <div class="rel-body">
+          <div class="role">SKILLOVATE · HAPPLEYFIT · FREELANCE · B.E. COMPUTER ENGINEERING, PUNE UNIVERSITY</div>
+          <p>Logos, booths, brochures, a board game, a kids' eBook, WordPress sites, with an engineering degree running in parallel. The design habit and the code habit: <b>same repository, same years</b>.</p>
+          <div class="diff">
+            <div class="dl add"><span class="sign">+</span><span>init: everything. the daily commit streak begins</span></div>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <!-- ———— PIPELINE / PROCESS ———— -->
+    <section class="blk" id="pipeline">
+      <div class="blk-head">
+        <h2>Build pipeline</h2>
+        <span class="cmd">cat .github/workflows/design.yml</span>
+      </div>
+      <p class="lede">Six stages, triggered on every project. A build is green only when the last stage passes in production.</p>
+      <div class="pipe">
+        <div class="stage"><span class="st-status"><i></i>PASSED</span><h3>research</h3><p>Problem, customer, possible solutions.</p></div>
+        <div class="stage"><span class="st-status"><i></i>PASSED</span><h3>journey</h3><p>Personas, journeys, decisions. The insight.</p></div>
+        <div class="stage"><span class="st-status"><i></i>PASSED</span><h3>explore</h3><p>Go wide; test, iterate, collaborate.</p></div>
+        <div class="stage"><span class="st-status"><i></i>PASSED</span><h3>refine</h3><p>Polish, document, prep for handoff.</p></div>
+        <div class="stage"><span class="st-status"><i></i>PASSED</span><h3>handoff</h3><p>Build with eng + product. Ships = designed.</p></div>
+        <div class="stage"><span class="st-status"><i></i>PASSED</span><h3>monitor</h3><p>Live isn't done. Track, learn, improve.</p></div>
+      </div>
+    </section>
+
+    <!-- ———— SIGN-OFFS / CLIENTS ———— -->
+    <section class="blk" id="signoffs">
+      <div class="blk-head">
+        <h2>Signed-off-by</h2>
+        <span class="cmd">git shortlog -s --clients</span>
+      </div>
+      <p class="lede">Every project below merged with a client review. Names from the log, 2017 → present.</p>
+      <div class="signoffs">
+        <span>Asian Paints</span><span>Wikipedia</span><span>Shiprocket</span><span>Thence</span>
+        <span>LearnApp</span><span>Turns</span><span>Gadivan</span><span>LetsConnect</span>
+        <span>Parentverse</span><span>Venyou</span><span>Sharent</span><span>Spirinova</span>
+        <span>Gorico</span><span>RedShilliz</span><span>DGlobalist</span><span>Pahoti Wellness</span>
+        <span>Ivy Malik</span><span>PhotoFinder</span><span>Olsub</span><span>Learn Theta</span><span>+ more</span>
+      </div>
+    </section>
+
+    <!-- ———— INSTALL / CONTACT ———— -->
+    <section id="install">
+      <div class="install">
+        <div class="cmdline"><span class="dollar">$</span> npx add-naman --to=your-team</div>
+        <h2>Hiring? <span class="g">Merge me in.</span></h2>
+        <p>Full case studies (research plans, dead ends, final screens) are better walked through live. Zero conflicts expected; I rebase my opinions on new evidence.</p>
+        <div class="row">
+          <a class="primary" href="mailto:madebynaman@gmail.com">madebynaman@gmail.com</a>
+          <a href="tel:+918208369219">+91 82083 69219</a>
+          <a href="https://www.linkedin.com/in/madebynaman/" target="_blank" rel="noopener">LinkedIn ↗</a>
+          <a href="https://madebynaman.com" target="_blank" rel="noopener">madebynaman.com ↗</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <span>© NAMAN SHARMA · BUILT WITH <a href="https://madebynaman.com" target="_blank" rel="noopener">MADEBYNAMAN.COM</a></span>
+    <span>NO JARGON WAS HARMED · JAIPUR → WORLDWIDE</span>
+  </footer>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+(function () {
+  "use strict";
+  var RM = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var hasGsap = typeof window.gsap !== "undefined";
+  if (RM || !hasGsap) document.body.classList.add("no-motion");
+
+  /* ———— contribution graph: 9 years, density grows with seniority ———— */
+  var cg = document.getElementById("cg");
+  cg.innerHTML = "";
+  var years = 9, weeksPerYear = 13; /* 13 columns per year ≈ months; 117 columns fit the card */
+  var frag = document.createDocumentFragment();
+  var dayCells = [];
+  for (var wy = 0; wy < years * weeksPerYear; wy++) {
+    var yearIdx = Math.floor(wy / weeksPerYear);
+    var wk = document.createElement("div");
+    wk.className = "wk";
+    for (var d = 0; d < 7; d++) {
+      var cell = document.createElement("span");
+      cell.className = "d";
+      /* deterministic pseudo-random from position, density ramps with seniority */
+      var seed = Math.sin((wy * 7 + d) * 12.9898) * 43758.5453;
+      var rnd = seed - Math.floor(seed);
+      var density = 0.22 + (yearIdx / (years - 1)) * 0.62;
+      if (rnd < density) {
+        var lvl = rnd < density * 0.35 ? 4 : rnd < density * 0.6 ? 3 : rnd < density * 0.82 ? 2 : 1;
+        cell.classList.add("l" + lvl);
+      }
+      wk.appendChild(cell);
+      dayCells.push(cell);
+    }
+    frag.appendChild(wk);
+  }
+  cg.appendChild(frag);
+
+  if (hasGsap && !RM) {
+    var gsap = window.gsap;
+    gsap.registerPlugin(window.ScrollTrigger);
+
+    /* graph fills left→right when it enters */
+    gsap.to("#cg .d", {
+      opacity: 1, scale: 1, duration: 0.5, ease: "power2.out",
+      stagger: { each: 0.0016, from: "start" },
+      scrollTrigger: { trigger: "#cg", start: "top 85%", once: true }
+    });
+
+    /* test suite: badges flip RUN → PASS in sequence */
+    var badges = document.querySelectorAll(".test .badge");
+    var passCount = document.getElementById("pass-count");
+    var suiteTime = document.getElementById("suite-time");
+    window.ScrollTrigger.create({
+      trigger: ".suite", start: "top 78%", once: true,
+      onEnter: function () {
+        var count = { v: 0 };
+        badges.forEach(function (b, i) {
+          gsap.fromTo(b, { opacity: 0, y: 4 }, {
+            opacity: 1, y: 0, duration: 0.35, delay: i * 0.45, ease: "power2.out",
+            onStart: function () { b.classList.remove("pending"); b.textContent = "PASS"; }
+          });
+        });
+        gsap.to(count, {
+          v: 4, duration: 4 * 0.45 + 0.3, ease: "none",
+          onUpdate: function () { passCount.textContent = Math.round(count.v); }
+        });
+        var t = { v: 0 };
+        gsap.to(t, {
+          v: 1.842, duration: 4 * 0.45 + 0.3, ease: "none",
+          onUpdate: function () { suiteTime.textContent = t.v.toFixed(3) + "s"; },
+          onComplete: function () { suiteTime.textContent = "1.842s · all green"; }
+        });
+      }
+    });
+
+    /* generic entrances */
+    gsap.utils.toArray(".blk-head, .lede, .release, .pipe .stage, .signoffs, .install, .hero .sub, .hero .meta-row").forEach(function (el, i) {
+      gsap.from(el, {
+        y: 26, opacity: 0, duration: 0.8, ease: "expo.out",
+        scrollTrigger: { trigger: el, start: "top 90%", once: true }
+      });
+    });
+
+    /* diff lines slide in per release */
+    gsap.utils.toArray(".diff").forEach(function (diff) {
+      var lines = diff.querySelectorAll(".dl");
+      gsap.from(lines, {
+        x: -14, opacity: 0, duration: 0.5, ease: "power2.out", stagger: 0.12,
+        scrollTrigger: { trigger: diff, start: "top 88%", once: true }
+      });
+    });
+
+    /* hero title settles in */
+    gsap.from(".hero h1", { y: 34, opacity: 0, duration: 1, ease: "expo.out", delay: 0.05 });
+  } else {
+    /* static fallbacks */
+    var cells = document.querySelectorAll("#cg .d");
+    Array.prototype.forEach.call(cells, function (c) { c.style.opacity = 1; c.style.transform = "none"; });
+    var bs = document.querySelectorAll(".test .badge");
+    Array.prototype.forEach.call(bs, function (b) { b.classList.remove("pending"); b.textContent = "PASS"; b.style.opacity = 1; b.style.transform = "none"; });
+    var pc = document.getElementById("pass-count");
+    if (pc) pc.textContent = "4";
+    var st = document.getElementById("suite-time");
+    if (st) st.textContent = "1.842s · all green";
+  }
+})();
+</script>
+</body>
+</html>

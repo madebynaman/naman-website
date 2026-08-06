@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Naman Sharma — Drawn to Scale · Product/UX Designer</title>
+<meta name="description" content="Naman Sharma is a research-led Product/UX designer from Jaipur, India. Complex products, drawn to human scale.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chivo:wght@400;700;900&family=Chivo+Mono:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+/*
+  SHEET SET NS-2026 — THE CLARITY MACHINE
+  THESIS: a portfolio drawn like an engineering drawing: every claim dimensioned, every part numbered.
+  WORLD: blueprint sheet, white linework, cyan annotations, amber dimensions.
+*/
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --sheet: #14286B;
+  --sheet-deep: #0D1B4A;
+  --ink: #EAF0FF;
+  --soft: #A9BCE8;
+  --faint: #6D83C4;
+  --grid: rgba(234, 240, 255, .055);
+  --line: rgba(234, 240, 255, .38);
+  --hair: rgba(234, 240, 255, .16);
+  --cyan: #8FD8FF;
+  --amber: #FFC24B;
+  --sans: 'Chivo', system-ui, sans-serif;
+  --mono: 'Chivo Mono', 'SFMono-Regular', Menlo, monospace;
+}
+
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+body {
+  background: var(--sheet);
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 28px 28px;
+  color: var(--ink);
+  font-family: var(--mono);
+  font-size: 15px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+::selection { background: var(--amber); color: var(--sheet-deep); }
+:focus-visible { outline: 2px dashed var(--cyan); outline-offset: 3px; border-radius: 1px; }
+
+/* scrollbar — part of the drawing */
+html { scrollbar-color: var(--faint) var(--sheet-deep); scrollbar-width: thin; }
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: var(--sheet-deep); }
+::-webkit-scrollbar-thumb { background: var(--faint); border: 2px solid var(--sheet-deep); }
+::-webkit-scrollbar-thumb:hover { background: var(--cyan); }
+
+a { color: var(--cyan); }
+
+.sheet-frame {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 clamp(18px, 4vw, 56px) 0 clamp(18px, 4vw, 72px);
+}
+
+/* ———— ruler rail ———— */
+.rail {
+  position: fixed; left: 0; top: 0; bottom: 0; width: 34px;
+  border-right: 1px solid var(--line);
+  background:
+    repeating-linear-gradient(to bottom, var(--hair) 0 1px, transparent 1px 14px),
+    var(--sheet-deep);
+  z-index: 40;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+}
+.rail::before {
+  content: ""; position: absolute; inset: 0;
+  background: repeating-linear-gradient(to bottom, var(--line) 0 1px, transparent 1px 70px);
+}
+.rail .readout {
+  writing-mode: vertical-rl; transform: rotate(180deg);
+  font-size: 10px; letter-spacing: .18em; color: var(--amber);
+  white-space: nowrap; z-index: 1;
+}
+.rail .readout b { font-weight: 500; }
+@media (max-width: 900px) { .rail { display: none; } }
+
+/* ———— top strip / drawing index ———— */
+.topbar {
+  border-bottom: 1px solid var(--line);
+  display: flex; justify-content: space-between; align-items: stretch;
+  flex-wrap: wrap;
+}
+.topbar .id {
+  padding: 14px 18px 14px 0;
+  font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--soft);
+}
+.topbar .id b { color: var(--ink); font-weight: 500; }
+.topbar nav { display: flex; flex-wrap: wrap; }
+.topbar nav a {
+  font-size: 10.5px; letter-spacing: .14em; text-transform: uppercase; text-decoration: none;
+  color: var(--soft); padding: 14px 16px; border-left: 1px solid var(--hair);
+  transition: background .15s, color .15s;
+}
+.topbar nav a:hover { background: rgba(143, 216, 255, .1); color: var(--cyan); }
+.topbar nav a:last-child { border-right: none; }
+
+/* ———— hero ———— */
+.hero { padding: clamp(48px, 8vh, 96px) 0 0; }
+.hero .set-line {
+  display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+  font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--faint);
+  margin-bottom: 28px;
+}
+.hero .set-line .rev { color: var(--amber); }
+h1 {
+  font-family: var(--sans); font-weight: 900;
+  font-size: clamp(2.6rem, 7.2vw, 5.9rem);
+  line-height: .98; letter-spacing: -.03em;
+  text-transform: uppercase;
+  max-width: 14ch;
+}
+h1 .dim { color: var(--cyan); }
+h1 .stroke { color: transparent; -webkit-text-stroke: 1.5px var(--ink); }
+.hero .spec {
+  margin-top: 30px; display: grid; grid-template-columns: minmax(0, 46ch) auto; gap: 32px; align-items: end;
+}
+.hero .spec p { color: var(--soft); font-size: 14.5px; max-width: 46ch; }
+.hero .spec p b { color: var(--ink); font-weight: 500; }
+.hero .cta-row { display: flex; gap: 12px; flex-wrap: wrap; }
+.btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: var(--mono); font-size: 11.5px; letter-spacing: .14em; text-transform: uppercase;
+  text-decoration: none; padding: 13px 22px; border: 1px solid var(--line); color: var(--ink);
+  position: relative; transition: color .15s, border-color .15s, background .15s;
+}
+.btn::after { content: ""; position: absolute; inset: 3px; border: 1px dashed transparent; transition: border-color .15s; pointer-events: none; }
+.btn:hover { border-color: var(--cyan); color: var(--cyan); }
+.btn:hover::after { border-color: rgba(143, 216, 255, .5); }
+.btn.primary { background: var(--ink); color: var(--sheet-deep); border-color: var(--ink); font-weight: 500; }
+.btn.primary:hover { background: var(--amber); border-color: var(--amber); color: var(--sheet-deep); }
+.btn.primary:hover::after { border-color: rgba(13, 27, 74, .45); }
+
+/* figure caption + sheet plates */
+.fig-head {
+  display: flex; justify-content: space-between; align-items: baseline; gap: 14px;
+  border-bottom: 1px solid var(--line); padding: 10px 0 8px; margin-top: 56px;
+  font-size: 11px; letter-spacing: .16em; text-transform: uppercase;
+}
+.fig-head .fig { color: var(--amber); }
+.fig-head .scale { color: var(--faint); }
+
+.figure {
+  border: 1px solid var(--line); margin-top: -1px; position: relative;
+  background: var(--sheet-deep);
+}
+.figure svg { display: block; width: 100%; height: auto; }
+.figure .corner {
+  position: absolute; width: 14px; height: 14px; pointer-events: none;
+}
+.figure .corner.tl { top: -1px; left: -1px; border-top: 2px solid var(--cyan); border-left: 2px solid var(--cyan); }
+.figure .corner.tr { top: -1px; right: -1px; border-top: 2px solid var(--cyan); border-right: 2px solid var(--cyan); }
+.figure .corner.bl { bottom: -1px; left: -1px; border-bottom: 2px solid var(--cyan); border-left: 2px solid var(--cyan); }
+.figure .corner.br { bottom: -1px; right: -1px; border-bottom: 2px solid var(--cyan); border-right: 2px solid var(--cyan); }
+
+/* ———— sheet sections ———— */
+.sheet { padding: clamp(64px, 10vh, 110px) 0 0; }
+.sheet-head { display: grid; grid-template-columns: auto 1fr; gap: clamp(20px, 4vw, 48px); align-items: end; margin-bottom: 44px; }
+.sheet-no {
+  font-family: var(--sans); font-weight: 900; font-size: clamp(3rem, 7vw, 5.5rem);
+  line-height: .85; color: transparent; -webkit-text-stroke: 1.5px var(--faint);
+  letter-spacing: -.02em;
+}
+.sheet-head h2 {
+  font-family: var(--sans); font-weight: 900; text-transform: uppercase;
+  font-size: clamp(1.7rem, 4.2vw, 3.1rem); letter-spacing: -.02em; line-height: 1;
+}
+.sheet-head .sub { color: var(--soft); font-size: 13.5px; margin-top: 10px; max-width: 62ch; }
+.sheet-head .sub b { color: var(--ink); font-weight: 500; }
+@media (max-width: 700px) { .sheet-head { grid-template-columns: 1fr; gap: 14px; } }
+
+/* bill of materials */
+table.bom { width: 100%; border-collapse: collapse; border: 1px solid var(--line); }
+table.bom th {
+  text-align: left; font-weight: 500; font-size: 10.5px; letter-spacing: .16em; text-transform: uppercase;
+  color: var(--sheet-deep); background: var(--ink); padding: 10px 16px;
+}
+table.bom td { border-top: 1px solid var(--hair); padding: 15px 16px; vertical-align: baseline; font-size: 13.5px; color: var(--soft); }
+table.bom td.part { color: var(--amber); white-space: nowrap; }
+table.bom td.qty { font-size: 20px; color: var(--ink); white-space: nowrap; font-variant-numeric: tabular-nums; }
+table.bom td.qty .unit { font-size: 11px; color: var(--cyan); letter-spacing: .1em; }
+table.bom tr:hover td { background: rgba(143, 216, 255, .05); }
+.table-scroll { overflow-x: auto; }
+
+/* case drawings */
+.case { border: 1px solid var(--line); margin-bottom: 44px; background: var(--sheet-deep); }
+.case .case-strip {
+  display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap;
+  border-bottom: 1px solid var(--line); padding: 12px 18px;
+  font-size: 11px; letter-spacing: .16em; text-transform: uppercase;
+}
+.case .case-strip .drg { color: var(--amber); }
+.case .case-strip .org { color: var(--faint); }
+.case .case-grid { display: grid; grid-template-columns: 1.05fr .95fr; }
+.case:nth-child(even) .case-grid { grid-template-columns: .95fr 1.05fr; }
+.case:nth-child(even) .case-fig { order: 2; border-left: 1px solid var(--hair); border-right: none; }
+.case-fig { border-right: 1px solid var(--hair); padding: 26px; display: flex; align-items: center; }
+.case-fig svg { width: 100%; height: auto; }
+.case-body { padding: 28px 30px 26px; }
+.case-body h3 {
+  font-family: var(--sans); font-weight: 900; text-transform: uppercase;
+  font-size: clamp(1.4rem, 2.6vw, 2rem); line-height: 1.05; letter-spacing: -.015em; margin-bottom: 14px;
+}
+.case-body .role { font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--cyan); margin-bottom: 16px; }
+.case-body p { color: var(--soft); font-size: 13.5px; max-width: 52ch; }
+.case-body p b { color: var(--ink); font-weight: 500; }
+.case .dims { display: flex; flex-wrap: wrap; border-top: 1px solid var(--hair); margin-top: 22px; }
+.case .dims .d {
+  padding: 14px 18px 12px 0; margin-right: 18px; border-right: 1px solid var(--hair);
+}
+.case .dims .d:last-child { border-right: none; }
+.case .dims .v { font-size: 22px; color: var(--amber); font-variant-numeric: tabular-nums; }
+.case .dims .k { font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--faint); margin-top: 2px; }
+@media (max-width: 860px) {
+  .case .case-grid, .case:nth-child(even) .case-grid { grid-template-columns: 1fr; }
+  .case:nth-child(even) .case-fig { order: 0; border-left: none; }
+  .case-fig { border-right: none; border-bottom: 1px solid var(--hair); }
+}
+
+/* assembly sequence */
+.seq { display: grid; grid-template-columns: repeat(6, 1fr); border: 1px solid var(--line); background: var(--sheet-deep); }
+.seq .step { border-right: 1px solid var(--hair); padding: 22px 16px 20px; position: relative; }
+.seq .step:last-child { border-right: none; }
+.seq .bolt { width: 46px; height: 46px; margin-bottom: 46px; }
+.seq .bolt svg { width: 100%; height: 100%; }
+.seq .torque { position: absolute; top: 26px; right: 14px; font-size: 10px; color: var(--faint); letter-spacing: .1em; }
+.seq h3 { font-family: var(--sans); font-weight: 700; font-size: 15.5px; text-transform: uppercase; letter-spacing: .02em; margin-bottom: 8px; }
+.seq p { font-size: 12px; color: var(--soft); line-height: 1.55; }
+@media (max-width: 1000px) { .seq { grid-template-columns: repeat(3, 1fr); } .seq .step:nth-child(-n+3) { border-bottom: 1px solid var(--hair); } .seq .step:nth-child(3n) { border-right: none; } }
+@media (max-width: 620px) { .seq { grid-template-columns: 1fr 1fr; } .seq .step { border-bottom: 1px solid var(--hair); } .seq .step:nth-child(odd) { border-right: 1px solid var(--hair); } .seq .step:nth-child(even) { border-right: none; } .seq .step:nth-child(3n) { border-right: 1px solid var(--hair); } .seq .step:nth-child(2n) { border-right: none; } }
+
+/* certifications */
+.certs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--hair); border: 1px solid var(--line); }
+.cert { background: var(--sheet-deep); padding: 26px 24px 24px; }
+.cert .seal { width: 74px; height: 74px; margin-bottom: 20px; }
+.cert .seal svg { width: 100%; height: 100%; }
+.cert .cert-no { font-size: 10px; letter-spacing: .16em; color: var(--amber); text-transform: uppercase; margin-bottom: 8px; }
+.cert h3 { font-family: var(--sans); font-weight: 700; font-size: 17px; margin-bottom: 8px; }
+.cert p { font-size: 12.5px; color: var(--soft); }
+@media (max-width: 1000px) { .certs { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 560px) { .certs { grid-template-columns: 1fr; } }
+
+/* service history */
+.hist td.role { color: var(--ink); }
+.hist td.per { white-space: nowrap; color: var(--amber); font-size: 12px; }
+
+/* title block / contact */
+.titleblock { border: 2px solid var(--ink); margin-top: clamp(64px, 10vh, 110px); background: var(--sheet-deep); }
+.titleblock .contact-row { display: grid; grid-template-columns: 1.2fr .8fr; border-bottom: 1px solid var(--line); }
+.titleblock .contact-main { padding: clamp(30px, 5vw, 56px); border-right: 1px solid var(--line); }
+.titleblock h2 {
+  font-family: var(--sans); font-weight: 900; text-transform: uppercase;
+  font-size: clamp(2rem, 5vw, 3.8rem); line-height: .98; letter-spacing: -.025em; margin-bottom: 20px;
+}
+.titleblock h2 .dim { color: var(--amber); }
+.titleblock .contact-main p { color: var(--soft); font-size: 13.5px; max-width: 46ch; margin-bottom: 26px; }
+.titleblock .tb { display: grid; grid-template-columns: 1fr 1fr; }
+.titleblock .tb .cell { border-bottom: 1px solid var(--hair); padding: 12px 16px; font-size: 11px; }
+.titleblock .tb .cell:nth-child(odd) { border-right: 1px solid var(--hair); }
+.titleblock .tb .cell .k { color: var(--faint); text-transform: uppercase; letter-spacing: .14em; font-size: 9.5px; margin-bottom: 4px; }
+.titleblock .tb .cell .v { color: var(--ink); }
+.titleblock .tb .cell .v.jerry { color: var(--amber); }
+@media (max-width: 860px) { .titleblock .contact-row { grid-template-columns: 1fr; } .titleblock .contact-main { border-right: none; border-bottom: 1px solid var(--line); } }
+
+footer { padding: 26px 0 40px; display: flex; justify-content: space-between; gap: 14px; flex-wrap: wrap; font-size: 10.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--faint); }
+footer a { color: var(--soft); text-decoration: none; }
+footer a:hover { color: var(--cyan); }
+
+/* svg shared */
+.dl { fill: none; stroke: var(--ink); stroke-width: 1.6; }
+.dl.thin { stroke-width: 1; stroke: var(--soft); }
+.dl.cy { stroke: var(--cyan); }
+.dl.am { stroke: var(--amber); }
+.dl.dash { stroke-dasharray: 5 5; }
+svg text { font-family: var(--mono); fill: var(--soft); }
+svg text.am { fill: var(--amber); }
+svg text.cy { fill: var(--cyan); }
+svg text.wt { fill: var(--ink); }
+
+@media (prefers-reduced-motion: reduce) {
+  .no-motion { display: none !important; }
+}
+</style>
+</head>
+<body>
+
+<div class="rail" aria-hidden="true"><div class="readout">Y&nbsp;=&nbsp;<b id="rail-y">0000</b>&nbsp;MM&nbsp;·&nbsp;SHEET&nbsp;<b id="rail-sheet">00</b>/06</div></div>
+
+<div class="sheet-frame">
+
+  <header class="topbar">
+    <div class="id">SET <b>NS-2026</b> · SUBJECT <b>NAMAN SHARMA</b> · PRODUCT/UX DESIGNER</div>
+    <nav aria-label="Drawing index">
+      <a href="#bom">01 Parts</a>
+      <a href="#cases">02 Casework</a>
+      <a href="#assembly">03 Assembly</a>
+      <a href="#certs">04 Specs</a>
+      <a href="#history">05 History</a>
+      <a href="#contact">06 Contact</a>
+    </nav>
+  </header>
+
+  <main>
+
+    <!-- ———— HERO ———— -->
+    <section class="hero" id="top">
+      <div class="set-line">
+        <span>GENERAL ARRANGEMENT · PORTFOLIO 2017—2026</span>
+        <span class="rev">REV C · JAIPUR, IN → WORLDWIDE</span>
+      </div>
+      <h1>Complex products, <span class="dim">drawn</span> to <span class="stroke">human scale.</span></h1>
+      <div class="spec">
+        <p>
+          I'm Naman Sharma, a self-taught <b>Product/UX designer</b> with a Computer Science
+          background, working remotely from Jaipur, India. I do the research first, then draw:
+          startups taken <b>0 → 1</b>, tangled platforms made easy to use, results measured after
+          launch. No jargon on this sheet. Every claim below carries a dimension.
+        </p>
+        <div class="cta-row">
+          <a class="btn primary" href="#cases">Open the drawings</a>
+          <a class="btn" href="mailto:madebynaman@gmail.com">Request fabrication</a>
+        </div>
+      </div>
+
+      <div class="fig-head"><span class="fig">FIG. 1 — THE CLARITY MACHINE</span><span class="scale">SCALE 1:1 · DO NOT SCALE DRAWING</span></div>
+      <div class="figure" id="fig1">
+        <span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
+        <svg viewBox="0 0 1240 560" role="img" aria-label="Technical schematic: research, journey and interface blocks connected in a flow, with dimension lines marking years of experience and project outcomes">
+          <!-- machine frame -->
+          <rect class="dl" x="40" y="40" width="1160" height="420"/>
+          <rect class="dl thin" x="52" y="52" width="1136" height="396"/>
+
+          <!-- block A: research -->
+          <g>
+            <rect class="dl" x="150" y="140" width="240" height="170"/>
+            <line class="dl thin" x1="150" y1="176" x2="390" y2="176"/>
+            <text x="270" y="166" text-anchor="middle" font-size="15" class="wt" letter-spacing="3">RESEARCH</text>
+            <circle class="dl cy" cx="270" cy="245" r="38"/>
+            <path class="dl cy" d="M270 217 L270 273 M242 245 L298 245"/>
+            <circle class="dl thin" cx="270" cy="245" r="52"/>
+            <text x="270" y="345" text-anchor="middle" font-size="11" letter-spacing="2">LISTEN FIRST</text>
+          </g>
+
+          <!-- arrow A->B -->
+          <path class="dl" d="M390 225 L470 225"/>
+          <path class="dl" d="M470 225 L458 218 L458 232 Z"/>
+
+          <!-- block B: journey -->
+          <g>
+            <rect class="dl" x="470" y="140" width="240" height="170"/>
+            <line class="dl thin" x1="470" y1="176" x2="710" y2="176"/>
+            <text x="590" y="166" text-anchor="middle" font-size="15" class="wt" letter-spacing="3">JOURNEY</text>
+            <path class="dl cy" d="M500 265 C 530 210, 560 290, 590 245 S 650 215, 680 255"/>
+            <circle class="dl cy" cx="500" cy="265" r="5"/>
+            <circle class="dl cy" cx="590" cy="245" r="5"/>
+            <circle class="dl cy" cx="680" cy="255" r="5"/>
+            <text x="590" y="345" text-anchor="middle" font-size="11" letter-spacing="2">MAP THE FRICTION</text>
+          </g>
+
+          <!-- arrow B->C -->
+          <path class="dl" d="M710 225 L790 225"/>
+          <path class="dl" d="M790 225 L778 218 L778 232 Z"/>
+
+          <!-- block C: interface -->
+          <g>
+            <rect class="dl" x="790" y="140" width="240" height="170"/>
+            <line class="dl thin" x1="790" y1="176" x2="1030" y2="176"/>
+            <text x="910" y="166" text-anchor="middle" font-size="15" class="wt" letter-spacing="3">INTERFACE</text>
+            <rect class="dl cy" x="830" y="200" width="120" height="80"/>
+            <line class="dl cy" x1="830" y1="216" x2="950" y2="216"/>
+            <line class="dl thin" x1="842" y1="230" x2="910" y2="230"/>
+            <line class="dl thin" x1="842" y1="242" x2="930" y2="242"/>
+            <rect class="dl thin" x="842" y="254" width="42" height="14"/>
+            <text x="910" y="345" text-anchor="middle" font-size="11" letter-spacing="2">MAKE IT OBVIOUS</text>
+          </g>
+
+          <!-- in/out annotations -->
+          <text x="150" y="105" font-size="11" letter-spacing="2" class="cy">IN: MESSY EVIDENCE ↓</text>
+          <path class="dl cy dash" d="M330 110 L330 140 L380 140"/>
+          <text x="760" y="105" font-size="11" letter-spacing="2" class="am">OUT: PRODUCTS PEOPLE USE ↓</text>
+          <path class="dl am dash" d="M1050 110 L1050 140 L1030 140"/>
+
+          <!-- dimension: experience (left, vertical) -->
+          <g>
+            <line class="dl am" x1="90" y1="140" x2="90" y2="310"/>
+            <line class="dl am" x1="80" y1="140" x2="100" y2="140"/>
+            <line class="dl am" x1="80" y1="310" x2="100" y2="310"/>
+            <text x="74" y="230" font-size="12" class="am" text-anchor="middle" transform="rotate(-90 74 230)" letter-spacing="2">UX SINCE 2019</text>
+          </g>
+
+          <!-- dimension: 0->1 (bottom) -->
+          <g>
+            <line class="dl am" x1="150" y1="390" x2="1030" y2="390"/>
+            <line class="dl am" x1="150" y1="380" x2="150" y2="400"/>
+            <line class="dl am" x1="1030" y1="380" x2="1030" y2="400"/>
+            <text x="590" y="380" text-anchor="middle" font-size="12" class="am" letter-spacing="2">0 → 1, REPEATEDLY</text>
+          </g>
+
+          <!-- tolerance note -->
+          <text x="60" y="500" font-size="11" letter-spacing="2">NOTES: 1. RESEARCH IS NOT OPTIONAL. 2. DELIGHT IS A REQUIREMENT, NOT A FINISH. 3. JARGON TOLERANCE: ±0.</text>
+          <text x="940" y="500" font-size="11" letter-spacing="2" class="cy">MATERIAL: CURIOSITY</text>
+        </svg>
+      </div>
+    </section>
+
+    <!-- ———— 01 BILL OF MATERIALS ———— -->
+    <section class="sheet" id="bom">
+      <div class="sheet-head">
+        <div class="sheet-no" aria-hidden="true">01</div>
+        <div>
+          <h2>Bill of materials</h2>
+          <p class="sub">Every engagement below, stripped to its measurable part. <b>All figures from real projects</b>; full case studies available on request (some work is under NDA).</p>
+        </div>
+      </div>
+      <div class="table-scroll">
+        <table class="bom">
+          <thead><tr><th>Part no.</th><th>Description</th><th>Source</th><th>Qty</th></tr></thead>
+          <tbody>
+            <tr><td class="part">NS-1001</td><td>Increase in online transaction volume, Asian Paints dealer portal</td><td>Thence · 2021</td><td class="qty"><span class="count" data-to="20" data-pre="+">+0</span><span class="unit"> %</span></td></tr>
+            <tr><td class="part">NS-1002</td><td>Decrease in app uninstall rate, Boost360 onboarding</td><td>Thence · 2021</td><td class="qty"><span class="count" data-to="60" data-pre="−">−0</span><span class="unit"> %</span></td></tr>
+            <tr><td class="part">NS-1003</td><td>Field participants interviewed for the Wikipedia × KaiOS study</td><td>Hureo · 2020</td><td class="qty"><span class="count" data-to="25">0</span><span class="unit"> people</span></td></tr>
+            <tr><td class="part">NS-1004</td><td>Pre-seed raised by Turns after the website revamp lifted conversions</td><td>Freelance · 2022</td><td class="qty"><span class="count" data-to="500" data-pre="$" data-post="K">$0K</span><span class="unit"> pre-seed</span></td></tr>
+            <tr><td class="part">NS-1005</td><td>Play Store rating after the LetsConnect experience redesign</td><td>Freelance · 2022</td><td class="qty"><span class="count" data-to="4.8" data-dec="1">0.0</span><span class="unit"> ★</span></td></tr>
+            <tr><td class="part">NS-1006</td><td>Years designing: graphic design since 2017, UX since 2019</td><td>Career</td><td class="qty"><span class="count" data-to="9">0</span><span class="unit"> yrs</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ———— 02 CASE DRAWINGS ———— -->
+    <section class="sheet" id="cases">
+      <div class="sheet-head">
+        <div class="sheet-no" aria-hidden="true">02</div>
+        <div>
+          <h2>Case drawings</h2>
+          <p class="sub">Three contexts: high-volume commerce, first-run product experience, and field research on constrained devices. Dimensions shown are the business impact.</p>
+        </div>
+      </div>
+
+      <!-- Asian Paints -->
+      <article class="case">
+        <div class="case-strip"><span class="drg">DRG NO. NS-AP-2021-A</span><span class="org">ASIAN PAINTS · THENCE · 2021</span></div>
+        <div class="case-grid">
+          <div class="case-fig">
+            <svg viewBox="0 0 520 400" role="img" aria-label="Wireframe drawing of the Asian Paints dealer portal with a barcode scanner line">
+              <rect class="dl" x="40" y="40" width="440" height="300"/>
+              <line class="dl" x1="40" y1="70" x2="480" y2="70"/>
+              <circle class="dl thin" cx="58" cy="55" r="4"/><circle class="dl thin" cx="76" cy="55" r="4"/><circle class="dl thin" cx="94" cy="55" r="4"/>
+              <line class="dl thin" x1="120" y1="55" x2="280" y2="55"/>
+              <rect class="dl cy" x="60" y="92" width="120" height="228"/>
+              <line class="dl thin" x1="74" y1="116" x2="150" y2="116"/>
+              <line class="dl thin" x1="74" y1="140" x2="160" y2="140"/>
+              <line class="dl thin" x1="74" y1="164" x2="140" y2="164"/>
+              <line class="dl thin" x1="74" y1="188" x2="155" y2="188"/>
+              <rect class="dl" x="200" y="92" width="260" height="110"/>
+              <rect class="dl thin" x="214" y="106" width="66" height="82"/>
+              <rect class="dl thin" x="292" y="106" width="66" height="82"/>
+              <rect class="dl thin" x="370" y="106" width="66" height="82"/>
+              <rect class="dl" x="200" y="218" width="260" height="102"/>
+              <line class="dl thin" x1="214" y1="238" x2="320" y2="238"/>
+              <line class="dl thin" x1="214" y1="256" x2="380" y2="256"/>
+              <rect class="dl am" x="214" y="278" width="90" height="26"/>
+              <text x="259" y="295" text-anchor="middle" font-size="10" class="am" letter-spacing="1">ORDER</text>
+              <line class="scan dl cy" x1="40" y1="40" x2="480" y2="40" stroke-width="2"/>
+              <!-- dimension -->
+              <line class="dl am" x1="40" y1="368" x2="480" y2="368"/>
+              <line class="dl am" x1="40" y1="358" x2="40" y2="378"/>
+              <line class="dl am" x1="480" y1="358" x2="480" y2="378"/>
+              <text x="260" y="392" text-anchor="middle" font-size="12" class="am" letter-spacing="2">+20% ONLINE TRANSACTION VOLUME</text>
+            </svg>
+          </div>
+          <div class="case-body">
+            <div class="role">UX Research · UX Design · UI Design</div>
+            <h3>Dealer portal built around how dealers actually order</h3>
+            <p>Dealers didn't want to phone a salesperson for every order, and every competing portal frustrated them. Heuristic evaluation, then an end-to-end redesign: <b>barcode reordering in under 10 seconds</b>, recommendations from order history, and promotions driven by regional demand data.</p>
+            <div class="dims">
+              <div class="d"><div class="v">+20%</div><div class="k">Transaction volume</div></div>
+              <div class="d"><div class="v">&lt;10s</div><div class="k">Barcode reorder</div></div>
+              <div class="d"><div class="v">E2E</div><div class="k">Research → UI</div></div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Boost360 -->
+      <article class="case">
+        <div class="case-strip"><span class="drg">DRG NO. NS-B3-2021-B</span><span class="org">BOOST360 · THENCE · 2021</span></div>
+        <div class="case-grid">
+          <div class="case-fig">
+            <svg viewBox="0 0 520 400" role="img" aria-label="Wireframe drawing of the Boost360 onboarding flow on a phone, with a downward uninstall gauge">
+              <rect class="dl" x="180" y="30" width="160" height="320" rx="22"/>
+              <rect class="dl thin" x="192" y="56" width="136" height="268" rx="12"/>
+              <line class="dl thin" x1="238" y1="42" x2="282" y2="42"/>
+              <text x="260" y="110" text-anchor="middle" font-size="12" class="wt" letter-spacing="1">YOUR BUSINESS,</text>
+              <text x="260" y="128" text-anchor="middle" font-size="12" class="wt" letter-spacing="1">ONLINE.</text>
+              <rect class="dl cy" x="210" y="152" width="100" height="66" rx="6"/>
+              <path class="dl cy" d="M228 185 L246 168 L262 182 L278 162 L292 176"/>
+              <rect class="dl thin" x="210" y="236" width="100" height="12" rx="6"/>
+              <rect class="dl am" x="210" y="260" width="100" height="24" rx="4"/>
+              <text x="260" y="276" text-anchor="middle" font-size="10" class="am" letter-spacing="1">SEE IT LIVE</text>
+              <!-- gauge -->
+              <circle class="dl" cx="420" cy="110" r="46"/>
+              <path class="dl am" d="M386 110 A 34 34 0 0 1 454 110"/>
+              <line class="dl am" x1="420" y1="110" x2="398" y2="88"/>
+              <text x="420" y="186" text-anchor="middle" font-size="10" class="am" letter-spacing="1">UNINSTALLS −60%</text>
+              <!-- dimension left -->
+              <line class="dl am" x1="120" y1="30" x2="120" y2="350"/>
+              <line class="dl am" x1="110" y1="30" x2="130" y2="30"/>
+              <line class="dl am" x1="110" y1="350" x2="130" y2="350"/>
+              <text x="104" y="190" text-anchor="middle" font-size="11" class="am" transform="rotate(-90 104 190)" letter-spacing="2">4 HRS → LOYAL USER</text>
+            </svg>
+          </div>
+          <div class="case-body">
+            <div class="role">UX Research · UX Design · UI Design · Usability Testing</div>
+            <h3>Onboarding that closes the expectation gap</h3>
+            <p>Users uninstalled within four hours; signup success sat at 20% and took 30 minutes. Twelve hypotheses tested, real culprits found: a confusing signup and a gap between ad promises and the app. The redesign made onboarding visual, built trust with social proof, and engineered a quick win: <b>your business website, live in minutes</b>.</p>
+            <div class="dims">
+              <div class="d"><div class="v">−60%</div><div class="k">Uninstall rate</div></div>
+              <div class="d"><div class="v">20%→</div><div class="k">Signup baseline</div></div>
+              <div class="d"><div class="v">12</div><div class="k">Hypotheses tested</div></div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Wikipedia KaiOS -->
+      <article class="case">
+        <div class="case-strip"><span class="drg">DRG NO. NS-WK-2020-C</span><span class="org">WIKIPEDIA × KAIOS · HUREO · 2020</span></div>
+        <div class="case-grid">
+          <div class="case-fig">
+            <svg viewBox="0 0 520 400" role="img" aria-label="Drawing of a KaiOS feature phone with keypad, annotated with field-study locations">
+              <rect class="dl" x="200" y="26" width="130" height="330" rx="16"/>
+              <rect class="dl thin" x="212" y="44" width="106" height="120" rx="4"/>
+              <text x="265" y="72" text-anchor="middle" font-size="11" class="wt">विकिपीडिया</text>
+              <line class="dl thin" x1="224" y1="92" x2="306" y2="92"/>
+              <line class="dl thin" x1="224" y1="106" x2="298" y2="106"/>
+              <line class="dl thin" x1="224" y1="120" x2="306" y2="120"/>
+              <line class="dl thin" x1="224" y1="134" x2="280" y2="134"/>
+              <rect class="dl cy" x="224" y="146" width="60" height="10" rx="5"/>
+              <g class="keys">
+                <rect class="dl thin" x="216" y="186" width="30" height="18" rx="4"/><rect class="dl thin" x="252" y="186" width="30" height="18" rx="4"/><rect class="dl thin" x="288" y="186" width="30" height="18" rx="4"/>
+                <rect class="dl thin" x="216" y="212" width="30" height="18" rx="4"/><rect class="dl thin" x="252" y="212" width="30" height="18" rx="4"/><rect class="dl thin" x="288" y="212" width="30" height="18" rx="4"/>
+                <rect class="dl thin" x="216" y="238" width="30" height="18" rx="4"/><rect class="dl thin" x="252" y="238" width="30" height="18" rx="4"/><rect class="dl thin" x="288" y="238" width="30" height="18" rx="4"/>
+                <rect class="dl thin" x="216" y="264" width="30" height="18" rx="4"/><rect class="dl thin" x="252" y="264" width="30" height="18" rx="4"/><rect class="dl thin" x="288" y="264" width="30" height="18" rx="4"/>
+              </g>
+              <!-- city markers -->
+              <circle class="dl am" cx="120" cy="120" r="6"/><text x="120" y="102" text-anchor="middle" font-size="10" class="am" letter-spacing="1">PUNE</text>
+              <path class="dl am dash" d="M126 124 L196 150"/>
+              <circle class="dl am" cx="100" cy="220" r="6"/><text x="100" y="202" text-anchor="middle" font-size="10" class="am" letter-spacing="1">MUMBAI</text>
+              <path class="dl am dash" d="M106 224 L196 240"/>
+              <circle class="dl am" cx="130" cy="320" r="6"/><text x="130" y="302" text-anchor="middle" font-size="10" class="am" letter-spacing="1">DELHI</text>
+              <path class="dl am dash" d="M136 316 L200 290"/>
+              <!-- dimension -->
+              <line class="dl am" x1="200" y1="380" x2="330" y2="380"/>
+              <line class="dl am" x1="200" y1="370" x2="200" y2="390"/>
+              <line class="dl am" x1="330" y1="370" x2="330" y2="390"/>
+              <text x="420" y="300" text-anchor="middle" font-size="11" class="am" letter-spacing="2">25 USERS</text>
+              <text x="420" y="318" text-anchor="middle" font-size="10" class="am" letter-spacing="1">45–60 MIN EACH</text>
+            </svg>
+          </div>
+          <div class="case-body">
+            <div class="role">UX Research · Personas · Journey Mapping</div>
+            <h3>25 people, three cities, one tiny screen</h3>
+            <p>For the Wikimedia Foundation: in-person interviews and observed sessions with JioPhone users across Pune, Mumbai and Delhi: why people choose a smart feature phone, and how they actually read on one. Ground truth you only get face to face, turned into recommendations from <b>voice interfaces to readability</b>.</p>
+            <div class="dims">
+              <div class="d"><div class="v">25</div><div class="k">Participants</div></div>
+              <div class="d"><div class="v">3</div><div class="k">Cities</div></div>
+              <div class="d"><div class="v">45–60</div><div class="k">Min / session</div></div>
+            </div>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <!-- ———— 03 ASSEMBLY SEQUENCE ———— -->
+    <section class="sheet" id="assembly">
+      <div class="sheet-head">
+        <div class="sheet-no" aria-hidden="true">03</div>
+        <div>
+          <h2>Assembly sequence</h2>
+          <p class="sub">The same six operations, in order, every time. Skipping a step voids the warranty.</p>
+        </div>
+      </div>
+      <div class="seq">
+        <div class="step"><span class="torque">OP-1</span><div class="bolt"><svg viewBox="0 0 46 46"><path class="dl cy" d="M23 4 L39 13.5 V32.5 L23 42 L7 32.5 V13.5 Z"/><circle class="dl" cx="23" cy="23" r="7"/></svg></div><h3>Research</h3><p>Understand the problem, the customer, and the possible solutions before anything is drawn.</p></div>
+        <div class="step"><span class="torque">OP-2</span><div class="bolt"><svg viewBox="0 0 46 46"><path class="dl cy" d="M23 4 L39 13.5 V32.5 L23 42 L7 32.5 V13.5 Z"/><circle class="dl" cx="23" cy="23" r="7"/><line class="dl" x1="23" y1="16" x2="23" y2="30"/></svg></div><h3>User journey</h3><p>Map personas, journeys and decision-making to surface the insights that matter.</p></div>
+        <div class="step"><span class="torque">OP-3</span><div class="bolt"><svg viewBox="0 0 46 46"><path class="dl cy" d="M23 4 L39 13.5 V32.5 L23 42 L7 32.5 V13.5 Z"/><circle class="dl" cx="23" cy="23" r="7"/><line class="dl" x1="16" y1="23" x2="30" y2="23"/></svg></div><h3>Exploration</h3><p>Go wide. Test, iterate, collaborate. Work through the problem, not around it.</p></div>
+        <div class="step"><span class="torque">OP-4</span><div class="bolt"><svg viewBox="0 0 46 46"><path class="dl cy" d="M23 4 L39 13.5 V32.5 L23 42 L7 32.5 V13.5 Z"/><circle class="dl" cx="23" cy="23" r="7"/><line class="dl" x1="17" y1="17" x2="29" y2="29"/></svg></div><h3>Refinement</h3><p>Polish the chosen direction, document decisions, prepare for handoff.</p></div>
+        <div class="step"><span class="torque">OP-5</span><div class="bolt"><svg viewBox="0 0 46 46"><path class="dl cy" d="M23 4 L39 13.5 V32.5 L23 42 L7 32.5 V13.5 Z"/><circle class="dl" cx="23" cy="23" r="7"/><line class="dl" x1="17" y1="29" x2="29" y2="17"/></svg></div><h3>Handoff</h3><p>Work shoulder-to-shoulder with engineering and product so ships matches designed.</p></div>
+        <div class="step"><span class="torque">OP-6</span><div class="bolt"><svg viewBox="0 0 46 46"><path class="dl cy" d="M23 4 L39 13.5 V32.5 L23 42 L7 32.5 V13.5 Z"/><circle class="dl" cx="23" cy="23" r="7"/><path class="dl" d="M19 23 L22 26 L28 20"/></svg></div><h3>Monitoring</h3><p>Live isn't done. Track the metrics that define success and keep improving.</p></div>
+      </div>
+    </section>
+
+    <!-- ———— 04 CERTIFICATIONS ———— -->
+    <section class="sheet" id="certs">
+      <div class="sheet-head">
+        <div class="sheet-no" aria-hidden="true">04</div>
+        <div>
+          <h2>Material certifications</h2>
+          <p class="sub">Four operating principles, tested to destruction. Certificates held since day one.</p>
+        </div>
+      </div>
+      <div class="certs">
+        <div class="cert">
+          <div class="seal"><svg viewBox="0 0 74 74"><circle class="dl am" cx="37" cy="37" r="33"/><circle class="dl thin" cx="37" cy="37" r="26"/><text x="37" y="42" text-anchor="middle" font-size="12" class="am">ISO</text></svg></div>
+          <div class="cert-no">CERT NS-01 · COMPOUNDING</div>
+          <h3>Consistency beats talent</h3>
+          <p>Consistent effort compounds into unimaginable results. Not the most talented designer in the world, just the one who shows up and improves, every day.</p>
+        </div>
+        <div class="cert">
+          <div class="seal"><svg viewBox="0 0 74 74"><circle class="dl am" cx="37" cy="37" r="33"/><circle class="dl thin" cx="37" cy="37" r="26"/><path class="dl am" d="M37 24 L41 33 L37 50 L33 33 Z"/></svg></div>
+          <div class="cert-no">CERT NS-02 · NAVIGATION</div>
+          <h3>Let curiosity guide you</h3>
+          <p>Knowing a little about a lot of things is how scattered information becomes connected dots. Every project is a journey of discovery.</p>
+        </div>
+        <div class="cert">
+          <div class="seal"><svg viewBox="0 0 74 74"><circle class="dl am" cx="37" cy="37" r="33"/><circle class="dl thin" cx="37" cy="37" r="26"/><rect class="dl am" x="27" y="27" width="20" height="20"/></svg></div>
+          <div class="cert-no">CERT NS-03 · FUNCTION FIRST</div>
+          <h3>Form follows function</h3>
+          <p>Solve the need first. Then go the extra mile and make it beautiful, because humans remember delight.</p>
+        </div>
+        <div class="cert">
+          <div class="seal"><svg viewBox="0 0 74 74"><circle class="dl am" cx="37" cy="37" r="33"/><circle class="dl thin" cx="37" cy="37" r="26"/><path class="dl am" d="M37 50 C 28 42 26 34 32 30 C 35 28 37 30 37 32 C 37 30 39 28 42 30 C 48 34 46 42 37 50 Z"/></svg></div>
+          <div class="cert-no">CERT NS-04 · OWNERSHIP</div>
+          <h3>Give a damn</h3>
+          <p>Founder's mindset, high agency, shared responsibility. Ownership of every project, committed to the extra mile.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ———— 05 SERVICE HISTORY ———— -->
+    <section class="sheet" id="history">
+      <div class="sheet-head">
+        <div class="sheet-no" aria-hidden="true">05</div>
+        <div>
+          <h2>Service history</h2>
+          <p class="sub">Full maintenance log, 2017 → present. Education: B.E. Computer Engineering, Pune University (the reason handoffs go smoothly).</p>
+        </div>
+      </div>
+      <div class="table-scroll">
+        <table class="bom hist">
+          <thead><tr><th>Role</th><th>Organisation</th><th>Period</th><th>Record</th></tr></thead>
+          <tbody>
+            <tr><td class="role">Product, UX &amp; Web Designer</td><td>Freelance</td><td class="per">APR 2022 — PRESENT</td><td>0→1 products, UX audits, design systems; clients taught to measure UX impact on business.</td></tr>
+            <tr><td class="role">UX Designer</td><td>Thence</td><td class="per">APR 2021 — MAR 2022</td><td>Asian Paints, Boost360, Shiprocket. Rebuilt platforms user-centric; mentored interns.</td></tr>
+            <tr><td class="role">UX Research Intern</td><td>Hureo</td><td class="per">DEC 2019 — APR 2020</td><td>Wikipedia × KaiOS field study: interviews, personas, journey &amp; ecosystem maps.</td></tr>
+            <tr><td class="role">Graphic Design Intern</td><td>HappleyFit</td><td class="per">JUL 2018 — MAY 2019</td><td>Logo, exhibition booth, WordPress site, social &amp; print collateral.</td></tr>
+            <tr><td class="role">Graphic Design Intern</td><td>Skillovate</td><td class="per">DEC 2017 — MAR 2018</td><td>Company mascot, kids' eBook, a board game, posters and brochures.</td></tr>
+            <tr><td class="role">Graphic Designer</td><td>Freelance</td><td class="per">JUL 2017 — APR 2020</td><td>Where the drawing habit started.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ———— 06 TITLE BLOCK / CONTACT ———— -->
+    <section id="contact">
+      <div class="titleblock">
+        <div class="contact-row">
+          <div class="contact-main">
+            <h2>For fabrication, <span class="dim">contact the workshop.</span></h2>
+            <p>Hiring, or stuck on a hard UX problem? Full case files (research plans, dead ends, final screens) are better walked through live.</p>
+            <div class="cta-row">
+              <a class="btn primary" href="mailto:madebynaman@gmail.com">madebynaman@gmail.com</a>
+              <a class="btn" href="tel:+918208369219">+91 82083 69219</a>
+              <a class="btn" href="https://www.linkedin.com/in/madebynaman/" target="_blank" rel="noopener">LinkedIn</a>
+            </div>
+          </div>
+          <div class="tb">
+            <div class="cell"><div class="k">Drawn by</div><div class="v">N. SHARMA</div></div>
+            <div class="cell"><div class="k">Checked by</div><div class="v jerry">JERRY (DOG, CHIEF MORALE OFFICER)</div></div>
+            <div class="cell"><div class="k">Approved by</div><div class="v">THE USERS</div></div>
+            <div class="cell"><div class="k">Scale</div><div class="v">1:1 — HUMAN</div></div>
+            <div class="cell"><div class="k">Sheet</div><div class="v">06 OF 06</div></div>
+            <div class="cell"><div class="k">Revision</div><div class="v">C — 2026</div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <span>SET NS-2026 · © NAMAN SHARMA · <a href="https://madebynaman.com" target="_blank" rel="noopener">MADEBYNAMAN.COM</a></span>
+    <span>THIRD ANGLE PROJECTION · ALL DIMENSIONS IN USERS</span>
+  </footer>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+(function () {
+  "use strict";
+  var RM = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var hasGsap = typeof window.gsap !== "undefined";
+
+  /* ——— ruler rail readout ——— */
+  var railY = document.getElementById("rail-y");
+  var railSheet = document.getElementById("rail-sheet");
+  var sheetIds = ["top", "bom", "cases", "assembly", "certs", "history", "contact"];
+  function onScroll() {
+    var y = Math.round(window.scrollY / 4);
+    if (railY) railY.textContent = String(y).padStart(4, "0");
+    var idx = 0;
+    for (var i = 0; i < sheetIds.length; i++) {
+      var el = document.getElementById(sheetIds[i]);
+      if (el && el.getBoundingClientRect().top < window.innerHeight * 0.45) idx = i;
+    }
+    if (railSheet) railSheet.textContent = String(idx).padStart(2, "0");
+  }
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+
+  /* ——— count-up numbers ——— */
+  function countUp(el) {
+    var to = parseFloat(el.getAttribute("data-to"));
+    var dec = parseInt(el.getAttribute("data-dec") || "0", 10);
+    var pre = el.getAttribute("data-pre") || "";
+    var post = el.getAttribute("data-post") || "";
+    if (!hasGsap || RM) { el.textContent = pre + to.toFixed(dec) + post; return; }
+    var obj = { v: 0 };
+    window.gsap.to(obj, {
+      v: to, duration: 1.4, ease: "expo.out",
+      onUpdate: function () { el.textContent = pre + obj.v.toFixed(dec) + post; }
+    });
+  }
+
+  /* ——— line drawing ——— */
+  function prepLines(scope) {
+    var lines = scope.querySelectorAll(".dl");
+    var arr = [];
+    for (var i = 0; i < lines.length; i++) {
+      var el = lines[i];
+      var len = 100;
+      try { len = el.getTotalLength(); } catch (e) { len = 300; }
+      el.style.strokeDasharray = len;
+      el.style.strokeDashoffset = RM || !hasGsap ? 0 : len;
+      arr.push(el);
+    }
+    return arr;
+  }
+
+  if (hasGsap && !RM) {
+    window.gsap.registerPlugin(window.ScrollTrigger);
+
+    /* hero figure draws itself on load */
+    var fig1 = document.getElementById("fig1");
+    var heroLines = prepLines(fig1);
+    var heroTexts = fig1.querySelectorAll("text");
+    window.gsap.set(heroTexts, { opacity: 0 });
+    var tl = window.gsap.timeline({ delay: 0.25 });
+    tl.to(heroLines, {
+      strokeDashoffset: 0, duration: 1.6, ease: "power2.inOut",
+      stagger: { each: 0.035, from: "start" }
+    }).to(heroTexts, { opacity: 1, duration: 0.7, stagger: 0.05, ease: "power1.out" }, "-=0.8");
+
+    /* scan beam loops in the Asian Paints drawing */
+    var scan = document.querySelector(".scan");
+    if (scan) {
+      window.gsap.to(scan, {
+        attr: { y1: 340, y2: 340 }, duration: 2.4, ease: "sine.inOut",
+        repeat: -1, yoyo: true
+      });
+    }
+
+    /* case figures + bolts + seals draw on scroll */
+    var drawScopes = document.querySelectorAll(".case-fig, .bolt, .seal");
+    Array.prototype.forEach.call(drawScopes, function (scope) {
+      var lines = prepLines(scope);
+      var texts = scope.querySelectorAll("text");
+      window.gsap.set(texts, { opacity: 0 });
+      window.ScrollTrigger.create({
+        trigger: scope, start: "top 82%", once: true,
+        onEnter: function () {
+          window.gsap.to(lines, { strokeDashoffset: 0, duration: 1.3, ease: "power2.out", stagger: 0.03 });
+          window.gsap.to(texts, { opacity: 1, duration: 0.6, delay: 0.5, stagger: 0.04 });
+        }
+      });
+    });
+
+    /* section entrances — from visible defaults, quick expo ease */
+    var blocks = document.querySelectorAll(".sheet-head, .case, .bom, .cert, .titleblock, .hero .spec");
+    Array.prototype.forEach.call(blocks, function (el) {
+      window.gsap.from(el, {
+        y: 34, opacity: 0, duration: 0.9, ease: "expo.out",
+        scrollTrigger: { trigger: el, start: "top 88%", once: true }
+      });
+    });
+
+    /* counters */
+    var counters = document.querySelectorAll(".count");
+    Array.prototype.forEach.call(counters, function (el) {
+      window.ScrollTrigger.create({
+        trigger: el, start: "top 90%", once: true,
+        onEnter: function () { countUp(el); }
+      });
+    });
+  } else {
+    /* no motion / no gsap: everything visible, counters final */
+    var all = document.querySelectorAll(".dl");
+    Array.prototype.forEach.call(all, function (el) { el.style.strokeDasharray = "none"; el.style.strokeDashoffset = "0"; });
+    var cs = document.querySelectorAll(".count");
+    Array.prototype.forEach.call(cs, function (el) {
+      var dec = parseInt(el.getAttribute("data-dec") || "0", 10);
+      el.textContent = (el.getAttribute("data-pre") || "") + parseFloat(el.getAttribute("data-to")).toFixed(dec) + (el.getAttribute("data-post") || "");
+    });
+  }
+})();
+</script>
+</body>
+</html>

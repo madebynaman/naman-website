@@ -355,6 +355,7 @@ const models = [
     label: 'DeepSeek V4 Flash',
     rounds: {
       'round-1': [1,2,3,4,5],
+      'round-2': [26,27,28,29,30],
     }
   },
   {
@@ -442,6 +443,7 @@ const models = [
     label: 'MiniMax M3',
     rounds: {
       'round-1': [61,62,63,64,65],
+      'round-2': [31,32,33,34,35],
     }
   },
   {
@@ -484,6 +486,13 @@ const models = [
     label: 'Fable 5',
     rounds: {
       'round-2': [11,12,13,14,15],
+    }
+  },
+  {
+    name: 'kimi-k3',
+    label: 'Kimi K3',
+    rounds: {
+      'round-2': [36,37,38,39,40],
     }
   },
 ];
@@ -555,7 +564,7 @@ function renderGrid() {
   grid.innerHTML = '';
 
   const roundOrder = {
-    'round-2': ['glm-5.2', 'opus-5', 'fable-5', 'deepseek-v4-pro', 'mimo-v2.5'],
+    'round-2': ['glm-5.2', 'opus-5', 'fable-5', 'deepseek-v4-pro', 'mimo-v2.5', 'deepseek-v4-flash', 'minimax-m3', 'kimi-k3'],
   };
 
   let entries = models.map((m, idx) => ({ m, idx }));
