@@ -1,0 +1,868 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>naman.sh — TTY/0.4 — interactive terminal</title>
+<meta name="description" content="Naman Sharma — product and UX designer. TTY session, in command-line form.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@300;400;500;600;700&family=Geist:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<style>
+  :root{
+    --bg:#0A0B0E;
+    --bg-2:#11131A;
+    --panel:#15171F;
+    --panel-2:#1C1F2A;
+    --line:#262936;
+    --line-2:#3A3F4F;
+    --text:#E6E6E8;
+    --text-2:#A8AAB4;
+    --muted:#6B6E7A;
+    --dim:#4A4D58;
+    --amber:#FFB454;
+    --lime:#A8E063;
+    --sky:#6FB7E0;
+    --pink:#F472B6;
+    --violet:#BDA4FF;
+    --red:#F06F6F;
+    --green:#7CD992;
+    --mono:'Geist Mono','JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+    --sans:'Geist',-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto}
+    *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
+  }
+  ::selection{background:var(--amber);color:var(--bg)}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--mono);
+    font-size:14.5px;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+    background-image:
+      radial-gradient(circle at 12% 6%,rgba(168,224,99,.05),transparent 40%),
+      radial-gradient(circle at 88% 80%,rgba(111,183,224,.04),transparent 45%);
+    background-attachment:fixed;
+  }
+  a{color:inherit;text-decoration:none}
+  :focus-visible{outline:2px solid var(--amber);outline-offset:3px}
+
+  /* CRT scanline overlay */
+  body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:1;
+    background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(255,255,255,.012) 3px,rgba(255,255,255,.012) 4px);
+    mix-blend-mode:overlay;
+  }
+  body::after{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:2;
+    background:radial-gradient(ellipse at center,transparent 55%,rgba(0,0,0,.5) 100%);
+  }
+
+  .wrap{max-width:1200px;margin:0 auto;padding:0 clamp(20px,4vw,40px);position:relative;z-index:3}
+
+  /* ─── TOP STATUS BAR ─── */
+  .statusbar{
+    position:sticky;top:0;z-index:40;
+    background:rgba(10,11,14,.85);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+    font-size:11.5px;
+    letter-spacing:.04em;
+  }
+  .statusbar .row{
+    display:flex;align-items:center;justify-content:space-between;
+    height:38px;gap:16px;
+  }
+  .sb-left,.sb-mid,.sb-right{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+  .pill{
+    display:inline-flex;align-items:center;gap:6px;
+    border:1px solid var(--line-2);
+    padding:3px 9px;
+    border-radius:999px;
+    font-size:10.5px;
+    letter-spacing:.06em;
+    color:var(--text-2);
+  }
+  .pill .dot{width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 6px var(--green)}
+  .pill.live .dot{animation:blink 1.6s ease-in-out infinite}
+  @keyframes blink{50%{opacity:.35}}
+  .pill.amber{color:var(--amber);border-color:rgba(255,180,84,.4)}
+  .pill.violet{color:var(--violet);border-color:rgba(189,164,255,.4)}
+  .pill.sky{color:var(--sky);border-color:rgba(111,183,224,.4)}
+  .sb-mid{justify-content:center;color:var(--muted)}
+  .sb-right{justify-content:flex-end;color:var(--text-2);font-variant-numeric:tabular-nums}
+
+  /* ─── TABS ─── */
+  .tabs{
+    display:flex;gap:0;
+    border-bottom:1px solid var(--line);
+    background:rgba(17,19,26,.6);
+    font-size:12px;
+    overflow-x:auto;
+  }
+  .tabs a{
+    padding:9px 16px;
+    color:var(--muted);
+    border-right:1px solid var(--line);
+    white-space:nowrap;
+    transition:color .2s, background .2s;
+  }
+  .tabs a:hover{color:var(--text);background:rgba(255,255,255,.02)}
+  .tabs a.active{color:var(--amber);background:rgba(255,180,84,.06);border-bottom:1px solid var(--amber);margin-bottom:-1px}
+
+  /* ─── HERO ─── */
+  .hero{
+    padding:clamp(60px,9vw,120px) 0 clamp(60px,8vw,100px);
+    border-bottom:1px solid var(--line);
+    position:relative;
+  }
+  .hero .term-wrap{
+    border:1px solid var(--line-2);
+    background:var(--bg-2);
+    border-radius:10px;
+    overflow:hidden;
+    box-shadow:0 0 0 1px rgba(255,255,255,.02), 0 30px 60px -20px rgba(0,0,0,.6);
+  }
+  .term-bar{
+    display:flex;align-items:center;gap:8px;
+    padding:9px 14px;
+    background:var(--panel);
+    border-bottom:1px solid var(--line);
+  }
+  .term-bar .dot{width:11px;height:11px;border-radius:50%;background:#3A3D45}
+  .term-bar .dot.r{background:#F06F6F}
+  .term-bar .dot.y{background:#F7C948}
+  .term-bar .dot.g{background:#7CD992}
+  .term-bar .ttl{flex:1;text-align:center;font-size:11.5px;color:var(--muted);letter-spacing:.04em}
+  .term-bar .rgt{font-size:10.5px;color:var(--muted);letter-spacing:.04em}
+  .term-body{
+    padding:24px 26px;
+    font-size:14.5px;
+    line-height:1.8;
+    color:var(--text);
+    min-height:340px;
+  }
+  .prompt{display:flex;gap:8px;align-items:baseline;margin-bottom:2px}
+  .prompt .user{color:var(--lime);font-weight:500}
+  .prompt .at{color:var(--muted)}
+  .prompt .host{color:var(--sky);font-weight:500}
+  .prompt .path{color:var(--violet)}
+  .prompt .sym{color:var(--amber);margin-left:4px}
+  .cmd{color:var(--text)}
+  .out{margin:6px 0 18px;color:var(--text-2);white-space:pre-wrap;line-height:1.7}
+  .out .dim{color:var(--dim)}
+  .out .green{color:var(--green)}
+  .out .amber{color:var(--amber)}
+  .out .sky{color:var(--sky)}
+  .out .violet{color:var(--violet)}
+  .out .red{color:var(--red)}
+  .out .pink{color:var(--pink)}
+  .out b{color:var(--text);font-weight:600}
+  .caret{display:inline-block;width:8px;height:1.1em;background:var(--amber);vertical-align:-2px;margin-left:4px;animation:caret 1.05s steps(1) infinite}
+  @keyframes caret{50%{opacity:0}}
+  @media (prefers-reduced-motion: reduce){.caret{animation:none}}
+
+  /* ─── META STRIP ─── */
+  .meta-strip{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:0;
+    border-bottom:1px solid var(--line);
+    background:var(--bg-2);
+  }
+  .meta-strip > div{
+    padding:18px 20px;
+    border-right:1px solid var(--line);
+  }
+  .meta-strip > div:last-child{border-right:0}
+  .meta-strip .lbl{font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+  .meta-strip .val{font-family:var(--sans);font-size:20px;font-weight:500;color:var(--text);line-height:1.1}
+  .meta-strip .val .amber{color:var(--amber)}
+  .meta-strip .val .lime{color:var(--lime)}
+  .meta-strip .val .sky{color:var(--sky)}
+  .meta-strip .val .violet{color:var(--violet)}
+
+  /* ─── SECTIONS ─── */
+  section{padding:70px 0;border-bottom:1px solid var(--line)}
+  .sec-head{
+    display:flex;align-items:baseline;gap:14px;
+    padding-bottom:14px;
+    margin-bottom:34px;
+    border-bottom:1px dashed var(--line-2);
+    flex-wrap:wrap;
+  }
+  .sec-head .tag{color:var(--amber);font-size:12px;letter-spacing:.04em}
+  .sec-head .tag::before{content:"## ";color:var(--muted)}
+  .sec-head h2{font-family:var(--sans);font-size:clamp(22px,2.4vw,30px);font-weight:600;color:var(--text);letter-spacing:-.01em}
+  .sec-head .path{margin-left:auto;font-size:11.5px;color:var(--muted)}
+  .sec-head .path::before{content:"~ ";color:var(--dim)}
+
+  /* ─── WORK CARDS ─── */
+  .works{display:grid;gap:0;border:1px solid var(--line-2);border-radius:10px;overflow:hidden;background:var(--bg-2)}
+  .work{
+    display:grid;grid-template-columns:1fr 1.2fr;
+    border-bottom:1px solid var(--line);
+    background:var(--bg-2);
+    transition:background .3s;
+  }
+  .work:last-child{border-bottom:0}
+  .work:hover{background:var(--panel)}
+  .work .left{padding:28px 30px;border-right:1px solid var(--line);position:relative}
+  .work .right{padding:28px 30px;font-size:13.5px;color:var(--text-2);display:flex;flex-direction:column;gap:14px}
+  .work .hash{color:var(--dim);font-size:11px;letter-spacing:.1em;margin-bottom:6px}
+  .work .hash b{color:var(--amber);font-weight:500}
+  .work h3{font-family:var(--sans);font-size:24px;font-weight:600;line-height:1.15;letter-spacing:-.01em;color:var(--text);margin-bottom:14px}
+  .work .meta{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;font-size:12px;margin-bottom:18px}
+  .work .meta .k{color:var(--muted);letter-spacing:.04em}
+  .work .meta .v{color:var(--text)}
+  .work .meta .v .amber{color:var(--amber)}
+  .work .meta .v .lime{color:var(--lime)}
+  .work p{line-height:1.7}
+  .work .stat-row{display:flex;align-items:flex-end;gap:18px;margin-top:auto;padding-top:14px;border-top:1px dashed var(--line-2)}
+  .work .stat-row .n{font-family:var(--sans);font-weight:600;font-size:38px;line-height:.95;color:var(--amber)}
+  .work .stat-row .l{font-size:11.5px;color:var(--muted);line-height:1.5;max-width:18ch}
+
+  /* Work ASCII art */
+  .ascii{
+    font-family:var(--mono);
+    font-size:11px;
+    line-height:1.4;
+    color:var(--lime);
+    background:var(--bg);
+    border:1px solid var(--line);
+    padding:14px 16px;
+    white-space:pre;
+    overflow-x:auto;
+    margin-top:18px;
+    border-radius:6px;
+  }
+  .ascii .dim{color:var(--dim)}
+  .ascii .amber{color:var(--amber)}
+  .ascii .sky{color:var(--sky)}
+  .ascii .violet{color:var(--violet)}
+  .ascii .pink{color:var(--pink)}
+
+  /* ─── PRINCIPLES ─── */
+  .prin{display:grid;grid-template-columns:repeat(2,1fr);gap:0;border:1px solid var(--line-2);border-radius:10px;overflow:hidden;background:var(--bg-2)}
+  .prin-i{padding:26px 28px;border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .prin-i:nth-child(2n){border-right:0}
+  .prin-i:nth-last-child(-n+2){border-bottom:0}
+  .prin-i .pn{color:var(--amber);font-size:12px;letter-spacing:.1em;margin-bottom:8px}
+  .prin-i h4{font-family:var(--sans);font-size:18px;font-weight:600;color:var(--text);margin-bottom:10px;line-height:1.2}
+  .prin-i p{color:var(--text-2);font-size:13.5px;line-height:1.65}
+
+  /* ─── PROCESS ─── */
+  .proc{font-family:var(--mono)}
+  .proc-step{
+    display:grid;grid-template-columns:120px 1fr;gap:24px;
+    padding:18px 0;
+    border-bottom:1px dashed var(--line-2);
+    align-items:start;
+  }
+  .proc-step:last-child{border-bottom:0}
+  .proc-step .ix{color:var(--amber);font-size:13px;letter-spacing:.06em}
+  .proc-step h4{font-family:var(--sans);font-size:18px;font-weight:600;color:var(--text);margin-bottom:6px;line-height:1.2}
+  .proc-step p{color:var(--text-2);font-size:13.5px;line-height:1.65}
+
+  /* ─── TIMELINE ─── */
+  .tl{font-size:13.5px}
+  .tl .commit{
+    display:grid;grid-template-columns:140px 90px 1fr;gap:20px;
+    padding:14px 0;
+    border-bottom:1px dashed var(--line-2);
+    align-items:start;
+  }
+  .tl .commit:last-child{border-bottom:0}
+  .tl .commit .hash{color:var(--amber);font-size:12px;letter-spacing:.04em}
+  .tl .commit .date{color:var(--muted);font-size:12px}
+  .tl .commit .body{color:var(--text-2);line-height:1.6}
+  .tl .commit .body b{color:var(--text);font-weight:500}
+  .tl .commit .body .tag{display:inline-block;border:1px solid var(--line-2);padding:1px 7px;font-size:10.5px;color:var(--violet);margin-left:6px;border-radius:3px;letter-spacing:.04em}
+
+  /* ─── BIO ─── */
+  .bio{display:grid;grid-template-columns:1.2fr 1fr;gap:48px;align-items:start}
+  .bio-text p{color:var(--text-2);font-size:14.5px;line-height:1.7;margin-bottom:14px;max-width:62ch}
+  .bio-text p b{color:var(--text);font-weight:500}
+  .bio-ascii{
+    font-family:var(--mono);font-size:11px;line-height:1.45;
+    color:var(--lime);background:var(--bg-2);
+    border:1px solid var(--line-2);border-radius:8px;
+    padding:18px 20px;white-space:pre;overflow-x:auto;
+  }
+  .bio-ascii .amber{color:var(--amber)}
+  .bio-ascii .sky{color:var(--sky)}
+  .bio-ascii .violet{color:var(--violet)}
+  .bio-ascii .dim{color:var(--dim)}
+  .bio-ascii .pink{color:var(--pink)}
+  .bio-card{
+    border:1px solid var(--line-2);
+    background:var(--bg-2);
+    border-radius:8px;
+    padding:18px 20px;
+    margin-top:14px;
+    font-size:12.5px;color:var(--text-2);
+    line-height:1.7;
+  }
+  .bio-card b{color:var(--amber);font-weight:500}
+
+  /* ─── CONTACT ─── */
+  .contact{
+    padding:90px 0;
+    background:var(--bg-2);
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+  }
+  .contact-inner{max-width:760px}
+  .contact .kicker{color:var(--amber);font-size:12px;letter-spacing:.04em;margin-bottom:14px}
+  .contact .kicker::before{content:"$ ";color:var(--dim)}
+  .contact h2{font-family:var(--sans);font-size:clamp(32px,5vw,52px);font-weight:500;line-height:1.1;letter-spacing:-.02em;color:var(--text);margin-bottom:18px}
+  .contact h2 .amber{color:var(--amber)}
+  .contact p{color:var(--text-2);font-size:15px;line-height:1.7;max-width:48ch;margin-bottom:30px}
+  .contact .email{
+    display:inline-flex;align-items:center;gap:10px;
+    border:1px solid var(--amber);
+    color:var(--amber);
+    padding:14px 22px;
+    font-size:13px;letter-spacing:.04em;
+    border-radius:6px;
+    transition:background .2s, color .2s;
+  }
+  .contact .email:hover{background:var(--amber);color:var(--bg)}
+  .contact .email .arr{transition:transform .2s}
+  .contact .email:hover .arr{transform:translate(2px,-2px)}
+
+  /* ─── FOOT ─── */
+  footer{padding:18px 0;color:var(--muted);font-size:11.5px;letter-spacing:.04em}
+  .foot{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
+  .foot .b{color:var(--amber)}
+  .foot .d{color:var(--dim)}
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 880px){
+    .meta-strip{grid-template-columns:repeat(2,1fr)}
+    .meta-strip > div:nth-child(2){border-right:0}
+    .meta-strip > div:nth-child(-n+2){border-bottom:1px solid var(--line)}
+    .work{grid-template-columns:1fr}
+    .work .left{border-right:0;border-bottom:1px solid var(--line)}
+    .prin{grid-template-columns:1fr}
+    .prin-i{border-right:0!important;border-bottom:1px solid var(--line)}
+    .prin-i:last-child{border-bottom:0}
+    .proc-step{grid-template-columns:1fr;gap:8px}
+    .tl .commit{grid-template-columns:1fr;gap:4px}
+    .bio{grid-template-columns:1fr;gap:30px}
+    .sb-mid{display:none}
+  }
+  @media (max-width: 560px){
+    .statusbar .row{height:auto;padding:8px 0;flex-wrap:wrap;gap:8px}
+    .sb-left,.sb-right{font-size:10.5px}
+    .term-body{padding:18px;font-size:13px}
+    .term-body .prompt{flex-wrap:wrap}
+  }
+</style>
+</head>
+<body>
+
+<!-- STATUS BAR -->
+<div class="statusbar">
+  <div class="wrap">
+    <div class="row">
+      <div class="sb-left">
+        <span class="pill live"><span class="dot"></span>SESSION LIVE</span>
+        <span class="pill amber">TTY/0.4</span>
+        <span class="pill violet">v2.6.1</span>
+      </div>
+      <div class="sb-mid">~/portfolio · 5 tabs · uptime 7y</div>
+      <div class="sb-right" id="clock">--:--:-- IST</div>
+    </div>
+  </div>
+</div>
+
+<!-- TABS -->
+<div class="tabs">
+  <div class="wrap" style="display:flex;gap:0;overflow:hidden">
+    <a href="#hero" class="active">~/README.md</a>
+    <a href="#works">~/works/</a>
+    <a href="#process">~/process.sh</a>
+    <a href="#beliefs">~/beliefs.toml</a>
+    <a href="#about">~/about.json</a>
+    <a href="#contact">~/contact.env</a>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="wrap">
+    <div class="term-wrap">
+      <div class="term-bar">
+        <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+        <span class="ttl">naman@tty: ~/portfolio — bash — 120×40</span>
+        <span class="rgt">UTF-8 · LF</span>
+      </div>
+      <div class="term-body" id="term">
+        <div class="prompt">
+          <span class="user">naman</span><span class="at">@</span><span class="host">tty</span>
+          <span class="path">~/portfolio</span><span class="sym">$</span>
+          <span class="cmd">whoami</span>
+        </div>
+        <div class="out">naman sharma · product / ux designer · jaipur, in</div>
+
+        <div class="prompt">
+          <span class="user">naman</span><span class="at">@</span><span class="host">tty</span>
+          <span class="path">~/portfolio</span><span class="sym">$</span>
+          <span class="cmd">cat profile.json | jq .</span>
+        </div>
+        <pre class="out">{</pre>
+        <div class="out">  <span class="dim">"name":</span>     <span class="amber">"Naman Sharma"</span>,</div>
+        <div class="out">  <span class="dim">"role":</span>     <span class="amber">"Product / UX Designer"</span>,</div>
+        <div class="out">  <span class="dim">"since":</span>    <span class="lime">2017</span>,</div>
+        <div class="out">  <span class="dim">"ux_since":</span> <span class="lime">2019</span>,</div>
+        <div class="out">  <span class="dim">"base":</span>     <span class="sky">"Jaipur, IN"</span>,</div>
+        <div class="out">  <span class="dim">"remote":</span>   <span class="violet">true</span>,</div>
+        <div class="out">  <span class="dim">"stack":</span>    <span class="pink">["research", "ux", "ui", "brand", "code"]</span>,</div>
+        <div class="out">  <span class="dim">"tools":</span>    <span class="pink">["figma", "framer", "miro", "protopie", "webflow"]</span>,</div>
+        <div class="out">  <span class="dim">"status":</span>   <span class="lime">"open_to_work"</span></div>
+        <pre class="out">}</pre>
+
+        <div class="prompt">
+          <span class="user">naman</span><span class="at">@</span><span class="host">tty</span>
+          <span class="path">~/portfolio</span><span class="sym">$</span>
+          <span class="cmd">./say-hi --to stranger</span><span class="caret"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- META STRIP -->
+<div class="meta-strip">
+  <div>
+    <div class="lbl">// pre-seed raised</div>
+    <div class="val"><span class="lime">$500K</span> · Turns</div>
+  </div>
+  <div>
+    <div class="lbl">// play store rating</div>
+    <div class="val"><span class="amber">4.8</span>★ · LetsConnect</div>
+  </div>
+  <div>
+    <div class="lbl">// field interviews</div>
+    <div class="val"><span class="sky">25</span> · Wikipedia × KaiOS</div>
+  </div>
+  <div>
+    <div class="lbl">// clients since</div>
+    <div class="val"><span class="violet">15+</span> · since 2017</div>
+  </div>
+</div>
+
+<!-- WORKS -->
+<section id="works">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="tag">works/</span>
+      <h2>ls works/ — selected studies</h2>
+      <span class="path">works/</span>
+    </div>
+
+    <div class="works">
+      <!-- Work 1 -->
+      <article class="work">
+        <div class="left">
+          <div class="hash">// <b>studios/asian-paints</b> · 2021 · th3nce</div>
+          <h3>The dealer portal, reconsidered.</h3>
+          <div class="meta">
+            <div class="k">type</div><div class="v"><span class="amber">commerce</span> · b2b portal</div>
+            <div class="k">role</div><div class="v">ux research, ux, ui</div>
+            <div class="k">team</div><div class="v">ui · pm · dm · client</div>
+            <div class="k">stack</div><div class="v">figma · principle · miro</div>
+          </div>
+          <p>Dealers wanted to order without calling a salesperson every time. Every competitor had a portal, and dealers hated all of them. The redesign brought role-based access, intelligent recommendations from order history, stock checks, loyalty incentives, order tracking, and a barcode flow that put an order in the cart in under ten seconds.</p>
+          <pre class="ascii"><span class="dim">┌─────────────────────────────┐
+│</span> <span class="amber">HOME</span>   <span class="dim">│</span>  <span class="lime">TRENDING</span>  <span class="dim">│</span>  CART(3) <span class="dim">│</span>
+<span class="dim">├─────────────────────────────┤
+│</span> <span class="sky">▦ Deals near you</span>      <span class="dim">│</span>
+<span class="dim">│</span> <span class="amber">▦ Personalised for you</span>  <span class="dim">│</span>
+<span class="dim">│</span> <span class="violet">▦ Stock &amp; reorder</span>     <span class="dim">│</span>
+<span class="dim">├─────────────────────────────┤
+│</span> <span class="pink">[SCAN ▣] [CATALOG] [ORDERS]</span> <span class="dim">│
+└─────────────────────────────┘</span></pre>
+        </div>
+        <div class="right">
+          <p>Heuristic review first, then end-to-end redesign of the existing portal. New features reduced the dealer's dependency on a salesperson and, with it, the cost that came with every call. Barcode scan ordering made the cart reachable in under 10 seconds.</p>
+          <div class="stat-row">
+            <div class="n">+20%</div>
+            <div class="l">lift in online transaction volume after rollout</div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Work 2 -->
+      <article class="work">
+        <div class="left">
+          <div class="hash">// <b>studios/boost360</b> · 2021 · th3nce</div>
+          <h3>Make the first win visible.</h3>
+          <div class="meta">
+            <div class="k">type</div><div class="v"><span class="amber">activation</span> · mobile onboarding</div>
+            <div class="k">role</div><div class="v">research, ux, ui, usability</div>
+            <div class="k">team</div><div class="v">ui · motion · pm · dm</div>
+            <div class="k">stack</div><div class="v">figma · protopie · principle</div>
+          </div>
+          <p>New users installed the app and left before signing up. Uninstalls inside four hours. Signup success at 20%, average time to a successful signup at 30 minutes. Research traced the cause to a single gap: marketing promised one thing, signup delivered another. The new flow visualised the process, built trust with social proof, and put a working website in front of the user before they could lose interest.</p>
+          <pre class="ascii"><span class="dim">╭───────────────────╮
+│</span>  <span class="amber">01</span>  <span class="dim">│</span> See how it works  <span class="dim">│
+│</span>  <span class="amber">02</span>  <span class="dim">│</span> Pick a category    <span class="dim">│
+│</span>  <span class="amber">03</span>  <span class="dim">│</span> Create your site   <span class="dim">│
+│</span>  <span class="amber">04</span>  <span class="dim">│</span> Publish &amp; share   <span class="dim">│
+╰───────────────────╯</span>
+  <span class="dim">↓</span> <span class="lime">live in &lt; 4 min</span></pre>
+        </div>
+        <div class="right">
+          <p>Visual, self-explanatory signup that communicated app USPs during onboarding rather than after. Social proof inside the flow, quick wins before the user could lose interest, and a direct line to support for anyone stuck. Usability testing showed the new flow landed every time.</p>
+          <div class="stat-row">
+            <div class="n">−60%</div>
+            <div class="l">drop in app uninstalls in the first two weeks</div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Work 3 -->
+      <article class="work">
+        <div class="left">
+          <div class="hash">// <b>research/wikipedia-kaios</b> · 2020 · hur3o</div>
+          <h3>Knowledge on a feature phone.</h3>
+          <div class="meta">
+            <div class="k">type</div><div class="v"><span class="sky">field research</span> · 25 sessions</div>
+            <div class="k">role</div><div class="v">recruit · interview · synthesis</div>
+            <div class="k">team</div><div class="v">founders · sr. researchers</div>
+            <div class="k">client</div><div class="v">Wikimedia Foundation</div>
+          </div>
+          <p>Twenty-five in-person sessions across Pune, Mumbai and Delhi with JioPhone users — for many of them the only internet-connected device in the house. First an interview on background, reading habits, phone and internet use, then observed tasks on the participant's own device. The research surfaced needs the Wikipedia team hadn't seen yet: voice input, English numerals, a table of contents, video content, and search they couldn't miss.</p>
+          <pre class="ascii"><span class="dim">Pune</span>      <span class="amber">●●●●●●●</span>  8
+<span class="dim">Mumbai</span>    <span class="amber">●●●●●●</span>    6
+<span class="dim">Delhi</span>     <span class="amber">●●●●●●●●●●</span>  11
+<span class="dim">─────────────────────────────────</span>
+<span class="violet">total</span>     <span class="lime">25 sessions · 3 cities</span>
+<span class="dim">45-60 min</span> <span class="lime">each</span></pre>
+        </div>
+        <div class="right">
+          <p>Findings went to the Wikimedia Foundation as personas, journey maps, ecosystem maps and a full research report. The most useful recommendation was the one that wasn't about Wikipedia at all: voice input. Typing on a keypad is the real barrier to information access on a feature phone.</p>
+          <div class="stat-row">
+            <div class="n">25</div>
+            <div class="l">one-on-one sessions across Pune, Mumbai, Delhi</div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Work 4 -->
+      <article class="work">
+        <div class="left">
+          <div class="hash">// <b>studios/turns</b> · 2022 · freelance</div>
+          <h3>New website, new brand, new system.</h3>
+          <div class="meta">
+            <div class="k">type</div><div class="v"><span class="violet">brand</span> · website · design system</div>
+            <div class="k">role</div><div class="v">ux, ui, brand, system</div>
+            <div class="k">team</div><div class="v">founding team</div>
+            <div class="k">stack</div><div class="v">figma · webflow · notion</div>
+          </div>
+          <p>Turns needed a website that explained the product clearly and a brand that looked like a company investors could trust. End-to-end redesign of the site and key landing pages, brand guidelines that worked across web, mobile and print, and a design system the team could keep shipping from after I left.</p>
+          <pre class="ascii"><span class="dim">┌─ brand ─────────────┐</span>
+<span class="amber">●</span> voice  <span class="lime">●</span> palette  <span class="sky">●</span> type
+<span class="dim">├─ site ──────────────┤</span>
+<span class="amber">●</span> home  <span class="lime">●</span> pricing  <span class="sky">●</span> blog
+<span class="dim">├─ system ────────────┤</span>
+<span class="amber">●</span> tokens  <span class="lime">●</span> comps  <span class="sky">●</span> docs
+<span class="dim">└────────────────────┘</span></pre>
+        </div>
+        <div class="right">
+          <p>The new site went into the Turns fundraise. Conversions lifted after launch. The team closed a $500K pre-seed round, and the design system is still in use.</p>
+          <div class="stat-row">
+            <div class="n">$500K</div>
+            <div class="l">pre-seed raised after the website and brand revamp</div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="process">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="tag">process.sh</span>
+      <h2>how the work gets made</h2>
+      <span class="path">process.sh</span>
+    </div>
+    <div class="proc">
+      <div class="proc-step">
+        <div class="ix">→ step 01</div>
+        <div>
+          <h4>listen</h4>
+          <p>Users, founders, analytics, support tickets. Most of what I need already exists inside the company. It just isn't in one place yet. <span style="color:var(--muted)">#research #interviews #analytics</span></p>
+        </div>
+      </div>
+      <div class="proc-step">
+        <div class="ix">→ step 02</div>
+        <div>
+          <h4>map</h4>
+          <p>The full journey, end to end, until I can see where it breaks. Personas when they're honest. Journey maps when they're load-bearing. <span style="color:var(--muted)">#ux #personas #flows</span></p>
+        </div>
+      </div>
+      <div class="proc-step">
+        <div class="ix">→ step 03</div>
+        <div>
+          <h4>explore</h4>
+          <p>Go wide before narrowing. I'd rather throw away ten directions than defend the first one. Sketches on paper, options in Figma, prototypes in code. <span style="color:var(--muted)">#sketch #wireframe #prototype</span></p>
+        </div>
+      </div>
+      <div class="proc-step">
+        <div class="ix">→ step 04</div>
+        <div>
+          <h4>refine</h4>
+          <p>Pick a direction and sweat the details. Type, spacing, motion, system. The product earns its finish by doing the job first. <span style="color:var(--muted)">#ui #system #motion</span></p>
+        </div>
+      </div>
+      <div class="proc-step">
+        <div class="ix">→ step 05</div>
+        <div>
+          <h4>ship</h4>
+          <p>Stay with engineering through the build, screen by screen, until it's live. Read the codebase when it helps. Translate when it doesn't. <span style="color:var(--muted)">#handoff #qa #code</span></p>
+        </div>
+      </div>
+      <div class="proc-step">
+        <div class="ix">→ step 06</div>
+        <div>
+          <h4>check</h4>
+          <p>Watch the numbers afterwards. Fix what moved, fix what didn't. The job is not done because the build is live. <span style="color:var(--muted)">#analytics #iteration</span></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BELIEFS -->
+<section id="beliefs">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="tag">beliefs.toml</span>
+      <h2>four things I design by</h2>
+      <span class="path">beliefs.toml</span>
+    </div>
+    <div class="prin">
+      <div class="prin-i">
+        <div class="pn">[principle.consistency]</div>
+        <h4>consistency_beats_talent = true</h4>
+        <p>I'm not the most talented designer in the room. I show up every day instead, and that compounds. Designing since 2017, in UX since 2019, fifteen plus clients, no year off.</p>
+      </div>
+      <div class="prin-i">
+        <div class="pn">[principle.curiosity]</div>
+        <h4>curiosity = "the job"</h4>
+        <p>I know a little about a lot, which helps me connect things other people keep separate. The Wikipedia study shaped its recommendations because we understood why someone picks a keypad phone over a smartphone.</p>
+      </div>
+      <div class="prin-i">
+        <div class="pn">[principle.function]</div>
+        <h4>form_follows_function = true</h4>
+        <p>Function solves the problem. Beauty is what makes people remember it, and you earn the second by doing the first. On the Boost360 onboarding, no visual polish would have moved the number until research found the real problem.</p>
+      </div>
+      <div class="prin-i">
+        <div class="pn">[principle.ownership]</div>
+        <h4>give_a_damn = "always"</h4>
+        <p>Founder's mindset. Take ownership past the assigned frame. At Turns that meant handing the team brand guidelines and a design system so they could keep shipping consistently after I left. Nobody asked for it.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT + JERRY -->
+<section id="about">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="tag">about.json</span>
+      <h2>the longer version</h2>
+      <span class="path">about.json</span>
+    </div>
+    <div class="bio">
+      <div class="bio-text">
+        <p>Self-taught designer with a <b>computer engineering</b> degree from Pune University. Halfway through the degree I worked out I liked designing products more than writing code, so I taught myself properly: books, courses, YouTube, and a lot of bad early work.</p>
+        <p>It started in 2017 with graphic design — logos, posters, a board game, a kids' eBook. In 2019 I found UX research and never looked back. <b>Field research, usability testing, web apps, mobile apps, brands, packaging, social media.</b> Print and pixels and most things in between.</p>
+        <p>I'm a <b>curious generalist</b>, and I think that's the useful part. Range lets me see the whole problem rather than only my corner of it. The engineering degree helps me talk to engineers; re-learning code now lets me help them build.</p>
+        <div class="bio-card">
+          <b>// companions</b><br>
+          Jerry, four-year-old indie street dog, asleep next to the desk right now supervising. He says hi. If he ever lets you pet him, take it as a five-star review.<br>
+          <span style="color:var(--violet)">dogs_rescued:</span> <span style="color:var(--lime)">1</span> ·
+          <span style="color:var(--violet)">status:</span> <span style="color:var(--lime)">"supervising"</span>
+        </div>
+      </div>
+      <div>
+<pre class="bio-ascii"><span class="dim">{
+  "id": "naman-sharma",
+  "class": "designer",</span>
+  <span class="violet">"skills"</span>: {
+    <span class="sky">"hard"</span>: [
+      "user research",
+      "ux design",
+      "wireframing",
+      "ui design",
+      "prototyping",
+      "usability testing",
+      "responsive design",
+      "branding"
+    ],
+    <span class="pink">"soft"</span>: [
+      "no drama",
+      "self-starter",
+      "entrepreneurial",
+      "collaborates well",
+      "adaptable",
+      "organised"
+    ]
+  },<span class="dim">
+  "currently_reading": "—",
+  "currently_playing": "—",</span>
+  <span class="amber">"reach_out"</span>: <span class="lime">true</span>
+<span class="dim">}</span></pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TIMELINE -->
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="tag">git log --oneline</span>
+      <h2>where I've been</h2>
+      <span class="path">git log</span>
+    </div>
+    <div class="tl">
+      <div class="commit">
+        <div class="hash">a7c2e1f <span style="color:var(--green)">●</span></div>
+        <div class="date">2022 → now</div>
+        <div class="body"><b>Independent product, UX &amp; web designer.</b> Turns, Gadivan, LetsConnect, LearnApp and a dozen others. 0 to 1 product design, UX audits, design systems, websites and brand revamps. <span class="tag">freelance</span></div>
+      </div>
+      <div class="commit">
+        <div class="hash">d3b4f09 <span style="color:var(--green)">●</span></div>
+        <div class="date">2021 – 22</div>
+        <div class="body"><b>UX designer at Thence.</b> Agency work for large Indian brands. Asian Paints dealer portal, NowFloats Boost360 onboarding, Shiprocket website revamp. Mentored interns. <span class="tag">agency</span></div>
+      </div>
+      <div class="commit">
+        <div class="hash">f8812c4 <span style="color:var(--green)">●</span></div>
+        <div class="date">2019 – 20</div>
+        <div class="body"><b>UX research intern at Hureo.</b> Field research for the Wikimedia Foundation on KaiOS / JioPhone users. Recruited, interviewed, transcribed, mapped. <span class="tag">research</span></div>
+      </div>
+      <div class="commit">
+        <div class="hash">12e9a55 <span style="color:var(--green)">●</span></div>
+        <div class="date">2017 – 19</div>
+        <div class="body"><b>Graphic design intern · Skillovate, HappleyFit.</b> Logos, mascots, a kids' eBook, a board game, posters, brochures, an exhibition booth, and my first WordPress site. <span class="tag">studio</span></div>
+      </div>
+      <div class="commit">
+        <div class="hash">b04a178 <span style="color:var(--green)">●</span></div>
+        <div class="date">2017 – 21</div>
+        <div class="body"><b>B.E. Computer Engineering.</b> Smt. Kashibai Navale College of Engineering, Pune University (SPPU). <span class="tag">education</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="contact">
+  <div class="wrap contact-inner">
+    <div class="kicker">contact.env</div>
+    <h2>Let's <span class="amber">make</span><br>something useful.</h2>
+    <p>Whether it's a role, a project, or a good conversation about design, hip-hop, or dogs, the inbox is open. Replies inside a day, often faster.</p>
+    <a class="email" href="mailto:madebynaman@gmail.com">madebynaman@gmail.com <span class="arr">↗</span></a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot">
+    <span><span class="b">naman@tty</span>:<span style="color:var(--sky)">~/portfolio</span><span class="d">$</span> echo "jerry approved this site."</span>
+    <span class="d">session uptime: 7y · no jargon used · MMXXVI</span>
+  </div>
+</footer>
+
+<script>
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Live clock
+  const clockEl = document.getElementById('clock');
+  const tick = () => {
+    const d = new Date();
+    const ist = new Date(d.toLocaleString('en-US', {timeZone: 'Asia/Kolkata'}));
+    const hh = String(ist.getHours()).padStart(2, '0');
+    const mm = String(ist.getMinutes()).padStart(2, '0');
+    const ss = String(ist.getSeconds()).padStart(2, '0');
+    clockEl.textContent = `${hh}:${mm}:${ss} IST`;
+  };
+  tick();
+  setInterval(tick, 1000);
+
+  if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    // Hero load
+    const tl = gsap.timeline({defaults: {ease: 'power2.out'}});
+    tl.from('.statusbar .pill, .sb-mid, #clock', {y: -8, opacity: 0, duration: 0.5, stagger: 0.04})
+      .from('.tabs a', {y: -8, opacity: 0, duration: 0.4, stagger: 0.04}, '-=0.3')
+      .from('.term-wrap', {y: 24, opacity: 0, duration: 0.8, ease: 'power3.out'}, '-=0.2')
+      .from('#term .prompt, #term .out', {x: -8, opacity: 0, duration: 0.5, stagger: 0.05}, '-=0.5')
+      .from('.meta-strip > div', {y: 16, opacity: 0, duration: 0.6, stagger: 0.06}, '-=0.4');
+
+    // Section heads
+    gsap.utils.toArray('.sec-head').forEach(sh => {
+      gsap.from(sh.children, {y: 14, opacity: 0, duration: 0.6, stagger: 0.06, ease: 'power2.out',
+        scrollTrigger: {trigger: sh, start: 'top 88%'}});
+    });
+
+    // Works
+    gsap.utils.toArray('.work').forEach((w, i) => {
+      gsap.from(w.children, {y: 30, opacity: 0, duration: 0.8, stagger: 0.1, ease: 'power3.out',
+        scrollTrigger: {trigger: w, start: 'top 80%'}});
+    });
+
+    // Process steps
+    gsap.from('.proc-step', {x: -16, opacity: 0, duration: 0.6, stagger: 0.08, ease: 'power2.out',
+      scrollTrigger: {trigger: '#process', start: 'top 80%'}});
+
+    // Beliefs
+    gsap.from('.prin-i', {y: 20, opacity: 0, duration: 0.7, stagger: 0.08, ease: 'power3.out',
+      scrollTrigger: {trigger: '#beliefs', start: 'top 80%'}});
+
+    // Bio
+    gsap.from('.bio > *', {y: 24, opacity: 0, duration: 0.8, stagger: 0.1, ease: 'power3.out',
+      scrollTrigger: {trigger: '#about', start: 'top 80%'}});
+
+    // Timeline commits
+    gsap.from('.commit', {x: -14, opacity: 0, duration: 0.6, stagger: 0.08, ease: 'power2.out',
+      scrollTrigger: {trigger: '.tl', start: 'top 82%'}});
+
+    // Contact
+    gsap.from('.contact .kicker, .contact h2, .contact p, .contact .email', {
+      y: 24, opacity: 0, duration: 0.7, stagger: 0.1, ease: 'power3.out',
+      scrollTrigger: {trigger: '#contact', start: 'top 78%'}
+    });
+  }
+
+  // Tabs scroll-spy
+  const links = document.querySelectorAll('.tabs a[href^="#"]');
+  const sections = Array.from(links).map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+  const setActive = (id) => {
+    links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === id));
+  };
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) setActive('#' + e.target.id); });
+  }, {rootMargin: '-40% 0px -55% 0px'});
+  sections.forEach(s => s && obs.observe(s));
+</script>
+</body>
+</html>
