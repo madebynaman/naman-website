@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Naman Sharma · Product &amp; UX Designer · Plain Words</title>
+<meta name="description" content="A usage dictionary of one designer. Plain words, attested numbers, no jargon. Naman Sharma, product and UX designer, Jaipur.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;0,7..72,600;0,7..72,700;1,7..72,400;1,7..72,500&family=Red+Hat+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+<link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap" rel="stylesheet">
+<style>
+/* ————————————————————————————————————————————
+   PLAIN WORDS · a usage dictionary of one designer
+   ———————————————————————————————————————————— */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --page: #FAF8F1;
+  --ink: #232019;
+  --soft: #5C574B;
+  --hairline: #E3DFD1;
+  --oxblood: #8C2F26;
+  --oxblood-soft: #EBD9D2;
+  --serif: 'Literata', Georgia, serif;
+  --sans: 'General Sans', 'Helvetica Neue', Arial, sans-serif;
+  --mono: 'Red Hat Mono', 'SF Mono', Menlo, monospace;
+}
+
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+body {
+  background: var(--page);
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 1.0625rem;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+::selection { background: var(--oxblood); color: var(--page); }
+input { caret-color: var(--oxblood); }
+* { scrollbar-width: thin; scrollbar-color: var(--oxblood) var(--page); }
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: var(--page); }
+::-webkit-scrollbar-thumb { background: var(--oxblood); }
+:focus-visible { outline: 2px solid var(--oxblood); outline-offset: 3px; }
+
+.wrap { max-width: 1080px; margin: 0 auto; padding: 0 clamp(1.25rem, 4vw, 3.5rem); }
+
+.mono { font-family: var(--mono); font-size: 0.6563rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--soft); }
+a { color: inherit; }
+
+/* ——— Masthead ——— */
+.masthead {
+  position: sticky; top: 0; z-index: 50;
+  background: color-mix(in srgb, var(--page) 92%, transparent);
+  backdrop-filter: blur(8px);
+  border-bottom: 2px solid var(--ink);
+}
+.masthead-inner {
+  display: grid; grid-template-columns: 1fr auto 1fr;
+  align-items: center; height: 3.25rem; gap: 1rem;
+}
+.running-head { font-family: var(--serif); font-style: italic; font-size: 0.9375rem; }
+.running-head a { text-decoration: none; }
+.mast-center { display: flex; gap: 1.5rem; }
+.mast-center a { font-family: var(--sans); font-size: 0.8125rem; font-weight: 500; text-decoration: none; color: var(--soft); transition: color 0.15s; }
+.mast-center a:hover { color: var(--oxblood); }
+.mast-right { display: flex; justify-content: flex-end; align-items: center; gap: 0.75rem; }
+
+/* the jargon switch */
+.jargon-switch { display: inline-flex; align-items: center; gap: 0.6rem; cursor: pointer; user-select: none; }
+.jargon-switch .lab { font-family: var(--mono); font-size: 0.625rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--soft); }
+.jargon-switch input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.jargon-switch .pill {
+  width: 44px; height: 24px; border-radius: 999px;
+  border: 1.5px solid var(--ink); position: relative;
+  transition: background 0.25s ease-out;
+  flex-shrink: 0;
+}
+.jargon-switch .pill::after {
+  content: ''; position: absolute; top: 2.5px; left: 3px;
+  width: 15px; height: 15px; border-radius: 50%;
+  background: var(--ink);
+  transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1), background 0.25s;
+}
+.jargon-switch input:checked + .pill { background: var(--oxblood); border-color: var(--oxblood); }
+.jargon-switch input:checked + .pill::after { transform: translateX(20px); background: var(--page); }
+.jargon-switch input:focus-visible + .pill { outline: 2px solid var(--oxblood); outline-offset: 3px; }
+
+/* jargon-mode body state */
+body.jargon [data-plain] { text-decoration: underline wavy var(--oxblood) 1px; text-underline-offset: 4px; }
+
+/* ——— Entries (shared grammar) ——— */
+.entry { padding: 4rem 0; border-bottom: 1px solid var(--hairline); }
+.headword {
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: clamp(2rem, 4.4vw, 3.5rem);
+  letter-spacing: -0.015em;
+  line-height: 1.05;
+  color: var(--oxblood);
+  text-wrap: balance;
+}
+.gram { font-family: var(--serif); font-style: italic; font-weight: 400; color: var(--soft); font-size: 0.55em; letter-spacing: 0; margin-left: 0.5rem; white-space: nowrap; }
+.phon { font-family: var(--mono); font-size: 0.9375rem; color: var(--soft); letter-spacing: 0.02em; margin-top: 0.6rem; text-transform: none; }
+.senses { margin-top: 1.75rem; max-width: 44rem; }
+.sense { display: grid; grid-template-columns: 2rem minmax(0, 1fr); gap: 0.5rem; padding: 0.55rem 0; }
+.sense .sn { font-family: var(--serif); font-weight: 700; color: var(--oxblood); font-variant-numeric: tabular-nums; }
+.sense .sd { text-wrap: pretty; }
+.sense .sd b { font-weight: 600; }
+.sense .sd .fld { font-style: italic; color: var(--soft); }
+.example { font-family: var(--serif); font-style: italic; color: var(--soft); margin-top: 0.35rem; }
+.example::before { content: '‘'; }
+.example::after { content: '’'; }
+
+/* ——— Hero entry ——— */
+.hero-entry { padding: 5rem 0 4rem; border-bottom: 2px solid var(--ink); }
+.hero-grid { display: grid; grid-template-columns: minmax(0, 8fr) minmax(0, 4fr); gap: clamp(2rem, 5vw, 5rem); align-items: start; }
+.hero-entry .headword { font-size: clamp(3.25rem, 8vw, 6rem); }
+.etym { margin-top: 1.75rem; padding-top: 1.25rem; border-top: 1px solid var(--hairline); font-size: 0.9375rem; color: var(--soft); max-width: 44rem; }
+.etym b { font-family: var(--mono); font-size: 0.625rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 500; color: var(--ink); margin-right: 0.4rem; }
+.see-also { margin-top: 2.25rem; display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; }
+.btn {
+  display: inline-block; padding: 0.8rem 1.6rem;
+  font-family: var(--sans); font-size: 0.9375rem; font-weight: 600; text-decoration: none;
+  border-radius: 3px;
+  transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1), background 0.15s, color 0.15s, border-color 0.15s;
+}
+.btn-solid { background: var(--ink); color: var(--page); }
+.btn-solid:hover { background: var(--oxblood); transform: translateY(-2px); }
+.btn-line { border: 1px solid var(--ink); }
+.btn-line:hover { border-color: var(--oxblood); color: var(--oxblood); transform: translateY(-2px); }
+.avail { margin-top: 1.5rem; font-family: var(--sans); font-size: 0.9375rem; font-weight: 500; display: inline-flex; align-items: center; gap: 0.6rem; }
+.avail i { width: 8px; height: 8px; border-radius: 50%; background: var(--oxblood); }
+
+.hero-aside { border-left: 1px solid var(--hairline); padding-left: clamp(1.25rem, 3vw, 2.5rem); }
+.hero-aside .mono { display: block; margin-bottom: 1rem; }
+.attested { list-style: none; }
+.attested li { padding: 0.9rem 0; border-bottom: 1px solid var(--hairline); }
+.attested li:last-child { border-bottom: none; }
+.attested .n { font-family: var(--serif); font-weight: 700; font-size: 1.75rem; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.attested .c { display: block; font-family: var(--sans); font-size: 0.8125rem; color: var(--soft); margin-top: 0.2rem; text-wrap: pretty; }
+.attested .src { font-family: var(--mono); font-size: 0.5938rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--oxblood); }
+
+/* ——— Usage note (no-jargon) ——— */
+.usage-note {
+  margin: 4rem auto;
+  border: 1.5px solid var(--ink);
+  border-radius: 4px;
+  padding: clamp(1.75rem, 4vw, 3rem);
+  position: relative;
+  background: #FFFEF9;
+  box-shadow: 0 10px 30px rgba(35, 32, 25, 0.06);
+}
+.usage-note .un-head { display: flex; align-items: baseline; gap: 1rem; flex-wrap: wrap; }
+.usage-note h2 { font-size: clamp(1.5rem, 3vw, 2.25rem); font-weight: 700; }
+.usage-note .lead { margin-top: 1.25rem; color: var(--soft); max-width: 42rem; text-wrap: pretty; }
+.usage-note .lead em { font-style: italic; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+.jargon-list {
+  margin-top: 1.75rem;
+  font-family: var(--serif); font-style: italic;
+  font-size: clamp(1.125rem, 2.2vw, 1.5rem); line-height: 1.8; color: var(--soft);
+  max-width: 48rem;
+}
+.jargon-list del { text-decoration: line-through; text-decoration-color: var(--oxblood); text-decoration-thickness: 2px; }
+.jargon-list .sep { color: var(--oxblood); font-style: normal; }
+.plain-truth {
+  margin-top: 1.75rem;
+  font-family: var(--serif); font-weight: 600;
+  font-size: clamp(1.25rem, 2.4vw, 1.75rem); line-height: 1.5;
+  max-width: 42rem; text-wrap: balance;
+}
+.plain-truth b { color: var(--oxblood); }
+
+/* ——— Work entries ——— */
+.section-rule { padding: 3.5rem 0 0; }
+.section-rule h2 { font-family: var(--serif); font-weight: 700; font-size: clamp(1.75rem, 3.4vw, 2.75rem); }
+.section-rule p { color: var(--soft); margin-top: 0.5rem; font-style: italic; }
+.work-entry { display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 6fr); gap: clamp(2rem, 5vw, 4.5rem); align-items: center; }
+.work-entry.flip .we-text { order: 2; }
+.work-entry.flip .we-plate { order: 1; }
+.outcome { margin-top: 1rem; font-size: 1.125rem; text-wrap: pretty; }
+.outcome b { font-weight: 700; color: var(--oxblood); }
+.plate {
+  position: relative; border: 1px solid var(--ink); border-radius: 4px;
+  background: #FFFEF9; overflow: hidden; aspect-ratio: 16 / 10;
+}
+.plate svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.plate-cap {
+  margin-top: 0.6rem; text-align: center;
+  font-family: var(--serif); font-style: italic; font-size: 0.875rem; color: var(--soft);
+}
+.plate-cap b { font-style: normal; font-family: var(--mono); font-size: 0.625rem; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 500; color: var(--ink); margin-right: 0.5rem; }
+.locked-entry { background: var(--oxblood-soft); border: 1px solid var(--oxblood); border-radius: 4px; padding: clamp(1.75rem, 4vw, 2.75rem); margin-top: 4rem; display: grid; grid-template-columns: minmax(0, 8fr) minmax(0, 4fr); gap: 2rem; align-items: center; }
+.locked-entry .headword { font-size: clamp(1.625rem, 3vw, 2.375rem); }
+.locked-entry p { margin-top: 0.9rem; color: var(--soft); max-width: 36rem; text-wrap: pretty; }
+.locked-entry .keyart { display: flex; justify-content: center; }
+.more-refs { margin-top: 3rem; font-size: 0.9375rem; color: var(--soft); line-height: 2; max-width: 46rem; font-style: italic; }
+
+/* ——— Method entry (6 senses) ——— */
+.method-entry .senses { max-width: 46rem; }
+.method-entry .sense { padding: 0.8rem 0; border-bottom: 1px solid var(--hairline); }
+.method-entry .sense:last-child { border-bottom: none; }
+.method-entry .sd b { color: var(--ink); }
+
+/* ——— Split entries ——— */
+.split { display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 6fr); gap: clamp(2rem, 5vw, 5rem); align-items: start; }
+.split .senses { margin-top: 1.5rem; }
+.note-card {
+  border: 1px solid var(--hairline); border-radius: 4px; background: #FFFEF9;
+  padding: 1.75rem 2rem; font-size: 0.9375rem; color: var(--soft);
+  box-shadow: 0 10px 30px rgba(35, 32, 25, 0.05);
+}
+.note-card .mono { display: block; margin-bottom: 0.9rem; color: var(--ink); }
+.note-card p + p { margin-top: 0.75rem; }
+.note-card b { color: var(--ink); font-weight: 600; }
+
+/* ——— Jerry entry ——— */
+.jerry-grid { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: clamp(2rem, 5vw, 4.5rem); align-items: center; }
+.jerry-plate { aspect-ratio: 4/3; }
+
+/* ——— Origin (timeline as etymology) ——— */
+.origin-list { margin-top: 2rem; max-width: 52rem; }
+.origin-row {
+  display: grid; grid-template-columns: 200px minmax(0, 1fr);
+  gap: 1.75rem; padding: 1.5rem 0; border-bottom: 1px solid var(--hairline); align-items: baseline;
+}
+.origin-row:last-child { border-bottom: none; }
+.origin-row .years { font-family: var(--serif); font-weight: 700; font-size: clamp(1.25rem, 2.2vw, 1.625rem); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.origin-row .body { color: var(--soft); text-wrap: pretty; }
+.origin-row .body b { color: var(--ink); font-weight: 600; }
+.origin-foot { margin-top: 2rem; font-size: 0.9375rem; color: var(--soft); line-height: 1.9; max-width: 52rem; }
+.origin-foot b { color: var(--ink); font-weight: 600; }
+
+/* ——— Contact ——— */
+.contact-entry { padding: 5.5rem 0 4.5rem; border-bottom: none; text-align: center; }
+.contact-entry .headword { font-size: clamp(2.75rem, 7vw, 5.5rem); }
+.contact-entry .phon { text-align: center; }
+.contact-entry .def { margin: 1.5rem auto 0; max-width: 34rem; color: var(--soft); font-size: 1.125rem; text-wrap: pretty; }
+.big-email {
+  display: inline-block; margin-top: 2.5rem;
+  font-family: var(--serif); font-weight: 700;
+  font-size: clamp(1.375rem, 3.4vw, 2.625rem); letter-spacing: -0.01em;
+  color: var(--oxblood); text-decoration: none;
+  border-bottom: 3px solid var(--oxblood-soft);
+  transition: border-color 0.2s;
+}
+.big-email:hover { border-color: var(--oxblood); }
+.socials { margin-top: 2rem; display: flex; justify-content: center; gap: 1.75rem; }
+.socials a { font-family: var(--sans); font-size: 0.9375rem; color: var(--soft); text-decoration: none; }
+.socials a:hover { color: var(--oxblood); }
+.fine { margin-top: 2rem; }
+
+.footer { border-top: 2px solid var(--ink); padding: 1.75rem 0 2.25rem; }
+.footer-inner { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem; }
+
+/* ——— Responsive ——— */
+@media (max-width: 920px) {
+  .hero-grid, .split, .work-entry, .jerry-grid, .locked-entry { grid-template-columns: 1fr; }
+  .work-entry.flip .we-text { order: 1; }
+  .work-entry.flip .we-plate { order: 2; }
+  .hero-aside { border-left: none; padding-left: 0; border-top: 1px solid var(--hairline); padding-top: 1.75rem; }
+  .attested { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0 1.5rem; }
+  .mast-center { display: none; }
+  .origin-row { grid-template-columns: 1fr; gap: 0.35rem; }
+}
+@media (max-width: 560px) {
+  .attested { grid-template-columns: 1fr; }
+  .masthead-inner { grid-template-columns: 1fr auto; }
+  .running-head { font-size: 0.8125rem; }
+}
+</style>
+</head>
+<body>
+<!--
+THESIS: the no-jargon promise as an entire form: the portfolio written as a usage
+dictionary, with a live jargon switch that shows exactly what this designer refuses
+to sound like. Refuses the template portfolio and the cream-serif-terracotta default.
+OWN-WORLD: ivory page, near-black ink, oxblood headwords; Literata with real italics,
+General Sans for controls, Red Hat Mono for pronunciation and labels; plates instead
+of screenshots, senses instead of bullet points.
+STORY: the reader looks Naman up, flips jargon mode on, laughs once, flips it off,
+and trusts every plain sentence after that. Then they write to him.
+FIRST VIEWPORT: the headword na·man shar·ma at dictionary scale, pronunciation,
+two senses, attested numbers in the right column, the jargon switch in the masthead.
+FORM: reference-book system, #4 of my derived list; seed script degraded (no output),
+substitution disclosed in thread.
+FINISH: unreviewed and undocumented is unfinished; this build ends with the finish
+review, the verdict, and DESIGN.md
+-->
+
+<header class="masthead">
+  <div class="wrap masthead-inner">
+    <span class="running-head"><a href="#top">naman · sharma</a></span>
+    <nav class="mast-center" aria-label="Sections">
+      <a href="#work">work</a>
+      <a href="#method">method</a>
+      <a href="#about">about</a>
+      <a href="#contact">contact</a>
+    </nav>
+    <div class="mast-right">
+      <label class="jargon-switch">
+        <span class="lab">jargon mode</span>
+        <input type="checkbox" id="jargonToggle">
+        <span class="pill" aria-hidden="true"></span>
+      </label>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ———————————————— HERO ENTRY ———————————————— -->
+  <section class="hero-entry wrap">
+    <div class="hero-grid">
+      <div>
+        <h1 class="headword">na·man shar·ma<span class="gram">proper n.</span></h1>
+        <p class="phon">/ˈnə.mən ˈʃər.mə/ · product &amp; UX designer · Jaipur, India</p>
+        <div class="senses">
+          <div class="sense">
+            <span class="sn">1</span>
+            <p class="sd" data-plain="a designer who helps teams turn messy problems into products people actually understand." data-jargon="a visionary experience architect synergizing human-centric paradigms across the phygital continuum.">a designer who helps teams turn messy problems into products people actually understand.</p>
+          </div>
+          <div class="sense">
+            <span class="sn">2</span>
+            <p class="sd"><span class="fld">(by training)</span> <span data-plain="a computer engineer who chose design, and kept the useful half of the degree." data-jargon="a cross-functional polymath leveraging full-stack ideation frameworks.">a computer engineer who chose design, and kept the useful half of the degree.</span>
+            <span class="example">designing since 2017, in UX since 2019, no year off</span></p>
+          </div>
+          <div class="sense">
+            <span class="sn">3</span>
+            <p class="sd"><span class="fld">(informal)</span> <span data-plain="the person your engineers stop having to translate for." data-jargon="a seamless alignment catalyst for engineering-adjacent stakeholders.">the person your engineers stop having to translate for.</span></p>
+          </div>
+        </div>
+        <p class="etym"><b>etymology</b> from Sanskrit, a greeting offered with respect. Fitting, since the work always starts with listening.</p>
+        <p class="avail"><i></i>Open to product design roles and freelance.</p>
+        <div class="see-also">
+          <a class="btn btn-solid" href="#work">See my work</a>
+          <a class="btn btn-line" href="#contact">Say hi</a>
+          <span class="mono">see also: work, contact</span>
+        </div>
+      </div>
+      <aside class="hero-aside">
+        <span class="mono">attested numbers</span>
+        <ul class="attested">
+          <li>
+            <div class="n">$<span class="count" data-count="500">0</span>K</div>
+            <span class="c">pre-seed raised after the website and brand revamp</span>
+            <span class="src">Turns, attested</span>
+          </li>
+          <li>
+            <div class="n"><span class="count" data-count="4.8" data-decimals="1">0.0</span>★</div>
+            <span class="c">on the Play Store after the redesign</span>
+            <span class="src">LetsConnect, attested</span>
+          </li>
+          <li>
+            <div class="n"><span class="count" data-count="25">0</span></div>
+            <span class="c">in-person interviews across 3 cities</span>
+            <span class="src">Wikimedia Foundation, attested</span>
+          </li>
+          <li>
+            <div class="n"><span class="count" data-count="15">0</span>+</div>
+            <span class="c">clients since 2017, agency and independent</span>
+            <span class="src">Career, attested</span>
+          </li>
+        </ul>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ———————————————— USAGE NOTE ———————————————— -->
+  <section class="wrap">
+    <div class="usage-note">
+      <div class="un-head">
+        <span class="mono" style="color: var(--oxblood);">usage note</span>
+        <h2>On jargon, and the absence of it here</h2>
+      </div>
+      <p class="lead">Most designer portfolios promise to <em>synergize aesthetics with functionality</em> and <em>craft delightful experiences</em>. This one doesn't. I hate jargon. So, for the record, I do not:</p>
+      <p class="jargon-list">
+        <span class="sr-only">Things I do not do:</span>
+        <del>foster innovation through synergizing aesthetics and functionality</del> <span class="sep">;</span>
+        <del>navigate the confluence of form and function</del> <span class="sep">;</span>
+        <del>orchestrate design revolutions</del> <span class="sep">;</span>
+        <del>instigate paradigmatic evolutions</del> <span class="sep">;</span>
+        <del>seamlessly integrate cutting-edge methodologies</del> <span class="sep">;</span>
+        <del>engineer experiential marvels</del> <span class="sep">;</span>
+        <del>champion transformative ideation in the ever-evolving design ethos</del> <span class="sep">;</span>
+        <del>perpetuate narratives that transcend boundaries</del>
+      </p>
+      <p class="plain-truth">Here's what I actually do: I listen to users. I sketch. I test. I simplify. I ship. Then I check if it worked. <b>That's the whole trick.</b></p>
+      <p class="mono" style="margin-top: 1.5rem;">tip: the switch in the masthead shows what this page would sound like without the promise</p>
+    </div>
+  </section>
+
+  <!-- ———————————————— WORK ENTRIES ———————————————— -->
+  <div class="wrap section-rule" id="work">
+    <h2>Selected entries</h2>
+    <p>a few favourites. Short senses here; ask me for the long ones.</p>
+  </div>
+
+  <section class="entry wrap reveal">
+    <div class="work-entry">
+      <div class="we-text">
+        <h3 class="headword">turns<span class="gram">proper n. · website, brand, design system</span></h3>
+        <div class="senses">
+          <div class="sense"><span class="sn">1</span><p class="sd" data-plain="new website, new brand, new design system. They raised $500K pre-seed after the revamp." data-jargon="a holistic brand-experience transformation unlocking exponential capital-readiness synergies.">new website, new brand, new design system. They raised <b>$500K pre-seed</b> after the revamp.</p></div>
+          <div class="sense"><span class="sn">2</span><p class="sd">brand guidelines and a system the team could keep shipping with after I left. <span class="fld">Nobody asked for that part.</span></p></div>
+        </div>
+      </div>
+      <div class="we-plate">
+        <div class="plate">
+          <svg viewBox="0 0 640 400" fill="none" aria-hidden="true">
+            <rect x="70" y="48" width="400" height="260" rx="4" stroke="#232019" stroke-width="1.5"/>
+            <line x1="70" y1="86" x2="470" y2="86" stroke="#E3DFD1" stroke-width="2"/>
+            <rect x="100" y="116" width="180" height="15" rx="2" fill="#8C2F26"/>
+            <rect x="100" y="144" width="120" height="9" rx="2" fill="#E3DFD1"/>
+            <rect x="100" y="196" width="150" height="82" rx="4" stroke="#E3DFD1" stroke-width="2"/>
+            <rect x="270" y="196" width="150" height="82" rx="4" stroke="#E3DFD1" stroke-width="2"/>
+            <rect x="440" y="120" width="130" height="232" rx="14" stroke="#232019" stroke-width="1.5" fill="#FAF8F1"/>
+            <rect x="458" y="152" width="94" height="11" rx="2" fill="#8C2F26"/>
+            <rect x="458" y="176" width="60" height="8" rx="2" fill="#E3DFD1"/>
+            <rect x="458" y="204" width="94" height="52" rx="4" stroke="#E3DFD1" stroke-width="2"/>
+            <rect x="458" y="268" width="94" height="52" rx="4" stroke="#E3DFD1" stroke-width="2"/>
+          </svg>
+        </div>
+        <p class="plate-cap"><b>plate i</b>the Turns website, laptop and phone (mockup slot)</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="entry wrap reveal">
+    <div class="work-entry flip">
+      <div class="we-text">
+        <h3 class="headword">wiki·pedia × kai·os<span class="gram">n. · field research, 25 users, 3 cities</span></h3>
+        <div class="senses">
+          <div class="sense"><span class="sn">1</span><p class="sd" data-plain="25 in-person interviews for the Wikimedia Foundation, with JioPhone users in Pune, Mumbai and Delhi." data-jargon="a hyperlocal ethnographic deep-dive activating emergent-market user-truth paradigms."><b>25 in-person interviews</b> for the Wikimedia Foundation, with JioPhone users in Pune, Mumbai and Delhi.</p></div>
+          <div class="sense"><span class="sn">2</span><p class="sd">tiny screens, real keypads, and for most participants the only internet-connected device in the house. <span class="example">most of the internet is designed for people like me, on devices like mine. This study changed how I think about the user</span></p></div>
+        </div>
+      </div>
+      <div class="we-plate">
+        <div class="plate">
+          <svg viewBox="0 0 640 400" fill="none" aria-hidden="true">
+            <rect x="260" y="44" width="120" height="310" rx="12" stroke="#232019" stroke-width="1.5"/>
+            <rect x="277" y="66" width="86" height="122" rx="3" stroke="#8C2F26" stroke-width="1.5"/>
+            <line x1="285" y1="92" x2="355" y2="92" stroke="#E3DFD1" stroke-width="2"/>
+            <line x1="285" y1="112" x2="341" y2="112" stroke="#E3DFD1" stroke-width="2"/>
+            <line x1="285" y1="132" x2="355" y2="132" stroke="#E3DFD1" stroke-width="2"/>
+            <line x1="285" y1="152" x2="330" y2="152" stroke="#E3DFD1" stroke-width="2"/>
+            <g stroke="#232019" stroke-width="1.5">
+              <rect x="277" y="210" width="24" height="16" rx="3"/><rect x="308" y="210" width="24" height="16" rx="3"/><rect x="339" y="210" width="24" height="16" rx="3"/>
+              <rect x="277" y="234" width="24" height="16" rx="3"/><rect x="308" y="234" width="24" height="16" rx="3"/><rect x="339" y="234" width="24" height="16" rx="3"/>
+              <rect x="277" y="258" width="24" height="16" rx="3"/><rect x="308" y="258" width="24" height="16" rx="3"/><rect x="339" y="258" width="24" height="16" rx="3"/>
+              <rect x="277" y="282" width="24" height="16" rx="3"/><rect x="308" y="282" width="24" height="16" rx="3"/><rect x="339" y="282" width="24" height="16" rx="3"/>
+            </g>
+            <circle cx="130" cy="110" r="4" fill="#8C2F26"/><circle cx="114" cy="200" r="4" fill="#8C2F26"/><circle cx="150" cy="274" r="4" fill="#8C2F26"/>
+            <path d="M 130 110 C 118 146, 114 172, 114 200 C 114 230, 130 256, 150 274" stroke="#8C2F26" stroke-width="1.5" stroke-dasharray="2 6"/>
+            <text x="144" y="107" font-family="Red Hat Mono, monospace" font-size="12" fill="#5C574B">Delhi</text>
+            <text x="128" y="197" font-family="Red Hat Mono, monospace" font-size="12" fill="#5C574B">Mumbai</text>
+            <text x="164" y="271" font-family="Red Hat Mono, monospace" font-size="12" fill="#5C574B">Pune</text>
+            <g stroke="#E3DFD1" stroke-width="2"><line x1="440" y1="100" x2="560" y2="100"/><line x1="440" y1="124" x2="540" y2="124"/><line x1="440" y1="148" x2="556" y2="148"/><line x1="440" y1="172" x2="520" y2="172"/></g>
+            <text x="440" y="80" font-family="Red Hat Mono, monospace" font-size="12" fill="#5C574B">field notes</text>
+          </svg>
+        </div>
+        <p class="plate-cap"><b>plate ii</b>a JioPhone, field notes, an interview (photo slot)</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="entry wrap reveal">
+    <div class="work-entry">
+      <div class="we-text">
+        <h3 class="headword">lets·connect<span class="gram">proper n. · mobile app, UX redesign</span></h3>
+        <div class="senses">
+          <div class="sense"><span class="sn">1</span><p class="sd" data-plain="rebuilt the experience from user feedback. Now at 4.8★ on the Play Store." data-jargon="a user-obsessed experience elevation journey delivering five-star-adjacent satisfaction outcomes.">rebuilt the experience from user feedback. Now at <b>4.8★ on the Play Store</b>.</p></div>
+          <div class="sense"><span class="sn">2</span><p class="sd">read the reviews, grouped the recurring complaints, redesigned the journeys where people got lost. <span class="fld">The app worked. It just didn't feel like it.</span></p></div>
+        </div>
+      </div>
+      <div class="we-plate">
+        <div class="plate">
+          <svg viewBox="0 0 640 400" fill="none" aria-hidden="true">
+            <rect x="150" y="56" width="130" height="290" rx="14" stroke="#E3DFD1" stroke-width="2"/>
+            <rect x="170" y="92" width="90" height="9" rx="2" fill="#E3DFD1"/>
+            <rect x="170" y="124" width="90" height="60" rx="4" stroke="#E3DFD1" stroke-width="2"/>
+            <rect x="170" y="198" width="90" height="60" rx="4" stroke="#E3DFD1" stroke-width="2"/>
+            <path d="M 300 200 L 340 200 M 328 188 L 340 200 L 328 212" stroke="#8C2F26" stroke-width="2"/>
+            <rect x="360" y="56" width="130" height="290" rx="14" stroke="#232019" stroke-width="1.5"/>
+            <rect x="380" y="92" width="90" height="12" rx="2" fill="#8C2F26"/>
+            <rect x="380" y="122" width="90" height="86" rx="5" stroke="#232019" stroke-width="1.5"/>
+            <rect x="380" y="224" width="90" height="28" rx="14" fill="#232019"/>
+            <g fill="#8C2F26"><circle cx="392" cy="286" r="4"/><circle cx="409" cy="286" r="4"/><circle cx="426" cy="286" r="4"/><circle cx="443" cy="286" r="4"/><circle cx="460" cy="286" r="4"/></g>
+            <text x="380" y="318" font-family="Red Hat Mono, monospace" font-size="12" fill="#5C574B">4.8 / 5</text>
+          </svg>
+        </div>
+        <p class="plate-cap"><b>plate iii</b>before and after screens (screens slot)</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="entry wrap reveal">
+    <div class="work-entry flip">
+      <div class="we-text">
+        <h3 class="headword">gadi·van<span class="gram">proper n. · 0 to 1, multiple apps</span></h3>
+        <div class="senses">
+          <div class="sense"><span class="sn">1</span><p class="sd" data-plain="designed the whole product from a blank page. Different apps for different users, one system underneath." data-jargon="an end-to-end zero-to-one ecosystem orchestration across multi-persona touchpoint matrices.">designed the whole product from a blank page. <b>Different apps for different users, one system underneath.</b></p></div>
+          <div class="sense"><span class="sn">2</span><p class="sd">founders, journeys, flows, screens, then side by side with engineering until launch.</p></div>
+        </div>
+      </div>
+      <div class="we-plate">
+        <div class="plate">
+          <svg viewBox="0 0 640 400" fill="none" aria-hidden="true">
+            <rect x="120" y="90" width="104" height="220" rx="10" stroke="#E3DFD1" stroke-width="2"/>
+            <rect x="262" y="60" width="104" height="220" rx="10" stroke="#232019" stroke-width="1.5"/>
+            <rect x="404" y="90" width="104" height="220" rx="10" stroke="#E3DFD1" stroke-width="2"/>
+            <rect x="136" y="118" width="72" height="8" rx="2" fill="#E3DFD1"/>
+            <rect x="278" y="88" width="72" height="8" rx="2" fill="#8C2F26"/>
+            <rect x="420" y="118" width="72" height="8" rx="2" fill="#E3DFD1"/>
+            <rect x="136" y="142" width="72" height="48" rx="4" stroke="#E3DFD1" stroke-width="2"/>
+            <rect x="278" y="112" width="72" height="48" rx="4" stroke="#232019" stroke-width="1.5"/>
+            <rect x="420" y="142" width="72" height="48" rx="4" stroke="#E3DFD1" stroke-width="2"/>
+            <path d="M 172 340 C 172 360, 314 360, 314 340 M 314 340 C 314 360, 456 360, 456 340" stroke="#8C2F26" stroke-width="1.5" stroke-dasharray="2 6"/>
+            <text x="238" y="386" font-family="Red Hat Mono, monospace" font-size="12" fill="#5C574B">one system underneath</text>
+          </svg>
+        </div>
+        <p class="plate-cap"><b>plate iv</b>the Gadivan app family (family shot slot)</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap">
+    <div class="locked-entry reveal">
+      <div>
+        <h3 class="headword">re·dact·ed<span class="gram">adj. · two case studies, under NDA</span></h3>
+        <p>A dealer portal for one of India's largest paint companies. An onboarding rescue for a small-business app. Real numbers, real impact, both behind a password.</p>
+        <div class="see-also" style="margin-top: 1.5rem;">
+          <a class="btn btn-line" href="mailto:madebynaman@gmail.com?subject=Password%20for%20the%20NDA%20case%20studies">Ask for the password</a>
+        </div>
+      </div>
+      <div class="keyart" aria-hidden="true">
+        <svg width="140" height="140" viewBox="0 0 140 140" fill="none">
+          <rect x="34" y="62" width="72" height="56" rx="8" stroke="#8C2F26" stroke-width="2.5" fill="#FAF8F1"/>
+          <path d="M 48 62 v-16 a22 22 0 0 1 44 0 v16" stroke="#8C2F26" stroke-width="2.5"/>
+          <circle cx="70" cy="88" r="6" fill="#8C2F26"/>
+          <line x1="70" y1="94" x2="70" y2="104" stroke="#8C2F26" stroke-width="2.5"/>
+        </svg>
+      </div>
+    </div>
+    <p class="more-refs">also in the corpus: Parentverse, Venyou, Sharent, Spirinova, Gorico, RedShilliz, DGlobalist, Pahoti Wellness, Ivy Malik, PhotoFinder, Olsub, Learn Theta.</p>
+  </section>
+
+  <!-- ———————————————— METHOD ———————————————— -->
+  <section class="entry method-entry wrap reveal" id="method">
+    <h2 class="headword">meth·od<span class="gram">n. · six senses, in strict order</span></h2>
+    <p class="phon">/ˈmɛθ.əd/ · the order matters more than the labels</p>
+    <div class="senses">
+      <div class="sense"><span class="sn">1</span><p class="sd"><b>listen.</b> Users, founders, analytics, support tickets. Most of what I need already exists inside the company. It just isn't in one place yet.</p></div>
+      <div class="sense"><span class="sn">2</span><p class="sd"><b>map.</b> The full journey, end to end, until I can see where it breaks.</p></div>
+      <div class="sense"><span class="sn">3</span><p class="sd"><b>explore.</b> Go wide before narrowing. I would rather throw away ten directions than defend the first one.</p></div>
+      <div class="sense"><span class="sn">4</span><p class="sd"><b>refine.</b> Pick a direction and sweat the details.</p></div>
+      <div class="sense"><span class="sn">5</span><p class="sd"><b>ship.</b> Stay with engineering through the build, screen by screen, until it's live.</p></div>
+      <div class="sense"><span class="sn">6</span><p class="sd"><b>check.</b> Watch the numbers afterwards. Fix what moved, and fix what didn't.</p></div>
+    </div>
+  </section>
+
+  <!-- ———————————————— BILINGUAL ———————————————— -->
+  <section class="entry wrap reveal">
+    <div class="split">
+      <div>
+        <h2 class="headword">bi·lin·gual<span class="gram">adj. · speaks design and engineering</span></h2>
+        <div class="senses">
+          <div class="sense"><span class="sn">1</span><p class="sd">holding a <b>computer engineering degree</b> that turned out to be one of the more useful things I own: I know what's expensive to build before I draw it, I can read the codebase instead of guessing, and engineers don't have to translate for me.</p></div>
+          <div class="sense"><span class="sn">2</span><p class="sd">re-learning to code properly, building with AI most days. <span class="example">this site is where that started: the same brief went to 16 AI models, 80 directions came back, and I went through all of them to work out what I actually wanted. The design decisions are still mine</span></p></div>
+        </div>
+      </div>
+      <div class="note-card reveal">
+        <span class="mono">translator's note</span>
+        <p>When a handoff goes sideways, he can usually work out why on his own. Flows, states, edge cases arrive <b>drawn</b>. Empty, loading and error states arrive <b>designed, not implied</b>. Copy arrives <b>final</b>.</p>
+        <p>The expensive ideas get flagged <b>before the sprint</b>, not discovered inside it.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ———————————————— ABOUT ———————————————— -->
+  <section class="entry wrap reveal" id="about">
+    <div class="split">
+      <div>
+        <h2 class="headword">the long·er ver·sion<span class="gram">biographical note</span></h2>
+        <div class="senses">
+          <div class="sense"><span class="sn">1</span><p class="sd">a <b>self-taught designer with a computer engineering degree</b>. Halfway through the degree I worked out that I liked designing products more than writing code, so I taught myself design properly: books, courses, YouTube, and a lot of bad early work.</p></div>
+          <div class="sense"><span class="sn">2</span><p class="sd">started in 2017 with graphic design: logos, posters, a board game, a kids' eBook. Found UX research in 2019 and never looked back. Since then: field research, usability testing, web apps, mobile apps, websites, brands, packaging. Print and pixels and most things in between.</p></div>
+          <div class="sense"><span class="sn">3</span><p class="sd">a <b>curious generalist</b>, and that's the useful part. Range lets me see the whole problem rather than only my corner of it. <span class="example">right now: open to product design roles. Living in Jaipur with Jerry. Reading something good, playing something old</span></p></div>
+        </div>
+      </div>
+      <div class="note-card reveal">
+        <span class="mono">cross references</span>
+        <p><b>hip-hop</b> raised on old school; these days deep into Desi Hip Hop.</p>
+        <p><b>video games</b> NFS: Most Wanted (2005, the correct answer), Call of Duty, Prince of Persia: Warrior Within.</p>
+        <p><b>computers</b> engineering kid who never grew out of taking things apart.</p>
+        <p><b>investing</b> slow, boring, long-term, on purpose.</p>
+        <p><b>education</b> how people learn fascinates me, and it shows up in how I design.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ———————————————— JERRY ———————————————— -->
+  <section class="entry wrap reveal">
+    <div class="jerry-grid">
+      <div>
+        <h2 class="headword">jer·ry<span class="gram">n. · the real boss</span></h2>
+        <p class="phon">/ˈdʒɛ.ri/ · indie street dog, four years old</p>
+        <div class="senses">
+          <div class="sense"><span class="sn">1</span><p class="sd">a four-year-old indie street dog, and the love of my life. I met him at four weeks old: malnourished, separated from his mother and litter, far too young to survive on his own. So I brought him home. <span class="fld">My parents took some convincing.</span></p></div>
+          <div class="sense"><span class="sn">2</span><p class="sd">stubborn, smart and deeply introverted; extremely selective about who may pet him. <b>If he ever lets you, take it as a five-star review.</b></p></div>
+          <div class="sense"><span class="sn">3</span><p class="sd">asleep next to my desk right now, supervising. He says hi. <span class="example">dogs rescued: 1</span></p></div>
+        </div>
+      </div>
+      <div>
+        <div class="plate jerry-plate">
+          <svg viewBox="0 0 480 360" fill="none" aria-hidden="true">
+            <rect x="24" y="24" width="432" height="312" rx="6" stroke="#E3DFD1" stroke-width="2" stroke-dasharray="6 8"/>
+            <circle cx="240" cy="160" r="62" stroke="#232019" stroke-width="1.5"/>
+            <path d="M 178 272 C 202 240, 278 240, 302 272" stroke="#232019" stroke-width="1.5"/>
+            <text x="240" y="312" text-anchor="middle" font-family="Red Hat Mono, monospace" font-size="13" fill="#5C574B">photo slot: Jerry · this photo matters more than any mockup</text>
+          </svg>
+        </div>
+        <p class="plate-cap"><b>plate v</b>Jerry, supervising</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ———————————————— PRINCIPLES ———————————————— -->
+  <section class="entry wrap reveal">
+    <h2 class="headword">creed<span class="gram">n. · four things I design by</span></h2>
+    <div class="senses" style="max-width: 48rem;">
+      <div class="sense"><span class="sn">1</span><p class="sd"><b>consistency beats talent.</b> I'm not the most talented designer in the world. I show up every day instead, and that compounds. Since 2017, 15+ clients, no year off.</p></div>
+      <div class="sense"><span class="sn">2</span><p class="sd"><b>curiosity is the job.</b> I know a little about a lot, which helps me connect things other people keep separate. Understanding why someone picks a keypad phone shaped the Wikipedia recommendations more than anything I knew about interfaces.</p></div>
+      <div class="sense"><span class="sn">3</span><p class="sd"><b>form follows function.</b> Function solves the problem; beauty is what makes people remember it, and you earn the second by doing the first. On one onboarding rescue, no polish moved the number until research found the real problem: the ads promised something the signup flow didn't deliver.</p></div>
+      <div class="sense"><span class="sn">4</span><p class="sd"><b>give a damn.</b> Founder's mindset, full ownership. At Turns that meant brand guidelines and a design system so the team could keep shipping after I left. Nobody asked for that part.</p></div>
+    </div>
+  </section>
+
+  <!-- ———————————————— ORIGIN ———————————————— -->
+  <section class="entry wrap reveal">
+    <h2 class="headword">or·i·gin<span class="gram">career etymology, 2017 → now</span></h2>
+    <div class="origin-list">
+      <div class="origin-row">
+        <span class="years">2025 · now</span>
+        <p class="body"><b>Product designer, open to what's next.</b> Rebuilding this site in public, designing with AI most days, taking select freelance.</p>
+      </div>
+      <div class="origin-row">
+        <span class="years">2022 · 2025</span>
+        <p class="body"><b>Independent product, UX and web designer.</b> Turns, Gadivan, LetsConnect, LearnApp and a dozen others. Brand work, 0 to 1 product design, UX audits, design systems.</p>
+      </div>
+      <div class="origin-row">
+        <span class="years">2021 · 2022</span>
+        <p class="body"><b>UX designer at Thence</b>, a UX studio. Client work for large Indian brands, plus mentoring interns.</p>
+      </div>
+      <div class="origin-row">
+        <span class="years">2019 · 2020</span>
+        <p class="body"><b>UX research intern at Hureo.</b> Field research for the Wikimedia Foundation.</p>
+      </div>
+      <div class="origin-row">
+        <span class="years">2017 · 2019</span>
+        <p class="body"><b>First attested use.</b> Graphic design at Skillovate, then HappleyFit, plus freelance. Logos, a mascot, posters, a board game, a kids' eBook, a first WordPress site.</p>
+      </div>
+    </div>
+    <p class="origin-foot"><b>Education:</b> B.E. Computer Engineering, Pune University, 2017 to 2021. <b>Corpus of collaborators:</b> Turns, LetsConnect, Gadivan, LearnApp and a dozen more; agency-side, Thence, and research for the Wikimedia Foundation via Hureo.</p>
+  </section>
+
+  <!-- ———————————————— CONTACT ———————————————— -->
+  <section class="entry contact-entry wrap" id="contact">
+    <h2 class="headword">say hi<span class="gram">interj.</span></h2>
+    <p class="phon">/seɪ haɪ/ · the recommended usage</p>
+    <p class="def">Whether it's a role, a project, or just a good conversation about design, hip-hop, or dogs, my inbox is open.</p>
+    <a class="big-email" href="mailto:madebynaman@gmail.com">madebynaman@gmail.com</a>
+    <div class="socials">
+      <a href="#" rel="noopener">LinkedIn</a>
+      <a href="#" rel="noopener">Instagram</a>
+      <a href="#" rel="noopener">Twitter</a>
+    </div>
+    <p class="fine mono">Jaipur, India (GMT+5:30) · replies within a day, usually faster · open to product design roles</p>
+  </section>
+
+  <footer class="footer">
+    <div class="wrap footer-inner">
+      <span class="mono">No jargon was used on this website. The switch proves it.</span>
+      <span class="mono">Jerry approved this edition.</span>
+    </div>
+  </footer>
+
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script>
+(function () {
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // ——— Jargon switch: the page's one big move ———
+  var toggle = document.getElementById('jargonToggle');
+  var swaps = document.querySelectorAll('[data-plain]');
+  toggle.addEventListener('change', function () {
+    var toJargon = toggle.checked;
+    document.body.classList.toggle('jargon', toJargon);
+    swaps.forEach(function (el, i) {
+      var next = toJargon ? el.dataset.jargon : el.dataset.plain;
+      if (window.gsap && !reduce) {
+        gsap.timeline({ delay: i * 0.03 })
+          .to(el, { opacity: 0, y: -6, duration: 0.16, ease: 'power2.in' })
+          .add(function () { el.textContent = next; })
+          .to(el, { opacity: 1, y: 0, duration: 0.24, ease: 'power2.out' });
+      } else {
+        el.textContent = next;
+      }
+    });
+  });
+
+  // ——— Counts + reveals (quiet; this is a reading page) ———
+  if (!window.gsap || reduce) {
+    document.querySelectorAll('.count').forEach(function (el) {
+      var d = parseInt(el.dataset.decimals || '0', 10);
+      el.textContent = parseFloat(el.dataset.count).toFixed(d);
+    });
+    return;
+  }
+
+  gsap.registerPlugin();
+  // Hero settles in like a page being opened.
+  gsap.from('.hero-entry .headword, .hero-entry .phon, .hero-entry .senses .sense, .hero-entry .etym, .hero-entry .avail, .hero-entry .see-also', {
+    y: 18, opacity: 0, duration: 0.7, ease: 'power3.out', stagger: 0.06, delay: 0.1
+  });
+  gsap.from('.hero-aside', { y: 18, opacity: 0, duration: 0.8, ease: 'power3.out', delay: 0.45 });
+
+  // Counts.
+  var seen = new WeakSet();
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (!entry.isIntersecting || seen.has(entry.target)) return;
+      seen.add(entry.target);
+      var el = entry.target;
+      var target = parseFloat(el.dataset.count);
+      var decimals = parseInt(el.dataset.decimals || '0', 10);
+      var obj = { v: 0 };
+      gsap.to(obj, {
+        v: target, duration: 1.3, ease: 'power2.out',
+        onUpdate: function () { el.textContent = obj.v.toFixed(decimals); }
+      });
+      io.unobserve(el);
+    });
+  }, { rootMargin: '0px 0px -10% 0px' });
+  document.querySelectorAll('.count').forEach(function (el) { io.observe(el); });
+
+  // Gentle entry reveals.
+  var io2 = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (!entry.isIntersecting) return;
+      gsap.to(entry.target, { y: 0, opacity: 1, duration: 0.7, ease: 'power3.out' });
+      io2.unobserve(entry.target);
+    });
+  }, { rootMargin: '0px 0px -8% 0px' });
+  document.querySelectorAll('.reveal').forEach(function (el) {
+    gsap.set(el, { y: 22, opacity: 0 });
+    io2.observe(el);
+  });
+})();
+</script>
+</body>
+</html>

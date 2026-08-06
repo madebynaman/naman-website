@@ -1,0 +1,1156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Naman Sharma — Product &amp; UX Designer · The File</title>
+<meta name="description" content="Naman Sharma is a product and UX designer in Jaipur. This portfolio is the working file: frames, layers, comments and version history.">
+<link rel="preconnect" href="https://api.fontshare.com">
+<link rel="preconnect" href="https://cdn.fontshare.com" crossorigin>
+<link href="https://api.fontshare.com/v2/css?f%5B%5D=switzer@300,400,500,600,700&f%5B%5D=bevellier@400,500,700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spline+Sans+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════════════════════════
+   THE FILE — the portfolio shown as the working document
+   ═══════════════════════════════════════════════════════════════ */
+
+:root{
+  --canvas:    #0E1116;
+  --canvas-2:  #131822;
+  --panel:     #11151D;
+  --panel-2:   #161C26;
+  --line:      #222A38;
+  --line-soft: #1A212C;
+  --frame:     #FBFAF6;
+  --frame-2:   #F1EFE8;
+  --ink:       #0C1017;
+  --ink-2:     #3D4653;
+  --wire:      #2FE0D0;
+  --pin:       #FF6A3D;
+  --violet:    #A78BFA;
+  --muted:     #8A94A6;
+  --muted-2:   #5D6675;
+
+  --ui:      "Switzer", "Helvetica Neue", Arial, sans-serif;
+  --display: "Bevellier", "Helvetica Neue", Arial, sans-serif;
+  --mono:    "Spline Sans Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  --rail-l: 244px;
+  --rail-r: 268px;
+  --bar: 46px;
+}
+
+*,*::before,*::after{ box-sizing:border-box; }
+html{ -webkit-text-size-adjust:100%; scroll-behavior:smooth; scrollbar-color:#2B3442 var(--canvas); }
+@media (prefers-reduced-motion: reduce){ html{ scroll-behavior:auto; } }
+
+body{
+  margin:0;
+  background:var(--canvas);
+  color:#D6DBE4;
+  font-family:var(--ui);
+  font-size:15px;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+::selection{ background:var(--wire); color:#04201D; }
+:focus-visible{ outline:2px solid var(--wire); outline-offset:2px; border-radius:3px; }
+::-webkit-scrollbar{ width:11px; height:11px; }
+::-webkit-scrollbar-track{ background:var(--canvas); }
+::-webkit-scrollbar-thumb{ background:#2B3442; border:3px solid var(--canvas); border-radius:99px; }
+::-webkit-scrollbar-thumb:hover{ background:#3A4658; }
+
+a{ color:inherit; }
+svg{ display:block; }
+h1,h2,h3,h4{ margin:0; font-weight:500; line-height:1.05; }
+p{ margin:0; }
+ul,ol{ margin:0; padding:0; list-style:none; }
+button,input{ font:inherit; }
+.sr{ position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; border:0; }
+
+/* ── The canvas ground: a real dot grid, because this is a canvas ── */
+.canvas-bg{
+  position:fixed; inset:0; z-index:0; pointer-events:none;
+  background-image:radial-gradient(circle, #1E2632 1px, transparent 1px);
+  background-size:28px 28px;
+  background-position:0 0;
+  opacity:.75;
+}
+
+/* ── Top toolbar ─────────────────────────────────────────────── */
+.toolbar{
+  position:fixed; top:0; left:0; right:0; height:var(--bar); z-index:70;
+  background:rgba(17,21,29,.92);
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line);
+  display:flex; align-items:center; gap:.4rem; padding:0 .6rem;
+}
+.tool{
+  width:32px; height:32px; display:grid; place-items:center;
+  border:1px solid transparent; border-radius:5px; background:none; color:var(--muted); cursor:pointer;
+}
+.tool[aria-pressed="true"]{ background:var(--wire); color:#04201D; }
+.tool:hover:not([aria-pressed="true"]){ background:var(--panel-2); color:#E4E9F1; }
+.tool-sep{ width:1px; height:20px; background:var(--line); margin-inline:.35rem; }
+
+.filename{ display:flex; align-items:baseline; gap:.5rem; margin-left:.5rem; min-width:0; }
+.filename b{ font-weight:600; color:#EDF1F7; font-size:.9rem; white-space:nowrap; }
+.filename span{ font-family:var(--mono); font-size:.72rem; color:var(--muted-2); white-space:nowrap; }
+@media (max-width:640px){
+  .filename span{ display:none; }
+  .zoom{ display:none; }
+  .avatars .av:nth-child(n+3){ display:none; }
+  .share{ white-space:nowrap; }
+}
+
+.toolbar-right{ margin-left:auto; display:flex; align-items:center; gap:.5rem; }
+.avatars{ display:flex; }
+.av{
+  width:26px; height:26px; border-radius:50%; display:grid; place-items:center;
+  font-size:.66rem; font-weight:600; color:#08111A;
+  border:2px solid var(--panel); margin-left:-7px;
+}
+.av:first-child{ margin-left:0; }
+.zoom{
+  font-family:var(--mono); font-size:.74rem; color:var(--muted);
+  border:1px solid var(--line); border-radius:5px; padding:.22rem .5rem; min-width:62px; text-align:center;
+}
+.share{
+  font-size:.8rem; font-weight:600; background:var(--wire); color:#04201D;
+  border:0; border-radius:5px; padding:.4rem .8rem; cursor:pointer; text-decoration:none;
+}
+.share:hover{ background:#5BF0E2; }
+
+/* ── Rails ───────────────────────────────────────────────────── */
+.shell{
+  position:relative; z-index:1;
+  padding-top:var(--bar);
+  display:grid;
+  grid-template-columns: var(--rail-l) minmax(0,1fr) var(--rail-r);
+}
+@media (max-width:1180px){ .shell{ grid-template-columns:1fr; } }
+
+.rail{
+  border-right:1px solid var(--line);
+  background:rgba(17,21,29,.86);
+  backdrop-filter:blur(10px);
+  position:sticky; top:var(--bar);
+  height:calc(100vh - var(--bar));
+  overflow-y:auto;
+  padding:.7rem 0 2rem;
+}
+.rail-r{ border-right:0; border-left:1px solid var(--line); }
+@media (max-width:1180px){ .rail{ display:none; } }
+
+.rail-h{
+  font-size:.68rem; font-weight:600; letter-spacing:.12em; text-transform:uppercase;
+  color:var(--muted-2); padding:.6rem .9rem .45rem;
+}
+.layer{
+  display:flex; align-items:center; gap:.5rem;
+  padding:.34rem .9rem; font-size:.82rem; color:var(--muted);
+  text-decoration:none; border-left:2px solid transparent;
+}
+.layer:hover{ background:var(--panel-2); color:#E4E9F1; }
+.layer.on{ background:rgba(47,224,208,.10); color:var(--wire); border-left-color:var(--wire); }
+.layer .ic{ flex:0 0 14px; opacity:.75; }
+.layer .nm{ overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.layer .lk{ margin-left:auto; opacity:.55; flex:0 0 auto; }
+.layer.locked{ color:var(--muted-2); }
+.layer.nested{ padding-left:1.9rem; }
+
+.rail-block{ padding:.9rem; border-top:1px solid var(--line-soft); margin-top:.6rem; }
+.prop{ display:flex; justify-content:space-between; gap:1rem; padding:.2rem 0; font-family:var(--mono); font-size:.74rem; }
+.prop dt{ color:var(--muted-2); }
+.prop dd{ margin:0; color:#C3CAD6; }
+.swatchrow{ display:flex; align-items:center; gap:.5rem; padding:.28rem 0; font-family:var(--mono); font-size:.74rem; color:#C3CAD6; }
+.sw{ width:15px; height:15px; border-radius:3px; border:1px solid rgba(255,255,255,.18); flex:0 0 auto; }
+
+/* ── Canvas column ───────────────────────────────────────────── */
+.canvas{
+  padding: clamp(1.5rem,3vw,3rem) clamp(.75rem,3vw,3rem) 6rem;
+  display:flex; flex-direction:column; gap:clamp(3rem,6vw,6.5rem);
+}
+
+/* A frame is an artboard sitting on the canvas */
+.frame{ position:relative; }
+.frame-name{
+  position:absolute; top:-1.45rem; left:0;
+  font-family:var(--mono); font-size:.73rem; color:var(--muted);
+  display:flex; align-items:center; gap:.4rem;
+}
+.frame.sel .frame-name{ color:var(--wire); }
+.frame-box{
+  background:var(--frame); color:var(--ink);
+  border:1px solid #DAD6CC;
+  position:relative;
+}
+.frame.sel .frame-box{ box-shadow:0 0 0 1.5px var(--wire); border-color:var(--wire); }
+
+/* selection handles */
+.handle{
+  position:absolute; width:8px; height:8px; background:var(--canvas);
+  border:1.5px solid var(--wire); border-radius:1px; opacity:0; transition:opacity .18s;
+}
+.frame.sel .handle{ opacity:1; }
+.h-tl{ top:-4px; left:-4px; } .h-tr{ top:-4px; right:-4px; }
+.h-bl{ bottom:-4px; left:-4px; } .h-br{ bottom:-4px; right:-4px; }
+
+/* dimension label under a selected frame */
+.dim{
+  position:absolute; bottom:-1.6rem; left:50%; transform:translateX(-50%);
+  font-family:var(--mono); font-size:.7rem;
+  background:var(--wire); color:#04201D; padding:.1rem .4rem; border-radius:3px;
+  opacity:0; transition:opacity .18s; white-space:nowrap;
+}
+.frame.sel .dim{ opacity:1; }
+
+/* comment pin */
+.pin-wrap{ position:absolute; }
+.pin-r{ right:-13px; }
+.pin-l{ left:-13px; }
+/* once the rails are gone there is no gutter to hang a pin in */
+@media (max-width:1180px){
+  .pin-r{ right:10px; }
+  .pin-l{ left:10px; }
+}
+.pin{
+  position:absolute; z-index:5; width:26px; height:26px; border-radius:50% 50% 50% 2px;
+  background:var(--pin); color:#1B0A03; border:0; cursor:pointer;
+  display:grid; place-items:center; font-size:.68rem; font-weight:700;
+  box-shadow:0 4px 10px -2px rgba(0,0,0,.6);
+}
+.pin:hover{ transform:scale(1.12); }
+.pin-note{
+  position:absolute; z-index:6; width:min(280px, 70vw);
+  background:var(--panel-2); color:#D6DBE4; border:1px solid var(--line);
+  border-radius:8px; padding:.7rem .8rem; font-size:.82rem; line-height:1.5;
+  box-shadow:0 18px 40px -18px #000;
+  opacity:0; visibility:hidden; transform:translateY(6px); transition:opacity .18s, transform .18s, visibility .18s;
+}
+.pin-wrap.open .pin-note{ opacity:1; visibility:visible; transform:translateY(0); }
+.pin-note b{ display:block; font-size:.68rem; letter-spacing:.1em; text-transform:uppercase; color:var(--pin); margin-bottom:.3rem; font-weight:600; }
+
+/* ── Content inside frames ───────────────────────────────────── */
+.pad{ padding:clamp(1.5rem,4vw,3.4rem); }
+
+.eyebrow-mono{ font-family:var(--mono); font-size:.72rem; letter-spacing:.06em; color:#8A8478; }
+
+h1.big{
+  font-family:var(--display); font-weight:500;
+  font-size:clamp(2.4rem,6.6vw,5.4rem); line-height:.94; letter-spacing:-.03em;
+  color:var(--ink);
+}
+h2.big{
+  font-family:var(--display); font-weight:500;
+  font-size:clamp(1.9rem,4.2vw,3.4rem); line-height:1; letter-spacing:-.025em; color:var(--ink);
+}
+h3.mid{
+  font-family:var(--display); font-weight:500;
+  font-size:clamp(1.35rem,2.4vw,2rem); line-height:1.05; letter-spacing:-.02em; color:var(--ink);
+}
+.lede{ font-size:clamp(1.02rem,1.2vw,1.16rem); color:#3D4653; max-width:62ch; }
+.body-l p{ color:#3D4653; max-width:64ch; }
+.body-l p + p{ margin-top:.9rem; }
+.body-l strong{ color:var(--ink); font-weight:600; }
+
+/* hero frame */
+.hero-grid{ display:grid; grid-template-columns:minmax(0,1.35fr) minmax(0,1fr); gap:clamp(1.5rem,3vw,3rem); align-items:end; }
+@media (max-width:900px){ .hero-grid{ grid-template-columns:1fr; } }
+.avail-chip{
+  display:inline-flex; align-items:center; gap:.45rem;
+  font-family:var(--mono); font-size:.76rem; color:#0B4F45;
+  background:#D6F7F2; border:1px solid #8FE5DA; border-radius:99px; padding:.22rem .65rem;
+}
+.avail-chip i{ width:7px; height:7px; border-radius:50%; background:#0FA391; font-style:normal; }
+.hero-cta{ display:flex; flex-wrap:wrap; gap:.6rem; align-items:center; margin-top:1.6rem; }
+.btn{
+  display:inline-flex; align-items:center; gap:.45rem;
+  font-size:.92rem; font-weight:600; text-decoration:none;
+  border-radius:7px; padding:.62rem 1.05rem; border:1px solid transparent;
+  transition:transform .14s cubic-bezier(.2,.8,.3,1), background .14s, box-shadow .14s;
+}
+.btn:hover{ transform:translateY(-1px); }
+.btn-p{ background:var(--ink); color:#F7F6F2; box-shadow:0 6px 16px -8px rgba(12,16,23,.9); }
+.btn-p:hover{ background:#1B2330; }
+.btn-s{ background:transparent; color:var(--ink); border-color:#CFCABF; }
+.btn-s:hover{ background:var(--frame-2); }
+.cta-note{ font-size:.85rem; color:#7C7568; }
+
+/* metrics as measured spans, the way a spec sheet marks distance */
+.specs{ display:grid; grid-template-columns:repeat(4,1fr); gap:0; border-top:1px solid #DFDBD1; margin-top:clamp(1.8rem,3vw,2.6rem); }
+@media (max-width:820px){ .specs{ grid-template-columns:repeat(2,1fr); } }
+.spec{ padding:1rem 1.1rem 1.1rem; border-right:1px solid #DFDBD1; position:relative; }
+.spec:last-child{ border-right:0; }
+@media (max-width:820px){ .spec:nth-child(2n){ border-right:0; } .spec:nth-child(-n+2){ border-bottom:1px solid #DFDBD1; } }
+.spec .v{
+  font-family:var(--display); font-weight:500; font-size:clamp(1.7rem,3.4vw,2.5rem);
+  line-height:1; letter-spacing:-.03em; color:var(--ink);
+}
+.spec .k{ margin-top:.45rem; font-size:.86rem; line-height:1.4; color:#5E574B; }
+.spec .measure{ position:absolute; top:0; left:1.1rem; right:1.1rem; height:1px; background:var(--wire); opacity:.85; }
+.spec .measure::before,.spec .measure::after{ content:""; position:absolute; top:-3px; width:1px; height:7px; background:var(--wire); }
+.spec .measure::before{ left:0; } .spec .measure::after{ right:0; }
+
+/* placeholder image plates: a labelled wireframe region, not a broken picture */
+.plate{
+  background:
+    repeating-linear-gradient(135deg, #E9E6DD 0 10px, #E4E0D6 10px 20px);
+  border:1px solid #D3CEC3;
+  position:relative; min-height:200px;
+  display:grid; place-items:center;
+}
+.plate .plabel{
+  font-family:var(--mono); font-size:.72rem; color:#6E675A; text-align:center; padding:1rem;
+  max-width:34ch;
+}
+.plate .corner{ position:absolute; width:12px; height:12px; border:1.5px solid #B9B2A4; }
+.plate .c1{ top:8px; left:8px; border-right:0; border-bottom:0; }
+.plate .c2{ top:8px; right:8px; border-left:0; border-bottom:0; }
+.plate .c3{ bottom:8px; left:8px; border-right:0; border-top:0; }
+.plate .c4{ bottom:8px; right:8px; border-left:0; border-top:0; }
+
+/* jargon */
+.del-list{ display:grid; gap:.28rem; max-width:74ch; margin-top:1.2rem; }
+.del-list li{ font-size:clamp(.95rem,1.4vw,1.12rem); }
+.del-list del{ text-decoration:line-through; text-decoration-color:var(--pin); text-decoration-thickness:2px; color:#9A9285; }
+.do-row{ display:flex; flex-wrap:wrap; gap:.5rem; margin-top:1.8rem; }
+.do-row li{
+  font-family:var(--display); font-weight:500; font-size:clamp(1.3rem,2.6vw,2.1rem);
+  letter-spacing:-.02em; color:var(--ink);
+  border:1px solid var(--ink); border-radius:8px; padding:.2rem .8rem .35rem;
+}
+
+/* work list rows */
+.work{ border-top:1px solid #DFDBD1; }
+.work-row{
+  display:grid; grid-template-columns: 58px minmax(0,1.1fr) minmax(0,1.2fr) auto;
+  gap:clamp(.8rem,2vw,2rem); align-items:start;
+  padding:1.5rem 0; border-bottom:1px solid #DFDBD1;
+  text-decoration:none; color:inherit;
+  transition:background .16s, transform .16s cubic-bezier(.2,.8,.3,1);
+}
+.work-row:hover{ background:#F3F1EA; transform:translateX(6px); }
+@media (max-width:860px){ .work-row{ grid-template-columns:44px 1fr; } .work-row .wr-out, .work-row .wr-go{ grid-column:2; } }
+.wr-n{ font-family:var(--mono); font-size:.78rem; color:#9A9285; padding-top:.35rem; }
+.wr-t h3{ font-family:var(--display); font-weight:500; font-size:clamp(1.4rem,2.6vw,2.1rem); letter-spacing:-.025em; }
+.wr-tags{ display:flex; flex-wrap:wrap; gap:.35rem; margin-top:.5rem; }
+.wr-tags li{ font-family:var(--mono); font-size:.7rem; color:#6E675A; border:1px solid #D3CEC3; border-radius:4px; padding:.06rem .38rem; }
+.wr-out{ color:#3D4653; }
+.wr-out b{ color:var(--ink); font-weight:600; }
+.wr-go{ align-self:center; color:#9A9285; transition:transform .16s, color .16s; }
+.work-row:hover .wr-go{ transform:translateX(4px); color:var(--ink); }
+
+/* locked frame */
+.locked-box{
+  border:1px dashed #C6C0B2; background:#F1EFE8;
+  padding:clamp(1.2rem,3vw,2rem);
+  display:grid; grid-template-columns:1fr minmax(240px,340px); gap:1.6rem; align-items:center;
+}
+@media (max-width:860px){ .locked-box{ grid-template-columns:1fr; } }
+.lockform{ display:flex; flex-direction:column; gap:.5rem; }
+.lockform label{ font-family:var(--mono); font-size:.72rem; color:#6E675A; }
+.lockrow{ display:flex; gap:.4rem; }
+.lockrow input{
+  flex:1; min-width:0; border:1px solid #CFCABF; border-radius:7px; padding:.55rem .7rem;
+  background:#fff; color:var(--ink); font-size:.92rem;
+}
+.lockrow input::placeholder{ color:#A19A8C; }
+.lockrow input:focus{ outline:2px solid var(--wire); outline-offset:0; border-color:var(--wire); }
+.lockrow button{ border:0; border-radius:7px; background:var(--ink); color:#F7F6F2; padding:.55rem .95rem; font-weight:600; cursor:pointer; }
+.lockrow button:hover{ background:#1B2330; }
+.lockmsg{ font-family:var(--mono); font-size:.74rem; min-height:1.1em; color:#0FA391; }
+
+/* flow diagram: how I work */
+.flow{ display:grid; grid-template-columns:repeat(6,1fr); gap:.75rem; margin-top:1.8rem; }
+@media (max-width:980px){ .flow{ grid-template-columns:repeat(3,1fr); } }
+@media (max-width:600px){ .flow{ grid-template-columns:repeat(2,1fr); } }
+.node{
+  border:1px solid #D3CEC3; background:#fff; border-radius:9px; padding:.9rem .8rem 1rem;
+  position:relative;
+}
+.node .nn{ font-family:var(--mono); font-size:.7rem; color:var(--wire); filter:brightness(.62); }
+.node h4{ font-family:var(--display); font-weight:500; font-size:1.15rem; margin:.3rem 0 .4rem; letter-spacing:-.01em; }
+.node p{ font-size:.85rem; line-height:1.45; color:#5E574B; }
+.node::after{
+  content:""; position:absolute; right:-.75rem; top:50%; width:.75rem; height:1px; background:#C6C0B2;
+}
+.node:last-child::after{ display:none; }
+@media (max-width:980px){ .node::after{ display:none; } }
+
+/* styles panel look for principles */
+.styles{ display:grid; grid-template-columns:repeat(2,1fr); gap:0; border:1px solid #DFDBD1; margin-top:1.6rem; }
+@media (max-width:820px){ .styles{ grid-template-columns:1fr; } }
+.style{ padding:1.4rem 1.3rem; border-right:1px solid #DFDBD1; border-bottom:1px solid #DFDBD1; }
+.style:nth-child(2n){ border-right:0; }
+.style:nth-child(n+3){ border-bottom:0; }
+@media (max-width:820px){ .style{ border-right:0; } .style:last-child{ border-bottom:0; } }
+.style .sname{ display:flex; align-items:center; gap:.5rem; font-family:var(--mono); font-size:.74rem; color:#6E675A; }
+.style h4{ font-family:var(--display); font-weight:500; font-size:clamp(1.25rem,2.2vw,1.7rem); margin:.5rem 0 .5rem; letter-spacing:-.02em; }
+.style p{ font-size:.92rem; color:#5E574B; max-width:46ch; }
+
+/* quotes */
+.quotes{ display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; margin-top:1.6rem; }
+@media (max-width:900px){ .quotes{ grid-template-columns:1fr; } }
+.quote{ border:1px solid #DFDBD1; border-radius:10px; padding:1.2rem 1.1rem; background:#fff; }
+.quote blockquote{ margin:0; font-family:var(--display); font-weight:400; font-size:1.08rem; line-height:1.42; color:var(--ink); }
+.quote cite{ display:block; font-style:normal; margin-top:.9rem; font-size:.82rem; color:#6E675A; }
+.tag-draft{ display:inline-block; margin-top:.7rem; font-family:var(--mono); font-size:.66rem; color:#8A5A3B; background:#FBE9DF; border:1px solid #F0CDB6; border-radius:4px; padding:.05rem .35rem; }
+
+/* version history = career */
+.hist{ margin-top:1.4rem; }
+.vrow{
+  display:grid; grid-template-columns:112px 12px 1fr; gap:1rem; align-items:start;
+  padding:1rem 0; border-bottom:1px solid #DFDBD1;
+}
+@media (max-width:620px){ .vrow{ grid-template-columns:82px 12px 1fr; gap:.7rem; } }
+.vtag{ font-family:var(--mono); font-size:.8rem; color:#6E675A; padding-top:.15rem; }
+.vdot{ position:relative; height:100%; }
+.vdot i{ position:absolute; top:.42rem; left:1px; width:9px; height:9px; border-radius:50%; background:var(--wire); border:2px solid var(--frame); box-shadow:0 0 0 1px var(--wire); }
+.vrow:first-child .vdot i{ background:var(--pin); box-shadow:0 0 0 1px var(--pin); }
+.vdot::before{ content:""; position:absolute; top:1.1rem; bottom:-1rem; left:5px; width:1px; background:#DFDBD1; }
+.vrow:last-child .vdot::before{ display:none; }
+.vbody h4{ font-family:var(--display); font-weight:500; font-size:1.2rem; letter-spacing:-.015em; }
+.vbody p{ font-size:.92rem; color:#5E574B; margin-top:.3rem; max-width:62ch; }
+
+.assets{ display:flex; flex-wrap:wrap; gap:.5rem; margin-top:1.4rem; }
+.asset{ border:1px solid #D3CEC3; border-radius:8px; padding:.65rem .85rem; max-width:320px; background:#fff; }
+.asset b{ display:block; font-family:var(--display); font-weight:500; font-size:1.05rem; }
+.asset span{ font-size:.85rem; color:#5E574B; }
+
+.clientlist{ display:flex; flex-wrap:wrap; gap:.3rem .5rem; margin-top:1rem; }
+.clientlist li{ font-family:var(--mono); font-size:.78rem; color:#6E675A; }
+.clientlist li::after{ content:" /"; color:#C6C0B2; }
+.clientlist li:last-child::after{ content:""; }
+
+/* contact frame */
+.contact-in{ text-align:center; padding-block:clamp(1rem,3vw,2rem); }
+.mailbig{
+  display:inline-block; margin-top:1.2rem;
+  font-family:var(--display); font-weight:500; letter-spacing:-.03em;
+  font-size:clamp(1.35rem,4.6vw,3.2rem); color:var(--ink); text-decoration:none;
+  border-bottom:2px solid var(--wire); word-break:break-word;
+}
+.mailbig:hover{ border-color:var(--pin); }
+.social{ display:flex; justify-content:center; flex-wrap:wrap; gap:.5rem; margin-top:1.4rem; }
+.social a{ font-size:.88rem; color:#3D4653; text-decoration:none; border:1px solid #D3CEC3; border-radius:99px; padding:.35rem .85rem; }
+.social a:hover{ background:var(--ink); color:#F7F6F2; border-color:var(--ink); }
+
+/* ── Cursor + zoom HUD ───────────────────────────────────────── */
+.cursor{
+  position:fixed; z-index:80; pointer-events:none; display:flex; align-items:flex-start; gap:2px;
+  opacity:0; transition:opacity .4s;
+}
+.cursor .lbl{
+  font-size:.68rem; font-weight:600; color:#1B0A03; background:var(--pin);
+  border-radius:4px; padding:.05rem .3rem; margin-top:12px;
+  white-space:nowrap;
+}
+.hud{
+  position:fixed; right:calc(var(--rail-r) + 14px); bottom:14px; z-index:65;
+  display:flex; align-items:center; gap:.4rem;
+  background:rgba(17,21,29,.92); border:1px solid var(--line); border-radius:8px;
+  padding:.3rem .5rem; font-family:var(--mono); font-size:.73rem; color:var(--muted);
+  backdrop-filter:blur(10px);
+}
+@media (max-width:1180px){ .hud{ right:14px; } }
+
+.footnote{
+  border-top:1px solid var(--line);
+  padding:1.4rem clamp(.75rem,3vw,3rem) 2.4rem;
+  font-family:var(--mono); font-size:.74rem; color:var(--muted-2);
+  display:flex; justify-content:space-between; gap:1rem; flex-wrap:wrap;
+}
+</style>
+</head>
+<body>
+<!--
+THESIS: A portfolio shown as the working file rather than the finished poster: frames, layer tree, comment pins, version history. The reader is invited to inspect the thinking, not admire the render. Refuses the polished marketing page with its case studies pre-chewed.
+OWN-WORLD: Dark canvas with a real dot grid, warm paper artboards floating on it, cyan measurement rules and selection handles, orange comment pins, a drifting collaborator cursor. Switzer for tool chrome, Bevellier for artboard display type, Spline Sans Mono for coordinates, dimensions and version tags.
+STORY: A design lead recognises the environment in one second, reads the work as artboards, opens two comment pins for the reasoning behind them, and mails him from the last frame.
+FIRST VIEWPORT: Toolbar with the file name across the top, layer rail left, inspector rail right. The hero artboard sits selected on the canvas: name tab "01 · Hero", cyan handles at its corners, a 1440x900 dimension label under it, headline set in Bevellier, four measured metrics along the bottom edge.
+FORM: Design-tool canvas, #5 on the derived list, assigned by external roll. Seed key 8827b2cf.
+FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md
+-->
+
+<div class="canvas-bg" aria-hidden="true"></div>
+
+<!-- Icon set: one stroke weight, drawn for this file -->
+<svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute">
+  <symbol id="i-move" viewBox="0 0 16 16"><path d="M3 2l10 4.4-4.2 1.4L7.4 12z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></symbol>
+  <symbol id="i-frame" viewBox="0 0 16 16"><g fill="none" stroke="currentColor" stroke-width="1.3"><path d="M5 1.5v13M11 1.5v13M1.5 5h13M1.5 11h13"/></g></symbol>
+  <symbol id="i-pen" viewBox="0 0 16 16"><path d="M2.5 13.5l1-3.4 7-7 2.4 2.4-7 7z" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></symbol>
+  <symbol id="i-text" viewBox="0 0 16 16"><g fill="none" stroke="currentColor" stroke-width="1.3"><path d="M3 3h10M8 3v10M5.5 13h5"/></g></symbol>
+  <symbol id="i-comment" viewBox="0 0 16 16"><path d="M2.5 3.5h11v7h-6l-3 2.5v-2.5h-2z" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 16 16"><g fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3.5" y="7" width="9" height="6.5" rx="1"/><path d="M5.5 7V5a2.5 2.5 0 015 0v2"/></g></symbol>
+  <symbol id="i-layer" viewBox="0 0 16 16"><path d="M8 2l6 3-6 3-6-3z" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/><path d="M2 9l6 3 6-3" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></symbol>
+  <symbol id="i-comp" viewBox="0 0 16 16"><path d="M8 1.5L14.5 8 8 14.5 1.5 8z" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-eye" viewBox="0 0 16 16"><g fill="none" stroke="currentColor" stroke-width="1.3"><path d="M1.5 8s2.6-4 6.5-4 6.5 4 6.5 4-2.6 4-6.5 4-6.5-4-6.5-4z"/><circle cx="8" cy="8" r="1.8"/></g></symbol>
+</svg>
+
+<!-- ══ TOOLBAR ═══════════════════════════════════════════════ -->
+<div class="toolbar">
+  <button class="tool" aria-pressed="true" aria-label="Move tool"><svg class="ic" width="16" height="16"><use href="#i-move"/></svg></button>
+  <button class="tool" aria-label="Frame tool"><svg width="16" height="16"><use href="#i-frame"/></svg></button>
+  <button class="tool" aria-label="Pen tool"><svg width="16" height="16"><use href="#i-pen"/></svg></button>
+  <button class="tool" aria-label="Text tool"><svg width="16" height="16"><use href="#i-text"/></svg></button>
+  <span class="tool-sep" aria-hidden="true"></span>
+  <button class="tool" aria-label="Show comments" data-toggle-comments><svg width="16" height="16"><use href="#i-comment"/></svg></button>
+
+  <div class="filename">
+    <b>madebynaman.file</b>
+    <span>Edited just now · autosaved</span>
+  </div>
+
+  <div class="toolbar-right">
+    <div class="avatars" aria-label="In this file">
+      <span class="av" style="background:#2FE0D0" title="Naman Sharma">NS</span>
+      <span class="av" style="background:#FF6A3D" title="Jerry">J</span>
+      <span class="av" style="background:#A78BFA" title="You">YOU</span>
+    </div>
+    <span class="zoom" data-zoom>100%</span>
+    <a class="share" href="#contact">Say hi</a>
+  </div>
+</div>
+
+<div class="shell">
+
+  <!-- ══ LAYERS RAIL ═════════════════════════════════════════ -->
+  <aside class="rail" aria-label="Layers">
+    <p class="rail-h">Page 1 · Homepage</p>
+    <nav id="layers">
+      <a class="layer" href="#f-hero" data-layer="f-hero"><svg class="ic" width="14" height="14"><use href="#i-frame"/></svg><span class="nm">01 · Hero</span></a>
+      <a class="layer" href="#f-promise" data-layer="f-promise"><svg class="ic" width="14" height="14"><use href="#i-text"/></svg><span class="nm">02 · No-jargon promise</span></a>
+      <a class="layer" href="#f-work" data-layer="f-work"><svg class="ic" width="14" height="14"><use href="#i-frame"/></svg><span class="nm">03 · Selected work</span></a>
+      <span class="layer nested locked"><svg class="ic" width="14" height="14"><use href="#i-comp"/></svg><span class="nm">Turns</span></span>
+      <span class="layer nested locked"><svg class="ic" width="14" height="14"><use href="#i-comp"/></svg><span class="nm">Wikipedia × KaiOS</span></span>
+      <span class="layer nested locked"><svg class="ic" width="14" height="14"><use href="#i-comp"/></svg><span class="nm">LetsConnect</span></span>
+      <span class="layer nested locked"><svg class="ic" width="14" height="14"><use href="#i-comp"/></svg><span class="nm">Gadivan</span></span>
+      <span class="layer nested locked"><svg class="ic" width="14" height="14"><use href="#i-lock"/></svg><span class="nm">NDA · 2 studies</span><svg class="lk" width="14" height="14"><use href="#i-lock"/></svg></span>
+      <a class="layer" href="#f-process" data-layer="f-process"><svg class="ic" width="14" height="14"><use href="#i-layer"/></svg><span class="nm">04 · How I work</span></a>
+      <a class="layer" href="#f-words" data-layer="f-words"><svg class="ic" width="14" height="14"><use href="#i-comment"/></svg><span class="nm">05 · Kind words</span></a>
+      <a class="layer" href="#f-code" data-layer="f-code"><svg class="ic" width="14" height="14"><use href="#i-text"/></svg><span class="nm">06 · Designer who codes</span></a>
+      <a class="layer" href="#f-about" data-layer="f-about"><svg class="ic" width="14" height="14"><use href="#i-text"/></svg><span class="nm">07 · The longer version</span></a>
+      <a class="layer" href="#f-jerry" data-layer="f-jerry"><svg class="ic" width="14" height="14"><use href="#i-eye"/></svg><span class="nm">08 · Jerry</span></a>
+      <a class="layer" href="#f-believe" data-layer="f-believe"><svg class="ic" width="14" height="14"><use href="#i-comp"/></svg><span class="nm">09 · What I believe</span></a>
+      <a class="layer" href="#f-history" data-layer="f-history"><svg class="ic" width="14" height="14"><use href="#i-layer"/></svg><span class="nm">10 · Version history</span></a>
+      <a class="layer" href="#f-contact" data-layer="f-contact"><svg class="ic" width="14" height="14"><use href="#i-frame"/></svg><span class="nm">11 · Say hi</span></a>
+    </nav>
+    <div class="rail-block">
+      <p class="rail-h" style="padding:0 0 .5rem">Colour styles</p>
+      <div class="swatchrow"><span class="sw" style="background:#0E1116"></span> canvas / 0E1116</div>
+      <div class="swatchrow"><span class="sw" style="background:#FBFAF6"></span> paper / FBFAF6</div>
+      <div class="swatchrow"><span class="sw" style="background:#2FE0D0"></span> measure / 2FE0D0</div>
+      <div class="swatchrow"><span class="sw" style="background:#FF6A3D"></span> comment / FF6A3D</div>
+    </div>
+  </aside>
+
+  <!-- ══ CANVAS ══════════════════════════════════════════════ -->
+  <main class="canvas">
+
+    <!-- 01 HERO -->
+    <section class="frame" id="f-hero" data-frame data-name="01 · Hero" data-dim="1440 × 900" data-w="1440" data-h="900" data-fill="Paper 100%">
+      <p class="frame-name"><svg width="12" height="12"><use href="#i-frame"/></svg> 01 · Hero</p>
+      <div class="frame-box">
+        <span class="handle h-tl"></span><span class="handle h-tr"></span><span class="handle h-bl"></span><span class="handle h-br"></span>
+        <span class="dim">1440 × 900</span>
+
+        <div class="pad">
+          <div class="hero-grid">
+            <div>
+              <p class="eyebrow-mono">Naman Sharma / product &amp; UX designer / Jaipur, IN</p>
+              <h1 class="big" style="margin-top:.9rem">I make complex<br>products simple.</h1>
+              <p class="lede" style="margin-top:1.4rem">
+                Designing since 2017, in UX since 2019. I help teams turn messy problems into
+                products people actually understand. Based in Jaipur, working everywhere.
+              </p>
+              <p style="margin-top:1.1rem"><span class="avail-chip"><i></i>Open to product design roles and freelance</span></p>
+              <div class="hero-cta">
+                <a class="btn btn-p" href="#f-work">See my work <svg width="14" height="14"><use href="#i-arrow"/></svg></a>
+                <a class="btn btn-s" href="#f-contact">Say hi</a>
+                <span class="cta-note">Always up for a good conversation.</span>
+              </div>
+            </div>
+
+            <div class="plate" style="min-height:270px">
+              <span class="corner c1"></span><span class="corner c2"></span><span class="corner c3"></span><span class="corner c4"></span>
+              <p class="plabel">image · portrait.jpg<br>warm photo of Naman, natural light, Jerry in frame if he agrees</p>
+            </div>
+          </div>
+
+          <ul class="specs">
+            <li class="spec"><span class="measure" aria-hidden="true"></span><p class="v">$500K</p><p class="k">pre-seed raised after the Turns website and brand revamp</p></li>
+            <li class="spec"><span class="measure" aria-hidden="true"></span><p class="v">4.8★</p><p class="k">on the Play Store after the LetsConnect redesign</p></li>
+            <li class="spec"><span class="measure" aria-hidden="true"></span><p class="v">25</p><p class="k">in-person interviews for the Wikimedia Foundation, across 3 cities</p></li>
+            <li class="spec"><span class="measure" aria-hidden="true"></span><p class="v">15+</p><p class="k">clients since 2017, from one-person startups to large brands</p></li>
+          </ul>
+        </div>
+
+        <div class="pin-wrap pin-r" style="top:22%">
+          <button class="pin" aria-expanded="false" aria-label="Open comment 1">1</button>
+          <div class="pin-note" style="right:0; top:34px">
+            <b>Naman · on the numbers</b>
+            The Asian Paints result is bigger than three of these. It stays out of the hero because
+            that study is behind a password, and a number you cannot show is a number you should not lead with.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 02 PROMISE -->
+    <section class="frame" id="f-promise" data-frame data-name="02 · No-jargon promise" data-dim="1440 × 720" data-w="1440" data-h="720" data-fill="Paper 100%">
+      <p class="frame-name"><svg width="12" height="12"><use href="#i-text"/></svg> 02 · No-jargon promise</p>
+      <div class="frame-box">
+        <span class="handle h-tl"></span><span class="handle h-tr"></span><span class="handle h-bl"></span><span class="handle h-br"></span>
+        <span class="dim">1440 × 720</span>
+        <div class="pad">
+          <h2 class="big">A no-jargon promise</h2>
+          <p class="lede" style="margin-top:1.2rem">
+            Most designer portfolios promise to synergize aesthetics with functionality and craft
+            delightful experiences. This one doesn't. I hate jargon. So, for the record:
+          </p>
+
+          <p class="sr" id="nd2">Things I do not do:</p>
+          <ul class="del-list" aria-labelledby="nd2">
+            <li><del>Foster innovation through synergy</del></li>
+            <li><del>Navigate the confluence of form and function</del></li>
+            <li><del>Orchestrate design revolutions</del></li>
+            <li><del>Instigate paradigmatic evolutions</del></li>
+            <li><del>Seamlessly integrate cutting-edge methodologies</del></li>
+            <li><del>Engineer experiential marvels</del></li>
+            <li><del>Champion transformative ideation in the ever-evolving design ethos</del></li>
+            <li><del>Perpetuate narratives that transcend boundaries</del></li>
+          </ul>
+
+          <p class="eyebrow-mono" style="margin-top:2rem">Here is what I actually do</p>
+          <ul class="do-row">
+            <li>Listen</li><li>Sketch</li><li>Test</li><li>Simplify</li><li>Ship</li><li>Check if it worked</li>
+          </ul>
+          <p class="lede" style="margin-top:1.4rem"><strong>That's the whole trick.</strong></p>
+        </div>
+
+        <div class="pin-wrap pin-l" style="bottom:14%">
+          <button class="pin" aria-expanded="false" aria-label="Open comment 2">2</button>
+          <div class="pin-note" style="left:0; top:34px">
+            <b>Naman · accessibility note</b>
+            Screen readers announce struck-through text as ordinary text, so this list is wrapped in
+            <code>&lt;del&gt;</code> with a hidden "things I do not do" heading above it. Otherwise a blind
+            visitor hears me sincerely claiming to orchestrate design revolutions.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 03 WORK -->
+    <section class="frame" id="f-work" data-frame data-name="03 · Selected work" data-dim="1440 × 1180" data-w="1440" data-h="1180" data-fill="Paper 100%">
+      <p class="frame-name"><svg width="12" height="12"><use href="#i-frame"/></svg> 03 · Selected work</p>
+      <div class="frame-box">
+        <span class="handle h-tl"></span><span class="handle h-tr"></span><span class="handle h-bl"></span><span class="handle h-br"></span>
+        <span class="dim">1440 × 1180</span>
+        <div class="pad">
+          <h2 class="big">Selected work</h2>
+          <p class="lede" style="margin-top:1rem">A few favourites. Short versions here. Ask me for the long ones.</p>
+
+          <div class="work" style="margin-top:2rem">
+            <a class="work-row" href="#f-contact">
+              <span class="wr-n">01</span>
+              <span class="wr-t"><h3>Turns</h3><ul class="wr-tags"><li>Website</li><li>Brand</li><li>Design system</li></ul></span>
+              <span class="wr-out">New website, new brand, new design system. <b>They raised $500K pre-seed after the revamp.</b></span>
+              <span class="wr-go"><svg width="18" height="18"><use href="#i-arrow"/></svg></span>
+            </a>
+            <a class="work-row" href="#f-contact">
+              <span class="wr-n">02</span>
+              <span class="wr-t"><h3>Wikipedia × KaiOS</h3><ul class="wr-tags"><li>Field research</li><li>25 users</li><li>3 cities</li></ul></span>
+              <span class="wr-out"><b>25 in-person interviews for the Wikimedia Foundation</b>, with JioPhone users in Pune, Mumbai and Delhi. Tiny screens, real keypads, and often the only internet-connected device in the house.</span>
+              <span class="wr-go"><svg width="18" height="18"><use href="#i-arrow"/></svg></span>
+            </a>
+            <a class="work-row" href="#f-contact">
+              <span class="wr-n">03</span>
+              <span class="wr-t"><h3>LetsConnect</h3><ul class="wr-tags"><li>Mobile app</li><li>UX redesign</li></ul></span>
+              <span class="wr-out">Rebuilt the experience from user feedback. <b>Now at 4.8★ on the Play Store.</b></span>
+              <span class="wr-go"><svg width="18" height="18"><use href="#i-arrow"/></svg></span>
+            </a>
+            <a class="work-row" href="#f-contact">
+              <span class="wr-n">04</span>
+              <span class="wr-t"><h3>Gadivan</h3><ul class="wr-tags"><li>0 to 1</li><li>Multiple apps</li></ul></span>
+              <span class="wr-out">Designed the whole product from a blank page. <b>Different apps for different users, one system underneath.</b></span>
+              <span class="wr-go"><svg width="18" height="18"><use href="#i-arrow"/></svg></span>
+            </a>
+          </div>
+
+          <div class="locked-box" style="margin-top:2rem">
+            <div>
+              <p class="eyebrow-mono" style="display:flex;align-items:center;gap:.4rem"><svg width="13" height="13" style="color:#8A8478"><use href="#i-lock"/></svg> layer locked</p>
+              <h3 class="mid" style="margin-top:.6rem">Two more, behind a password</h3>
+              <p style="margin-top:.6rem;color:#5E574B;max-width:52ch">
+                A dealer portal for one of India's largest paint companies. An onboarding rescue for a
+                small-business app. Real numbers, real impact, both under NDA.
+              </p>
+            </div>
+            <form class="lockform" data-lock>
+              <label for="e17">Leave your email, the password comes back</label>
+              <div class="lockrow">
+                <input id="e17" type="email" required placeholder="you@company.com" autocomplete="email">
+                <button type="submit">Send it</button>
+              </div>
+              <p class="lockmsg" role="status" data-lockmsg></p>
+            </form>
+          </div>
+
+          <div class="plate" style="margin-top:2rem;min-height:230px">
+            <span class="corner c1"></span><span class="corner c2"></span><span class="corner c3"></span><span class="corner c4"></span>
+            <p class="plabel">image group · work-mockups/<br>Turns site on laptop and phone · JioPhone with field notes · LetsConnect before and after · Gadivan app family</p>
+          </div>
+        </div>
+
+        <div class="pin-wrap pin-r" style="top:8%">
+          <button class="pin" aria-expanded="false" aria-label="Open comment 3">3</button>
+          <div class="pin-note" style="right:0; top:34px">
+            <b>Naman · why a field, not "ask me"</b>
+            This card reaches you at the moment you are most interested. Asking you to stop, open a mail
+            client and compose a message loses most people. One click, subject already written.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 04 PROCESS -->
+    <section class="frame" id="f-process" data-frame data-name="04 · How I work" data-dim="1440 × 560" data-w="1440" data-h="560" data-fill="Paper 100%">
+      <p class="frame-name"><svg width="12" height="12"><use href="#i-layer"/></svg> 04 · How I work</p>
+      <div class="frame-box">
+        <span class="handle h-tl"></span><span class="handle h-tr"></span><span class="handle h-bl"></span><span class="handle h-br"></span>
+        <span class="dim">1440 × 560</span>
+        <div class="pad">
+          <h2 class="big">How I work</h2>
+          <p class="lede" style="margin-top:1rem">Six steps. The order matters more than the labels.</p>
+          <ol class="flow">
+            <li class="node"><p class="nn">step 1</p><h4>Listen</h4><p>Users, founders, analytics, support tickets. Most of what I need already exists inside the company. It just isn't in one place yet.</p></li>
+            <li class="node"><p class="nn">step 2</p><h4>Map</h4><p>The full journey, end to end, until I can see where it breaks.</p></li>
+            <li class="node"><p class="nn">step 3</p><h4>Explore</h4><p>Go wide before narrowing. I'd rather throw away ten directions than defend the first one.</p></li>
+            <li class="node"><p class="nn">step 4</p><h4>Refine</h4><p>Pick a direction and sweat the details.</p></li>
+            <li class="node"><p class="nn">step 5</p><h4>Ship</h4><p>Stay with engineering through the build, screen by screen, until it's live.</p></li>
+            <li class="node"><p class="nn">step 6</p><h4>Check</h4><p>Watch the numbers afterwards. Fix what moved, and fix what didn't.</p></li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- 05 WORDS -->
+    <section class="frame" id="f-words" data-frame data-name="05 · Kind words" data-dim="1440 × 520" data-w="1440" data-h="520" data-fill="Paper 100%">
+      <p class="frame-name"><svg width="12" height="12"><use href="#i-comment"/></svg> 05 · Kind words</p>
+      <div class="frame-box">
+        <span class="handle h-tl"></span><span class="handle h-tr"></span><span class="handle h-bl"></span><span class="handle h-br"></span>
+        <span class="dim">1440 × 520</span>
+        <div class="pad">
+          <h2 class="big">Kind words</h2>
+          <p class="lede" style="margin-top:1rem">Specific beats glowing. Three people who had to work with me on a deadline.</p>
+          <div class="quotes">
+            <div class="quote">
+              <blockquote>He asked the questions we'd been avoiding for a year, then showed us the answers on a wall of screens.</blockquote>
+              <cite>Founder · Turns</cite><br>
+              <span class="tag-draft">draft copy · real quote pending</span>
+            </div>
+            <div class="quote">
+              <blockquote>Four apps, four kinds of user, and somehow they all felt like the same company. That was him.</blockquote>
+              <cite>Co-founder · Gadivan</cite><br>
+              <span class="tag-draft">draft copy · real quote pending</span>
+            </div>
+            <div class="quote">
+              <blockquote>He rebuilt our component library on his own time because the handoffs kept breaking. Nobody asked him to.</blockquote>
+              <cite>Design manager · Thence</cite><br>
+              <span class="tag-draft">draft copy · real quote pending</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 06 CODES -->
+    <section class="frame" id="f-code" data-frame data-name="06 · Designer who codes" data-dim="1440 × 480" data-w="1440" data-h="480" data-fill="Paper 100%">
+      <p class="frame-name"><svg width="12" height="12"><use href="#i-text"/></svg> 06 · Designer who codes</p>
+      <div class="frame-box">
+        <span class="handle h-tl"></span><span class="handle h-tr"></span><span class="handle h-bl"></span><span class="handle h-br"></span>
+        <span class="dim">1440 × 480</span>
+        <div class="pad">
+          <h2 class="big">I design it, then I help build it</h2>
+          <div class="body-l" style="margin-top:1.2rem">
+            <p>I have a computer engineering degree. For years I barely used it, and it has turned out to be one of the more useful things I own.</p>
+            <p>It means I know what's expensive to build before I draw it, I can read the codebase instead of guessing, and engineers don't have to translate for me. When a handoff goes sideways, I can usually work out why on my own.</p>
+            <p>I'm re-learning to code properly now, and I build with AI most days. This site is where that started: I gave the same brief to a room full of models, read every direction that came back, and worked out what I actually wanted. Useful exercise. <strong>The design decisions are still mine.</strong></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 07 ABOUT -->
+    <section class="frame" id="f-about" data-frame data-name="07 · The longer version" data-dim="1440 × 620" data-w="1440" data-h="620" data-fill="Paper 100%">
+      <p class="frame-name"><svg width="12" height="12"><use href="#i-text"/></svg> 07 · The longer version</p>
+      <div class="frame-box">
+        <span class="handle h-tl"></span><span class="handle h-tr"></span><span class="handle h-bl"></span><span class="handle h-br"></span>
+        <span class="dim">1440 × 620</span>
+        <div class="pad">
+          <div class="hero-grid" style="align-items:start">
+            <div>
+              <h2 class="big">The longer version</h2>
+              <div class="body-l" style="margin-top:1.2rem">
+                <p>I'm a self-taught designer with a computer engineering degree. Halfway through the degree I worked out that I liked designing products more than writing code, so I taught myself design properly: books, courses, YouTube, and a lot of bad early work.</p>
+                <p>It started in 2017 with graphic design. Logos, posters, a board game, a kids' eBook. In 2019 I found UX research and never looked back. Since then: field research, usability testing, web apps, mobile apps, websites, brands, packaging, social graphics. Print and pixels and most things in between.</p>
+                <p>I'm a curious generalist, and I think that's the useful part. <strong>Range lets me see the whole problem rather than only my corner of it.</strong></p>
+                <p><strong>Right now:</strong> Jaipur, with Jerry asleep under the desk. Open to product design roles and freelance.</p>
+              </div>
+              <p class="eyebrow-mono" style="margin-top:1.6rem">Tools: Figma · FigJam · Miro · Framer · Webflow · Protopie · Illustrator · Photoshop</p>
+            </div>
+            <div class="plate" style="min-height:240px">
+              <span class="corner c1"></span><span class="corner c2"></span><span class="corner c3"></span><span class="corner c4"></span>
+              <p class="plabel">image strip · about/<br>three candids: working, a whiteboard, chai. A strip rather than a gallery.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 08 JERRY -->
+    <section class="frame" id="f-jerry" data-frame data-name="08 · Jerry" data-dim="1440 × 540" data-w="1440" data-h="540" data-fill="Paper 100%">
+      <p class="frame-name"><svg width="12" height="12"><use href="#i-eye"/></svg> 08 · Jerry</p>
+      <div class="frame-box">
+        <span class="handle h-tl"></span><span class="handle h-tr"></span><span class="handle h-bl"></span><span class="handle h-br"></span>
+        <span class="dim">1440 × 540</span>
+        <div class="pad">
+          <div class="hero-grid" style="align-items:center">
+            <div>
+              <h2 class="big">The real boss</h2>
+              <div class="body-l" style="margin-top:1.2rem">
+                <p>Jerry is a four-year-old indie street dog, and the love of my life.</p>
+                <p>I met him when he was four weeks old. Malnourished, separated from his mother and litter, far too young to survive on his own. So I brought him home. My parents took some convincing.</p>
+                <p>He grew up stubborn, smart and deeply introverted, and he is extremely selective about who may pet him. <strong>If he ever lets you, take it as a five-star review.</strong></p>
+                <p>He's asleep next to my desk right now, supervising. He says hi.</p>
+              </div>
+              <p class="eyebrow-mono" style="margin-top:1.2rem">Dogs rescued: 1</p>
+            </div>
+            <div class="plate" style="min-height:260px">
+              <span class="corner c1"></span><span class="corner c2"></span><span class="corner c3"></span><span class="corner c4"></span>
+              <p class="plabel">image · jerry.jpg<br>this photo matters more than any mockup in the file</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="pin-wrap pin-r" style="top:16%">
+          <button class="pin" aria-expanded="false" aria-label="Open comment 4">4</button>
+          <div class="pin-note" style="right:0; top:34px">
+            <b>Jerry · 4 weeks ago</b>
+            Approved. Move the photo up.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 09 BELIEVE -->
+    <section class="frame" id="f-believe" data-frame data-name="09 · What I believe" data-dim="1440 × 660" data-w="1440" data-h="660" data-fill="Paper 100%">
+      <p class="frame-name"><svg width="12" height="12"><use href="#i-comp"/></svg> 09 · What I believe</p>
+      <div class="frame-box">
+        <span class="handle h-tl"></span><span class="handle h-tr"></span><span class="handle h-bl"></span><span class="handle h-br"></span>
+        <span class="dim">1440 × 660</span>
+        <div class="pad">
+          <h2 class="big">Four things I design by</h2>
+          <p class="lede" style="margin-top:1rem">Published as styles, so they stay consistent across everything I touch.</p>
+          <div class="styles">
+            <div class="style">
+              <p class="sname"><svg width="13" height="13"><use href="#i-comp"/></svg> principle / consistency</p>
+              <h4>Consistency beats talent</h4>
+              <p>I'm not the most talented designer in the world. I show up every day instead, and that compounds. Designing since 2017, in UX since 2019, 15+ clients, no year off.</p>
+            </div>
+            <div class="style">
+              <p class="sname"><svg width="13" height="13"><use href="#i-comp"/></svg> principle / curiosity</p>
+              <h4>Curiosity is the job</h4>
+              <p>Understanding why someone picks a keypad phone over a smartphone shaped the Wikipedia recommendations far more than anything I knew about interfaces.</p>
+            </div>
+            <div class="style">
+              <p class="sname"><svg width="13" height="13"><use href="#i-comp"/></svg> principle / function</p>
+              <h4>Form follows function</h4>
+              <p>Function solves the problem. Beauty is what makes people remember it, and you earn the second by doing the first. On one signup rescue, no amount of polish would have moved the number until research found the real problem.</p>
+            </div>
+            <div class="style">
+              <p class="sname"><svg width="13" height="13"><use href="#i-comp"/></svg> principle / ownership</p>
+              <h4>Give a damn</h4>
+              <p>At Turns that meant brand guidelines and a design system so the team could keep shipping consistently after I left. Nobody asked for that part.</p>
+            </div>
+          </div>
+
+          <p class="eyebrow-mono" style="margin-top:2rem">Assets · ask me about</p>
+          <ul class="assets">
+            <li class="asset"><b>Hip-hop</b><span>Raised on old school, Eminem and 50 Cent. These days mostly Desi Hip Hop.</span></li>
+            <li class="asset"><b>Video games</b><span>Need for Speed: Most Wanted (2005, the correct answer). Call of Duty. Prince of Persia: Warrior Within.</span></li>
+            <li class="asset"><b>Personal finance</b><span>Slow, boring, long-term, on purpose.</span></li>
+            <li class="asset"><b>Education</b><span>How people learn fascinates me, and it shows up in how I design.</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 10 HISTORY -->
+    <section class="frame" id="f-history" data-frame data-name="10 · Version history" data-dim="1440 × 840" data-w="1440" data-h="840" data-fill="Paper 100%">
+      <p class="frame-name"><svg width="12" height="12"><use href="#i-layer"/></svg> 10 · Version history</p>
+      <div class="frame-box">
+        <span class="handle h-tl"></span><span class="handle h-tr"></span><span class="handle h-bl"></span><span class="handle h-br"></span>
+        <span class="dim">1440 × 840</span>
+        <div class="pad">
+          <h2 class="big">Version history</h2>
+          <p class="lede" style="margin-top:1rem">Where I've been, newest first.</p>
+
+          <div class="hist">
+            <div class="vrow">
+              <p class="vtag">2025 → now</p>
+              <span class="vdot" aria-hidden="true"><i></i></span>
+              <div class="vbody"><h4>Current</h4><p>Product and UX work I can get properly stuck into. Open to a full-time role for the right team.</p></div>
+            </div>
+            <div class="vrow">
+              <p class="vtag">2022 – 2025</p>
+              <span class="vdot" aria-hidden="true"><i></i></span>
+              <div class="vbody"><h4>Independent product, UX and web designer</h4><p>Turns, Gadivan, LetsConnect, LearnApp and a dozen others. Website and brand work, 0 to 1 product design, UX audits, design systems.</p></div>
+            </div>
+            <div class="vrow">
+              <p class="vtag">2021 – 2022</p>
+              <span class="vdot" aria-hidden="true"><i></i></span>
+              <div class="vbody"><h4>UX designer at Thence</h4><p>A UX studio. Competitive analysis, research, wireframing, prototyping and usability testing for large Indian brands. Mentored interns.</p></div>
+            </div>
+            <div class="vrow">
+              <p class="vtag">2019 – 2020</p>
+              <span class="vdot" aria-hidden="true"><i></i></span>
+              <div class="vbody"><h4>UX research intern at Hureo</h4><p>Field research for the Wikimedia Foundation. Recruiting, questionnaires, 25 face-to-face interviews, personas, journey maps, ecosystem maps, the report.</p></div>
+            </div>
+            <div class="vrow">
+              <p class="vtag">2017 – 2019</p>
+              <span class="vdot" aria-hidden="true"><i></i></span>
+              <div class="vbody"><h4>Graphic design at Skillovate, then HappleyFit</h4><p>A mascot, a kids' eBook, a board game, posters, brochures, an exhibition booth, and my first WordPress site.</p></div>
+            </div>
+            <div class="vrow">
+              <p class="vtag">2017 – 2021</p>
+              <span class="vdot" aria-hidden="true"><i></i></span>
+              <div class="vbody"><h4>B.E. Computer Engineering</h4><p>Smt. Kashibai Navale College of Engineering, Pune University.</p></div>
+            </div>
+          </div>
+
+          <p class="eyebrow-mono" style="margin-top:2rem">Shared with</p>
+          <ul class="clientlist">
+            <li>Turns</li><li>LetsConnect</li><li>Gadivan</li><li>LearnApp</li><li>Parentverse</li><li>Venyou</li><li>Sharent</li>
+            <li>Spirinova</li><li>Gorico</li><li>RedShilliz</li><li>DGlobalist</li><li>Pahoti Wellness</li><li>Ivy Malik</li>
+            <li>PhotoFinder</li><li>Olsub</li><li>Learn Theta</li><li>Thence</li><li>Hureo</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 11 CONTACT -->
+    <section class="frame" id="f-contact" data-frame data-name="11 · Say hi" data-dim="1440 × 520" data-w="1440" data-h="520" data-fill="Paper 100%">
+      <p class="frame-name"><svg width="12" height="12"><use href="#i-frame"/></svg> 11 · Say hi</p>
+      <div class="frame-box">
+        <span class="handle h-tl"></span><span class="handle h-tr"></span><span class="handle h-bl"></span><span class="handle h-br"></span>
+        <span class="dim">1440 × 520</span>
+        <div class="pad">
+          <div class="contact-in">
+            <h2 class="big">Say hi</h2>
+            <p class="lede" style="margin:1rem auto 0">
+              Whether it's a role, a project, or a good conversation about design, hip-hop or dogs, my inbox is open.
+            </p>
+            <a class="mailbig" href="mailto:madebynaman@gmail.com">madebynaman@gmail.com</a>
+            <div class="social">
+              <a href="https://www.linkedin.com/in/madebynaman/" rel="noopener">LinkedIn</a>
+              <a href="https://www.madebynaman.com" rel="noopener">madebynaman.com</a>
+              <a href="#f-hero">Instagram</a>
+              <a href="#f-hero">Twitter</a>
+            </div>
+            <p class="eyebrow-mono" style="margin-top:1.4rem">Jaipur, India (GMT+5:30) · replies within a day, usually faster</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="footnote">
+      <span>madebynaman.file · page 1 of 1 · 11 frames · 1 locked layer</span>
+      <span>No jargon was used on this website. Jerry approved it.</span>
+    </div>
+  </main>
+
+  <!-- ══ INSPECTOR RAIL ══════════════════════════════════════ -->
+  <aside class="rail rail-r" aria-label="Inspector">
+    <p class="rail-h">Selection</p>
+    <div style="padding:0 .9rem">
+      <p style="font-size:.86rem;color:#E4E9F1;font-weight:600" data-insp-name>01 · Hero</p>
+      <dl style="margin:.7rem 0 0">
+        <div class="prop"><dt>W</dt><dd data-insp-w>1440</dd></div>
+        <div class="prop"><dt>H</dt><dd data-insp-h>900</dd></div>
+        <div class="prop"><dt>X</dt><dd>0</dd></div>
+        <div class="prop"><dt>Y</dt><dd data-insp-y>0</dd></div>
+        <div class="prop"><dt>Fill</dt><dd data-insp-fill>Paper 100%</dd></div>
+      </dl>
+    </div>
+
+    <div class="rail-block">
+      <p class="rail-h" style="padding:0 0 .5rem">Text styles</p>
+      <div class="prop"><dt>Display / XL</dt><dd>Bevellier 500</dd></div>
+      <div class="prop"><dt>Body</dt><dd>Switzer 400</dd></div>
+      <div class="prop"><dt>Data</dt><dd>Spline Mono 400</dd></div>
+    </div>
+
+    <div class="rail-block">
+      <p class="rail-h" style="padding:0 0 .5rem">Comments</p>
+      <p style="font-size:.82rem;color:var(--muted);line-height:1.5">
+        Four pins on this page. They hold the reasoning behind decisions people usually ask about in interviews.
+      </p>
+      <button class="share" style="margin-top:.8rem;width:100%" data-toggle-comments>Show all comments</button>
+    </div>
+
+    <div class="rail-block">
+      <p class="rail-h" style="padding:0 0 .5rem">Export</p>
+      <a class="layer" href="mailto:madebynaman@gmail.com?subject=Can%20I%20see%20the%20full%20case%20studies%3F" style="border-left-color:transparent">
+        <svg class="ic" width="14" height="14"><use href="#i-arrow"/></svg><span class="nm">Request full case studies</span>
+      </a>
+    </div>
+  </aside>
+</div>
+
+<div class="hud"><span data-zoom2>100%</span> · <span data-frames>11 frames</span></div>
+
+<div class="cursor" data-cursor aria-hidden="true">
+  <svg width="14" height="18" viewBox="0 0 14 18"><path d="M1 1l11 6.5-5 1.2-1.6 5z" fill="#FF6A3D" stroke="#0E1116" stroke-width="1"/></svg>
+  <span class="lbl">Jerry</span>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+<script>
+(function(){
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var frames = Array.prototype.slice.call(document.querySelectorAll('[data-frame]'));
+  var layers = Array.prototype.slice.call(document.querySelectorAll('[data-layer]'));
+
+  /* Inspector + layer rail follow whichever frame is under the viewport centre */
+  var inspName = document.querySelector('[data-insp-name]');
+  var inspW = document.querySelector('[data-insp-w]');
+  var inspH = document.querySelector('[data-insp-h]');
+  var inspY = document.querySelector('[data-insp-y]');
+  var inspFill = document.querySelector('[data-insp-fill]');
+
+  function select(frame){
+    frames.forEach(function(f){ f.classList.toggle('sel', f === frame); });
+    layers.forEach(function(l){ l.classList.toggle('on', l.dataset.layer === frame.id); });
+    inspName.textContent = frame.dataset.name;
+    inspW.textContent = frame.dataset.w;
+    inspH.textContent = frame.dataset.h;
+    inspY.textContent = Math.round(frame.offsetTop);
+    inspFill.textContent = frame.dataset.fill;
+  }
+
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting) select(e.target);
+    });
+  }, { rootMargin:'-45% 0px -45% 0px', threshold:0 });
+  frames.forEach(function(f){ io.observe(f); });
+  select(frames[0]);
+
+  /* Zoom readout: the canvas "zooms out" as you travel down the file */
+  var zoomEls = [document.querySelector('[data-zoom]'), document.querySelector('[data-zoom2]')];
+  function updateZoom(){
+    var max = document.body.scrollHeight - window.innerHeight;
+    var p = max > 0 ? window.scrollY / max : 0;
+    var z = Math.round(100 - p * 46);
+    zoomEls.forEach(function(el){ if(el) el.textContent = z + '%'; });
+  }
+  window.addEventListener('scroll', updateZoom, { passive:true });
+  updateZoom();
+
+  /* Comment pins */
+  document.querySelectorAll('.pin').forEach(function(btn){
+    var wrap = btn.closest('.pin-wrap');
+    btn.addEventListener('click', function(){
+      var open = wrap.classList.toggle('open');
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+  });
+  document.querySelectorAll('[data-toggle-comments]').forEach(function(b){
+    b.addEventListener('click', function(){
+      var wraps = document.querySelectorAll('.pin-wrap');
+      var anyClosed = Array.prototype.some.call(wraps, function(w){ return !w.classList.contains('open'); });
+      wraps.forEach(function(w){
+        w.classList.toggle('open', anyClosed);
+        w.querySelector('.pin').setAttribute('aria-expanded', anyClosed ? 'true' : 'false');
+      });
+    });
+  });
+
+  /* Locked layer: mailto with the request already written */
+  document.querySelectorAll('[data-lock]').forEach(function(form){
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      var input = form.querySelector('input');
+      var msg = form.querySelector('[data-lockmsg]');
+      if(!input.value || !input.checkValidity()){
+        msg.style.color = '#C4472A';
+        msg.textContent = 'That address looks off. Check it and try again.';
+        input.focus();
+        return;
+      }
+      msg.style.color = '#0FA391';
+      msg.textContent = 'Opening your mail app. Send it and the password comes back.';
+      window.location.href = 'mailto:madebynaman@gmail.com'
+        + '?subject=' + encodeURIComponent('Password please: the two NDA case studies')
+        + '&body=' + encodeURIComponent('Hi Naman,\n\nSend me the password for the dealer portal and onboarding case studies.\n\nMy email: ' + input.value + '\n');
+    });
+  });
+
+  if(reduce || typeof window.gsap === 'undefined') return;
+  gsap.registerPlugin(ScrollTrigger);
+
+  /* Load: the chrome assembles around the canvas, then the hero frame is selected */
+  var tl = gsap.timeline({ defaults:{ ease:'expo.out' } });
+  tl.from('.toolbar', { y:-46, duration:.6 })
+    .from('.rail', { opacity:0, x:function(i){ return i === 0 ? -24 : 24; }, duration:.6 }, '-=.3')
+    .from('#f-hero .frame-box', { opacity:0, y:26, scale:.985, duration:.9 }, '-=.35')
+    .from('#f-hero .handle', { scale:0, duration:.45, stagger:.05 }, '-=.35')
+    .from('#f-hero .dim, #f-hero .frame-name', { opacity:0, y:6, duration:.4 }, '-=.3')
+    .from('#f-hero .spec .measure', { scaleX:0, transformOrigin:'left center', duration:.6, stagger:.07 }, '-=.25')
+    .from('#f-hero .pin', { scale:0, duration:.5, ease:'back.out(2)' }, '-=.2');
+
+  /* The hero frame must never stay blank if the ticker is starved. */
+  setTimeout(function(){ if(tl.progress() < 1) tl.progress(1); }, 4000);
+
+  /* Frames settle onto the canvas as you scroll to them */
+  frames.slice(1).forEach(function(f){
+    gsap.from(f, {
+      opacity:0, y:44, duration:.85, ease:'expo.out',
+      scrollTrigger:{ trigger:f, start:'top 88%', once:true }
+    });
+  });
+
+  /* Measurement rules draw themselves when the metrics arrive */
+  gsap.utils.toArray('.node').forEach(function(n, i){
+    gsap.from(n, { opacity:0, y:20, duration:.55, delay:i*0.04, ease:'expo.out',
+      scrollTrigger:{ trigger:'.flow', start:'top 85%', once:true } });
+  });
+
+  /* Jerry's cursor wanders the file, the way a second person in the document does */
+  var cur = document.querySelector('[data-cursor]');
+  var pts = [[0.22,0.30],[0.68,0.22],[0.78,0.62],[0.35,0.72],[0.55,0.40]];
+  var i = 0;
+  function moveCursor(){
+    var p = pts[i % pts.length]; i++;
+    gsap.to(cur, {
+      left: p[0] * window.innerWidth,
+      top: p[1] * window.innerHeight,
+      opacity: 1,
+      duration: 2.6 + Math.random() * 1.4,
+      ease: 'power2.inOut',
+      onComplete: function(){ gsap.delayedCall(1.1 + Math.random(), moveCursor); }
+    });
+  }
+  gsap.set(cur, { left: window.innerWidth * 0.5, top: window.innerHeight * 0.5 });
+  gsap.delayedCall(1.6, moveCursor);
+})();
+</script>
+</body>
+</html>

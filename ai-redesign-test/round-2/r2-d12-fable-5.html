@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Naman Sharma · Product &amp; UX Designer · The Mixtape</title>
+<meta name="description" content="Complex in, simple out. A mixtape-format portfolio: Side A is the work, Side B is the person. Product and UX designer, Jaipur.">
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+<link href="https://api.fontshare.com/v2/css?f[]=tanker@400&f[]=supreme@300,400,500,700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Martian+Mono:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+/* ————————————————————————————————————————————
+   SIDE A / SIDE B · a portfolio pressed as a mixtape
+   ———————————————————————————————————————————— */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg: #171210;
+  --panel: #211915;
+  --panel-2: #2A211B;
+  --line: #3A2F26;
+  --label: #EDE0C4;
+  --label-ink: #241C12;
+  --label-soft: #6B5C42;
+  --orange: #E8622C;
+  --gold: #E5A63C;
+  --red: #C03E22;
+  --text: #F0E9DC;
+  --soft: #BBAE9B;
+  --display: 'Tanker', 'Arial Black', sans-serif;
+  --body: 'Supreme', 'Helvetica Neue', Arial, sans-serif;
+  --mono: 'Martian Mono', 'SF Mono', Menlo, monospace;
+}
+
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--body);
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+::selection { background: var(--orange); color: var(--bg); }
+input { caret-color: var(--orange); }
+* { scrollbar-width: thin; scrollbar-color: var(--orange) var(--bg); }
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--orange); }
+:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+
+.wrap { max-width: 1200px; margin: 0 auto; padding: 0 clamp(1.25rem, 4vw, 3.5rem); }
+
+.display {
+  font-family: var(--display);
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  line-height: 0.95;
+  text-transform: uppercase;
+}
+.mono { font-family: var(--mono); font-size: 0.625rem; letter-spacing: 0.08em; color: var(--soft); text-transform: uppercase; }
+a { color: inherit; }
+
+/* ——— Deck bar (nav) ——— */
+.deck {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+  background: color-mix(in srgb, var(--bg) 90%, transparent);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line);
+}
+.deck-inner { display: flex; align-items: center; justify-content: space-between; height: 3.5rem; gap: 1.5rem; }
+.deck-name { font-family: var(--display); font-size: 1.05rem; letter-spacing: 0.04em; text-transform: uppercase; text-decoration: none; }
+.deck-name span { color: var(--orange); }
+.deck-links { display: flex; gap: 1.5rem; list-style: none; }
+.deck-links a { text-decoration: none; font-size: 0.8125rem; font-weight: 500; color: var(--soft); transition: color 0.15s ease-out; }
+.deck-links a:hover { color: var(--gold); }
+.deck-status { display: flex; align-items: center; gap: 0.875rem; }
+.rec { display: inline-flex; align-items: center; gap: 0.4rem; }
+.rec i { width: 8px; height: 8px; border-radius: 50%; background: var(--red); animation: rec 1.6s ease-in-out infinite; }
+@keyframes rec { 0%, 100% { opacity: 1; } 50% { opacity: 0.25; } }
+@media (prefers-reduced-motion: reduce) { .rec i { animation: none; } }
+.counter {
+  font-family: var(--mono);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--gold);
+  background: #0E0A08;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 0.3rem 0.6rem;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.14em;
+}
+
+/* ——— Hero ——— */
+.hero { padding: 8.5rem 0 4rem; }
+.hero-grid { display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 6fr); gap: clamp(2rem, 5vw, 4.5rem); align-items: center; }
+.hero h1 { font-size: clamp(3rem, 6.5vw, 5.75rem); }
+.hero h1 em { font-style: normal; color: var(--orange); }
+.hero-sub { margin-top: 1.75rem; max-width: 32rem; font-size: 1.125rem; color: var(--soft); text-wrap: pretty; }
+.hero-sub strong { color: var(--text); font-weight: 500; }
+.availability { margin-top: 1.5rem; display: inline-flex; align-items: center; gap: 0.6rem; font-weight: 500; font-size: 0.9375rem; }
+.availability i { width: 8px; height: 8px; border-radius: 50%; background: var(--gold); }
+.hero-cta { margin-top: 2.25rem; display: flex; gap: 1rem; flex-wrap: wrap; }
+.btn {
+  display: inline-block; padding: 0.9rem 1.8rem; border-radius: 8px;
+  font-size: 0.9375rem; font-weight: 700; text-decoration: none;
+  transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1), background 0.15s, color 0.15s, border-color 0.15s;
+}
+.btn-solid { background: var(--orange); color: #1B0E07; }
+.btn-solid:hover { background: var(--gold); transform: translateY(-2px); }
+.btn-line { border: 1px solid var(--line); color: var(--text); }
+.btn-line:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-2px); }
+.hero-note { margin-top: 1.25rem; font-size: 0.8125rem; color: var(--soft); }
+
+/* ——— Cassette ——— */
+.tape-box { position: relative; }
+.tape-box svg { width: 100%; height: auto; display: block; filter: drop-shadow(0 24px 48px rgba(0,0,0,0.5)); }
+.tape-caption { margin-top: 1rem; display: flex; justify-content: space-between; }
+
+/* ——— Certified (proof) ——— */
+.certified { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: var(--panel); }
+.cert-grid { display: grid; grid-template-columns: repeat(4, 1fr); }
+.cert {
+  padding: 2.25rem 1.75rem 2.5rem;
+  border-right: 1px solid var(--line);
+  position: relative;
+}
+.cert:first-child { border-left: 1px solid var(--line); }
+.cert .stamp {
+  display: inline-block;
+  font-family: var(--mono); font-size: 0.5625rem; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--gold); border: 1px solid var(--gold); border-radius: 999px; padding: 0.25rem 0.65rem;
+}
+.cert .big {
+  margin-top: 1rem;
+  font-family: var(--display);
+  font-size: clamp(2.25rem, 4.2vw, 3.5rem);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+.cert p { margin-top: 0.6rem; font-size: 0.875rem; color: var(--soft); text-wrap: pretty; }
+
+/* ——— Advisory (no-jargon) ——— */
+.advisory { padding: 5.5rem 0; }
+.advisory-grid { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: clamp(2rem, 5vw, 4.5rem); align-items: start; }
+.advisory-sticker {
+  background: var(--label); color: var(--label-ink);
+  border-radius: 4px; padding: 1.4rem 1.2rem 1.2rem; text-align: center;
+  box-shadow: 0 16px 32px rgba(0,0,0,0.4);
+  position: sticky; top: 5.5rem;
+}
+.advisory-sticker .a1 { font-family: var(--display); font-size: 1.6rem; line-height: 1; text-transform: uppercase; }
+.advisory-sticker .a2 { font-family: var(--display); font-size: 2.6rem; line-height: 1; text-transform: uppercase; margin-top: 0.2rem; }
+.advisory-sticker .a3 { font-family: var(--mono); font-size: 0.5625rem; letter-spacing: 0.14em; text-transform: uppercase; margin-top: 0.8rem; color: var(--label-soft); }
+.advisory h2 { font-size: clamp(2rem, 4vw, 3.25rem); }
+.advisory .lead { margin-top: 1.25rem; font-size: 1.125rem; color: var(--soft); max-width: 40rem; text-wrap: pretty; }
+.advisory .lead em { font-style: italic; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+.jargon-list { margin-top: 2rem; font-size: clamp(1.125rem, 2vw, 1.5rem); line-height: 1.7; font-weight: 300; color: var(--soft); max-width: 46rem; }
+.jargon-list del { text-decoration: line-through; text-decoration-color: var(--red); text-decoration-thickness: 3px; }
+.jargon-list .sep { color: var(--orange); }
+.plain { margin-top: 2rem; font-size: clamp(1.375rem, 2.6vw, 2rem); font-weight: 500; line-height: 1.4; max-width: 40rem; text-wrap: balance; }
+.plain b { color: var(--gold); font-weight: 700; }
+
+/* ——— Side heads ——— */
+.side-head { display: flex; align-items: baseline; gap: 1.5rem; padding: 4.5rem 0 2.5rem; }
+.side-head .side { font-family: var(--display); font-size: clamp(3.25rem, 7vw, 6rem); line-height: 0.9; text-transform: uppercase; }
+.side-head .side b { color: var(--orange); font-weight: 400; }
+.side-head .desc { color: var(--soft); font-size: 1rem; max-width: 22rem; text-wrap: pretty; }
+
+/* ——— Tracklist ——— */
+.tracks { border-top: 1px solid var(--line); }
+.track { border-bottom: 1px solid var(--line); }
+.track-row {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 3.5rem 44px minmax(0, 4fr) minmax(0, 5fr) 7rem 2.5rem;
+  gap: 1.25rem; align-items: center;
+  padding: 1.5rem 0;
+  background: none; border: none; color: inherit; font: inherit; text-align: left; cursor: pointer;
+  transition: background 0.15s ease-out;
+}
+.track-row:hover { background: var(--panel); }
+.track-no { font-family: var(--mono); font-size: 0.8125rem; color: var(--soft); padding-left: 0.25rem; }
+.eq { display: flex; align-items: flex-end; gap: 3px; height: 22px; }
+.eq i { width: 4px; background: var(--orange); height: 20%; border-radius: 2px; transition: height 0.2s; }
+.track-row:hover .eq i, .track.open .eq i { animation: eq 0.7s ease-in-out infinite alternate; }
+.track-row:hover .eq i:nth-child(2), .track.open .eq i:nth-child(2) { animation-delay: 0.12s; }
+.track-row:hover .eq i:nth-child(3), .track.open .eq i:nth-child(3) { animation-delay: 0.24s; }
+.track-row:hover .eq i:nth-child(4), .track.open .eq i:nth-child(4) { animation-delay: 0.36s; }
+@keyframes eq { from { height: 15%; } to { height: 100%; } }
+@media (prefers-reduced-motion: reduce) { .track-row:hover .eq i, .track.open .eq i { animation: none; height: 60%; } }
+.track-title { font-family: var(--display); font-size: clamp(1.25rem, 2.4vw, 1.875rem); text-transform: uppercase; }
+.track-sub { font-size: 0.9375rem; color: var(--soft); text-wrap: pretty; }
+.track-len { font-family: var(--mono); font-size: 0.8125rem; color: var(--gold); text-align: right; font-variant-numeric: tabular-nums; }
+.track-toggle { color: var(--soft); font-size: 1.25rem; text-align: center; transition: transform 0.25s ease-out; }
+.track.open .track-toggle { transform: rotate(45deg); color: var(--orange); }
+.track-detail { overflow: hidden; height: 0; }
+.track-detail-inner {
+  display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: 2rem; padding: 0.5rem 0 2.25rem; align-items: center;
+}
+.track-detail-inner p { color: var(--soft); font-size: 0.9844rem; max-width: 34rem; text-wrap: pretty; }
+.track-detail-inner p b { color: var(--text); font-weight: 500; }
+.ph {
+  position: relative; border: 1px solid var(--line); border-radius: 10px;
+  background: var(--panel); overflow: hidden; aspect-ratio: 16 / 9;
+}
+.ph svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.ph-cap {
+  position: absolute; left: 0.75rem; bottom: 0.65rem;
+  font-family: var(--mono); font-size: 0.5625rem; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--soft); background: var(--bg); border: 1px solid var(--line);
+  border-radius: 999px; padding: 0.25rem 0.6rem;
+}
+.locked .track-title { color: var(--soft); }
+.locked-note { font-size: 0.9375rem; color: var(--soft); }
+.locked-note a { color: var(--gold); text-underline-offset: 3px; }
+
+/* ——— Production notes (process) ——— */
+.prod { background: var(--panel); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 5rem 0; }
+.prod h2 { font-size: clamp(2rem, 4vw, 3.25rem); }
+.prod .lead { color: var(--soft); margin-top: 1rem; }
+.chain { margin-top: 3rem; display: grid; grid-template-columns: repeat(6, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+.chain-step { background: var(--panel-2); padding: 1.6rem 1.4rem 1.8rem; }
+.chain-step .n { font-family: var(--mono); font-size: 0.625rem; color: var(--gold); letter-spacing: 0.12em; }
+.chain-step h3 { font-family: var(--display); font-size: 1.375rem; text-transform: uppercase; margin-top: 0.6rem; }
+.chain-step p { margin-top: 0.6rem; font-size: 0.8438rem; color: var(--soft); line-height: 1.55; text-wrap: pretty; }
+
+/* ——— Engineer (codes) ——— */
+.engineer { padding: 5.5rem 0; }
+.engineer-grid { display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 6fr); gap: clamp(2rem, 5vw, 4.5rem); align-items: center; }
+.engineer h2 { font-size: clamp(2rem, 4vw, 3.25rem); }
+.engineer h2 em { font-style: normal; color: var(--orange); }
+.engineer p { margin-top: 1.25rem; color: var(--soft); text-wrap: pretty; }
+.engineer p b { color: var(--text); font-weight: 500; }
+.channel-strip {
+  border: 1px solid var(--line); border-radius: 12px; background: var(--panel);
+  padding: 1.75rem; display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.25rem;
+}
+.fader { text-align: center; }
+.fader .rail { position: relative; height: 150px; width: 4px; background: var(--line); margin: 0.75rem auto 0; border-radius: 2px; }
+.fader .cap {
+  position: absolute; left: 50%; transform: translateX(-50%);
+  width: 26px; height: 14px; border-radius: 3px; background: var(--label);
+  box-shadow: 0 3px 8px rgba(0,0,0,0.5);
+}
+.fader .pct { margin-top: 0.75rem; font-family: var(--mono); font-size: 0.6875rem; color: var(--gold); font-variant-numeric: tabular-nums; }
+
+/* ——— Side B: liner notes ——— */
+.liner-grid { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: clamp(2rem, 5vw, 4.5rem); }
+.liner-grid p { color: var(--soft); margin-top: 1.25rem; text-wrap: pretty; }
+.liner-grid p b { color: var(--text); font-weight: 500; }
+.now-playing {
+  margin-top: 1.75rem; border: 1px solid var(--line); border-radius: 10px;
+  background: var(--panel); padding: 1.1rem 1.3rem; font-size: 0.9375rem; color: var(--soft);
+  display: flex; gap: 0.85rem; align-items: center;
+}
+.now-playing b { color: var(--text); font-weight: 500; }
+.ask { margin-top: 2rem; display: flex; flex-wrap: wrap; gap: 0.6rem; }
+.ask span {
+  border: 1px solid var(--line); border-radius: 999px; padding: 0.5rem 1rem;
+  font-size: 0.8438rem; color: var(--soft);
+}
+
+/* Jerry: hidden track */
+.hidden-track {
+  border: 1px solid var(--line); border-radius: 14px; background: var(--panel); overflow: hidden;
+}
+.hidden-track .ph { border: none; border-bottom: 1px solid var(--line); border-radius: 0; aspect-ratio: 4/3; }
+.hidden-track .body { padding: 1.75rem; }
+.hidden-track .body h3 { font-family: var(--display); font-size: 1.75rem; text-transform: uppercase; }
+.hidden-track .body h3 span { color: var(--orange); }
+.hidden-track .body p { margin-top: 0.85rem; font-size: 0.9375rem; color: var(--soft); text-wrap: pretty; }
+.hidden-track .caption { display: flex; justify-content: space-between; margin-top: 1.25rem; }
+
+/* ——— Four bars (principles) ——— */
+.bars { padding: 5.5rem 0; }
+.bars h2 { font-size: clamp(2rem, 4vw, 3.25rem); }
+.bars-grid { margin-top: 3rem; display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+.bar {
+  border: 1px solid var(--line); border-radius: 12px; padding: 2rem 2rem 2.25rem;
+  background: linear-gradient(160deg, var(--panel) 0%, var(--bg) 100%);
+}
+.bar .tag { font-family: var(--mono); font-size: 0.5625rem; letter-spacing: 0.14em; color: var(--gold); text-transform: uppercase; }
+.bar h3 { font-family: var(--display); font-size: clamp(1.5rem, 2.6vw, 2.125rem); text-transform: uppercase; margin-top: 0.75rem; }
+.bar p { margin-top: 0.9rem; color: var(--soft); font-size: 0.9844rem; text-wrap: pretty; }
+
+/* ——— Discography (timeline) ——— */
+.disco { background: var(--panel); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 5rem 0; }
+.disco h2 { font-size: clamp(2rem, 4vw, 3.25rem); }
+.disco-list { margin-top: 2.5rem; }
+.release {
+  display: grid; grid-template-columns: 190px 260px minmax(0, 1fr);
+  gap: 1.75rem; padding: 1.6rem 0; border-top: 1px solid var(--line); align-items: baseline;
+}
+.release:last-child { border-bottom: 1px solid var(--line); }
+.release .years { font-family: var(--mono); font-size: 0.875rem; color: var(--gold); font-variant-numeric: tabular-nums; }
+.release .title { font-family: var(--display); font-size: 1.375rem; text-transform: uppercase; }
+.release .notes { color: var(--soft); font-size: 0.9375rem; text-wrap: pretty; }
+.disco-foot { margin-top: 2rem; color: var(--soft); font-size: 0.9375rem; max-width: 56rem; line-height: 1.9; }
+.disco-foot b { color: var(--text); font-weight: 500; }
+
+/* ——— Booking (contact) ——— */
+.booking { padding: 6.5rem 0 4.5rem; text-align: center; }
+.booking h2 { font-family: var(--display); font-size: clamp(3rem, 8vw, 6.5rem); text-transform: uppercase; line-height: 0.95; }
+.booking h2 span { color: var(--orange); }
+.booking .pitch { margin: 1.75rem auto 0; max-width: 34rem; color: var(--soft); font-size: 1.125rem; text-wrap: pretty; }
+.booking .email {
+  display: inline-block; margin-top: 2.75rem;
+  font-family: var(--mono); font-size: clamp(1.125rem, 2.8vw, 1.875rem);
+  color: var(--gold); text-decoration: none;
+  border: 1px solid var(--line); border-radius: 12px; padding: 1.1rem 2rem;
+  transition: border-color 0.15s, transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.booking .email:hover { border-color: var(--gold); transform: translateY(-2px); }
+.booking .socials { margin-top: 2rem; display: flex; justify-content: center; gap: 1.75rem; }
+.booking .socials a { color: var(--soft); font-size: 0.9375rem; text-decoration: none; }
+.booking .socials a:hover { color: var(--gold); }
+.booking .fine { margin-top: 2rem; }
+
+/* ——— Footer ——— */
+.footer { border-top: 1px solid var(--line); padding: 1.75rem 0 2.25rem; }
+.footer-inner { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem; }
+
+/* ——— Responsive ——— */
+@media (max-width: 960px) {
+  .hero-grid, .engineer-grid, .liner-grid { grid-template-columns: 1fr; }
+  .cert-grid { grid-template-columns: repeat(2, 1fr); }
+  .cert { border-left: none !important; border-bottom: 1px solid var(--line); }
+  .chain { grid-template-columns: repeat(2, 1fr); }
+  .advisory-grid { grid-template-columns: 1fr; }
+  .advisory-sticker { position: static; max-width: 220px; }
+  .track-row { grid-template-columns: 2.5rem 34px minmax(0, 1fr) 5rem 2rem; }
+  .track-sub { display: none; }
+  .track-detail-inner { grid-template-columns: 1fr; }
+  .release { grid-template-columns: 1fr; gap: 0.35rem; }
+  .deck-links { display: none; }
+}
+@media (max-width: 600px) {
+  .cert-grid { grid-template-columns: 1fr; }
+  .chain { grid-template-columns: 1fr; }
+  .bars-grid { grid-template-columns: 1fr; }
+  .channel-strip { grid-template-columns: repeat(2, 1fr); }
+}
+</style>
+</head>
+<body>
+<!--
+THESIS: a portfolio pressed as a mixtape: Side A is the work, Side B is the person.
+Refuses the terminal-console dark default and the cream scrapbook.
+OWN-WORLD: warm black, cassette-label cream, stripe orange and gold; Tanker display,
+Supreme body, Martian Mono counters; a real drawn cassette, EQ bars, certified plaques.
+STORY: the visitor presses play, scrolls the tape from 000 to full, reads the work as
+a tracklist and the person as liner notes, then books through one gold email.
+FIRST VIEWPORT: headline left, drawn cassette right with live spinning spools; deck
+bar carries a tape counter wired to scroll.
+FORM: audio-hardware artifact, #2 of my derived list; seed script degraded (no
+output), substitution disclosed in thread.
+FINISH: unreviewed and undocumented is unfinished; this build ends with the finish
+review, the verdict, and DESIGN.md
+-->
+
+<header class="deck">
+  <div class="wrap deck-inner">
+    <a class="deck-name" href="#top">NS<span>·</span>Mixtapes</a>
+    <nav aria-label="Sections">
+      <ul class="deck-links">
+        <li><a href="#side-a">Side A · Work</a></li>
+        <li><a href="#side-b">Side B · Person</a></li>
+        <li><a href="#disco">Discography</a></li>
+        <li><a href="#booking">Booking</a></li>
+      </ul>
+    </nav>
+    <div class="deck-status">
+      <span class="rec mono"><i></i>rec</span>
+      <span class="counter" id="tapeCounter" aria-hidden="true">000</span>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ———————————————— HERO ———————————————— -->
+  <section class="hero wrap">
+    <div class="hero-grid">
+      <div>
+        <h1 class="display">I make complex products <em>simple.</em></h1>
+        <p class="hero-sub">I'm <strong>Naman Sharma</strong>, a product and UX designer. Designing since 2017, in UX since 2019. I help teams turn messy problems into products people actually understand. Based in Jaipur, working everywhere. Raised on old school hip-hop, currently deep in DHH.</p>
+        <p class="availability"><i></i>Open to product design roles and freelance.</p>
+        <div class="hero-cta">
+          <a class="btn btn-solid" href="#side-a">Play Side A</a>
+          <a class="btn btn-line" href="#booking">Say hi</a>
+        </div>
+        <p class="hero-note">Always up for a good conversation.</p>
+      </div>
+      <div class="tape-box">
+        <svg viewBox="0 0 720 460" fill="none" role="img" aria-label="A drawn cassette tape titled Complex In, Simple Out, mixed by Naman Sharma">
+          <!-- shell -->
+          <rect x="10" y="10" width="700" height="440" rx="26" fill="#241B15" stroke="#3A2F26" stroke-width="2"/>
+          <rect x="10" y="10" width="700" height="440" rx="26" fill="none" stroke="#000" stroke-opacity="0.3" stroke-width="1" transform="translate(0 2)"/>
+          <!-- screws -->
+          <g stroke="#5A4B3A" stroke-width="2" fill="#171210">
+            <circle cx="42" cy="42" r="9"/><circle cx="678" cy="42" r="9"/><circle cx="42" cy="418" r="9"/><circle cx="678" cy="418" r="9"/><circle cx="360" cy="418" r="9"/>
+          </g>
+          <g stroke="#5A4B3A" stroke-width="1.5">
+            <line x1="36" y1="42" x2="48" y2="42"/><line x1="672" y1="42" x2="684" y2="42"/><line x1="36" y1="418" x2="48" y2="418"/><line x1="672" y1="418" x2="684" y2="418"/><line x1="354" y1="418" x2="366" y2="418"/>
+          </g>
+          <!-- label -->
+          <rect x="70" y="52" width="580" height="256" rx="10" fill="#EDE0C4"/>
+          <!-- stripes -->
+          <rect x="70" y="96" width="580" height="14" fill="#C03E22"/>
+          <rect x="70" y="110" width="580" height="14" fill="#E8622C"/>
+          <rect x="70" y="124" width="580" height="14" fill="#E5A63C"/>
+          <!-- label text -->
+          <text x="92" y="84" font-family="Martian Mono, monospace" font-size="13" letter-spacing="3" fill="#6B5C42">NS-01 · C-90 · MIXED 2017-2026</text>
+          <text x="92" y="182" font-family="Tanker, sans-serif" font-size="44" fill="#241C12">COMPLEX IN, SIMPLE OUT</text>
+          <text x="92" y="212" font-family="Supreme, sans-serif" font-size="17" fill="#6B5C42">mixed by Naman Sharma · product &amp; UX designer · Jaipur</text>
+          <line x1="92" y1="232" x2="628" y2="232" stroke="#6B5C42" stroke-width="1" stroke-dasharray="1 4"/>
+          <text x="92" y="256" font-family="Supreme, sans-serif" font-size="15" fill="#6B5C42">side A: the work · 4 tracks + 2 locked</text>
+          <text x="92" y="280" font-family="Supreme, sans-serif" font-size="15" fill="#6B5C42">side B: the person · 1 hidden track (Jerry)</text>
+          <!-- spool window -->
+          <rect x="180" y="318" width="360" height="86" rx="43" fill="#0E0A08" stroke="#3A2F26" stroke-width="2"/>
+          <!-- tape packs -->
+          <circle id="packL" cx="252" cy="361" r="30" fill="#4A3826"/>
+          <circle id="packR" cx="468" cy="361" r="16" fill="#4A3826"/>
+          <!-- spools -->
+          <g id="spoolL">
+            <circle cx="252" cy="361" r="15" fill="#EDE0C4"/>
+            <g stroke="#241C12" stroke-width="3" stroke-linecap="round">
+              <line x1="252" y1="349" x2="252" y2="355"/>
+              <line x1="262.4" y1="355" x2="257.2" y2="358"/>
+              <line x1="262.4" y1="367" x2="257.2" y2="364"/>
+              <line x1="252" y1="373" x2="252" y2="367"/>
+              <line x1="241.6" y1="367" x2="246.8" y2="364"/>
+              <line x1="241.6" y1="355" x2="246.8" y2="358"/>
+            </g>
+          </g>
+          <g id="spoolR">
+            <circle cx="468" cy="361" r="15" fill="#EDE0C4"/>
+            <g stroke="#241C12" stroke-width="3" stroke-linecap="round">
+              <line x1="468" y1="349" x2="468" y2="355"/>
+              <line x1="478.4" y1="355" x2="473.2" y2="358"/>
+              <line x1="478.4" y1="367" x2="473.2" y2="364"/>
+              <line x1="468" y1="373" x2="468" y2="367"/>
+              <line x1="457.6" y1="367" x2="462.8" y2="364"/>
+              <line x1="457.6" y1="355" x2="462.8" y2="358"/>
+            </g>
+          </g>
+          <!-- tape path between spools -->
+          <line x1="282" y1="361" x2="452" y2="361" stroke="#4A3826" stroke-width="3"/>
+        </svg>
+        <div class="tape-caption">
+          <span class="mono">NS-01 · the portfolio tape</span>
+          <span class="mono" style="color: var(--gold);" id="tapeSide">now playing: side A</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ———————————————— CERTIFIED ———————————————— -->
+  <section class="certified" aria-label="Certified results">
+    <div class="wrap">
+      <div class="cert-grid">
+        <div class="cert reveal">
+          <span class="stamp">certified · funding</span>
+          <div class="big">$<span class="count" data-count="500">0</span>K</div>
+          <p>pre-seed raised after the Turns website and brand revamp</p>
+        </div>
+        <div class="cert reveal">
+          <span class="stamp">certified · rating</span>
+          <div class="big"><span class="count" data-count="4.8" data-decimals="1">0.0</span>★</div>
+          <p>on the Play Store after the LetsConnect redesign</p>
+        </div>
+        <div class="cert reveal">
+          <span class="stamp">certified · research</span>
+          <div class="big"><span class="count" data-count="25">0</span></div>
+          <p>in-person interviews for the Wikimedia Foundation, 3 cities</p>
+        </div>
+        <div class="cert reveal">
+          <span class="stamp">certified · run</span>
+          <div class="big"><span class="count" data-count="15">0</span>+</div>
+          <p>clients since 2017, agency and independent, no year off</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ———————————————— ADVISORY ———————————————— -->
+  <section class="advisory wrap">
+    <div class="advisory-grid">
+      <aside class="advisory-sticker" aria-hidden="true">
+        <div class="a1">Designer</div>
+        <div class="a2">Advisory</div>
+        <div class="a3">explicit clarity · zero jargon</div>
+      </aside>
+      <div>
+        <h2 class="display">A no-jargon promise</h2>
+        <p class="lead">Most designer portfolios promise to <em>synergize aesthetics with functionality</em>. This one doesn't. I hate jargon. So, for the record, I do not:</p>
+        <p class="jargon-list">
+          <span class="sr-only">Things I do not do:</span>
+          <del>foster innovation through synergizing aesthetics and functionality</del> <span class="sep">/</span>
+          <del>navigate the confluence of form and function</del> <span class="sep">/</span>
+          <del>orchestrate design revolutions</del> <span class="sep">/</span>
+          <del>instigate paradigmatic evolutions</del> <span class="sep">/</span>
+          <del>seamlessly integrate cutting-edge methodologies</del> <span class="sep">/</span>
+          <del>engineer experiential marvels</del> <span class="sep">/</span>
+          <del>champion transformative ideation in the ever-evolving design ethos</del> <span class="sep">/</span>
+          <del>perpetuate narratives that transcend boundaries</del>
+        </p>
+        <p class="plain">Here's what I actually do: I listen to users. I sketch. I test. I simplify. I ship. Then I check if it worked. <b>That's the whole trick.</b></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ———————————————— SIDE A ———————————————— -->
+  <section class="wrap" id="side-a">
+    <div class="side-head">
+      <h2 class="side">Side <b>A</b></h2>
+      <p class="desc">The work. A few favourites, short versions here. Ask me for the long ones. Track length is the number that mattered.</p>
+    </div>
+
+    <div class="tracks">
+      <article class="track reveal">
+        <button class="track-row" aria-expanded="false">
+          <span class="track-no">A1</span>
+          <span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+          <span class="track-title">Turns</span>
+          <span class="track-sub">Website · brand · design system. New everything, then a raise.</span>
+          <span class="track-len">$500K</span>
+          <span class="track-toggle" aria-hidden="true">+</span>
+        </button>
+        <div class="track-detail">
+          <div class="track-detail-inner">
+            <p><b>New website, new brand, new design system.</b> They raised $500K pre-seed after the revamp. I also left behind brand guidelines and a system the team could keep shipping with. Nobody asked for that part.</p>
+            <div class="ph">
+              <svg viewBox="0 0 640 360" fill="none" aria-hidden="true">
+                <rect x="90" y="50" width="360" height="230" rx="8" stroke="#3A2F26" stroke-width="2"/>
+                <line x1="90" y1="84" x2="450" y2="84" stroke="#3A2F26" stroke-width="2"/>
+                <rect x="116" y="112" width="170" height="16" rx="8" fill="#E8622C"/>
+                <rect x="116" y="142" width="110" height="9" rx="4.5" fill="#3A2F26"/>
+                <rect x="116" y="186" width="140" height="70" rx="8" stroke="#3A2F26" stroke-width="2"/>
+                <rect x="278" y="186" width="140" height="70" rx="8" stroke="#3A2F26" stroke-width="2"/>
+                <rect x="428" y="110" width="120" height="212" rx="16" stroke="#E5A63C" stroke-width="2" fill="#211915"/>
+                <rect x="446" y="140" width="84" height="11" rx="5.5" fill="#E5A63C"/>
+                <rect x="446" y="164" width="56" height="8" rx="4" fill="#3A2F26"/>
+                <rect x="446" y="190" width="84" height="48" rx="6" stroke="#3A2F26" stroke-width="2"/>
+                <rect x="446" y="252" width="84" height="48" rx="6" stroke="#3A2F26" stroke-width="2"/>
+              </svg>
+              <span class="ph-cap">mockup slot: Turns site + brand</span>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="track reveal">
+        <button class="track-row" aria-expanded="false">
+          <span class="track-no">A2</span>
+          <span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+          <span class="track-title">Wikipedia × KaiOS</span>
+          <span class="track-sub">Field research with JioPhone users in Pune, Mumbai and Delhi.</span>
+          <span class="track-len">25 users</span>
+          <span class="track-toggle" aria-hidden="true">+</span>
+        </button>
+        <div class="track-detail">
+          <div class="track-detail-inner">
+            <p><b>25 in-person interviews for the Wikimedia Foundation.</b> Tiny screens, real keypads, and for most participants the only internet-connected device in the house. The findings shipped as personas, journey maps and a full research report.</p>
+            <div class="ph">
+              <svg viewBox="0 0 640 360" fill="none" aria-hidden="true">
+                <rect x="260" y="34" width="120" height="290" rx="14" stroke="#E5A63C" stroke-width="2"/>
+                <rect x="277" y="56" width="86" height="112" rx="4" stroke="#3A2F26" stroke-width="2"/>
+                <line x1="285" y1="80" x2="355" y2="80" stroke="#3A2F26" stroke-width="2"/>
+                <line x1="285" y1="98" x2="341" y2="98" stroke="#3A2F26" stroke-width="2"/>
+                <line x1="285" y1="116" x2="355" y2="116" stroke="#3A2F26" stroke-width="2"/>
+                <g stroke="#3A2F26" stroke-width="2">
+                  <rect x="277" y="188" width="24" height="16" rx="3"/><rect x="308" y="188" width="24" height="16" rx="3"/><rect x="339" y="188" width="24" height="16" rx="3"/>
+                  <rect x="277" y="212" width="24" height="16" rx="3"/><rect x="308" y="212" width="24" height="16" rx="3"/><rect x="339" y="212" width="24" height="16" rx="3"/>
+                  <rect x="277" y="236" width="24" height="16" rx="3"/><rect x="308" y="236" width="24" height="16" rx="3"/><rect x="339" y="236" width="24" height="16" rx="3"/>
+                </g>
+                <circle cx="120" cy="100" r="5" fill="#E8622C"/><circle cx="104" cy="190" r="5" fill="#E8622C"/><circle cx="140" cy="264" r="5" fill="#E8622C"/>
+                <path d="M 120 100 C 108 136, 104 162, 104 190 C 104 220, 120 246, 140 264" stroke="#E8622C" stroke-width="1.5" stroke-dasharray="2 6"/>
+                <text x="134" y="97" font-family="Martian Mono, monospace" font-size="12" fill="#BBAE9B">Delhi</text>
+                <text x="118" y="187" font-family="Martian Mono, monospace" font-size="12" fill="#BBAE9B">Mumbai</text>
+                <text x="154" y="261" font-family="Martian Mono, monospace" font-size="12" fill="#BBAE9B">Pune</text>
+                <g stroke="#3A2F26" stroke-width="2"><line x1="440" y1="90" x2="560" y2="90"/><line x1="440" y1="114" x2="540" y2="114"/><line x1="440" y1="138" x2="556" y2="138"/><line x1="440" y1="162" x2="520" y2="162"/></g>
+                <text x="440" y="70" font-family="Martian Mono, monospace" font-size="12" fill="#BBAE9B">field notes</text>
+              </svg>
+              <span class="ph-cap">photo slot: JioPhone + field notes</span>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="track reveal">
+        <button class="track-row" aria-expanded="false">
+          <span class="track-no">A3</span>
+          <span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+          <span class="track-title">LetsConnect</span>
+          <span class="track-sub">Mobile app, UX redesign. Rebuilt from user feedback.</span>
+          <span class="track-len">4.8★</span>
+          <span class="track-toggle" aria-hidden="true">+</span>
+        </button>
+        <div class="track-detail">
+          <div class="track-detail-inner">
+            <p><b>Rebuilt the experience from user feedback.</b> Read the reviews, grouped the recurring complaints, mapped the journeys where people got lost, redesigned end to end. Now at 4.8★ on the Play Store.</p>
+            <div class="ph">
+              <svg viewBox="0 0 640 360" fill="none" aria-hidden="true">
+                <rect x="150" y="46" width="130" height="266" rx="16" stroke="#3A2F26" stroke-width="2"/>
+                <rect x="170" y="80" width="90" height="9" rx="4.5" fill="#3A2F26"/>
+                <rect x="170" y="112" width="90" height="56" rx="6" stroke="#3A2F26" stroke-width="2"/>
+                <rect x="170" y="182" width="90" height="56" rx="6" stroke="#3A2F26" stroke-width="2"/>
+                <path d="M 300 180 L 340 180 M 328 168 L 340 180 L 328 192" stroke="#E8622C" stroke-width="2"/>
+                <rect x="360" y="46" width="130" height="266" rx="16" stroke="#E5A63C" stroke-width="2"/>
+                <rect x="380" y="80" width="90" height="13" rx="6.5" fill="#E5A63C"/>
+                <rect x="380" y="110" width="90" height="80" rx="8" stroke="#E5A63C" stroke-width="2"/>
+                <rect x="380" y="206" width="90" height="28" rx="14" fill="#E8622C"/>
+                <g fill="#E5A63C"><circle cx="392" cy="266" r="4"/><circle cx="409" cy="266" r="4"/><circle cx="426" cy="266" r="4"/><circle cx="443" cy="266" r="4"/><circle cx="460" cy="266" r="4"/></g>
+                <text x="380" y="296" font-family="Martian Mono, monospace" font-size="12" fill="#BBAE9B">4.8 / 5</text>
+              </svg>
+              <span class="ph-cap">screens slot: before / after</span>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="track reveal">
+        <button class="track-row" aria-expanded="false">
+          <span class="track-no">A4</span>
+          <span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+          <span class="track-title">Gadivan</span>
+          <span class="track-sub">0 to 1. Multiple apps for different users, one system underneath.</span>
+          <span class="track-len">0 → 1</span>
+          <span class="track-toggle" aria-hidden="true">+</span>
+        </button>
+        <div class="track-detail">
+          <div class="track-detail-inner">
+            <p><b>Designed the whole product from a blank page.</b> Worked with the founders to turn the idea into journeys, designed each app end to end, built one shared design language, stayed through development until launch.</p>
+            <div class="ph">
+              <svg viewBox="0 0 640 360" fill="none" aria-hidden="true">
+                <rect x="120" y="80" width="104" height="200" rx="12" stroke="#3A2F26" stroke-width="2"/>
+                <rect x="262" y="52" width="104" height="200" rx="12" stroke="#E5A63C" stroke-width="2"/>
+                <rect x="404" y="80" width="104" height="200" rx="12" stroke="#3A2F26" stroke-width="2"/>
+                <rect x="136" y="108" width="72" height="8" rx="4" fill="#3A2F26"/>
+                <rect x="278" y="80" width="72" height="8" rx="4" fill="#E5A63C"/>
+                <rect x="420" y="108" width="72" height="8" rx="4" fill="#3A2F26"/>
+                <rect x="136" y="132" width="72" height="46" rx="6" stroke="#3A2F26" stroke-width="2"/>
+                <rect x="278" y="104" width="72" height="46" rx="6" stroke="#E5A63C" stroke-width="2"/>
+                <rect x="420" y="132" width="72" height="46" rx="6" stroke="#3A2F26" stroke-width="2"/>
+                <path d="M 172 310 C 172 330, 314 330, 314 310 M 314 310 C 314 330, 456 330, 456 310" stroke="#E8622C" stroke-width="1.5" stroke-dasharray="2 6"/>
+                <text x="240" y="350" font-family="Martian Mono, monospace" font-size="12" fill="#BBAE9B">one system underneath</text>
+              </svg>
+              <span class="ph-cap">family shot slot: the Gadivan apps</span>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="track locked reveal">
+        <button class="track-row" aria-expanded="false">
+          <span class="track-no">A5</span>
+          <span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+          <span class="track-title">Two locked tracks</span>
+          <span class="track-sub">A dealer portal for a paint giant. An onboarding rescue. Both NDA.</span>
+          <span class="track-len">••••</span>
+          <span class="track-toggle" aria-hidden="true">+</span>
+        </button>
+        <div class="track-detail">
+          <div class="track-detail-inner">
+            <p class="locked-note">A dealer portal for one of India's largest paint companies. An onboarding rescue for a small-business app. Real numbers, real impact, both under NDA. <a href="mailto:madebynaman@gmail.com?subject=Password%20for%20the%20NDA%20case%20studies">Ask for the password</a> and it comes back same day.</p>
+            <div class="ph">
+              <svg viewBox="0 0 640 360" fill="none" aria-hidden="true">
+                <rect x="100" y="70" width="200" height="130" rx="10" stroke="#3A2F26" stroke-width="2"/>
+                <rect x="340" y="120" width="200" height="130" rx="10" stroke="#3A2F26" stroke-width="2"/>
+                <g stroke="#3A2F26" stroke-width="2"><line x1="120" y1="100" x2="272" y2="100"/><line x1="120" y1="124" x2="240" y2="124"/><line x1="360" y1="150" x2="512" y2="150"/><line x1="360" y1="174" x2="480" y2="174"/></g>
+                <rect x="288" y="150" width="64" height="52" rx="8" fill="#211915" stroke="#E5A63C" stroke-width="2"/>
+                <path d="M 302 150 v-14 a18 18 0 0 1 36 0 v14" stroke="#E5A63C" stroke-width="2"/>
+                <circle cx="320" cy="176" r="5" fill="#E5A63C"/>
+              </svg>
+              <span class="ph-cap">locked: full stories on request</span>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ———————————————— PRODUCTION NOTES ———————————————— -->
+  <section class="prod" id="process">
+    <div class="wrap">
+      <h2 class="display">How a track gets made</h2>
+      <p class="lead">Six steps. The order matters more than the labels.</p>
+      <div class="chain">
+        <div class="chain-step reveal"><span class="n">step 1</span><h3>Listen</h3><p>Users, founders, analytics, support tickets. Most of what I need already exists inside the company. It just isn't in one place yet.</p></div>
+        <div class="chain-step reveal"><span class="n">step 2</span><h3>Map</h3><p>The full journey, end to end, until I can see where it breaks.</p></div>
+        <div class="chain-step reveal"><span class="n">step 3</span><h3>Explore</h3><p>Go wide before narrowing. I would rather throw away ten directions than defend the first one.</p></div>
+        <div class="chain-step reveal"><span class="n">step 4</span><h3>Refine</h3><p>Pick a direction and sweat the details.</p></div>
+        <div class="chain-step reveal"><span class="n">step 5</span><h3>Ship</h3><p>Stay with engineering through the build, screen by screen, until it's live.</p></div>
+        <div class="chain-step reveal"><span class="n">step 6</span><h3>Check</h3><p>Watch the numbers afterwards. Fix what moved, and fix what didn't.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ———————————————— THE ENGINEER ———————————————— -->
+  <section class="engineer wrap">
+    <div class="engineer-grid">
+      <div>
+        <h2 class="display">Artist <em>and</em> engineer</h2>
+        <p>Every good record has both. I have a <b>computer engineering degree</b>. For years I barely used it, and it has turned out to be one of the more useful things I own.</p>
+        <p>It means I know what's expensive to build before I draw it, I can read the codebase instead of guessing, and <b>engineers don't have to translate for me</b>. When a handoff goes sideways, I can usually work out why on my own.</p>
+        <p>I'm re-learning to code properly now, and I build with AI most days. This site is where that started: I gave the same brief to 16 AI models, got 80 redesign directions back, and went through all of them to work out what I actually wanted. Useful exercise. <b>The design decisions are still mine.</b></p>
+      </div>
+      <div class="channel-strip reveal" aria-hidden="true">
+        <div class="fader"><span class="mono">research</span><div class="rail"><span class="cap" style="top: 12%;"></span></div><span class="pct">88</span></div>
+        <div class="fader"><span class="mono">product ux</span><div class="rail"><span class="cap" style="top: 6%;"></span></div><span class="pct">94</span></div>
+        <div class="fader"><span class="mono">visual</span><div class="rail"><span class="cap" style="top: 16%;"></span></div><span class="pct">84</span></div>
+        <div class="fader"><span class="mono">code</span><div class="rail"><span class="cap" style="top: 34%;"></span></div><span class="pct">66<span style="color: var(--soft);"> ↑</span></span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ———————————————— SIDE B ———————————————— -->
+  <section class="wrap" id="side-b">
+    <div class="side-head">
+      <h2 class="side">Side <b>B</b></h2>
+      <p class="desc">The person. Liner notes, one hidden track, and the four bars everything else is built on.</p>
+    </div>
+
+    <div class="liner-grid">
+      <div>
+        <p>I'm a <b>self-taught designer with a computer engineering degree</b>. Halfway through the degree I worked out that I liked designing products more than writing code, so I taught myself design properly: books, courses, YouTube, and a lot of bad early work.</p>
+        <p>It started in 2017 with graphic design. Logos, posters, a board game, a kids' eBook. In 2019 I found UX research and never looked back. Since then: field research, usability testing, web apps, mobile apps, websites, brands, packaging. Print and pixels and most things in between.</p>
+        <p>I'm a <b>curious generalist</b>, and I think that's the useful part. Range lets me see the whole problem rather than only my corner of it.</p>
+        <div class="now-playing"><span aria-hidden="true" style="color: var(--orange); font-size: 1.1rem;">▶</span><span><b>Right now:</b> open to product design roles. Living in Jaipur with Jerry. Old school on the speakers, DHH in the queue.</span></div>
+        <div class="ask" aria-label="Ask me about">
+          <span>ask me about: Desi Hip Hop</span>
+          <span>NFS: Most Wanted (2005, the correct answer)</span>
+          <span>taking computers apart</span>
+          <span>slow, boring investing</span>
+          <span>how people learn</span>
+        </div>
+      </div>
+      <aside class="hidden-track reveal">
+        <div class="ph">
+          <svg viewBox="0 0 400 300" fill="none" aria-hidden="true">
+            <rect x="20" y="20" width="360" height="260" rx="8" stroke="#3A2F26" stroke-width="2" stroke-dasharray="6 8"/>
+            <circle cx="200" cy="130" r="52" stroke="#3A2F26" stroke-width="2"/>
+            <path d="M 148 226 C 170 196, 230 196, 252 226" stroke="#3A2F26" stroke-width="2"/>
+            <text x="200" y="262" text-anchor="middle" font-family="Martian Mono, monospace" font-size="12" fill="#BBAE9B">photo slot: Jerry (matters most)</text>
+          </svg>
+        </div>
+        <div class="body">
+          <h3>Hidden track: <span>Jerry</span></h3>
+          <p>A four-year-old indie street dog, and the love of my life. I met him at four weeks old: malnourished, separated from his litter, too young to survive alone. So I brought him home. My parents took some convincing.</p>
+          <p>Stubborn, smart, deeply introverted, and extremely selective about who may pet him. If he ever lets you, take it as a five-star review. He's asleep next to my desk right now, supervising. He says hi.</p>
+          <div class="caption">
+            <span class="mono">dogs rescued: 1</span>
+            <span class="mono" style="color: var(--orange);">executive producer</span>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ———————————————— FOUR BARS ———————————————— -->
+  <section class="bars wrap">
+    <h2 class="display">Four bars I live by</h2>
+    <div class="bars-grid">
+      <div class="bar reveal">
+        <span class="tag">bar 1</span>
+        <h3>Consistency beats talent</h3>
+        <p>I'm not the most talented designer in the world. I show up every day instead, and that compounds. Designing since 2017, in UX since 2019, 15+ clients, no year off.</p>
+      </div>
+      <div class="bar reveal">
+        <span class="tag">bar 2</span>
+        <h3>Curiosity is the job</h3>
+        <p>I know a little about a lot, which helps me connect things other people keep separate. Understanding why someone picks a keypad phone over a smartphone shaped the Wikipedia recommendations more than anything I knew about interfaces.</p>
+      </div>
+      <div class="bar reveal">
+        <span class="tag">bar 3</span>
+        <h3>Form follows function</h3>
+        <p>Function solves the problem. Beauty is what makes people remember it, and you earn the second by doing the first. On one onboarding rescue, no polish would have moved the number until research found the real problem: the ads promised something the signup flow didn't deliver.</p>
+      </div>
+      <div class="bar reveal">
+        <span class="tag">bar 4</span>
+        <h3>Give a damn</h3>
+        <p>Founder's mindset, full ownership. At Turns that meant brand guidelines and a design system so the team could keep shipping consistently after I left. Nobody asked for that part.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ———————————————— DISCOGRAPHY ———————————————— -->
+  <section class="disco" id="disco">
+    <div class="wrap">
+      <h2 class="display">Discography</h2>
+      <div class="disco-list">
+        <div class="release reveal">
+          <span class="years">2025 · now</span>
+          <span class="title">The Next Record</span>
+          <span class="notes">Open to product design roles. Rebuilding this site in public, designing with AI most days, taking select freelance.</span>
+        </div>
+        <div class="release reveal">
+          <span class="years">2022 · 2025</span>
+          <span class="title">Independent (LP)</span>
+          <span class="notes">Freelance product, UX and web design. Turns, Gadivan, LetsConnect, LearnApp and a dozen others. Brand work, 0 to 1 product design, UX audits, design systems.</span>
+        </div>
+        <div class="release reveal">
+          <span class="years">2021 · 2022</span>
+          <span class="title">The Studio Album</span>
+          <span class="notes">UX designer at Thence, a UX studio. Client work for large Indian brands, plus mentoring interns.</span>
+        </div>
+        <div class="release reveal">
+          <span class="years">2019 · 2020</span>
+          <span class="title">The Research EP</span>
+          <span class="notes">UX research intern at Hureo. Field research for the Wikimedia Foundation.</span>
+        </div>
+        <div class="release reveal">
+          <span class="years">2017 · 2019</span>
+          <span class="title">The Mixtape Years</span>
+          <span class="notes">Graphic design at Skillovate, then HappleyFit, plus freelance. Logos, a mascot, posters, a board game, a kids' eBook, a first WordPress site.</span>
+        </div>
+      </div>
+      <p class="disco-foot"><b>Features:</b> Turns, LetsConnect, Gadivan, LearnApp, Parentverse, Venyou, Sharent, Spirinova, Gorico, RedShilliz, DGlobalist, Pahoti Wellness, Ivy Malik, PhotoFinder, Olsub, Learn Theta. Agency-side: Thence, and the Wikimedia Foundation via Hureo. <b>Education:</b> B.E. Computer Engineering, Pune University, 2017 to 2021.</p>
+    </div>
+  </section>
+
+  <!-- ———————————————— BOOKING ———————————————— -->
+  <section class="booking wrap" id="booking">
+    <h2>Booking is <span>open</span></h2>
+    <p class="pitch">A role, a project, or just a good conversation about design, hip-hop, or dogs. My inbox is open, and it replies within a day.</p>
+    <a class="email" href="mailto:madebynaman@gmail.com">madebynaman@gmail.com</a>
+    <div class="socials">
+      <a href="#" rel="noopener">LinkedIn</a>
+      <a href="#" rel="noopener">Instagram</a>
+      <a href="#" rel="noopener">Twitter</a>
+    </div>
+    <p class="fine mono">Jaipur, India (GMT+5:30) · open to product design roles</p>
+  </section>
+
+  <footer class="footer">
+    <div class="wrap footer-inner">
+      <span class="mono">℗ 2026 Naman Sharma · no jargon was used on this record</span>
+      <span class="mono">Jerry approved this site.</span>
+    </div>
+  </footer>
+
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<script>
+(function () {
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Tracklist accordion works with or without GSAP.
+  document.querySelectorAll('.track').forEach(function (track) {
+    var row = track.querySelector('.track-row');
+    var detail = track.querySelector('.track-detail');
+    row.addEventListener('click', function () {
+      var isOpen = track.classList.contains('open');
+      document.querySelectorAll('.track.open').forEach(function (other) {
+        if (other === track) return;
+        other.classList.remove('open');
+        other.querySelector('.track-row').setAttribute('aria-expanded', 'false');
+        collapse(other.querySelector('.track-detail'));
+      });
+      track.classList.toggle('open', !isOpen);
+      row.setAttribute('aria-expanded', String(!isOpen));
+      if (isOpen) collapse(detail); else expand(detail);
+    });
+  });
+  function expand(el) {
+    if (window.gsap && !reduce) {
+      gsap.to(el, { height: el.scrollHeight, duration: 0.45, ease: 'power3.out', onComplete: function () { el.style.height = 'auto'; } });
+    } else { el.style.height = 'auto'; }
+  }
+  function collapse(el) {
+    if (window.gsap && !reduce) {
+      gsap.to(el, { height: 0, duration: 0.35, ease: 'power3.in' });
+    } else { el.style.height = '0'; }
+  }
+
+  var counter = document.getElementById('tapeCounter');
+  var sideLabel = document.getElementById('tapeSide');
+
+  if (!window.gsap || reduce) {
+    document.querySelectorAll('.count').forEach(function (el) {
+      var d = parseInt(el.dataset.decimals || '0', 10);
+      el.textContent = parseFloat(el.dataset.count).toFixed(d);
+    });
+    counter.textContent = '090';
+    return;
+  }
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Spools spin steadily; scrolling spools the tape faster.
+  var spoolSpeed = { v: 1 };
+  gsap.to('#spoolL', { rotation: 360, transformOrigin: '50% 50%', svgOrigin: '252 361', duration: 6, repeat: -1, ease: 'none', id: 'spinL' });
+  gsap.to('#spoolR', { rotation: 360, transformOrigin: '50% 50%', svgOrigin: '468 361', duration: 4, repeat: -1, ease: 'none', id: 'spinR' });
+
+  // Whole-page progress: counter 000-999, tape packs trade radius, side flips at half.
+  var packL = document.getElementById('packL');
+  var packR = document.getElementById('packR');
+  ScrollTrigger.create({
+    trigger: document.body,
+    start: 'top top',
+    end: 'bottom bottom',
+    onUpdate: function (self) {
+      var p = self.progress;
+      counter.textContent = String(Math.round(p * 999)).padStart(3, '0');
+      packL.setAttribute('r', String(30 - p * 16));
+      packR.setAttribute('r', String(14 + p * 16));
+      sideLabel.textContent = p < 0.5 ? 'now playing: side A' : 'now playing: side B';
+      var boost = 1 + Math.min(Math.abs(self.getVelocity()) / 900, 5);
+      gsap.getById('spinL').timeScale(boost);
+      gsap.getById('spinR').timeScale(boost);
+    }
+  });
+
+  // Hero entrance.
+  gsap.from('.hero h1, .hero-sub, .availability, .hero-cta, .hero-note', {
+    y: 26, opacity: 0, duration: 0.9, ease: 'power3.out', stagger: 0.08, delay: 0.1
+  });
+  gsap.from('.tape-box', { y: 34, opacity: 0, duration: 1.1, ease: 'power3.out', delay: 0.25 });
+
+  // Section reveals.
+  document.querySelectorAll('.reveal').forEach(function (el) {
+    gsap.from(el, {
+      y: 26, opacity: 0, duration: 0.75, ease: 'power3.out',
+      scrollTrigger: { trigger: el, start: 'top 89%' }
+    });
+  });
+
+  // Certified numbers count up.
+  document.querySelectorAll('.count').forEach(function (el) {
+    var target = parseFloat(el.dataset.count);
+    var decimals = parseInt(el.dataset.decimals || '0', 10);
+    var obj = { v: 0 };
+    gsap.to(obj, {
+      v: target, duration: 1.3, ease: 'power2.out',
+      scrollTrigger: { trigger: el, start: 'top 88%' },
+      onUpdate: function () { el.textContent = obj.v.toFixed(decimals); }
+    });
+  });
+})();
+</script>
+</body>
+</html>

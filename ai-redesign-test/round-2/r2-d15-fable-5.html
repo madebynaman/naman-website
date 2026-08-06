@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Naman Sharma · Product &amp; UX Designer · The Long Game</title>
+<meta name="description" content="A portfolio you can play. Nine years of product and UX design as a board game: consistency beats talent, and the token is still moving.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shrikhand&family=Onest:wght@400;500;600;700&family=Sono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ————————————————————————————————————————————
+   THE LONG GAME · a portfolio you can play
+   he designed a board game in 2017; this is the rematch
+   ———————————————————————————————————————————— */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --board: #F2E7CE;
+  --tile: #FBF4E2;
+  --ink: #2A2118;
+  --soft: #6B5D49;
+  --line: #D9CBAA;
+  --red: #C8402D;
+  --green: #1F7A56;
+  --gold: #DE9E1B;
+  --blue: #33549E;
+  --display: 'Shrikhand', Georgia, serif;
+  --body: 'Onest', 'Helvetica Neue', Arial, sans-serif;
+  --game: 'Sono', 'SF Mono', Menlo, monospace;
+}
+
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+body {
+  background: var(--board);
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+::selection { background: var(--green); color: var(--tile); }
+input { caret-color: var(--green); }
+* { scrollbar-width: thin; scrollbar-color: var(--green) var(--board); }
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: var(--board); }
+::-webkit-scrollbar-thumb { background: var(--green); }
+:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }
+
+.wrap { max-width: 1160px; margin: 0 auto; padding: 0 clamp(1.25rem, 4vw, 3.5rem); }
+
+.display { font-family: var(--display); font-weight: 400; line-height: 1.1; letter-spacing: 0.005em; }
+.game-type { font-family: var(--game); font-size: 0.6563rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--soft); }
+a { color: inherit; }
+
+/* ——— Nav ——— */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+  background: color-mix(in srgb, var(--board) 90%, transparent);
+  backdrop-filter: blur(8px);
+  border-bottom: 2px solid var(--ink);
+}
+.nav-inner { display: flex; align-items: center; justify-content: space-between; height: 3.5rem; gap: 1.5rem; }
+.nav-name { font-family: var(--display); font-size: 1.05rem; text-decoration: none; }
+.nav-name span { color: var(--red); }
+.nav-links { display: flex; gap: 1.5rem; list-style: none; }
+.nav-links a { text-decoration: none; font-size: 0.8438rem; font-weight: 600; color: var(--soft); transition: color 0.15s; }
+.nav-links a:hover { color: var(--red); }
+.nav-score { font-family: var(--game); font-size: 0.75rem; font-weight: 600; color: var(--green); font-variant-numeric: tabular-nums; }
+
+/* ——— Hero ——— */
+.hero { padding: 8.5rem 0 3.5rem; text-align: center; position: relative; }
+.hero .title { font-size: clamp(3.25rem, 9vw, 7rem); color: var(--ink); }
+.hero .title em { font-style: normal; color: var(--red); }
+.hero .tagline { margin-top: 1rem; font-size: clamp(1.125rem, 2.2vw, 1.5rem); font-weight: 600; }
+.hero-sub { margin: 1.5rem auto 0; max-width: 36rem; font-size: 1.0625rem; color: var(--soft); text-wrap: pretty; }
+.hero-sub strong { color: var(--ink); font-weight: 600; }
+.availability { margin-top: 1.5rem; display: inline-flex; align-items: center; gap: 0.6rem; font-weight: 600; font-size: 0.9375rem; }
+.availability i { width: 9px; height: 9px; border-radius: 50%; background: var(--green); }
+.hero-cta { margin-top: 2rem; display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
+.btn {
+  display: inline-block; padding: 0.9rem 1.9rem; border-radius: 10px;
+  font-size: 0.9375rem; font-weight: 700; text-decoration: none;
+  border: 2px solid var(--ink);
+  box-shadow: 0 3px 0 var(--ink);
+  transition: transform 0.15s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.15s, background 0.15s, color 0.15s;
+}
+.btn:active { transform: translateY(3px); box-shadow: 0 0 0 var(--ink); }
+.btn-solid { background: var(--green); color: var(--tile); }
+.btn-solid:hover { background: var(--ink); }
+.btn-line { background: var(--tile); }
+.btn-line:hover { background: var(--board); }
+.hero-note { margin-top: 1.25rem; font-size: 0.8125rem; color: var(--soft); }
+
+/* the die */
+.die-zone { margin-top: 3rem; display: flex; flex-direction: column; align-items: center; gap: 1rem; }
+.die-btn {
+  width: 84px; height: 84px; border-radius: 18px;
+  background: var(--tile); border: 2.5px solid var(--ink);
+  box-shadow: 0 5px 0 var(--ink);
+  cursor: pointer; display: grid; place-items: center;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.die-btn:hover { transform: translateY(-2px); box-shadow: 0 7px 0 var(--ink); }
+.die-btn:active { transform: translateY(5px); box-shadow: 0 0 0 var(--ink); }
+.die-btn svg { width: 52px; height: 52px; }
+.die-fact { min-height: 3.4rem; max-width: 30rem; font-weight: 500; font-size: 1rem; color: var(--ink); text-wrap: balance; }
+.die-fact .lab { display: block; font-family: var(--game); font-size: 0.625rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--soft); margin-bottom: 0.25rem; }
+
+/* ——— Scoreboard (proof) ——— */
+.score { padding: 2.5rem 0 1rem; }
+.score-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.25rem; }
+.vp {
+  background: var(--tile); border: 2px solid var(--ink); border-radius: 14px;
+  padding: 1.5rem 1.5rem 1.6rem; position: relative; overflow: hidden;
+  box-shadow: 0 4px 0 var(--ink);
+}
+.vp::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 8px; }
+.vp.c-green::before { background: var(--green); }
+.vp.c-gold::before { background: var(--gold); }
+.vp.c-blue::before { background: var(--blue); }
+.vp.c-red::before { background: var(--red); }
+.vp .n { font-family: var(--display); font-size: clamp(2rem, 3.8vw, 2.875rem); line-height: 1.1; font-variant-numeric: tabular-nums; }
+.vp p { margin-top: 0.4rem; font-size: 0.8438rem; color: var(--soft); line-height: 1.5; text-wrap: pretty; }
+.vp .game-type { position: absolute; top: 1.1rem; right: 1.25rem; }
+
+/* ——— No-jargon: house rules ——— */
+.rules { padding: 5rem 0 4rem; }
+.rules-card {
+  background: var(--tile); border: 2px solid var(--ink); border-radius: 18px;
+  box-shadow: 0 6px 0 var(--ink);
+  padding: clamp(1.75rem, 4vw, 3rem);
+}
+.rules h2 { font-family: var(--display); font-size: clamp(1.75rem, 3.6vw, 2.75rem); }
+.rules .lead { margin-top: 1rem; color: var(--soft); max-width: 42rem; text-wrap: pretty; }
+.rules .lead em { font-style: italic; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+.jargon-list { margin-top: 1.75rem; font-size: clamp(1.0625rem, 2vw, 1.375rem); line-height: 1.8; font-weight: 500; color: var(--soft); max-width: 48rem; }
+.jargon-list del { text-decoration: line-through; text-decoration-color: var(--red); text-decoration-thickness: 3px; }
+.jargon-list .sep { color: var(--gold); }
+.plain-truth { margin-top: 1.75rem; font-size: clamp(1.25rem, 2.4vw, 1.75rem); font-weight: 700; line-height: 1.45; max-width: 42rem; text-wrap: balance; }
+.plain-truth b { color: var(--green); }
+
+/* ——— The board ——— */
+.board-sec { padding: 4rem 0 2rem; }
+.board-head { text-align: center; margin-bottom: 2.75rem; }
+.board-head h2 { font-family: var(--display); font-size: clamp(2.25rem, 5vw, 4rem); }
+.board-head p { margin-top: 0.75rem; color: var(--soft); max-width: 34rem; margin-left: auto; margin-right: auto; text-wrap: pretty; }
+.board-frame { position: relative; background: var(--tile); border: 3px solid var(--ink); border-radius: 22px; padding: clamp(0.875rem, 2.5vw, 1.75rem); box-shadow: 0 8px 0 var(--ink); }
+.board { display: grid; grid-template-columns: repeat(5, 1fr); gap: clamp(0.5rem, 1.2vw, 0.875rem); }
+.tile {
+  position: relative;
+  border: 2px solid var(--line);
+  border-radius: 12px;
+  background: var(--board);
+  min-height: 108px;
+  padding: 0.7rem 0.75rem;
+  display: flex; flex-direction: column; justify-content: space-between;
+  transition: border-color 0.25s, background 0.25s, transform 0.25s;
+}
+.tile .no { font-family: var(--game); font-size: 0.625rem; font-weight: 600; color: var(--soft); font-variant-numeric: tabular-nums; }
+.tile.mile { border-color: var(--ink); background: var(--tile); }
+.tile.mile .band { position: absolute; top: 0; left: 0; right: 0; height: 6px; border-radius: 10px 10px 0 0; }
+.tile.m-green .band { background: var(--green); } .tile.m-gold .band { background: var(--gold); }
+.tile.m-blue .band { background: var(--blue); } .tile.m-red .band { background: var(--red); }
+.tile.mile .yr { font-family: var(--game); font-size: 0.625rem; font-weight: 600; letter-spacing: 0.06em; margin-top: 0.4rem; }
+.tile.m-green .yr { color: var(--green); } .tile.m-gold .yr { color: var(--gold); }
+.tile.m-blue .yr { color: var(--blue); } .tile.m-red .yr { color: var(--red); }
+.tile.mile .t { font-weight: 700; font-size: 0.8438rem; line-height: 1.3; margin-top: 0.15rem; text-wrap: pretty; }
+.tile.mile .d { font-size: 0.7188rem; color: var(--soft); line-height: 1.4; margin-top: 0.2rem; text-wrap: pretty; }
+.tile.visited { transform: none; }
+.tile.mile.visited { box-shadow: 0 3px 0 var(--ink); }
+.tile.current { border-color: var(--ink); background: #FFFDF4; }
+
+/* token */
+.token { position: absolute; z-index: 5; width: 34px; height: 44px; pointer-events: none; filter: drop-shadow(0 4px 4px rgba(42,33,24,0.35)); }
+.board-legend { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem; margin-top: 1.1rem; }
+
+/* ——— Card deck (work) ——— */
+.deck-sec { padding: 5rem 0 2rem; }
+.deck-head { display: flex; align-items: baseline; justify-content: space-between; gap: 2rem; margin-bottom: 2.5rem; }
+.deck-head h2 { font-family: var(--display); font-size: clamp(2rem, 4.4vw, 3.5rem); }
+.deck-head p { color: var(--soft); max-width: 24rem; text-wrap: pretty; }
+.deck-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.75rem; }
+.gcard {
+  background: var(--tile); border: 2px solid var(--ink); border-radius: 16px;
+  overflow: hidden; box-shadow: 0 5px 0 var(--ink);
+  display: flex; flex-direction: column;
+  transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.2s;
+}
+.gcard:hover { transform: translateY(-4px) rotate(-0.4deg); box-shadow: 0 9px 0 var(--ink); }
+.gcard .top { padding: 1.4rem 1.6rem 1.1rem; color: var(--tile); }
+.gcard.c-green .top { background: var(--green); } .gcard.c-gold .top { background: var(--gold); color: var(--ink); }
+.gcard.c-blue .top { background: var(--blue); } .gcard.c-red .top { background: var(--red); }
+.gcard .top .kind { font-family: var(--game); font-size: 0.625rem; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.85; }
+.gcard .top h3 { font-family: var(--display); font-size: clamp(1.5rem, 2.6vw, 2rem); margin-top: 0.3rem; }
+.gcard .mid { padding: 1.4rem 1.6rem 0.5rem; }
+.gcard .outcome { font-size: 1.0625rem; font-weight: 600; text-wrap: pretty; }
+.gcard .note { margin-top: 0.6rem; font-size: 0.9063rem; color: var(--soft); text-wrap: pretty; }
+.gcard .ph { position: relative; margin: 1.25rem 1.6rem 1.6rem; border: 2px solid var(--line); border-radius: 10px; background: var(--board); overflow: hidden; aspect-ratio: 16/8.5; }
+.gcard .ph svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.ph-cap {
+  position: absolute; left: 0.7rem; bottom: 0.6rem;
+  font-family: var(--game); font-size: 0.5625rem; letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--soft); background: var(--tile); border: 1.5px solid var(--line);
+  border-radius: 999px; padding: 0.22rem 0.6rem;
+}
+.gcard.locked-card .top { background: var(--ink); }
+.locked-body { padding: 1.4rem 1.6rem 1.75rem; }
+.locked-body p { color: var(--soft); text-wrap: pretty; }
+.locked-body .btn { margin-top: 1.25rem; }
+.deck-more { margin-top: 2rem; font-size: 0.875rem; color: var(--soft); line-height: 2; max-width: 46rem; }
+
+/* ——— How a turn works ——— */
+.turn { padding: 5rem 0 2rem; }
+.turn h2 { font-family: var(--display); font-size: clamp(2rem, 4.4vw, 3.5rem); }
+.turn .lead { margin-top: 0.75rem; color: var(--soft); }
+.turn-grid { margin-top: 2.5rem; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+.turn-step {
+  background: var(--tile); border: 2px solid var(--ink); border-radius: 14px;
+  padding: 1.6rem 1.6rem 1.75rem; box-shadow: 0 4px 0 var(--ink);
+}
+.turn-step .pips { width: 40px; height: 40px; display: block; }
+.turn-step h3 { font-family: var(--display); font-size: 1.375rem; margin-top: 0.9rem; }
+.turn-step p { margin-top: 0.5rem; font-size: 0.875rem; color: var(--soft); line-height: 1.55; text-wrap: pretty; }
+
+/* ——— Rulebook (codes) ——— */
+.rulebook { padding: 5rem 0 2rem; }
+.rulebook-grid { display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 6fr); gap: clamp(2rem, 5vw, 4.5rem); align-items: center; }
+.rulebook h2 { font-family: var(--display); font-size: clamp(1.875rem, 3.8vw, 3rem); }
+.rulebook h2 em { font-style: normal; color: var(--blue); }
+.rulebook p { margin-top: 1.2rem; color: var(--soft); text-wrap: pretty; }
+.rulebook p b { color: var(--ink); font-weight: 600; }
+.manual {
+  background: var(--tile); border: 2px solid var(--ink); border-radius: 16px;
+  box-shadow: 0 5px 0 var(--ink); overflow: hidden;
+}
+.manual .m-head { padding: 1rem 1.5rem; border-bottom: 2px solid var(--ink); background: var(--blue); color: var(--tile); font-family: var(--game); font-size: 0.6875rem; letter-spacing: 0.1em; text-transform: uppercase; }
+.manual ul { list-style: none; padding: 1.4rem 1.6rem 1.6rem; }
+.manual li { display: flex; gap: 0.8rem; padding: 0.5rem 0; font-size: 0.9375rem; color: var(--soft); }
+.manual li b { color: var(--ink); font-weight: 600; }
+.manual li .chk { flex-shrink: 0; width: 20px; height: 20px; border: 2px solid var(--green); border-radius: 6px; position: relative; top: 0.2rem; }
+.manual li .chk::after { content: ''; position: absolute; inset: 2px; background: var(--green); border-radius: 2.5px; clip-path: polygon(14% 46%, 38% 68%, 86% 16%, 98% 28%, 40% 92%, 2% 58%); }
+
+/* ——— Player bio + companion ——— */
+.bio { padding: 5rem 0 2rem; }
+.bio-grid { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: clamp(2rem, 5vw, 4.5rem); }
+.bio h2 { font-family: var(--display); font-size: clamp(1.875rem, 3.8vw, 3rem); }
+.bio p { margin-top: 1.2rem; color: var(--soft); text-wrap: pretty; }
+.bio p b { color: var(--ink); font-weight: 600; }
+.bio .now {
+  margin-top: 1.5rem; background: var(--tile); border: 2px solid var(--ink); border-radius: 12px;
+  padding: 1rem 1.3rem; font-size: 0.9375rem; color: var(--soft); box-shadow: 0 3px 0 var(--ink);
+}
+.bio .now b { color: var(--ink); }
+.companion {
+  background: var(--tile); border: 2px solid var(--ink); border-radius: 16px;
+  box-shadow: 0 5px 0 var(--ink); overflow: hidden; align-self: start;
+}
+.companion .top { background: var(--red); color: var(--tile); padding: 1.2rem 1.6rem; }
+.companion .top .kind { font-family: var(--game); font-size: 0.625rem; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.9; }
+.companion .top h3 { font-family: var(--display); font-size: 1.75rem; margin-top: 0.25rem; }
+.companion .ph { position: relative; margin: 1.4rem 1.6rem 0; border: 2px solid var(--line); border-radius: 10px; background: var(--board); aspect-ratio: 4/3; overflow: hidden; }
+.companion .ph svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.companion .body { padding: 1.25rem 1.6rem 1.6rem; }
+.companion .body p { margin-top: 0; font-size: 0.9063rem; color: var(--soft); text-wrap: pretty; }
+.companion .body p + p { margin-top: 0.7rem; }
+.companion .stat { display: flex; justify-content: space-between; margin-top: 1.1rem; }
+
+/* ——— Players (principles) ——— */
+.players { padding: 5rem 0 2rem; }
+.players h2 { font-family: var(--display); font-size: clamp(2rem, 4.4vw, 3.5rem); }
+.players .lead { margin-top: 0.75rem; color: var(--soft); max-width: 36rem; text-wrap: pretty; }
+.players-grid { margin-top: 2.5rem; display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+.player {
+  border: 2px solid var(--ink); border-radius: 16px; background: var(--tile);
+  padding: 1.75rem 1.75rem 2rem; box-shadow: 0 4px 0 var(--ink);
+  display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 1.1rem;
+}
+.pawn-chip { width: 34px; height: 44px; }
+.player h3 { font-family: var(--display); font-size: clamp(1.25rem, 2.2vw, 1.625rem); }
+.player p { margin-top: 0.6rem; color: var(--soft); font-size: 0.9063rem; text-wrap: pretty; }
+
+/* ——— Contact ——— */
+.your-move { padding: 6rem 0 4.5rem; text-align: center; }
+.your-move h2 { font-family: var(--display); font-size: clamp(2.75rem, 8vw, 6rem); }
+.your-move h2 em { font-style: normal; color: var(--red); }
+.your-move .pitch { margin: 1.5rem auto 0; max-width: 34rem; color: var(--soft); font-size: 1.125rem; text-wrap: pretty; }
+.your-move .email {
+  display: inline-block; margin-top: 2.5rem;
+  font-family: var(--game); font-weight: 600;
+  font-size: clamp(1.125rem, 2.8vw, 1.75rem);
+  background: var(--tile); border: 2px solid var(--ink); border-radius: 14px;
+  box-shadow: 0 5px 0 var(--ink);
+  padding: 1.1rem 2rem; text-decoration: none;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.your-move .email:hover { transform: translateY(-2px); box-shadow: 0 7px 0 var(--ink); }
+.your-move .email:active { transform: translateY(5px); box-shadow: 0 0 0 var(--ink); }
+.your-move .socials { margin-top: 2rem; display: flex; justify-content: center; gap: 1.75rem; }
+.your-move .socials a { color: var(--soft); font-size: 0.9375rem; font-weight: 600; text-decoration: none; }
+.your-move .socials a:hover { color: var(--red); }
+.your-move .fine { margin-top: 2rem; }
+
+.footer { border-top: 2px solid var(--ink); padding: 1.75rem 0 2.25rem; }
+.footer-inner { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem; }
+
+/* ——— Responsive ——— */
+@media (max-width: 960px) {
+  .score-grid, .players-grid, .deck-grid { grid-template-columns: repeat(2, 1fr); }
+  .turn-grid { grid-template-columns: repeat(2, 1fr); }
+  .rulebook-grid, .bio-grid { grid-template-columns: 1fr; }
+  .nav-links { display: none; }
+}
+@media (max-width: 680px) {
+  .board { grid-template-columns: repeat(3, 1fr); }
+  .tile { min-height: 96px; }
+  .score-grid, .deck-grid, .turn-grid, .players-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<!--
+THESIS: "consistency beats talent" made playable: nine years of career as a board
+you move through, because he literally designed a board game in year one. Refuses
+the timeline-table portfolio and the stat-card hero.
+OWN-WORLD: sand board, cream tiles, four player colors with meanings (green
+consistency, blue curiosity, gold outcomes, red give-a-damn); Shrikhand display,
+Onest body, Sono for game numerals; hard 2px ink borders and pressed-button shadows
+as the one depth system (a chosen board-game material, not a costume).
+STORY: the visitor starts the game, follows the token square by square from 2017 to
+now, draws the four work cards, meets the companion, and ends on "your move."
+FIRST VIEWPORT: the box lid: THE LONG GAME at full scale, tagline, a rollable die,
+two pressed-button actions.
+FORM: game-board object, #5 of my derived list; seed script degraded (no output),
+substitution disclosed in thread.
+FINISH: unreviewed and undocumented is unfinished; this build ends with the finish
+review, the verdict, and DESIGN.md
+-->
+
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a class="nav-name" href="#top">The Long Game<span>.</span></a>
+    <nav aria-label="Sections">
+      <ul class="nav-links">
+        <li><a href="#board">The board</a></li>
+        <li><a href="#deck">The cards</a></li>
+        <li><a href="#bio">Player bio</a></li>
+        <li><a href="#contact">Your move</a></li>
+      </ul>
+    </nav>
+    <span class="nav-score game-type" id="navScore" aria-hidden="true">square 01 / 30</span>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ———————————————— HERO / BOX LID ———————————————— -->
+  <section class="hero wrap">
+    <h1 class="display title">The Long <em>Game</em></h1>
+    <p class="tagline">I make complex products simple. I've been at it, without a year off, since 2017.</p>
+    <p class="hero-sub">I'm <strong>Naman Sharma</strong>, a product and UX designer. I help teams turn messy problems into products people actually understand. Based in Jaipur, working everywhere. One of my first paid projects was an actual board game. This page is the rematch.</p>
+    <p class="availability"><i></i>Open to product design roles and freelance.</p>
+    <div class="hero-cta">
+      <a class="btn btn-solid" href="#board">Start the game</a>
+      <a class="btn btn-line" href="#contact">Skip to contact</a>
+    </div>
+    <p class="hero-note">1 player · ~4 min playtime · always up for a good conversation</p>
+    <div class="die-zone">
+      <button class="die-btn" id="dieBtn" aria-label="Roll the die for a conversation starter">
+        <svg id="dieFace" viewBox="0 0 52 52" aria-hidden="true">
+          <g fill="#2A2118">
+            <circle cx="14" cy="14" r="5"/><circle cx="38" cy="38" r="5"/><circle cx="26" cy="26" r="5"/>
+          </g>
+        </svg>
+      </button>
+      <p class="die-fact" id="dieFact" aria-live="polite"><span class="lab">roll for a conversation starter</span>Click the die. Six sides, six things I'll happily talk about for an hour.</p>
+    </div>
+  </section>
+
+  <!-- ———————————————— SCOREBOARD ———————————————— -->
+  <section class="score wrap" aria-label="Victory points so far">
+    <div class="score-grid">
+      <div class="vp c-gold reveal">
+        <span class="game-type">victory pts</span>
+        <div class="n">$<span class="count" data-count="500">0</span>K</div>
+        <p>pre-seed raised after the Turns website and brand revamp</p>
+      </div>
+      <div class="vp c-gold reveal">
+        <span class="game-type">victory pts</span>
+        <div class="n"><span class="count" data-count="4.8" data-decimals="1">0.0</span>★</div>
+        <p>on the Play Store after the LetsConnect redesign</p>
+      </div>
+      <div class="vp c-blue reveal">
+        <span class="game-type">research</span>
+        <div class="n"><span class="count" data-count="25">0</span></div>
+        <p>in-person interviews for the Wikimedia Foundation, 3 cities</p>
+      </div>
+      <div class="vp c-green reveal">
+        <span class="game-type">the streak</span>
+        <div class="n"><span class="count" data-count="15">0</span>+</div>
+        <p>clients since 2017, agency and independent, no year off</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ———————————————— HOUSE RULES ———————————————— -->
+  <section class="rules wrap">
+    <div class="rules-card reveal">
+      <h2>House rule №1: no jargon</h2>
+      <p class="lead">Most designer portfolios promise to <em>synergize aesthetics with functionality</em>. This one doesn't. I hate jargon. So, for the record, I do not:</p>
+      <p class="jargon-list">
+        <span class="sr-only">Things I do not do:</span>
+        <del>foster innovation through synergizing aesthetics and functionality</del> <span class="sep">·</span>
+        <del>navigate the confluence of form and function</del> <span class="sep">·</span>
+        <del>orchestrate design revolutions</del> <span class="sep">·</span>
+        <del>instigate paradigmatic evolutions</del> <span class="sep">·</span>
+        <del>seamlessly integrate cutting-edge methodologies</del> <span class="sep">·</span>
+        <del>engineer experiential marvels</del> <span class="sep">·</span>
+        <del>champion transformative ideation in the ever-evolving design ethos</del> <span class="sep">·</span>
+        <del>perpetuate narratives that transcend boundaries</del>
+      </p>
+      <p class="plain-truth">Here's what I actually do: I listen to users. I sketch. I test. I simplify. I ship. Then I check if it worked. <b>That's the whole trick.</b></p>
+    </div>
+  </section>
+
+  <!-- ———————————————— THE BOARD ———————————————— -->
+  <section class="board-sec wrap" id="board">
+    <div class="board-head">
+      <h2>Nine years, thirty squares</h2>
+      <p>Scroll, and the token plays through the career. Colors follow the four players below: green for the streak, blue for curiosity, gold for outcomes, red for giving a damn.</p>
+    </div>
+    <div class="board-frame">
+      <div class="board" id="theBoard">
+        <!-- row 1: 1-5 → -->
+        <div class="tile mile m-green" data-step="1"><span class="band"></span><span class="no">01 · start</span><div><span class="yr">2017</span><p class="t">Self-taught, first clients</p><p class="d">logos, posters, a kids' eBook</p></div></div>
+        <div class="tile" data-step="2"><span class="no">02</span></div>
+        <div class="tile mile m-gold" data-step="3"><span class="band"></span><span class="no">03</span><div><span class="yr">2017</span><p class="t">Designed an actual board game</p><p class="d">yes, really. Hence all this.</p></div></div>
+        <div class="tile" data-step="4"><span class="no">04</span></div>
+        <div class="tile mile m-green" data-step="5"><span class="band"></span><span class="no">05</span><div><span class="yr">2018</span><p class="t">A lot of bad early work</p><p class="d">lesson kept. Squares kept too.</p></div></div>
+        <!-- row 2: 10-6 ← (visual order right-to-left) -->
+        <div class="tile mile m-blue" data-step="10"><span class="band"></span><span class="no">10</span><div><span class="yr">2020</span><p class="t">Wikimedia field study</p><p class="d">25 interviews, 3 cities, JioPhones</p></div></div>
+        <div class="tile" data-step="9"><span class="no">09</span></div>
+        <div class="tile mile m-blue" data-step="8"><span class="band"></span><span class="no">08</span><div><span class="yr">2019</span><p class="t">Found UX research</p><p class="d">never looked back</p></div></div>
+        <div class="tile" data-step="7"><span class="no">07</span></div>
+        <div class="tile" data-step="6"><span class="no">06</span></div>
+        <!-- row 3: 11-15 → -->
+        <div class="tile mile m-red" data-step="11"><span class="band"></span><span class="no">11</span><div><span class="yr">2021</span><p class="t">UX designer at Thence</p><p class="d">large Indian brands, mentoring</p></div></div>
+        <div class="tile" data-step="12"><span class="no">12</span></div>
+        <div class="tile mile m-red" data-step="13"><span class="band"></span><span class="no">13</span><div><span class="yr">2021</span><p class="t">Two NDA rescues</p><p class="d">real numbers, behind a password</p></div></div>
+        <div class="tile" data-step="14"><span class="no">14</span></div>
+        <div class="tile mile m-green" data-step="15"><span class="band"></span><span class="no">15</span><div><span class="yr">2022</span><p class="t">Went independent</p><p class="d">15+ clients and counting</p></div></div>
+        <!-- row 4: 20-16 ← -->
+        <div class="tile mile m-gold" data-step="20"><span class="band"></span><span class="no">20</span><div><span class="yr">2023</span><p class="t">LetsConnect hits 4.8★</p><p class="d">rebuilt from user feedback</p></div></div>
+        <div class="tile" data-step="19"><span class="no">19</span></div>
+        <div class="tile mile m-gold" data-step="18"><span class="band"></span><span class="no">18</span><div><span class="yr">2023</span><p class="t">Turns raises $500K</p><p class="d">after the site + brand revamp</p></div></div>
+        <div class="tile" data-step="17"><span class="no">17</span></div>
+        <div class="tile" data-step="16"><span class="no">16</span></div>
+        <!-- row 5: 21-25 → -->
+        <div class="tile mile m-red" data-step="21"><span class="band"></span><span class="no">21</span><div><span class="yr">2022</span><p class="t">Rescued Jerry</p><p class="d">+1 companion, permanent</p></div></div>
+        <div class="tile" data-step="22"><span class="no">22</span></div>
+        <div class="tile mile m-gold" data-step="23"><span class="band"></span><span class="no">23</span><div><span class="yr">2024</span><p class="t">Gadivan, 0 → 1</p><p class="d">many apps, one system</p></div></div>
+        <div class="tile" data-step="24"><span class="no">24</span></div>
+        <div class="tile mile m-blue" data-step="25"><span class="band"></span><span class="no">25</span><div><span class="yr">2025</span><p class="t">Re-learning to code</p><p class="d">builds with AI most days</p></div></div>
+        <!-- row 6: 30-26 ← -->
+        <div class="tile mile m-green" data-step="30"><span class="band"></span><span class="no">30 · now</span><div><span class="yr">2026</span><p class="t">Open to what's next</p><p class="d">your move: say hi below</p></div></div>
+        <div class="tile" data-step="29"><span class="no">29</span></div>
+        <div class="tile mile m-blue" data-step="28"><span class="band"></span><span class="no">28</span><div><span class="yr">2026</span><p class="t">This site: 16 AI models</p><p class="d">80 directions, decisions mine</p></div></div>
+        <div class="tile" data-step="27"><span class="no">27</span></div>
+        <div class="tile" data-step="26"><span class="no">26</span></div>
+      </div>
+      <svg class="token" id="token" viewBox="0 0 34 44" aria-hidden="true">
+        <path d="M17 2 C 22 2 26 6 26 11 C 26 14.5 24.2 17.4 21.6 19 L 24 30 L 10 30 L 12.4 19 C 9.8 17.4 8 14.5 8 11 C 8 6 12 2 17 2 Z" fill="#1F7A56" stroke="#2A2118" stroke-width="2.5"/>
+        <path d="M 6 34 L 28 34 L 31 42 L 3 42 Z" fill="#1F7A56" stroke="#2A2118" stroke-width="2.5"/>
+      </svg>
+    </div>
+    <div class="board-legend">
+      <span class="game-type">● token moves as you scroll</span>
+      <span class="game-type">milestones light up when visited</span>
+    </div>
+  </section>
+
+  <!-- ———————————————— THE CARDS ———————————————— -->
+  <section class="deck-sec wrap" id="deck">
+    <div class="deck-head">
+      <h2>The cards you draw</h2>
+      <p>A few favourites, short versions on the card face. Ask me for the long ones.</p>
+    </div>
+    <div class="deck-grid">
+      <article class="gcard c-gold reveal">
+        <div class="top"><span class="kind">outcome card · website, brand, design system</span><h3>Turns</h3></div>
+        <div class="mid">
+          <p class="outcome">New website, new brand, new design system. They raised $500K pre-seed after the revamp.</p>
+          <p class="note">Plus brand guidelines and a system the team could keep shipping with after I left. Nobody asked for that part.</p>
+        </div>
+        <div class="ph">
+          <svg viewBox="0 0 640 340" fill="none" aria-hidden="true">
+            <rect x="80" y="40" width="370" height="240" rx="8" stroke="#D9CBAA" stroke-width="2.5"/>
+            <line x1="80" y1="76" x2="450" y2="76" stroke="#D9CBAA" stroke-width="2.5"/>
+            <rect x="108" y="104" width="170" height="15" rx="7" fill="#DE9E1B"/>
+            <rect x="108" y="132" width="110" height="9" rx="4" fill="#D9CBAA"/>
+            <rect x="108" y="176" width="150" height="76" rx="8" stroke="#D9CBAA" stroke-width="2.5"/>
+            <rect x="278" y="176" width="150" height="76" rx="8" stroke="#D9CBAA" stroke-width="2.5"/>
+            <rect x="440" y="96" width="120" height="216" rx="16" stroke="#2A2118" stroke-width="2.5" fill="#F2E7CE"/>
+            <rect x="458" y="126" width="84" height="12" rx="6" fill="#DE9E1B"/>
+            <rect x="458" y="150" width="56" height="8" rx="4" fill="#D9CBAA"/>
+            <rect x="458" y="176" width="84" height="50" rx="6" stroke="#D9CBAA" stroke-width="2.5"/>
+            <rect x="458" y="240" width="84" height="50" rx="6" stroke="#D9CBAA" stroke-width="2.5"/>
+          </svg>
+          <span class="ph-cap">mockup slot: Turns site + brand</span>
+        </div>
+      </article>
+
+      <article class="gcard c-blue reveal">
+        <div class="top"><span class="kind">research card · 25 users, 3 cities</span><h3>Wikipedia × KaiOS</h3></div>
+        <div class="mid">
+          <p class="outcome">25 in-person interviews for the Wikimedia Foundation, with JioPhone users in Pune, Mumbai and Delhi.</p>
+          <p class="note">Tiny screens, real keypads, and for most participants the only internet-connected device in the house.</p>
+        </div>
+        <div class="ph">
+          <svg viewBox="0 0 640 340" fill="none" aria-hidden="true">
+            <rect x="262" y="26" width="116" height="288" rx="14" stroke="#33549E" stroke-width="2.5"/>
+            <rect x="279" y="48" width="82" height="110" rx="4" stroke="#D9CBAA" stroke-width="2.5"/>
+            <line x1="288" y1="72" x2="352" y2="72" stroke="#D9CBAA" stroke-width="2.5"/>
+            <line x1="288" y1="92" x2="338" y2="92" stroke="#D9CBAA" stroke-width="2.5"/>
+            <line x1="288" y1="112" x2="352" y2="112" stroke="#D9CBAA" stroke-width="2.5"/>
+            <g stroke="#D9CBAA" stroke-width="2.5">
+              <rect x="279" y="178" width="22" height="15" rx="3"/><rect x="309" y="178" width="22" height="15" rx="3"/><rect x="339" y="178" width="22" height="15" rx="3"/>
+              <rect x="279" y="202" width="22" height="15" rx="3"/><rect x="309" y="202" width="22" height="15" rx="3"/><rect x="339" y="202" width="22" height="15" rx="3"/>
+              <rect x="279" y="226" width="22" height="15" rx="3"/><rect x="309" y="226" width="22" height="15" rx="3"/><rect x="339" y="226" width="22" height="15" rx="3"/>
+            </g>
+            <circle cx="120" cy="90" r="5" fill="#C8402D"/><circle cx="104" cy="180" r="5" fill="#C8402D"/><circle cx="140" cy="254" r="5" fill="#C8402D"/>
+            <path d="M 120 90 C 108 126, 104 152, 104 180 C 104 210, 120 236, 140 254" stroke="#C8402D" stroke-width="2" stroke-dasharray="2 6"/>
+            <text x="134" y="87" font-family="Sono, monospace" font-size="13" fill="#6B5D49">Delhi</text>
+            <text x="118" y="177" font-family="Sono, monospace" font-size="13" fill="#6B5D49">Mumbai</text>
+            <text x="154" y="251" font-family="Sono, monospace" font-size="13" fill="#6B5D49">Pune</text>
+            <g stroke="#D9CBAA" stroke-width="2.5"><line x1="440" y1="80" x2="560" y2="80"/><line x1="440" y1="104" x2="540" y2="104"/><line x1="440" y1="128" x2="556" y2="128"/><line x1="440" y1="152" x2="520" y2="152"/></g>
+            <text x="440" y="60" font-family="Sono, monospace" font-size="13" fill="#6B5D49">field notes</text>
+          </svg>
+          <span class="ph-cap">photo slot: JioPhone + notes</span>
+        </div>
+      </article>
+
+      <article class="gcard c-gold reveal">
+        <div class="top"><span class="kind">outcome card · mobile app, ux redesign</span><h3>LetsConnect</h3></div>
+        <div class="mid">
+          <p class="outcome">Rebuilt the experience from user feedback. Now at 4.8★ on the Play Store.</p>
+          <p class="note">Read the reviews, grouped the complaints, redesigned the journeys where people got lost.</p>
+        </div>
+        <div class="ph">
+          <svg viewBox="0 0 640 340" fill="none" aria-hidden="true">
+            <rect x="150" y="36" width="128" height="272" rx="16" stroke="#D9CBAA" stroke-width="2.5"/>
+            <rect x="170" y="70" width="88" height="9" rx="4" fill="#D9CBAA"/>
+            <rect x="170" y="100" width="88" height="56" rx="6" stroke="#D9CBAA" stroke-width="2.5"/>
+            <rect x="170" y="170" width="88" height="56" rx="6" stroke="#D9CBAA" stroke-width="2.5"/>
+            <path d="M 298 172 L 338 172 M 326 160 L 338 172 L 326 184" stroke="#C8402D" stroke-width="2.5"/>
+            <rect x="358" y="36" width="128" height="272" rx="16" stroke="#DE9E1B" stroke-width="2.5"/>
+            <rect x="378" y="70" width="88" height="13" rx="6" fill="#DE9E1B"/>
+            <rect x="378" y="100" width="88" height="80" rx="8" stroke="#DE9E1B" stroke-width="2.5"/>
+            <rect x="378" y="196" width="88" height="28" rx="14" fill="#1F7A56"/>
+            <g fill="#DE9E1B"><circle cx="390" cy="256" r="4.5"/><circle cx="407" cy="256" r="4.5"/><circle cx="424" cy="256" r="4.5"/><circle cx="441" cy="256" r="4.5"/><circle cx="458" cy="256" r="4.5"/></g>
+            <text x="378" y="290" font-family="Sono, monospace" font-size="13" fill="#6B5D49">4.8 / 5</text>
+          </svg>
+          <span class="ph-cap">screens slot: before / after</span>
+        </div>
+      </article>
+
+      <article class="gcard c-green reveal">
+        <div class="top"><span class="kind">builder card · 0 to 1, multiple apps</span><h3>Gadivan</h3></div>
+        <div class="mid">
+          <p class="outcome">Designed the whole product from a blank page. Different apps for different users, one system underneath.</p>
+          <p class="note">Founders, journeys, flows, screens, then side by side with engineering until launch.</p>
+        </div>
+        <div class="ph">
+          <svg viewBox="0 0 640 340" fill="none" aria-hidden="true">
+            <rect x="122" y="70" width="102" height="204" rx="12" stroke="#D9CBAA" stroke-width="2.5"/>
+            <rect x="264" y="42" width="102" height="204" rx="12" stroke="#1F7A56" stroke-width="2.5"/>
+            <rect x="406" y="70" width="102" height="204" rx="12" stroke="#D9CBAA" stroke-width="2.5"/>
+            <rect x="138" y="98" width="70" height="8" rx="4" fill="#D9CBAA"/>
+            <rect x="280" y="70" width="70" height="8" rx="4" fill="#1F7A56"/>
+            <rect x="422" y="98" width="70" height="8" rx="4" fill="#D9CBAA"/>
+            <rect x="138" y="122" width="70" height="46" rx="6" stroke="#D9CBAA" stroke-width="2.5"/>
+            <rect x="280" y="94" width="70" height="46" rx="6" stroke="#1F7A56" stroke-width="2.5"/>
+            <rect x="422" y="122" width="70" height="46" rx="6" stroke="#D9CBAA" stroke-width="2.5"/>
+            <path d="M 173 300 C 173 320, 315 320, 315 300 M 315 300 C 315 320, 457 320, 457 300" stroke="#C8402D" stroke-width="2" stroke-dasharray="2 6"/>
+            <text x="240" y="334" font-family="Sono, monospace" font-size="13" fill="#6B5D49">one system underneath</text>
+          </svg>
+          <span class="ph-cap">family shot slot: the Gadivan apps</span>
+        </div>
+      </article>
+
+      <article class="gcard locked-card reveal" style="grid-column: 1 / -1;">
+        <div class="top"><span class="kind">locked cards · two, under NDA</span><h3>Draw only with the password</h3></div>
+        <div class="locked-body">
+          <p>A dealer portal for one of India's largest paint companies. An onboarding rescue for a small-business app. Real numbers, real impact, both under NDA.</p>
+          <a class="btn btn-line" href="mailto:madebynaman@gmail.com?subject=Password%20for%20the%20NDA%20case%20studies">Ask for the password</a>
+        </div>
+      </article>
+    </div>
+    <p class="deck-more game-type">also in the box: Parentverse · Venyou · Sharent · Spirinova · Gorico · RedShilliz · DGlobalist · Pahoti Wellness · Ivy Malik · PhotoFinder · Olsub · Learn Theta</p>
+  </section>
+
+  <!-- ———————————————— HOW A TURN WORKS ———————————————— -->
+  <section class="turn wrap" id="turn">
+    <h2>How a turn works</h2>
+    <p class="lead">Six moves, always in this order. The order matters more than the labels.</p>
+    <div class="turn-grid">
+      <div class="turn-step reveal">
+        <svg class="pips" viewBox="0 0 40 40" aria-hidden="true"><rect x="1.5" y="1.5" width="37" height="37" rx="9" fill="#FBF4E2" stroke="#2A2118" stroke-width="2.5"/><circle cx="20" cy="20" r="4.5" fill="#2A2118"/></svg>
+        <h3>Listen</h3><p>Users, founders, analytics, support tickets. Most of what I need already exists inside the company. It just isn't in one place yet.</p>
+      </div>
+      <div class="turn-step reveal">
+        <svg class="pips" viewBox="0 0 40 40" aria-hidden="true"><rect x="1.5" y="1.5" width="37" height="37" rx="9" fill="#FBF4E2" stroke="#2A2118" stroke-width="2.5"/><g fill="#2A2118"><circle cx="12" cy="12" r="4.5"/><circle cx="28" cy="28" r="4.5"/></g></svg>
+        <h3>Map</h3><p>The full journey, end to end, until I can see where it breaks.</p>
+      </div>
+      <div class="turn-step reveal">
+        <svg class="pips" viewBox="0 0 40 40" aria-hidden="true"><rect x="1.5" y="1.5" width="37" height="37" rx="9" fill="#FBF4E2" stroke="#2A2118" stroke-width="2.5"/><g fill="#2A2118"><circle cx="11" cy="11" r="4.5"/><circle cx="20" cy="20" r="4.5"/><circle cx="29" cy="29" r="4.5"/></g></svg>
+        <h3>Explore</h3><p>Go wide before narrowing. I would rather throw away ten directions than defend the first one.</p>
+      </div>
+      <div class="turn-step reveal">
+        <svg class="pips" viewBox="0 0 40 40" aria-hidden="true"><rect x="1.5" y="1.5" width="37" height="37" rx="9" fill="#FBF4E2" stroke="#2A2118" stroke-width="2.5"/><g fill="#2A2118"><circle cx="12" cy="12" r="4.5"/><circle cx="28" cy="12" r="4.5"/><circle cx="12" cy="28" r="4.5"/><circle cx="28" cy="28" r="4.5"/></g></svg>
+        <h3>Refine</h3><p>Pick a direction and sweat the details.</p>
+      </div>
+      <div class="turn-step reveal">
+        <svg class="pips" viewBox="0 0 40 40" aria-hidden="true"><rect x="1.5" y="1.5" width="37" height="37" rx="9" fill="#FBF4E2" stroke="#2A2118" stroke-width="2.5"/><g fill="#2A2118"><circle cx="12" cy="12" r="4.5"/><circle cx="28" cy="12" r="4.5"/><circle cx="20" cy="20" r="4.5"/><circle cx="12" cy="28" r="4.5"/><circle cx="28" cy="28" r="4.5"/></g></svg>
+        <h3>Ship</h3><p>Stay with engineering through the build, screen by screen, until it's live.</p>
+      </div>
+      <div class="turn-step reveal">
+        <svg class="pips" viewBox="0 0 40 40" aria-hidden="true"><rect x="1.5" y="1.5" width="37" height="37" rx="9" fill="#FBF4E2" stroke="#2A2118" stroke-width="2.5"/><g fill="#2A2118"><circle cx="12" cy="11" r="4.5"/><circle cx="28" cy="11" r="4.5"/><circle cx="12" cy="20" r="4.5"/><circle cx="28" cy="20" r="4.5"/><circle cx="12" cy="29" r="4.5"/><circle cx="28" cy="29" r="4.5"/></g></svg>
+        <h3>Check</h3><p>Watch the numbers afterwards. Fix what moved, and fix what didn't.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ———————————————— RULEBOOK ———————————————— -->
+  <section class="rulebook wrap">
+    <div class="rulebook-grid">
+      <div>
+        <h2>I read the <em>rulebook.</em></h2>
+        <p>The rulebook here being the codebase. I have a <b>computer engineering degree</b>. For years I barely used it, and it has turned out to be one of the more useful things I own.</p>
+        <p>It means I know what's expensive to build before I draw it, I can read the code instead of guessing, and <b>engineers don't have to translate for me</b>. When a handoff goes sideways, I can usually work out why on my own.</p>
+        <p>I'm re-learning to code properly now, and I build with AI most days. This site is where that started: the same brief went to 16 AI models, 80 directions came back, and I went through all of them to work out what I actually wanted. Useful exercise. <b>The design decisions are still mine.</b></p>
+      </div>
+      <div class="manual reveal">
+        <div class="m-head">What ships with every handoff</div>
+        <ul>
+          <li><span class="chk" aria-hidden="true"></span><span><b>Flows, states, edge cases:</b> drawn, not implied</span></li>
+          <li><span class="chk" aria-hidden="true"></span><span><b>Empty, loading, error:</b> designed up front</span></li>
+          <li><span class="chk" aria-hidden="true"></span><span><b>Copy:</b> final, no lorem ipsum</span></li>
+          <li><span class="chk" aria-hidden="true"></span><span><b>Expensive ideas:</b> flagged before the sprint, not discovered inside it</span></li>
+          <li><span class="chk" aria-hidden="true"></span><span><b>Follow-through:</b> screen by screen until it's live</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ———————————————— PLAYER BIO + COMPANION ———————————————— -->
+  <section class="bio wrap" id="bio">
+    <div class="bio-grid">
+      <div>
+        <h2>Player bio</h2>
+        <p>I'm a <b>self-taught designer with a computer engineering degree</b>. Halfway through the degree I worked out that I liked designing products more than writing code, so I taught myself design properly: books, courses, YouTube, and a lot of bad early work.</p>
+        <p>It started in 2017 with graphic design. In 2019 I found UX research and never looked back. Since then: field research, usability testing, web apps, mobile apps, websites, brands, packaging. Print and pixels and most things in between.</p>
+        <p>I'm a <b>curious generalist</b>, and I think that's the useful part. Range lets me see the whole problem rather than only my corner of it.</p>
+        <div class="now"><b>Right now:</b> open to product design roles. Living in Jaipur with Jerry. Reading something good, playing something old. This paragraph gets updated every few months, like a save file.</div>
+      </div>
+      <aside class="companion reveal">
+        <div class="top"><span class="kind">companion card · permanent</span><h3>Jerry</h3></div>
+        <div class="ph">
+          <svg viewBox="0 0 400 300" fill="none" aria-hidden="true">
+            <rect x="20" y="20" width="360" height="260" rx="10" stroke="#D9CBAA" stroke-width="2.5" stroke-dasharray="7 9"/>
+            <circle cx="200" cy="130" r="52" stroke="#2A2118" stroke-width="2.5"/>
+            <path d="M 148 226 C 170 196, 230 196, 252 226" stroke="#2A2118" stroke-width="2.5"/>
+            <text x="200" y="262" text-anchor="middle" font-family="Sono, monospace" font-size="13" fill="#6B5D49">photo slot: Jerry (matters most)</text>
+          </svg>
+        </div>
+        <div class="body">
+          <p>A four-year-old indie street dog, and the love of my life. Met him at four weeks old: malnourished, separated from his litter, too young to survive alone. Brought him home. My parents took some convincing.</p>
+          <p>Stubborn, smart, deeply introverted, and extremely selective about who may pet him. If he ever lets you, take it as a five-star review. He's asleep next to my desk right now, supervising. He says hi.</p>
+          <div class="stat">
+            <span class="game-type">dogs rescued: 1</span>
+            <span class="game-type" style="color: var(--red);">effect: +1 to everything</span>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ———————————————— THE FOUR PLAYERS ———————————————— -->
+  <section class="players wrap">
+    <h2>The four players</h2>
+    <p class="lead">Every color on the board stands for one of the four things I design by.</p>
+    <div class="players-grid">
+      <div class="player reveal">
+        <svg class="pawn-chip" viewBox="0 0 34 44" aria-hidden="true"><path d="M17 2 C 22 2 26 6 26 11 C 26 14.5 24.2 17.4 21.6 19 L 24 30 L 10 30 L 12.4 19 C 9.8 17.4 8 14.5 8 11 C 8 6 12 2 17 2 Z M 6 34 L 28 34 L 31 42 L 3 42 Z" fill="#1F7A56" stroke="#2A2118" stroke-width="2"/></svg>
+        <div>
+          <h3>Green plays the streak</h3>
+          <p>Consistency beats talent. I'm not the most talented designer in the world. I show up every day instead, and that compounds. Since 2017, 15+ clients, no year off.</p>
+        </div>
+      </div>
+      <div class="player reveal">
+        <svg class="pawn-chip" viewBox="0 0 34 44" aria-hidden="true"><path d="M17 2 C 22 2 26 6 26 11 C 26 14.5 24.2 17.4 21.6 19 L 24 30 L 10 30 L 12.4 19 C 9.8 17.4 8 14.5 8 11 C 8 6 12 2 17 2 Z M 6 34 L 28 34 L 31 42 L 3 42 Z" fill="#33549E" stroke="#2A2118" stroke-width="2"/></svg>
+        <div>
+          <h3>Blue plays curiosity</h3>
+          <p>Curiosity is the job. I know a little about a lot, which connects things other people keep separate. Understanding why someone picks a keypad phone shaped the Wikipedia work more than anything I knew about interfaces.</p>
+        </div>
+      </div>
+      <div class="player reveal">
+        <svg class="pawn-chip" viewBox="0 0 34 44" aria-hidden="true"><path d="M17 2 C 22 2 26 6 26 11 C 26 14.5 24.2 17.4 21.6 19 L 24 30 L 10 30 L 12.4 19 C 9.8 17.4 8 14.5 8 11 C 8 6 12 2 17 2 Z M 6 34 L 28 34 L 31 42 L 3 42 Z" fill="#DE9E1B" stroke="#2A2118" stroke-width="2"/></svg>
+        <div>
+          <h3>Gold plays outcomes</h3>
+          <p>Form follows function. Function solves the problem; beauty makes people remember it, and you earn the second by doing the first. No polish moves a number until research finds the real problem.</p>
+        </div>
+      </div>
+      <div class="player reveal">
+        <svg class="pawn-chip" viewBox="0 0 34 44" aria-hidden="true"><path d="M17 2 C 22 2 26 6 26 11 C 26 14.5 24.2 17.4 21.6 19 L 24 30 L 10 30 L 12.4 19 C 9.8 17.4 8 14.5 8 11 C 8 6 12 2 17 2 Z M 6 34 L 28 34 L 31 42 L 3 42 Z" fill="#C8402D" stroke="#2A2118" stroke-width="2"/></svg>
+        <div>
+          <h3>Red plays give-a-damn</h3>
+          <p>Founder's mindset, full ownership. At Turns that meant brand guidelines and a design system so the team could keep shipping after I left. Nobody asked for that part.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ———————————————— YOUR MOVE ———————————————— -->
+  <section class="your-move wrap" id="contact">
+    <h2>Your <em>move.</em></h2>
+    <p class="pitch">Whether it's a role, a project, or just a good conversation about design, hip-hop, or dogs, my inbox is open.</p>
+    <a class="email" href="mailto:madebynaman@gmail.com">madebynaman@gmail.com</a>
+    <div class="socials">
+      <a href="#" rel="noopener">LinkedIn</a>
+      <a href="#" rel="noopener">Instagram</a>
+      <a href="#" rel="noopener">Twitter</a>
+    </div>
+    <p class="fine game-type">Jaipur, India (GMT+5:30) · replies within a day · open to product design roles</p>
+  </section>
+
+  <footer class="footer">
+    <div class="wrap footer-inner">
+      <span class="game-type">No jargon was used on this website.</span>
+      <span class="game-type">Jerry approved this game.</span>
+    </div>
+  </footer>
+
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<script>
+(function () {
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // ——— The die: six conversation starters ———
+  var facts = [
+    { pips: [[20, 20]], text: 'Hip-hop. Raised on old school, Eminem and 50 Cent. These days deep into Desi Hip Hop.' },
+    { pips: [[12, 12], [28, 28]], text: 'Video games. Need for Speed: Most Wanted (2005, the correct answer), Call of Duty, Prince of Persia: Warrior Within.' },
+    { pips: [[11, 11], [20, 20], [29, 29]], text: 'Computers and tech. Engineering kid who never grew out of taking things apart.' },
+    { pips: [[12, 12], [28, 12], [12, 28], [28, 28]], text: 'Personal finance and investing. Slow, boring, long-term, on purpose.' },
+    { pips: [[12, 12], [28, 12], [20, 20], [12, 28], [28, 28]], text: 'Education. How people learn fascinates me, and it shows up in how I design.' },
+    { pips: [[12, 11], [28, 11], [12, 20], [28, 20], [12, 29], [28, 29]], text: 'Jerry. The real boss. Ask to see photos; I will not need convincing.' }
+  ];
+  var dieBtn = document.getElementById('dieBtn');
+  var dieFace = document.getElementById('dieFace');
+  var dieFact = document.getElementById('dieFact');
+  var lastRoll = -1;
+  function drawFace(idx) {
+    var g = dieFace.querySelector('g');
+    g.innerHTML = '';
+    facts[idx].pips.forEach(function (p) {
+      var c = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+      c.setAttribute('cx', p[0]); c.setAttribute('cy', p[1]); c.setAttribute('r', 4.5);
+      g.appendChild(c);
+    });
+  }
+  dieBtn.addEventListener('click', function () {
+    var roll;
+    do { roll = Math.floor(Math.random() * 6); } while (roll === lastRoll);
+    lastRoll = roll;
+    var land = function () {
+      drawFace(roll);
+      dieFact.innerHTML = '<span class="lab">rolled a ' + (roll + 1) + ' · ask me about</span>' + facts[roll].text;
+    };
+    if (window.gsap && !reduce) {
+      gsap.timeline()
+        .to(dieBtn, { rotation: 360 + Math.random() * 360, y: -14, duration: 0.45, ease: 'power2.out' })
+        .add(land)
+        .to(dieBtn, { rotation: 0, y: 0, duration: 0.35, ease: 'bounce.out' });
+      gsap.fromTo(dieFact, { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.4, delay: 0.45 });
+    } else { land(); }
+  });
+
+  // ——— The token walks the board as you scroll ———
+  var board = document.getElementById('theBoard');
+  var frame = document.querySelector('.board-frame');
+  var token = document.getElementById('token');
+  var navScore = document.getElementById('navScore');
+  var tiles = Array.prototype.slice.call(board.querySelectorAll('.tile'));
+  tiles.sort(function (a, b) { return (+a.dataset.step) - (+b.dataset.step); });
+  var current = -1;
+
+  function tileCenter(tile) {
+    var fr = frame.getBoundingClientRect();
+    var tr = tile.getBoundingClientRect();
+    return {
+      x: tr.left - fr.left + tr.width / 2 - 17,
+      y: tr.top - fr.top + tr.height / 2 - 26
+    };
+  }
+  function placeToken(idx, animate) {
+    idx = Math.max(0, Math.min(tiles.length - 1, idx));
+    if (idx === current) return;
+    current = idx;
+    var pos = tileCenter(tiles[idx]);
+    if (window.gsap && !reduce && animate) {
+      gsap.to(token, { x: pos.x, y: pos.y, duration: 0.4, ease: 'back.out(1.6)' });
+    } else if (window.gsap) {
+      gsap.set(token, { x: pos.x, y: pos.y });
+    } else {
+      token.style.transform = 'translate(' + pos.x + 'px,' + pos.y + 'px)';
+    }
+    tiles.forEach(function (t, i) {
+      t.classList.toggle('visited', i <= idx);
+      t.classList.toggle('current', i === idx);
+    });
+    navScore.textContent = 'square ' + String(idx + 1).padStart(2, '0') + ' / 30';
+  }
+  placeToken(0, false);
+  window.addEventListener('resize', function () { var c = current; current = -1; placeToken(c, false); });
+
+  if (!window.gsap) {
+    document.querySelectorAll('.count').forEach(function (el) {
+      var d = parseInt(el.dataset.decimals || '0', 10);
+      el.textContent = parseFloat(el.dataset.count).toFixed(d);
+    });
+    return;
+  }
+  gsap.registerPlugin(ScrollTrigger);
+
+  ScrollTrigger.create({
+    trigger: frame,
+    start: 'top 65%',
+    end: 'bottom 40%',
+    onUpdate: function (self) {
+      placeToken(Math.floor(self.progress * (tiles.length - 0.001)), !reduce);
+    }
+  });
+
+  if (reduce) {
+    document.querySelectorAll('.count').forEach(function (el) {
+      var d = parseInt(el.dataset.decimals || '0', 10);
+      el.textContent = parseFloat(el.dataset.count).toFixed(d);
+    });
+    return;
+  }
+
+  // Hero entrance: the box lid opens.
+  gsap.from('.hero .title, .hero .tagline, .hero-sub, .availability, .hero-cta, .hero-note, .die-zone', {
+    y: 24, opacity: 0, duration: 0.85, ease: 'power3.out', stagger: 0.07, delay: 0.1
+  });
+
+  // Reveals.
+  document.querySelectorAll('.reveal').forEach(function (el) {
+    gsap.from(el, {
+      y: 26, opacity: 0, duration: 0.75, ease: 'power3.out',
+      scrollTrigger: { trigger: el, start: 'top 89%' }
+    });
+  });
+
+  // Victory points count up.
+  document.querySelectorAll('.count').forEach(function (el) {
+    var target = parseFloat(el.dataset.count);
+    var decimals = parseInt(el.dataset.decimals || '0', 10);
+    var obj = { v: 0 };
+    gsap.to(obj, {
+      v: target, duration: 1.3, ease: 'power2.out',
+      scrollTrigger: { trigger: el, start: 'top 88%' },
+      onUpdate: function () { el.textContent = obj.v.toFixed(decimals); }
+    });
+  });
+})();
+</script>
+</body>
+</html>

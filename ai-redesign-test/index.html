@@ -304,12 +304,12 @@ h1 .accent { color: var(--blue); }
 
       <div class="header-stats">
         <div class="stat">
-          <span class="stat-value">17</span>
+          <span class="stat-value" id="total-models">17</span>
           <span class="stat-label">Models</span>
         </div>
         <div class="stat">
-          <span class="stat-value">85</span>
-          <span class="stat-label">Directions / round</span>
+          <span class="stat-value" id="round-directions">85</span>
+          <span class="stat-label">This round</span>
         </div>
         <div class="stat">
           <span class="stat-value" id="total-directions">85</span>
@@ -376,6 +376,7 @@ const models = [
     label: 'Fable',
     rounds: {
       'round-1': [16,17,18,19,20],
+      'round-2': [16,17,18,19,20],
     }
   },
   {
@@ -397,7 +398,7 @@ const models = [
     label: 'GLM 5.2',
     rounds: {
       'round-1': [31,32,33,34,35],
-      'round-2': [11,12,13,14,15],
+      'round-2': [1,2,3,4,5],
     }
   },
   {
@@ -426,7 +427,6 @@ const models = [
     label: 'Grok 4.5',
     rounds: {
       'round-1': [51,52,53,54,55],
-      'round-2': [6,7,8,9,10],
     }
   },
   {
@@ -469,7 +469,20 @@ const models = [
     label: 'Composer 2.5',
     rounds: {
       'round-1': [81,82,83,84,85],
-      'round-2': [1,2,3,4,5],
+    }
+  },
+  {
+    name: 'opus-5',
+    label: 'Opus 5',
+    rounds: {
+      'round-2': [6,7,8,9,10],
+    }
+  },
+  {
+    name: 'fable-5',
+    label: 'Fable 5',
+    rounds: {
+      'round-2': [11,12,13,14,15],
     }
   },
 ];
@@ -528,10 +541,12 @@ function renderGrid() {
   const totalEl = document.getElementById('total-directions');
 
   totalEl.textContent = getTotalDirections();
+  document.getElementById('total-models').textContent = models.length;
 
   const round = rounds.find(r => r.id === activeRound);
   const dirCount = getRoundDirectionCount(activeRound);
   const modelCount = getRoundModelCount(activeRound);
+  document.getElementById('round-directions').textContent = dirCount;
 
   title.textContent = `${round.label} — All models`;
   meta.textContent = `${modelCount} model${modelCount !== 1 ? 's' : ''} · ${dirCount} direction${dirCount !== 1 ? 's' : ''}`;
@@ -539,7 +554,7 @@ function renderGrid() {
   grid.innerHTML = '';
 
   const roundOrder = {
-    'round-2': ['composer-2.5', 'grok-4.5', 'glm-5.2'],
+    'round-2': ['glm-5.2', 'opus-5', 'fable-5', 'fable'],
   };
 
   let entries = models.map((m, idx) => ({ m, idx }));

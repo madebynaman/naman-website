@@ -1,0 +1,1099 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Naman Sharma · Product &amp; UX Designer</title>
+<meta name="description" content="I turn messy problems into products people actually understand. Product and UX designer, designing since 2017, in UX since 2019.">
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+<link href="https://api.fontshare.com/v2/css?f[]=switzer@300,400,500,600,700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fragment+Mono:ital@0;1&display=swap" rel="stylesheet">
+<style>
+/* ————————————————————————————————————————————
+   THE UNTANGLING · one thread, drawn from knot to line
+   ———————————————————————————————————————————— */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --paper: #F4F3EF;
+  --ink: #17181A;
+  --ink-soft: #53555B;
+  --hairline: #DCDAD2;
+  --thread: #2130DE;
+  --thread-soft: #B9BEF4;
+  --sans: 'Switzer', 'Helvetica Neue', Arial, sans-serif;
+  --mono: 'Fragment Mono', 'SF Mono', Menlo, monospace;
+}
+
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+::selection { background: var(--thread); color: var(--paper); }
+input { caret-color: var(--thread); }
+
+* { scrollbar-width: thin; scrollbar-color: var(--ink) var(--paper); }
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: var(--paper); }
+::-webkit-scrollbar-thumb { background: var(--ink); }
+
+:focus-visible { outline: 2px solid var(--thread); outline-offset: 3px; }
+
+.wrap { max-width: 1280px; margin: 0 auto; padding: 0 clamp(1.25rem, 4vw, 4rem); }
+
+h1, h2, h3 { font-weight: 500; letter-spacing: -0.025em; text-wrap: balance; }
+
+.mono {
+  font-family: var(--mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.04em;
+  color: var(--ink-soft);
+}
+
+a { color: inherit; }
+
+/* ——— Nav ——— */
+.nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 40;
+  background: color-mix(in srgb, var(--paper) 88%, transparent);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--hairline);
+}
+.nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 3.5rem;
+  gap: 1.5rem;
+}
+.nav-name { font-weight: 600; font-size: 0.9375rem; letter-spacing: -0.01em; text-decoration: none; }
+.nav-links { display: flex; gap: 1.75rem; list-style: none; }
+.nav-links a {
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--ink-soft);
+  transition: color 0.15s ease-out;
+}
+.nav-links a:hover { color: var(--thread); }
+.tangle-meter { display: flex; align-items: baseline; gap: 0.5rem; }
+.tangle-meter .val { color: var(--thread); font-variant-numeric: tabular-nums; }
+
+/* ——— Hero ——— */
+.hero { padding: 9.5rem 0 3rem; position: relative; }
+.hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: 3rem;
+  align-items: center;
+}
+.hero h1 {
+  font-size: clamp(2.75rem, 6.2vw, 5.5rem);
+  font-weight: 300;
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+}
+.hero h1 .out { font-weight: 600; color: var(--thread); }
+.hero-sub {
+  max-width: 34rem;
+  margin-top: 2rem;
+  font-size: 1.125rem;
+  color: var(--ink-soft);
+  text-wrap: pretty;
+}
+.hero-sub strong { color: var(--ink); font-weight: 500; }
+.availability {
+  margin-top: 1.5rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+  font-size: 0.9375rem;
+  font-weight: 500;
+}
+.availability .dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--thread);
+  box-shadow: 0 0 0 4px var(--thread-soft);
+}
+.hero-cta { margin-top: 2.5rem; display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; }
+.btn {
+  display: inline-block;
+  padding: 0.875rem 1.75rem;
+  border-radius: 999px;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1), background 0.15s ease-out, color 0.15s ease-out;
+}
+.btn-solid { background: var(--ink); color: var(--paper); }
+.btn-solid:hover { background: var(--thread); transform: translateY(-2px); }
+.btn-line { border: 1px solid var(--ink); color: var(--ink); }
+.btn-line:hover { border-color: var(--thread); color: var(--thread); transform: translateY(-2px); }
+.hero-small { font-size: 0.8125rem; color: var(--ink-soft); }
+
+.knot-box { position: relative; }
+.knot-box svg { width: 100%; height: auto; display: block; overflow: visible; }
+.knot-label {
+  position: absolute;
+  top: 0; right: 0;
+  text-align: right;
+}
+
+/* ——— Thread passages between sections ——— */
+.passage { display: flex; justify-content: center; overflow: visible; }
+.passage svg { width: 200px; height: auto; overflow: visible; display: block; }
+
+/* ——— Sections ——— */
+section { position: relative; }
+.section-pad { padding: 4.5rem 0; }
+
+.sec-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+.sec-head h2 { font-size: clamp(1.75rem, 3.2vw, 2.75rem); font-weight: 500; }
+.sec-head .mono { flex-shrink: 0; }
+
+/* ——— Ruler (proof) ——— */
+.ruler-sec { padding: 4rem 0 4.5rem; }
+.ruler-svg { width: 100%; height: 34px; display: block; overflow: visible; }
+.ruler-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+  margin-top: 1.75rem;
+}
+.reading { border-left: none; }
+.reading .num {
+  font-size: clamp(2rem, 4vw, 3.25rem);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+.reading .num .unit { font-weight: 300; }
+.reading p { margin-top: 0.625rem; font-size: 0.875rem; color: var(--ink-soft); max-width: 15rem; text-wrap: pretty; }
+
+/* ——— No-jargon ——— */
+.jargon-sec .lead { font-size: 1.25rem; max-width: 38rem; color: var(--ink-soft); text-wrap: pretty; }
+.jargon-sec .lead em { font-style: italic; }
+.jargon-sec .lead strong { color: var(--ink); font-weight: 500; }
+.sr-only {
+  position: absolute; width: 1px; height: 1px;
+  padding: 0; margin: -1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+.jargon-list {
+  margin: 2.5rem 0;
+  font-size: clamp(1.25rem, 2.4vw, 1.875rem);
+  line-height: 1.55;
+  font-weight: 300;
+  letter-spacing: -0.015em;
+  max-width: 56rem;
+  color: var(--ink-soft);
+}
+.jargon-list del {
+  text-decoration: line-through;
+  text-decoration-color: var(--thread);
+  text-decoration-thickness: 2px;
+}
+.jargon-list .sep { color: var(--thread); font-weight: 400; }
+.plain-truth {
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 1.3;
+  max-width: 44rem;
+  text-wrap: balance;
+}
+.plain-truth .tick { color: var(--thread); }
+.trick { margin-top: 1.5rem; font-size: 1rem; color: var(--ink-soft); }
+
+/* ——— Work ——— */
+.work-intro { font-size: 1.125rem; color: var(--ink-soft); max-width: 30rem; }
+.work-list { margin-top: 3.5rem; display: flex; flex-direction: column; }
+.work-row {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: clamp(1.5rem, 4vw, 4rem);
+  padding: 3rem 0;
+  border-top: 1px solid var(--hairline);
+  align-items: center;
+}
+.work-row:nth-child(even) { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); }
+.work-row:nth-child(even) .work-info { order: 2; }
+.work-row:nth-child(even) .work-visual { order: 1; }
+.work-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
+.tag {
+  font-family: var(--mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.05em;
+  padding: 0.3rem 0.7rem;
+  border: 1px solid var(--hairline);
+  border-radius: 999px;
+  color: var(--ink-soft);
+  white-space: nowrap;
+}
+.work-info h3 { font-size: clamp(1.5rem, 2.6vw, 2.25rem); font-weight: 500; }
+.work-outcome { margin-top: 1rem; font-size: 1.125rem; line-height: 1.5; text-wrap: pretty; }
+.work-outcome strong { color: var(--thread); font-weight: 600; }
+.work-note { margin-top: 0.75rem; font-size: 0.9375rem; color: var(--ink-soft); max-width: 30rem; text-wrap: pretty; }
+
+/* placeholder visuals: crisp geometry, labeled */
+.ph {
+  position: relative;
+  border: 1px solid var(--hairline);
+  border-radius: 12px;
+  background: #FBFAF7;
+  overflow: hidden;
+  aspect-ratio: 16 / 10;
+}
+.ph svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.ph-cap {
+  position: absolute;
+  left: 0.875rem; bottom: 0.75rem;
+  font-family: var(--mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.04em;
+  color: var(--ink-soft);
+  background: var(--paper);
+  border: 1px solid var(--hairline);
+  border-radius: 999px;
+  padding: 0.25rem 0.65rem;
+}
+
+.locked-row {
+  border-top: 1px solid var(--hairline);
+  border-bottom: 1px solid var(--hairline);
+  padding: 3rem 0;
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: clamp(1.5rem, 4vw, 4rem);
+  align-items: center;
+}
+.locked-row h3 { font-size: clamp(1.375rem, 2.4vw, 2rem); font-weight: 500; }
+.locked-row p { margin-top: 1rem; color: var(--ink-soft); max-width: 32rem; text-wrap: pretty; }
+.locked-cta { margin-top: 1.5rem; }
+.more-work { margin-top: 2.5rem; font-size: 0.875rem; color: var(--ink-soft); max-width: 46rem; line-height: 2; }
+.more-work span { white-space: nowrap; }
+
+/* ——— Process ——— */
+.steps { max-width: 46rem; }
+.step {
+  display: grid;
+  grid-template-columns: 96px minmax(0, 1fr);
+  gap: 1.5rem;
+  align-items: start;
+}
+.step-node { display: flex; justify-content: center; }
+.step-node svg { width: 72px; height: 132px; overflow: visible; display: block; }
+.step-body { padding: 1.9rem 0; }
+.step-body h3 { font-size: 1.375rem; font-weight: 600; display: inline; }
+.step-body p { display: inline; color: var(--ink-soft); }
+.steps-lead { font-size: 1.125rem; color: var(--ink-soft); margin-bottom: 2.5rem; }
+
+/* ——— Code ——— */
+.code-sec .split {
+  display: grid;
+  grid-template-columns: minmax(0, 6fr) minmax(0, 6fr);
+  gap: clamp(2rem, 5vw, 5rem);
+  align-items: center;
+}
+.code-sec p { color: var(--ink-soft); margin-top: 1.25rem; text-wrap: pretty; }
+.code-sec p strong { color: var(--ink); font-weight: 500; }
+.code-card {
+  border: 1px solid var(--hairline);
+  border-radius: 12px;
+  background: #FBFAF7;
+  overflow: hidden;
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  line-height: 1.9;
+}
+.code-bar {
+  display: flex; align-items: center; gap: 0.4rem;
+  padding: 0.65rem 1rem;
+  border-bottom: 1px solid var(--hairline);
+}
+.code-bar i { width: 9px; height: 9px; border-radius: 50%; border: 1px solid var(--hairline); display: block; }
+.code-bar .t { margin-left: 0.6rem; font-size: 0.625rem; color: var(--ink-soft); letter-spacing: 0.04em; }
+.code-card pre { padding: 1.25rem 1.5rem; white-space: pre-wrap; color: var(--ink-soft); }
+.code-card pre b { color: var(--thread); font-weight: 400; }
+
+/* ——— About + Jerry ——— */
+.about-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: clamp(2rem, 5vw, 5rem);
+}
+.about-grid .col p { color: var(--ink-soft); margin-top: 1.25rem; text-wrap: pretty; }
+.about-grid .col p strong { color: var(--ink); font-weight: 500; }
+.now-line {
+  margin-top: 1.75rem;
+  padding: 1.1rem 1.4rem;
+  border: 1px solid var(--hairline);
+  border-radius: 12px;
+  font-size: 0.9375rem;
+  color: var(--ink-soft);
+}
+.now-line b { color: var(--ink); font-weight: 500; }
+.jerry-card { position: relative; }
+.jerry-ph {
+  aspect-ratio: 4 / 5;
+  border: 1px solid var(--hairline);
+  border-radius: 12px;
+  background: #FBFAF7;
+  position: relative;
+  overflow: hidden;
+}
+.jerry-ph svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.jerry-cap { margin-top: 0.875rem; display: flex; justify-content: space-between; align-items: baseline; }
+.jerry-body { margin-top: 1.5rem; }
+.jerry-body h3 { font-size: 1.375rem; font-weight: 600; }
+.jerry-body p { margin-top: 0.75rem; font-size: 0.9375rem; color: var(--ink-soft); text-wrap: pretty; }
+
+/* ——— Principles ——— */
+.principles {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0;
+  border-top: 1px solid var(--hairline);
+  border-left: 1px solid var(--hairline);
+}
+.principle {
+  padding: 2.25rem 2.25rem 2.5rem;
+  border-right: 1px solid var(--hairline);
+  border-bottom: 1px solid var(--hairline);
+}
+.principle h3 { font-size: 1.5rem; font-weight: 500; letter-spacing: -0.02em; }
+.principle h3 .u { text-decoration: underline; text-decoration-color: var(--thread); text-decoration-thickness: 2px; text-underline-offset: 6px; }
+.principle p { margin-top: 1rem; color: var(--ink-soft); font-size: 0.9844rem; text-wrap: pretty; }
+
+/* ——— Timeline ——— */
+.era {
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr);
+  gap: 2rem;
+  padding: 2rem 0;
+  border-top: 1px solid var(--hairline);
+  align-items: baseline;
+}
+.era-years {
+  font-size: clamp(1.375rem, 2.2vw, 1.875rem);
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.era-body strong { font-weight: 600; }
+.era-body { color: var(--ink-soft); max-width: 44rem; text-wrap: pretty; }
+.era-body b { color: var(--ink); font-weight: 500; }
+.clients { margin-top: 2.75rem; }
+.clients p { color: var(--ink-soft); font-size: 0.9375rem; max-width: 52rem; line-height: 2; }
+.clients p b { color: var(--ink); font-weight: 500; }
+
+/* ——— Ask me about ——— */
+.ask-row { display: flex; flex-wrap: wrap; gap: 0.625rem; margin-top: 1.75rem; }
+.ask-chip {
+  border: 1px solid var(--hairline);
+  border-radius: 999px;
+  padding: 0.55rem 1.1rem;
+  font-size: 0.875rem;
+  color: var(--ink-soft);
+  transition: border-color 0.15s ease-out, color 0.15s ease-out;
+}
+.ask-chip:hover { border-color: var(--thread); color: var(--thread); }
+
+/* ——— Contact ——— */
+.contact { padding: 6rem 0 4rem; text-align: center; }
+.contact h2 { font-size: clamp(2.25rem, 5vw, 4rem); font-weight: 300; letter-spacing: -0.035em; }
+.contact .pitch { margin: 1.5rem auto 0; max-width: 34rem; color: var(--ink-soft); font-size: 1.125rem; text-wrap: pretty; }
+.email-wrap { margin-top: 3rem; display: inline-block; position: relative; }
+.email {
+  font-size: clamp(1.375rem, 3.4vw, 2.75rem);
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  text-decoration: none;
+  transition: color 0.15s ease-out;
+}
+.email:hover { color: var(--thread); }
+.email-line { display: block; width: 100%; height: 14px; overflow: visible; margin-top: 0.25rem; }
+.contact .socials { margin-top: 2rem; display: flex; justify-content: center; gap: 1.75rem; }
+.contact .socials a { font-size: 0.9375rem; color: var(--ink-soft); text-decoration: none; }
+.contact .socials a:hover { color: var(--thread); }
+.contact .fineprint { margin-top: 2.25rem; }
+
+/* ——— Footer ——— */
+.footer { border-top: 1px solid var(--hairline); padding: 1.75rem 0 2.25rem; }
+.footer-inner { display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+
+/* ——— Reveal defaults: visible, JS enhances ——— */
+.reveal { opacity: 1; }
+
+/* ——— Responsive ——— */
+@media (max-width: 900px) {
+  .hero { padding-top: 7.5rem; }
+  .hero-grid { grid-template-columns: 1fr; gap: 2rem; }
+  .knot-box { max-width: 420px; }
+  .ruler-grid { grid-template-columns: repeat(2, 1fr); row-gap: 2.5rem; }
+  .work-row, .work-row:nth-child(even), .locked-row { grid-template-columns: 1fr; }
+  .work-row:nth-child(even) .work-info { order: 1; }
+  .work-row:nth-child(even) .work-visual { order: 2; }
+  .code-sec .split, .about-grid { grid-template-columns: 1fr; }
+  .principles { grid-template-columns: 1fr; }
+  .era { grid-template-columns: 1fr; gap: 0.5rem; }
+  .nav-links { display: none; }
+}
+@media (max-width: 560px) {
+  .ruler-grid { grid-template-columns: 1fr; }
+  .step { grid-template-columns: 56px minmax(0, 1fr); gap: 1rem; }
+  .step-node svg { width: 48px; }
+  .section-pad { padding: 3.25rem 0; }
+}
+</style>
+</head>
+<body>
+<!--
+THESIS: "Complex problems in. Simple products out." made literal: one thread runs
+the whole page, tangled at the top, straight by the end. Refuses the cream-serif
+portfolio and the stat-card hero.
+OWN-WORLD: porcelain paper, graphite ink, a single ultramarine thread; Switzer at
+two weights, Fragment Mono for measurements; hairline geometry, no photography.
+STORY: a stranger reads the headline, watches the knot loosen as they scroll, and
+by the footer believes untangling is what this designer does. Then they email.
+FIRST VIEWPORT: headline left at giant light weight, live tangled knot right,
+availability and two actions under the sub. Nav carries a falling "tangle %" meter.
+FORM: continuous-line drawing, #1 of my derived list; seed script degraded (no
+output), substitution disclosed in thread.
+FINISH: unreviewed and undocumented is unfinished; this build ends with the finish
+review, the verdict, and DESIGN.md
+-->
+
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a class="nav-name" href="#top">Naman Sharma</a>
+    <nav aria-label="Sections">
+      <ul class="nav-links">
+        <li><a href="#work">Work</a></li>
+        <li><a href="#process">Process</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+    <div class="tangle-meter mono" aria-hidden="true">
+      <span>tangle</span><span class="val" id="tangleVal">100%</span>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ———————————————— HERO ———————————————— -->
+  <section class="hero wrap">
+    <div class="hero-grid">
+      <div>
+        <h1>Complex problems in.<br><span class="out">Simple products out.</span></h1>
+        <p class="hero-sub">I'm <strong>Naman Sharma</strong>, a product and UX designer. Designing since 2017, in UX since 2019. I help teams turn messy problems into products people actually understand. Based in Jaipur, working everywhere.</p>
+        <p class="availability"><span class="dot"></span>Open to product design roles and freelance.</p>
+        <div class="hero-cta">
+          <a class="btn btn-solid" href="#work">See my work</a>
+          <a class="btn btn-line" href="#contact">Say hi</a>
+        </div>
+        <p class="hero-small" style="margin-top:1.25rem;">Always up for a good conversation.</p>
+      </div>
+      <div class="knot-box" aria-hidden="true">
+        <div class="knot-label mono">fig. 1<br>the problem,<br>as handed over</div>
+        <svg viewBox="0 0 640 700" fill="none">
+          <path id="knotPath" class="thread-seg" d="M 96 130
+            C 250 8, 480 52, 528 208
+            C 566 336, 402 402, 316 330
+            C 232 260, 300 148, 424 160
+            C 556 174, 596 330, 512 428
+            C 430 524, 252 502, 214 398
+            C 178 300, 254 236, 356 258
+            C 462 282, 486 402, 414 462
+            C 344 520, 234 480, 240 388
+            C 246 302, 352 296, 400 352
+            C 448 408, 400 486, 330 500
+            C 262 514, 220 560, 260 610
+            C 292 650, 320 660, 320 700"
+            stroke="#2130DE" stroke-width="2.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- thread passage 1: still knotted -->
+  <div class="passage" aria-hidden="true">
+    <svg viewBox="0 0 200 240">
+      <path class="thread-seg" d="M 100 0
+        C 100 40, 60 52, 60 86
+        C 60 122, 140 122, 140 86
+        C 140 58, 96 52, 84 84
+        C 70 122, 118 150, 118 186
+        C 118 214, 100 218, 100 240"
+        stroke="#2130DE" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+    </svg>
+  </div>
+
+  <!-- ———————————————— PROOF / RULER ———————————————— -->
+  <section class="ruler-sec wrap" aria-label="Proof in numbers">
+    <svg class="ruler-svg" viewBox="0 0 1200 34" preserveAspectRatio="none" aria-hidden="true">
+      <path class="thread-seg" d="M 600 0 C 600 10, 560 12, 380 14 C 190 16, 0 17, 0 17" stroke="#2130DE" stroke-width="2" fill="none"/>
+      <path id="rulerLine" class="thread-seg" d="M 0 17 L 1200 17" stroke="#2130DE" stroke-width="2" fill="none"/>
+      <g stroke="#2130DE" stroke-width="1.5" id="rulerTicks">
+        <line x1="30" y1="17" x2="30" y2="30"/><line x1="330" y1="17" x2="330" y2="30"/>
+        <line x1="630" y1="17" x2="630" y2="30"/><line x1="930" y1="17" x2="930" y2="30"/>
+      </g>
+      <path class="thread-seg" d="M 1200 17 C 1180 17, 1160 17, 1140 17" stroke="#2130DE" stroke-width="2" fill="none" opacity="0"/>
+    </svg>
+    <div class="ruler-grid">
+      <div class="reading">
+        <div class="num"><span class="unit">$</span><span class="count" data-count="500">0</span><span class="unit">K</span></div>
+        <p>pre-seed raised after the Turns website and brand revamp</p>
+      </div>
+      <div class="reading">
+        <div class="num"><span class="count" data-count="4.8" data-decimals="1">0.0</span><span class="unit">★</span></div>
+        <p>on the Play Store after the LetsConnect redesign</p>
+      </div>
+      <div class="reading">
+        <div class="num"><span class="count" data-count="25">0</span></div>
+        <p>in-person interviews for the Wikimedia Foundation, across 3 cities</p>
+      </div>
+      <div class="reading">
+        <div class="num"><span class="count" data-count="15">0</span><span class="unit">+</span></div>
+        <p>clients since 2017, agency and independent</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- passage 2: one loop left -->
+  <div class="passage" aria-hidden="true">
+    <svg viewBox="0 0 200 200">
+      <path class="thread-seg" d="M 100 0
+        C 100 36, 66 44, 66 78
+        C 66 112, 134 112, 134 78
+        C 134 52, 100 52, 100 84
+        C 100 130, 100 160, 100 200"
+        stroke="#2130DE" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+    </svg>
+  </div>
+
+  <!-- ———————————————— NO-JARGON ———————————————— -->
+  <section class="jargon-sec section-pad wrap">
+    <div class="sec-head">
+      <h2>A no-jargon promise</h2>
+      <span class="mono">fig. 2 · crossing things out</span>
+    </div>
+    <p class="lead">Most designer portfolios promise to <em>synergize aesthetics with functionality</em> and <em>craft delightful experiences</em>. This one doesn't. I hate jargon. So, for the record, I do not:</p>
+    <p class="jargon-list">
+      <span class="sr-only">Things I do not do:</span>
+      <del>foster innovation through synergizing aesthetics and functionality</del> <span class="sep">·</span>
+      <del>navigate the confluence of form and function</del> <span class="sep">·</span>
+      <del>orchestrate design revolutions</del> <span class="sep">·</span>
+      <del>instigate paradigmatic evolutions</del> <span class="sep">·</span>
+      <del>seamlessly integrate cutting-edge methodologies</del> <span class="sep">·</span>
+      <del>engineer experiential marvels</del> <span class="sep">·</span>
+      <del>champion transformative ideation in the ever-evolving design ethos</del> <span class="sep">·</span>
+      <del>perpetuate narratives that transcend boundaries</del>
+    </p>
+    <p class="plain-truth">Here's what I actually do: I listen to users. I sketch. I test. I simplify. I ship. Then I check if it worked.<span class="tick"> That's the whole trick.</span></p>
+  </section>
+
+  <!-- passage 3: soft S-curve, no loops -->
+  <div class="passage" aria-hidden="true">
+    <svg viewBox="0 0 200 170">
+      <path class="thread-seg" d="M 100 0 C 100 45, 62 60, 62 90 C 62 125, 100 130, 100 170"
+        stroke="#2130DE" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+    </svg>
+  </div>
+
+  <!-- ———————————————— WORK ———————————————— -->
+  <section class="section-pad wrap" id="work">
+    <div class="sec-head">
+      <h2>Selected work</h2>
+      <span class="mono">fig. 3 · four favourites, two locked</span>
+    </div>
+    <p class="work-intro">Short versions here. Ask me for the long ones.</p>
+
+    <div class="work-list">
+      <article class="work-row reveal">
+        <div class="work-info">
+          <div class="work-tags"><span class="tag">website</span><span class="tag">brand</span><span class="tag">design system</span></div>
+          <h3>Turns</h3>
+          <p class="work-outcome">New website, new brand, new design system. They raised <strong>$500K pre-seed</strong> after the revamp.</p>
+          <p class="work-note">I set up brand guidelines and a system the team could keep shipping with after I left. Nobody asked for that part.</p>
+        </div>
+        <div class="work-visual">
+          <div class="ph">
+            <svg viewBox="0 0 640 400" fill="none" aria-hidden="true">
+              <rect x="70" y="48" width="400" height="260" rx="8" stroke="#DCDAD2" stroke-width="2"/>
+              <line x1="70" y1="86" x2="470" y2="86" stroke="#DCDAD2" stroke-width="2"/>
+              <circle cx="92" cy="67" r="5" stroke="#DCDAD2" stroke-width="2"/>
+              <circle cx="112" cy="67" r="5" stroke="#DCDAD2" stroke-width="2"/>
+              <rect x="100" y="116" width="180" height="16" rx="8" fill="#2130DE" opacity="0.85"/>
+              <rect x="100" y="144" width="120" height="10" rx="5" fill="#DCDAD2"/>
+              <rect x="100" y="196" width="150" height="82" rx="8" stroke="#DCDAD2" stroke-width="2"/>
+              <rect x="270" y="196" width="150" height="82" rx="8" stroke="#DCDAD2" stroke-width="2"/>
+              <rect x="440" y="120" width="130" height="232" rx="18" stroke="#DCDAD2" stroke-width="2" fill="#F4F3EF"/>
+              <rect x="458" y="152" width="94" height="12" rx="6" fill="#2130DE" opacity="0.85"/>
+              <rect x="458" y="176" width="60" height="8" rx="4" fill="#DCDAD2"/>
+              <rect x="458" y="204" width="94" height="52" rx="6" stroke="#DCDAD2" stroke-width="2"/>
+              <rect x="458" y="268" width="94" height="52" rx="6" stroke="#DCDAD2" stroke-width="2"/>
+            </svg>
+            <span class="ph-cap">mockup slot: Turns site, laptop + phone</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="work-row reveal">
+        <div class="work-info">
+          <div class="work-tags"><span class="tag">field research</span><span class="tag">25 users</span><span class="tag">3 cities</span></div>
+          <h3>Wikipedia × KaiOS</h3>
+          <p class="work-outcome"><strong>25 in-person interviews</strong> for the Wikimedia Foundation, with JioPhone users in Pune, Mumbai and Delhi.</p>
+          <p class="work-note">Tiny screens, real keypads, and for most participants the only internet-connected device in the house.</p>
+        </div>
+        <div class="work-visual">
+          <div class="ph">
+            <svg viewBox="0 0 640 400" fill="none" aria-hidden="true">
+              <rect x="256" y="40" width="128" height="300" rx="16" stroke="#DCDAD2" stroke-width="2"/>
+              <rect x="274" y="64" width="92" height="120" rx="4" stroke="#2130DE" stroke-width="2"/>
+              <line x1="282" y1="88" x2="358" y2="88" stroke="#DCDAD2" stroke-width="2"/>
+              <line x1="282" y1="106" x2="344" y2="106" stroke="#DCDAD2" stroke-width="2"/>
+              <line x1="282" y1="124" x2="358" y2="124" stroke="#DCDAD2" stroke-width="2"/>
+              <line x1="282" y1="142" x2="330" y2="142" stroke="#DCDAD2" stroke-width="2"/>
+              <g stroke="#DCDAD2" stroke-width="2">
+                <rect x="274" y="206" width="26" height="18" rx="4"/><rect x="307" y="206" width="26" height="18" rx="4"/><rect x="340" y="206" width="26" height="18" rx="4"/>
+                <rect x="274" y="232" width="26" height="18" rx="4"/><rect x="307" y="232" width="26" height="18" rx="4"/><rect x="340" y="232" width="26" height="18" rx="4"/>
+                <rect x="274" y="258" width="26" height="18" rx="4"/><rect x="307" y="258" width="26" height="18" rx="4"/><rect x="340" y="258" width="26" height="18" rx="4"/>
+                <rect x="274" y="284" width="26" height="18" rx="4"/><rect x="307" y="284" width="26" height="18" rx="4"/><rect x="340" y="284" width="26" height="18" rx="4"/>
+              </g>
+              <circle cx="130" cy="120" r="6" fill="#2130DE"/>
+              <circle cx="112" cy="220" r="6" fill="#2130DE"/>
+              <circle cx="152" cy="300" r="6" fill="#2130DE"/>
+              <path d="M 130 120 C 118 160, 112 190, 112 220 C 112 254, 130 280, 152 300" stroke="#2130DE" stroke-width="1.5" stroke-dasharray="2 6"/>
+              <text x="146" y="116" font-family="Fragment Mono, monospace" font-size="13" fill="#53555B">Delhi</text>
+              <text x="128" y="224" font-family="Fragment Mono, monospace" font-size="13" fill="#53555B">Mumbai</text>
+              <text x="168" y="304" font-family="Fragment Mono, monospace" font-size="13" fill="#53555B">Pune</text>
+              <line x1="440" y1="80" x2="560" y2="80" stroke="#DCDAD2" stroke-width="2"/>
+              <line x1="440" y1="104" x2="540" y2="104" stroke="#DCDAD2" stroke-width="2"/>
+              <line x1="440" y1="128" x2="556" y2="128" stroke="#DCDAD2" stroke-width="2"/>
+              <line x1="440" y1="152" x2="520" y2="152" stroke="#DCDAD2" stroke-width="2"/>
+              <text x="440" y="60" font-family="Fragment Mono, monospace" font-size="13" fill="#53555B">field notes</text>
+            </svg>
+            <span class="ph-cap">photo slot: JioPhone, notes, session</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="work-row reveal">
+        <div class="work-info">
+          <div class="work-tags"><span class="tag">mobile app</span><span class="tag">ux redesign</span></div>
+          <h3>LetsConnect</h3>
+          <p class="work-outcome">Rebuilt the experience from user feedback. Now at <strong>4.8★ on the Play Store</strong>.</p>
+          <p class="work-note">Read the reviews, grouped the complaints, redesigned the journeys where people got lost.</p>
+        </div>
+        <div class="work-visual">
+          <div class="ph">
+            <svg viewBox="0 0 640 400" fill="none" aria-hidden="true">
+              <rect x="140" y="60" width="140" height="280" rx="18" stroke="#DCDAD2" stroke-width="2"/>
+              <rect x="160" y="96" width="100" height="10" rx="5" fill="#DCDAD2"/>
+              <rect x="160" y="116" width="70" height="10" rx="5" fill="#DCDAD2"/>
+              <rect x="160" y="150" width="100" height="60" rx="6" stroke="#DCDAD2" stroke-width="2"/>
+              <rect x="160" y="224" width="100" height="60" rx="6" stroke="#DCDAD2" stroke-width="2"/>
+              <path d="M 296 200 L 344 200 M 330 186 L 344 200 L 330 214" stroke="#2130DE" stroke-width="2"/>
+              <rect x="360" y="60" width="140" height="280" rx="18" stroke="#2130DE" stroke-width="2"/>
+              <rect x="380" y="96" width="100" height="14" rx="7" fill="#2130DE" opacity="0.85"/>
+              <rect x="380" y="126" width="100" height="88" rx="8" stroke="#2130DE" stroke-width="2"/>
+              <rect x="380" y="230" width="100" height="30" rx="15" fill="#2130DE" opacity="0.85"/>
+              <g fill="#2130DE"><circle cx="392" cy="292" r="4"/><circle cx="410" cy="292" r="4"/><circle cx="428" cy="292" r="4"/><circle cx="446" cy="292" r="4"/><circle cx="464" cy="292" r="4"/></g>
+              <text x="380" y="322" font-family="Fragment Mono, monospace" font-size="13" fill="#53555B">4.8 / 5</text>
+            </svg>
+            <span class="ph-cap">screens slot: before / after</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="work-row reveal">
+        <div class="work-info">
+          <div class="work-tags"><span class="tag">0 to 1</span><span class="tag">multiple apps</span></div>
+          <h3>Gadivan</h3>
+          <p class="work-outcome">Designed the whole product from a blank page. <strong>Different apps for different users</strong>, one system underneath.</p>
+          <p class="work-note">Founders, journeys, flows, screens, then side by side with engineering until launch.</p>
+        </div>
+        <div class="work-visual">
+          <div class="ph">
+            <svg viewBox="0 0 640 400" fill="none" aria-hidden="true">
+              <rect x="120" y="90" width="110" height="220" rx="14" stroke="#DCDAD2" stroke-width="2"/>
+              <rect x="265" y="60" width="110" height="220" rx="14" stroke="#2130DE" stroke-width="2"/>
+              <rect x="410" y="90" width="110" height="220" rx="14" stroke="#DCDAD2" stroke-width="2"/>
+              <rect x="138" y="120" width="74" height="9" rx="4.5" fill="#DCDAD2"/>
+              <rect x="283" y="90" width="74" height="9" rx="4.5" fill="#2130DE" opacity="0.85"/>
+              <rect x="428" y="120" width="74" height="9" rx="4.5" fill="#DCDAD2"/>
+              <rect x="138" y="146" width="74" height="52" rx="6" stroke="#DCDAD2" stroke-width="2"/>
+              <rect x="283" y="116" width="74" height="52" rx="6" stroke="#2130DE" stroke-width="2"/>
+              <rect x="428" y="146" width="74" height="52" rx="6" stroke="#DCDAD2" stroke-width="2"/>
+              <path d="M 175 340 C 175 360, 320 360, 320 340 M 320 340 C 320 360, 465 360, 465 340" stroke="#2130DE" stroke-width="1.5" stroke-dasharray="2 6"/>
+              <text x="252" y="384" font-family="Fragment Mono, monospace" font-size="13" fill="#53555B">one system underneath</text>
+            </svg>
+            <span class="ph-cap">family shot slot: the Gadivan apps</span>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <article class="locked-row reveal">
+      <div>
+        <h3>Two more, behind a password</h3>
+        <p>A dealer portal for one of India's largest paint companies. An onboarding rescue for a small-business app. Real numbers, real impact, both under NDA.</p>
+        <p class="locked-cta"><a class="btn btn-line" href="mailto:madebynaman@gmail.com?subject=Password%20for%20the%20NDA%20case%20studies">Ask for the password</a></p>
+      </div>
+      <div class="ph" style="aspect-ratio: 16/9;">
+        <svg viewBox="0 0 640 360" fill="none" aria-hidden="true">
+          <rect x="90" y="70" width="210" height="140" rx="10" stroke="#DCDAD2" stroke-width="2"/>
+          <rect x="340" y="120" width="210" height="140" rx="10" stroke="#DCDAD2" stroke-width="2"/>
+          <g stroke="#DCDAD2" stroke-width="2"><line x1="110" y1="100" x2="270" y2="100"/><line x1="110" y1="124" x2="240" y2="124"/><line x1="360" y1="150" x2="520" y2="150"/><line x1="360" y1="174" x2="490" y2="174"/></g>
+          <rect x="288" y="152" width="64" height="52" rx="8" fill="#F4F3EF" stroke="#2130DE" stroke-width="2"/>
+          <path d="M 302 152 v-14 a18 18 0 0 1 36 0 v14" stroke="#2130DE" stroke-width="2"/>
+          <circle cx="320" cy="176" r="5" fill="#2130DE"/>
+        </svg>
+        <span class="ph-cap">locked: 20%+ stories, on request</span>
+      </div>
+    </article>
+
+    <p class="more-work mono">also: <span>Parentverse</span> · <span>Venyou</span> · <span>Sharent</span> · <span>Spirinova</span> · <span>Gorico</span> · <span>RedShilliz</span> · <span>DGlobalist</span> · <span>Pahoti Wellness</span> · <span>Ivy Malik</span> · <span>PhotoFinder</span> · <span>Olsub</span> · <span>Learn Theta</span></p>
+  </section>
+
+  <!-- passage 4: near straight -->
+  <div class="passage" aria-hidden="true">
+    <svg viewBox="0 0 200 140">
+      <path class="thread-seg" d="M 100 0 C 100 40, 88 60, 88 76 C 88 100, 100 104, 100 140"
+        stroke="#2130DE" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+    </svg>
+  </div>
+
+  <!-- ———————————————— PROCESS ———————————————— -->
+  <section class="section-pad wrap" id="process">
+    <div class="sec-head">
+      <h2>How I work</h2>
+      <span class="mono">fig. 4 · six knots, loosened in order</span>
+    </div>
+    <p class="steps-lead">Six steps. The order matters more than the labels.</p>
+    <div class="steps">
+      <div class="step reveal">
+        <div class="step-node" aria-hidden="true"><svg viewBox="0 0 72 132"><path class="thread-seg" d="M 36 0 C 36 24, 16 30, 16 52 C 16 76, 56 76, 56 52 C 56 34, 36 34, 36 56 L 36 132" stroke="#2130DE" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg></div>
+        <div class="step-body"><h3>Listen.</h3> <p>Users, founders, analytics, support tickets. Most of what I need already exists inside the company. It just isn't in one place yet.</p></div>
+      </div>
+      <div class="step reveal">
+        <div class="step-node" aria-hidden="true"><svg viewBox="0 0 72 132"><path class="thread-seg" d="M 36 0 C 36 24, 56 30, 56 52 C 56 76, 16 76, 16 52 C 16 34, 36 34, 36 56 L 36 132" stroke="#2130DE" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg></div>
+        <div class="step-body"><h3>Map.</h3> <p>The full journey, end to end, until I can see where it breaks.</p></div>
+      </div>
+      <div class="step reveal">
+        <div class="step-node" aria-hidden="true"><svg viewBox="0 0 72 132"><path class="thread-seg" d="M 36 0 C 36 20, 14 26, 14 46 C 14 68, 58 68, 58 46 C 58 30, 36 30, 36 50 C 36 70, 20 74, 22 92 C 24 108, 36 110, 36 132" stroke="#2130DE" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg></div>
+        <div class="step-body"><h3>Explore.</h3> <p>Go wide before narrowing. I would rather throw away ten directions than defend the first one.</p></div>
+      </div>
+      <div class="step reveal">
+        <div class="step-node" aria-hidden="true"><svg viewBox="0 0 72 132"><path class="thread-seg" d="M 36 0 C 36 28, 50 36, 50 56 C 50 76, 26 78, 30 96 C 33 110, 36 112, 36 132" stroke="#2130DE" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg></div>
+        <div class="step-body"><h3>Refine.</h3> <p>Pick a direction and sweat the details.</p></div>
+      </div>
+      <div class="step reveal">
+        <div class="step-node" aria-hidden="true"><svg viewBox="0 0 72 132"><path class="thread-seg" d="M 36 0 C 36 32, 28 44, 30 66 C 32 90, 36 100, 36 132" stroke="#2130DE" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg></div>
+        <div class="step-body"><h3>Ship.</h3> <p>Stay with engineering through the build, screen by screen, until it's live.</p></div>
+      </div>
+      <div class="step reveal">
+        <div class="step-node" aria-hidden="true"><svg viewBox="0 0 72 132"><path class="thread-seg" d="M 36 0 L 36 132" stroke="#2130DE" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg></div>
+        <div class="step-body"><h3>Check.</h3> <p>Watch the numbers afterwards. Fix what moved, and fix what didn't.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- passage 5: straight with the gentlest drift -->
+  <div class="passage" aria-hidden="true">
+    <svg viewBox="0 0 200 120">
+      <path class="thread-seg" d="M 100 0 C 100 40, 96 60, 96 76 C 96 96, 100 100, 100 120"
+        stroke="#2130DE" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+    </svg>
+  </div>
+
+  <!-- ———————————————— DESIGNER WHO CODES ———————————————— -->
+  <section class="code-sec section-pad wrap">
+    <div class="split">
+      <div>
+        <h2 style="font-size: clamp(1.75rem, 3.2vw, 2.75rem);">A designer who codes</h2>
+        <p>I have a computer engineering degree. For years I barely used it, and it has turned out to be one of the more useful things I own.</p>
+        <p>It means <strong>I know what's expensive to build before I draw it</strong>, I can read the codebase instead of guessing, and engineers don't have to translate for me. When a handoff goes sideways, I can usually work out why on my own.</p>
+        <p>I'm re-learning to code properly now, and I build with AI most days. This site is where that started: I gave the same brief to 16 AI models, got 80 redesign directions back, and went through all of them to work out what I actually wanted. Useful exercise. <strong>The design decisions are still mine.</strong></p>
+      </div>
+      <div class="code-card reveal" aria-hidden="true">
+        <div class="code-bar"><i></i><i></i><i></i><span class="t">handoff.md · reads fine from both sides</span></div>
+        <pre>
+# what the engineer gets from me
+
+- flows, states, edge cases: <b>drawn</b>
+- empty, loading, error: <b>designed, not implied</b>
+- copy: <b>final, not lorem</b>
+- the expensive ideas: <b>flagged before sprint,
+  not discovered inside it</b>
+
+# what I get back
+
+- honest estimates
+- fewer translation meetings
+- a build that matches the file</pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- passage 6: dead straight now -->
+  <div class="passage" aria-hidden="true">
+    <svg viewBox="0 0 200 110">
+      <path class="thread-seg" d="M 100 0 L 100 110" stroke="#2130DE" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+    </svg>
+  </div>
+
+  <!-- ———————————————— ABOUT + JERRY ———————————————— -->
+  <section class="section-pad wrap" id="about">
+    <div class="sec-head">
+      <h2>The longer version</h2>
+      <span class="mono">fig. 5 · the person holding the thread</span>
+    </div>
+    <div class="about-grid">
+      <div class="col">
+        <p>I'm a <strong>self-taught designer with a computer engineering degree</strong>. Halfway through the degree I worked out that I liked designing products more than writing code, so I taught myself design properly: books, courses, YouTube, and a lot of bad early work.</p>
+        <p>It started in 2017 with graphic design. Logos, posters, a board game, a kids' eBook. In 2019 I found UX research and never looked back. Since then I've done field research, usability testing, web apps, mobile apps, websites, brands, packaging, and social media graphics. Print and pixels and most things in between.</p>
+        <p>I'm a <strong>curious generalist</strong>, and I think that's the useful part. Range lets me see the whole problem rather than only my corner of it.</p>
+        <div class="now-line"><b>Right now:</b> open to product design roles. Living in Jaipur with Jerry. Reading something good, playing something old.</div>
+        <div class="ask-row" aria-label="Ask me about">
+          <span class="ask-chip">ask me about: hip-hop, old school to DHH</span>
+          <span class="ask-chip">NFS: Most Wanted, 2005, the correct answer</span>
+          <span class="ask-chip">taking computers apart</span>
+          <span class="ask-chip">slow, boring investing</span>
+          <span class="ask-chip">how people learn</span>
+        </div>
+      </div>
+      <div class="jerry-card">
+        <div class="jerry-ph">
+          <svg viewBox="0 0 400 500" fill="none" aria-hidden="true">
+            <rect x="24" y="24" width="352" height="452" rx="10" stroke="#DCDAD2" stroke-width="2" stroke-dasharray="6 8"/>
+            <circle cx="200" cy="210" r="70" stroke="#DCDAD2" stroke-width="2"/>
+            <path d="M 130 340 C 160 300, 240 300, 270 340" stroke="#DCDAD2" stroke-width="2"/>
+            <text x="200" y="410" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="14" fill="#53555B">photo slot: Jerry</text>
+            <text x="200" y="432" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="14" fill="#53555B">(this photo matters most)</text>
+          </svg>
+        </div>
+        <div class="jerry-cap">
+          <span class="mono">dogs rescued: 1</span>
+          <span class="mono" style="color: var(--thread);">the real boss</span>
+        </div>
+        <div class="jerry-body">
+          <h3>Jerry</h3>
+          <p>A four-year-old indie street dog, and the love of my life. I met him when he was four weeks old: malnourished, separated from his mother, far too young to survive alone. So I brought him home. My parents took some convincing.</p>
+          <p>He grew up stubborn, smart and deeply introverted, and he is extremely selective about who may pet him. If he ever lets you, take it as a five-star review. He's asleep next to my desk right now, supervising. He says hi.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- passage 7: straight -->
+  <div class="passage" aria-hidden="true">
+    <svg viewBox="0 0 200 100">
+      <path class="thread-seg" d="M 100 0 L 100 100" stroke="#2130DE" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+    </svg>
+  </div>
+
+  <!-- ———————————————— PRINCIPLES ———————————————— -->
+  <section class="section-pad wrap">
+    <div class="sec-head">
+      <h2>Four things I design by</h2>
+      <span class="mono">fig. 6 · load-bearing beliefs</span>
+    </div>
+    <div class="principles">
+      <div class="principle reveal">
+        <h3><span class="u">Consistency</span> beats talent</h3>
+        <p>I'm not the most talented designer in the world. I show up every day instead, and that compounds. Designing since 2017, in UX since 2019, 15+ clients, no year off.</p>
+      </div>
+      <div class="principle reveal">
+        <h3><span class="u">Curiosity</span> is the job</h3>
+        <p>I know a little about a lot, which helps me connect things other people keep separate. Understanding why someone picks a keypad phone over a smartphone shaped the Wikipedia recommendations far more than anything I knew about interface design.</p>
+      </div>
+      <div class="principle reveal">
+        <h3>Form follows <span class="u">function</span></h3>
+        <p>Function solves the problem. Beauty is what makes people remember it, and you earn the second by doing the first. On one onboarding project, no amount of visual polish would have moved the number until research found the real problem: the ads promised something the signup flow didn't deliver.</p>
+      </div>
+      <div class="principle reveal">
+        <h3><span class="u">Give a damn</span></h3>
+        <p>I work with a founder's mindset and take ownership of what I touch. At Turns that meant brand guidelines and a design system so the team could keep shipping after I left. Nobody asked for that part.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- passage 8: straight -->
+  <div class="passage" aria-hidden="true">
+    <svg viewBox="0 0 200 100">
+      <path class="thread-seg" d="M 100 0 L 100 100" stroke="#2130DE" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+    </svg>
+  </div>
+
+  <!-- ———————————————— TIMELINE ———————————————— -->
+  <section class="section-pad wrap">
+    <div class="sec-head">
+      <h2>Where I've been</h2>
+      <span class="mono">fig. 7 · 2017 → now, no year off</span>
+    </div>
+    <div class="era reveal">
+      <div class="era-years">2025 · now</div>
+      <p class="era-body"><b>Product designer, open to what's next.</b> Rebuilding this site in public, designing with AI most days, taking on select freelance.</p>
+    </div>
+    <div class="era reveal">
+      <div class="era-years">2022 · 2025</div>
+      <p class="era-body"><b>Independent product, UX and web designer.</b> Turns, Gadivan, LetsConnect, LearnApp and a dozen others. Website and brand work, 0 to 1 product design, UX audits, design systems.</p>
+    </div>
+    <div class="era reveal">
+      <div class="era-years">2021 · 2022</div>
+      <p class="era-body"><b>UX designer at Thence</b>, a UX studio. Client work for large Indian brands, plus mentoring interns.</p>
+    </div>
+    <div class="era reveal">
+      <div class="era-years">2019 · 2020</div>
+      <p class="era-body"><b>UX research intern at Hureo.</b> Field research for the Wikimedia Foundation.</p>
+    </div>
+    <div class="era reveal">
+      <div class="era-years">2017 · 2019</div>
+      <p class="era-body"><b>Graphic design</b>, first at Skillovate and then at HappleyFit, alongside freelance. Logos, a mascot, posters, a board game, a kids' eBook, an exhibition booth, and my first WordPress site.</p>
+    </div>
+    <div class="clients">
+      <p><b>People I've worked with:</b> Turns, LetsConnect, Gadivan, LearnApp, Parentverse, Venyou, Sharent, Spirinova, Gorico, RedShilliz, DGlobalist, Pahoti Wellness, Ivy Malik, PhotoFinder, Olsub, Learn Theta. Agency-side: Thence, and research for the Wikimedia Foundation via Hureo.</p>
+      <p style="margin-top: 0.75rem;"><b>Education:</b> B.E. Computer Engineering, Pune University, 2017 to 2021.</p>
+    </div>
+  </section>
+
+  <!-- ———————————————— CONTACT ———————————————— -->
+  <section class="contact wrap" id="contact">
+    <h2>Untangled. <span style="font-weight: 600;">Now, say hi.</span></h2>
+    <p class="pitch">Whether it's a role, a project, or just a good conversation about design, hip-hop, or dogs, my inbox is open.</p>
+    <div class="email-wrap">
+      <a class="email" href="mailto:madebynaman@gmail.com">madebynaman@gmail.com</a>
+      <svg class="email-line" viewBox="0 0 600 14" preserveAspectRatio="none" aria-hidden="true">
+        <path id="finalLine" class="thread-seg" d="M 0 7 L 600 7" stroke="#2130DE" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div class="socials">
+      <a href="#" rel="noopener">LinkedIn</a>
+      <a href="#" rel="noopener">Instagram</a>
+      <a href="#" rel="noopener">Twitter</a>
+    </div>
+    <p class="fineprint mono">Jaipur, India (GMT+5:30) · replies within a day, usually faster · open to product design roles</p>
+  </section>
+
+  <footer class="footer">
+    <div class="wrap footer-inner">
+      <span class="mono">No jargon was used on this website.</span>
+      <span class="mono">Jerry approved this site.</span>
+    </div>
+  </footer>
+
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<script>
+(function () {
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var segs = document.querySelectorAll('.thread-seg');
+
+  // No GSAP or reduced motion: thread fully drawn, page fully visible.
+  if (!window.gsap || reduce) {
+    document.querySelectorAll('.count').forEach(function (el) {
+      var d = parseInt(el.dataset.decimals || '0', 10);
+      el.textContent = parseFloat(el.dataset.count).toFixed(d);
+    });
+    var meter = document.getElementById('tangleVal');
+    if (meter) meter.textContent = '0%';
+    return;
+  }
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Prepare every thread segment for draw-on.
+  segs.forEach(function (p) {
+    var len = p.getTotalLength();
+    p.style.strokeDasharray = len;
+    p.style.strokeDashoffset = len;
+  });
+
+  // Hero knot: an entrance, not a scroll effect. 2.6s of untangling-in-reverse.
+  var knot = document.getElementById('knotPath');
+  gsap.to(knot, { strokeDashoffset: 0, duration: 2.6, ease: 'power2.inOut', delay: 0.2 });
+
+  // Hero copy choreography.
+  gsap.from('.hero h1, .hero-sub, .availability, .hero-cta, .hero-small', {
+    y: 24, opacity: 0, duration: 0.9, ease: 'power3.out', stagger: 0.08, delay: 0.1
+  });
+
+  // Every other segment draws as it scrolls through view.
+  segs.forEach(function (p) {
+    if (p.id === 'knotPath') return;
+    gsap.to(p, {
+      strokeDashoffset: 0,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: p.closest('svg'),
+        start: 'top 88%',
+        end: 'bottom 45%',
+        scrub: 0.6
+      }
+    });
+  });
+
+  // Section reveals: one grammar, small and quick.
+  document.querySelectorAll('.reveal').forEach(function (el) {
+    gsap.from(el, {
+      y: 28, opacity: 0, duration: 0.8, ease: 'power3.out',
+      scrollTrigger: { trigger: el, start: 'top 88%' }
+    });
+  });
+
+  // Readings count up once.
+  document.querySelectorAll('.count').forEach(function (el) {
+    var target = parseFloat(el.dataset.count);
+    var decimals = parseInt(el.dataset.decimals || '0', 10);
+    var obj = { v: 0 };
+    gsap.to(obj, {
+      v: target, duration: 1.4, ease: 'power2.out',
+      scrollTrigger: { trigger: el, start: 'top 88%' },
+      onUpdate: function () { el.textContent = obj.v.toFixed(decimals); }
+    });
+  });
+
+  // Tangle meter: 100% at top of page, 0% at the bottom.
+  var meter = document.getElementById('tangleVal');
+  ScrollTrigger.create({
+    trigger: document.body,
+    start: 'top top',
+    end: 'bottom bottom',
+    onUpdate: function (self) {
+      var pct = Math.round((1 - self.progress) * 100);
+      meter.textContent = pct === 0 ? 'none' : pct + '%';
+    }
+  });
+})();
+</script>
+</body>
+</html>
