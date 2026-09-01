@@ -304,7 +304,7 @@ h1 .accent { color: var(--blue); }
 
       <div class="header-stats">
         <div class="stat">
-          <span class="stat-value" id="total-models">17</span>
+          <span class="stat-value" id="total-models">21</span>
           <span class="stat-label">Models</span>
         </div>
         <div class="stat">
@@ -312,7 +312,7 @@ h1 .accent { color: var(--blue); }
           <span class="stat-label">This round</span>
         </div>
         <div class="stat">
-          <span class="stat-value" id="total-directions">85</span>
+          <span class="stat-value" id="total-directions">130</span>
           <span class="stat-label">Total directions</span>
         </div>
       </div>
@@ -336,8 +336,8 @@ h1 .accent { color: var(--blue); }
   <footer class="footer">
     <div class="container">
       <div class="footer-content">
-        <span>AI Redesign Test — Q3 2025</span>
-        <span><a href="https://github.com/naman/website" target="_blank" rel="noopener">github.com/naman/website</a></span>
+        <span>AI Redesign Test — Q3 2026</span>
+        <span><a href="https://github.com/madebynaman/website" target="_blank" rel="noopener">github.com/madebynaman/website</a></span>
       </div>
     </div>
   </footer>
@@ -495,6 +495,13 @@ const models = [
       'round-2': [36,37,38,39,40],
     }
   },
+  {
+    name: 'glm-5.3-flash',
+    label: 'GLM 5.3 Flash',
+    rounds: {
+      'round-2': [41,42,43,44,45],
+    }
+  },
 ];
 
 let activeRound = 'round-1';
@@ -564,7 +571,7 @@ function renderGrid() {
   grid.innerHTML = '';
 
   const roundOrder = {
-    'round-2': ['glm-5.2', 'opus-5', 'fable-5', 'deepseek-v4-pro', 'mimo-v2.5', 'deepseek-v4-flash', 'minimax-m3', 'kimi-k3'],
+    'round-2': ['glm-5.2', 'opus-5', 'fable-5', 'deepseek-v4-pro', 'mimo-v2.5', 'deepseek-v4-flash', 'minimax-m3', 'kimi-k3', 'glm-5.3-flash'],
   };
 
   let entries = models.map((m, idx) => ({ m, idx }));
